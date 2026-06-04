@@ -19,6 +19,7 @@ Update this file after every meaningful implementation change.
 - Unit 2 completed: Next.js scaffolded; strict TypeScript, Tailwind, lint/format/typecheck scripts, CI workflow, and baseline security headers/CSP implemented and validated.
 - Unit 3 code-side controls completed: staging-only `X-Robots-Tag: noindex, nofollow`, staging `robots.txt` disallow-all, `.env.example` environment contract, and updated Unit 3 spec env requirements.
 - Vercel CLI authenticated and project linked (`zeds-projects-4a4386a5/promptraise-web`).
+- GitHub repository created and pushed: `butterflyio/promptraise-web` (branch `main`).
 - Production environment variables set in Vercel: `SITE_ENV=production`, `NEXT_PUBLIC_SITE_URL=https://www.promptraise.com`.
 - Development environment variables set in Vercel: `SITE_ENV=development`, `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
 - `staging.promptraise.com` added to Vercel project (DNS record still needs to be pointed to Vercel).
@@ -41,7 +42,7 @@ Update this file after every meaningful implementation change.
 - `ui-context.md` depends on Figma extraction (Dev Mode MCP + node `63-93` selected).
 - Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
 - Final analytics pick: Vercel Web Analytics vs Plausible.
-- Which Git repository should be connected to Vercel for automatic preview deployments?
+- Connect Vercel project to GitHub repo `butterflyio/promptraise-web` in Vercel dashboard (required for branch previews and preview-scoped env vars).
 
 ## Architecture Decisions
 
