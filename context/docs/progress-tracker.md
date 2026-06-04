@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 8 production cutover completed. V1 is live on production branch. DNS update required to complete cutover.
+- Sanity backend deployed and frontend wired to CMS. Ready to verify on staging.
 
 ## Current Goal
 
-- Unit 9: 48-hour observation and validation after DNS cutover.
+- Verify staging.promptraise.com loads correctly with Sanity data, then proceed to production.
 
 ## Completed
 
@@ -92,19 +92,29 @@ Update this file after every meaningful implementation change.
   - Footer cleaned to only show existing V1 pages
   - Production cutover document created: `context/docs/specs/08-production-cutover.md`
   - DNS cutover steps documented (A record or CNAME to Vercel)
+- **Sanity backend deployed and wired:**
+  - Deployed `siteSettings` schema to both staging and production datasets
+  - Created initial site settings document with real URLs (Telegram, audit, social links)
+  - Added `sanity/lib/queries.ts` for type-safe data fetching
+  - Updated `SiteHeader` to fetch site name and CTA URLs from Sanity
+  - Updated `SiteFooter` to fetch social links from Sanity (with fallbacks)
+  - Updated `HeroSection` and `AuditCtaSection` to accept CTA URLs as props
+  - Updated `page.tsx` to fetch settings server-side and pass to components
+  - All quality gates pass: typecheck, lint, format:check, build
 
 ## In Progress
 
-- Waiting for DNS update to complete cutover.
+- Verifying staging.promptraise.com with Sanity integration.
 
 ## Next Up
 
-- Unit 9: 48-hour observation and validation after DNS cutover.
-- Obtain Neutral Sans font file + web license to replace Geist fallback.
+- Test staging.promptraise.com to confirm Sanity data loads correctly.
+- Merge to main and update DNS for production cutover.
+- Unit 9: 48-hour observation and validation.
 
 ## Open Questions
 
-- Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
+- Final social URLs/handles and org metadata for `SiteSettings` (currently using placeholder URLs in Sanity).
 - `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
 - Confirm whether staging dataset can remain public on current Sanity plan or if plan upgrade/private dataset is required.
 - Figma MCP tool access in this environment is still unavailable, so exact token extraction must be provided via MCP/screenshot export.
@@ -130,6 +140,7 @@ Update this file after every meaningful implementation change.
 - Unit 6 landing page is content-complete for V1; visual polish from Figma extraction can be applied later.
 - Unit 7 AI visibility foundation is live: all V1 machine-readable surfaces implemented.
 - Unit 8 production cutover: code is on `main` and deployed, DNS update is the remaining step.
+- Sanity backend is now live with real data: site settings document created in both staging and production datasets.
 
 ## Housekeeping
 
@@ -138,3 +149,4 @@ Update this file after every meaningful implementation change.
 - [ ] Enable and keep CI secret scanning active.
 - [ ] Add Google Search Console and Bing Webmaster verification codes to Vercel env vars when available.
 - [ ] Update DNS A record for `www.promptraise.com` to `76.76.21.21` (or CNAME to `cname.vercel-dns.com`).
+- [ ] Update Sanity site settings with real social URLs when available.
