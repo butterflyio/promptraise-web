@@ -35,12 +35,15 @@ Update this file after every meaningful implementation change.
   - Studio route mounted at `/studio` with `noindex` metadata,
   - `.env.example` extended with Sanity variables,
   - Unit 4 spec added (`context/docs/specs/04-sanity-foundation.md`).
+- Unit 3 operational checks completed:
+  - created preview deployment from `staging` branch,
+  - aliased `staging.promptraise.com` to the staging preview deployment,
+  - verified staging behavior via forced host mapping (`--resolve`):
+    - `x-robots-tag: noindex, nofollow`,
+    - `robots.txt` returns `Disallow: /`.
 
 ## In Progress
 
-- Unit 3 account-side setup in Vercel:
-  - update DNS with `A staging.promptraise.com 76.76.21.21`,
-  - verify live `staging.promptraise.com` behavior.
 - Sanity account-side setup:
   - confirm target Sanity project ID,
   - create/confirm datasets `production` and `staging`,
@@ -57,7 +60,7 @@ Update this file after every meaningful implementation change.
 - `ui-context.md` depends on Figma extraction (Dev Mode MCP + node `63-93` selected).
 - Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
 - Final analytics pick: Vercel Web Analytics vs Plausible.
-- DNS for `staging.promptraise.com` is not yet resolvable from this environment (check propagation after GoDaddy update).
+- `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
 - Sanity project ID and final dataset names for this project still need confirmation.
 
 ## Architecture Decisions
