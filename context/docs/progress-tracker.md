@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 6 landing page content completed. Ready for Unit 7 AI visibility foundation.
+- Unit 7 AI visibility foundation completed. Ready for Unit 8 redirects and production cutover.
 
 ## Current Goal
 
-- Implement Unit 7: machine-readable surfaces and metadata (robots.txt, sitemap.xml, llms.txt, canonical/meta/OG, Organization/WebSite JSON-LD, privacy notice, search console verifications).
+- Implement Unit 8: verify redirect map on staging, then execute production switch and DNS cutover.
 
 ## Completed
 
@@ -73,23 +73,35 @@ Update this file after every meaningful implementation change.
   - Final Audit CTA section
   - All sections use brand dark tokens and green accent
   - All quality gates pass: typecheck, lint, format:check, build
+- **Unit 7 AI visibility foundation completed:**
+  - `robots.txt` updated: explicitly allows GPTBot, ClaudeBot, CCBot, Google-Extended, PerplexityBot, ChatGPT-User
+  - `sitemap.xml` created with homepage, privacy, and studio routes
+  - `llms.txt` endpoint created at `/llms.txt` (text/plain, lists pages and contact info)
+  - `Organization` + `WebSite` JSON-LD structured data added to root layout
+  - Enhanced metadata: OG tags, Twitter cards, keywords, authors, canonical URLs
+  - Search console verification meta tags ready (Google + Bing, env-var driven)
+  - Privacy notice page created at `/privacy`
+  - `@vercel/analytics` installed and configured (cookieless)
+  - `ai-visibility.md` checklist updated with V1 items marked complete
+  - All quality gates pass: typecheck, lint, format:check, build
 
 ## In Progress
 
-- Unit 7 AI visibility foundation.
+- Unit 8 redirects and production cutover planning.
 
 ## Next Up
 
-- Implement machine-readable surfaces: sitemap.xml, llms.txt, Organization + WebSite JSON-LD, enhanced meta tags, privacy notice page.
+- Verify redirect map on staging (if any existing URLs need redirects).
+- Execute production switch and DNS cutover once staging is validated.
 - Obtain Neutral Sans font file + web license to replace Geist fallback.
 
 ## Open Questions
 
 - Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
-- Final analytics pick: Vercel Web Analytics vs Plausible.
 - `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
 - Confirm whether staging dataset can remain public on current Sanity plan or if plan upgrade/private dataset is required.
 - Figma MCP tool access in this environment is still unavailable, so exact token extraction must be provided via MCP/screenshot export.
+- Need existing URL inventory from live `www.promptraise.com` for redirect mapping in Unit 8.
 
 ## Architecture Decisions
 
@@ -109,9 +121,11 @@ Update this file after every meaningful implementation change.
 - Unit 4 account-side provisioning is complete; only staging DNS resolver lag remains.
 - Unit 5 now uses brand dark tokens; no temporary scaffold values remain.
 - Unit 6 landing page is content-complete for V1; visual polish from Figma extraction can be applied later.
+- Unit 7 AI visibility foundation is live: all V1 machine-readable surfaces implemented.
 
 ## Housekeeping
 
 - [ ] Rotate the Sanity API token currently stored in local opencode config.
 - [ ] Ensure all secrets live in env vars/secret stores only.
 - [ ] Enable and keep CI secret scanning active.
+- [ ] Add Google Search Console and Bing Webmaster verification codes to Vercel env vars when available.

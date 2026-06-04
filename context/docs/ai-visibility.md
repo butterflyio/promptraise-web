@@ -22,12 +22,12 @@ summaries) and traditional search.
 
 ## Site-Level Requirements
 
-- [ ] `robots.txt` — allow `GPTBot`, `ClaudeBot`, `CCBot`, `Google-Extended`; never disallow `/llms.txt`; link `sitemap.xml`. **(V1)**
-- [ ] `sitemap.xml` — valid `<urlset>` with `<lastmod>`. **(V1)**
-- [ ] `llms.txt` — at site root, `text/plain`, lists pages with `.md` URLs. **(V1)**
-- [ ] `Organization` + `WebSite` JSON-LD sitewide. **(V1)**
-- [ ] Google Search Console + Bing Webmaster verification. **(V1)**
-- [ ] Cookieless analytics (no consent banner). **(V1)**
+- [x] `robots.txt` — allow `GPTBot`, `ClaudeBot`, `CCBot`, `Google-Extended`, `PerplexityBot`, `ChatGPT-User`; never disallow `/llms.txt`; link `sitemap.xml`. **(V1)**
+- [x] `sitemap.xml` — valid `<urlset>` with `<lastmod>`. **(V1)**
+- [x] `llms.txt` — at site root, `text/plain`, lists pages with URLs. **(V1)**
+- [x] `Organization` + `WebSite` JSON-LD sitewide. **(V1)**
+- [x] Google Search Console + Bing Webmaster verification meta tags ready. **(V1)**
+- [x] Cookieless analytics (no consent banner) via `@vercel/analytics`. **(V1)**
 - [ ] `sitemap.md` — `/sitemap.md`, headings + links mirroring structure. **(V2)**
 - [ ] `llms-full.txt` — full-content index; also hosts the public agent/skill file content. **(V2)**
 - [ ] Public agent/skill file — served via `/llms-full.txt` (install/config/usage framed around the public content API and Telegram audit bot). **(V2)**
