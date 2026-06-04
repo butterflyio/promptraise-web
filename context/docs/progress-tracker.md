@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 5 blocked on Figma extraction. Units 3 and 4 are complete with noted DNS caveat.
+- Unit 5 in progress: structural shell completed, visual fidelity blocked on Figma token extraction.
 
 ## Current Goal
 
-- Unblock Unit 5 by extracting Figma node `63-93` and finalizing `ui-context.md`.
+- Finalize Unit 5 by extracting Figma node `63-93` and replacing scaffold tokens/components with exact design values.
 
 ## Completed
 
@@ -49,15 +49,22 @@ Update this file after every meaningful implementation change.
     - `NEXT_PUBLIC_SANITY_DATASET`,
     - `SANITY_API_VERSION`,
   - local `.env.local` pulled from Vercel.
+- Unit 5 structural implementation completed:
+  - site shell (`SiteHeader`, `SiteFooter`, `SiteShell`) integrated into root layout,
+  - landing page section structure added,
+  - `app/not-found.tsx` and `app/manifest.ts` added,
+  - `ui-context.md` updated with implemented structure and required Figma extraction checklist.
 
 ## In Progress
 
+- Unit 5 visual fidelity pass pending Figma extraction.
 - DNS propagation verification for `staging.promptraise.com` from this local resolver.
 
 ## Next Up
 
-- Unit 5: Figma extraction + `ui-context.md` population.
-- Unit 5 implementation: design system and base layout from tokens.
+- Extract Figma node `63-93` and capture final tokens (colors, type, spacing, breakpoints, component rules).
+- Apply extracted tokens and layout refinements to complete Unit 5 fidelity.
+- Start Unit 6 landing content pass after Unit 5 signoff.
 
 ## Open Questions
 
@@ -66,6 +73,7 @@ Update this file after every meaningful implementation change.
 - Final analytics pick: Vercel Web Analytics vs Plausible.
 - `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
 - Confirm whether staging dataset can remain public on current Sanity plan or if plan upgrade/private dataset is required.
+- Figma MCP tool access in this environment is still unavailable, so exact token extraction must be provided via MCP/screenshot export.
 
 ## Architecture Decisions
 
@@ -83,6 +91,7 @@ Update this file after every meaningful implementation change.
 - Use Sanity MCP or CLI at implementation time; choose pragmatically.
 - Vercel CLI deploy succeeds, but live staging URL checks are blocked until DNS propagation completes.
 - Unit 4 account-side provisioning is complete; only staging DNS resolver lag remains.
+- Unit 5 currently uses temporary scaffold token values in `app/globals.css`; do not treat them as final design decisions.
 
 ## Housekeeping
 

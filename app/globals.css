@@ -1,19 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #111827;
+  /*
+    Unit 5 note:
+    These are temporary scaffold values only. Replace with extracted values from
+    Figma node 63-93 before implementing visual fidelity.
+  */
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-text: #111827;
+  --color-text-muted: #475569;
+  --color-border: #e2e8f0;
+  --color-primary: #0f172a;
+  --color-primary-foreground: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-text);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-border: var(--color-border);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-text);
   font-family: var(--font-geist-sans), sans-serif;
 }
