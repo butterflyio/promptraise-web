@@ -4,7 +4,7 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 3 in progress (Vercel environments): code-side complete, waiting on external Vercel/Git/DNS actions.
+- Unit 3 in progress (Vercel environments): code-side complete, waiting on external DNS verification.
 
 ## Current Goal
 
@@ -20,6 +20,10 @@ Update this file after every meaningful implementation change.
 - Unit 3 code-side controls completed: staging-only `X-Robots-Tag: noindex, nofollow`, staging `robots.txt` disallow-all, `.env.example` environment contract, and updated Unit 3 spec env requirements.
 - Vercel CLI authenticated and project linked (`zeds-projects-4a4386a5/promptraise-web`).
 - GitHub repository created and pushed: `butterflyio/promptraise-web` (branch `main`).
+- `staging` branch created and pushed to GitHub (`butterflyio/promptraise-web:staging`).
+- Vercel project connected to GitHub with preview env vars scoped to `staging` branch:
+  - `SITE_ENV=staging`
+  - `NEXT_PUBLIC_SITE_URL=https://staging.promptraise.com`
 - Production environment variables set in Vercel: `SITE_ENV=production`, `NEXT_PUBLIC_SITE_URL=https://www.promptraise.com`.
 - Development environment variables set in Vercel: `SITE_ENV=development`, `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
 - `staging.promptraise.com` added to Vercel project (DNS record still needs to be pointed to Vercel).
@@ -27,8 +31,6 @@ Update this file after every meaningful implementation change.
 ## In Progress
 
 - Unit 3 account-side setup in Vercel:
-  - connect a Git repository to the Vercel project (required for branch-based preview envs and automatic preview deployments),
-  - add preview-scoped env vars for `staging` branch,
   - update DNS with `A staging.promptraise.com 76.76.21.21`,
   - verify live `staging.promptraise.com` behavior.
 
@@ -42,7 +44,7 @@ Update this file after every meaningful implementation change.
 - `ui-context.md` depends on Figma extraction (Dev Mode MCP + node `63-93` selected).
 - Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
 - Final analytics pick: Vercel Web Analytics vs Plausible.
-- Connect Vercel project to GitHub repo `butterflyio/promptraise-web` in Vercel dashboard (required for branch previews and preview-scoped env vars).
+- DNS for `staging.promptraise.com` is not yet resolvable from this environment (check propagation after GoDaddy update).
 
 ## Architecture Decisions
 
@@ -58,6 +60,7 @@ Update this file after every meaningful implementation change.
 - Replacing a live website at `www.promptraise.com`; redirects and DNS cutover are explicit units.
 - Use placeholders for missing external values and resolve during relevant unit.
 - Use Sanity MCP or CLI at implementation time; choose pragmatically.
+- Vercel CLI deploy succeeds, but live staging URL checks are blocked until DNS propagation completes.
 
 ## Housekeeping
 
