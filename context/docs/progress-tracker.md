@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 7 AI visibility foundation completed. Ready for Unit 8 redirects and production cutover.
+- Unit 8 production cutover completed. V1 is live on production branch. DNS update required to complete cutover.
 
 ## Current Goal
 
-- Implement Unit 8: verify redirect map on staging, then execute production switch and DNS cutover.
+- Unit 9: 48-hour observation and validation after DNS cutover.
 
 ## Completed
 
@@ -84,15 +84,22 @@ Update this file after every meaningful implementation change.
   - `@vercel/analytics` installed and configured (cookieless)
   - `ai-visibility.md` checklist updated with V1 items marked complete
   - All quality gates pass: typecheck, lint, format:check, build
+- **Unit 8 production cutover completed:**
+  - `staging` branch merged into `main` (fast-forward)
+  - `main` pushed to GitHub, triggering production deployment
+  - `www.promptraise.com` added to Vercel project domains
+  - Redirect configuration added to `next.config.ts` (placeholder for legacy URLs)
+  - Footer cleaned to only show existing V1 pages
+  - Production cutover document created: `context/docs/specs/08-production-cutover.md`
+  - DNS cutover steps documented (A record or CNAME to Vercel)
 
 ## In Progress
 
-- Unit 8 redirects and production cutover planning.
+- Waiting for DNS update to complete cutover.
 
 ## Next Up
 
-- Verify redirect map on staging (if any existing URLs need redirects).
-- Execute production switch and DNS cutover once staging is validated.
+- Unit 9: 48-hour observation and validation after DNS cutover.
 - Obtain Neutral Sans font file + web license to replace Geist fallback.
 
 ## Open Questions
@@ -101,7 +108,7 @@ Update this file after every meaningful implementation change.
 - `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
 - Confirm whether staging dataset can remain public on current Sanity plan or if plan upgrade/private dataset is required.
 - Figma MCP tool access in this environment is still unavailable, so exact token extraction must be provided via MCP/screenshot export.
-- Need existing URL inventory from live `www.promptraise.com` for redirect mapping in Unit 8.
+- Need existing URL inventory from live `www.promptraise.com` for redirect mapping (currently using placeholder config).
 
 ## Architecture Decisions
 
@@ -122,6 +129,7 @@ Update this file after every meaningful implementation change.
 - Unit 5 now uses brand dark tokens; no temporary scaffold values remain.
 - Unit 6 landing page is content-complete for V1; visual polish from Figma extraction can be applied later.
 - Unit 7 AI visibility foundation is live: all V1 machine-readable surfaces implemented.
+- Unit 8 production cutover: code is on `main` and deployed, DNS update is the remaining step.
 
 ## Housekeeping
 
@@ -129,3 +137,4 @@ Update this file after every meaningful implementation change.
 - [ ] Ensure all secrets live in env vars/secret stores only.
 - [ ] Enable and keep CI secret scanning active.
 - [ ] Add Google Search Console and Bing Webmaster verification codes to Vercel env vars when available.
+- [ ] Update DNS A record for `www.promptraise.com` to `76.76.21.21` (or CNAME to `cname.vercel-dns.com`).
