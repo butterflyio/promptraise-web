@@ -6,18 +6,27 @@ import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { StatsSection } from "@/components/sections/stats-section";
 import { TeamSection } from "@/components/sections/team-section";
+import { getSiteSettings } from "@/sanity/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getSiteSettings();
+
   return (
     <main>
-      <HeroSection />
+      <HeroSection
+        telegramUrl={settings?.primaryTelegramCtaUrl}
+        auditUrl={settings?.freeAuditCtaUrl}
+      />
       <StatsSection />
       <HowItWorksSection />
       <ComparisonSection />
       <PricingSection />
       <CaseStudiesSection />
       <TeamSection />
-      <AuditCtaSection />
+      <AuditCtaSection
+        telegramUrl={settings?.primaryTelegramCtaUrl}
+        auditUrl={settings?.freeAuditCtaUrl}
+      />
     </main>
   );
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { getSiteSettings } from "@/sanity/lib/queries";
+
 const navItems = [
   { href: "#solutions", label: "Solutions" },
   { href: "#pricing", label: "Pricing" },
@@ -7,7 +9,10 @@ const navItems = [
   { href: "#resources", label: "Resources" },
 ];
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const settings = await getSiteSettings();
+  const auditUrl = settings?.freeAuditCtaUrl ?? "https://audit.promptraise.com";
+
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--border-default)] bg-[var(--bg-base)]/90 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
@@ -15,7 +20,7 @@ export function SiteHeader() {
           href="/"
           className="font-semibold tracking-tight text-[var(--text-primary)]"
         >
-          PromptRaise
+          {settings?.siteName ?? "PromptRaise"}
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
@@ -31,7 +36,7 @@ export function SiteHeader() {
         </nav>
 
         <a
-          href="https://audit.promptraise.com"
+          href={auditUrl}
           className="inline-flex items-center rounded-full bg-[var(--accent-primary)] px-4 py-2 text-sm font-medium text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
         >
           Get Audit

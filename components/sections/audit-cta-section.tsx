@@ -1,4 +1,12 @@
-export function AuditCtaSection() {
+interface AuditCtaSectionProps {
+  telegramUrl?: string;
+  auditUrl?: string;
+}
+
+export function AuditCtaSection({
+  telegramUrl = "https://t.me/promptraise",
+  auditUrl = "https://audit.promptraise.com",
+}: AuditCtaSectionProps) {
   return (
     <section id="audit" className="border-b border-[var(--border-default)]">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-6 py-16 text-center md:py-20">
@@ -14,13 +22,13 @@ export function AuditCtaSection() {
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <a
-            href="https://audit.promptraise.com"
+            href={auditUrl}
             className="inline-flex items-center rounded-full bg-[var(--accent-primary)] px-6 py-3 text-sm font-medium text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
           >
             Get Free Audit
           </a>
           <a
-            href="https://t.me/placeholder"
+            href={telegramUrl}
             className="inline-flex items-center rounded-full border border-[var(--border-default)] px-6 py-3 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)]"
           >
             Join Telegram

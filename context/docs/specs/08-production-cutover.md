@@ -53,26 +53,27 @@ ns2.vercel-dns.com
 ## Rollback Plan
 
 If issues occur:
+
 1. Revert DNS record back to previous value
 2. Or switch Vercel production deployment to previous commit via CLI/dashboard
 
 ## Current V1 Feature Status
 
-| Feature | Status |
-|---------|--------|
-| Dark brand theme | ✅ Live |
-| Landing page (8 sections) | ✅ Live |
-| Header + Footer | ✅ Live |
-| robots.txt (AI crawlers allowed) | ✅ Live |
-| sitemap.xml | ✅ Live |
-| llms.txt | ✅ Live |
-| Organization + WebSite JSON-LD | ✅ Live |
-| OG/Twitter metadata | ✅ Live |
-| Privacy notice | ✅ Live |
-| Cookieless analytics | ✅ Live |
-| 404 page | ✅ Live |
-| Manifest | ✅ Live |
-| Sanity Studio | ✅ Live at /studio |
+| Feature                          | Status             |
+| -------------------------------- | ------------------ |
+| Dark brand theme                 | ✅ Live            |
+| Landing page (8 sections)        | ✅ Live            |
+| Header + Footer                  | ✅ Live            |
+| robots.txt (AI crawlers allowed) | ✅ Live            |
+| sitemap.xml                      | ✅ Live            |
+| llms.txt                         | ✅ Live            |
+| Organization + WebSite JSON-LD   | ✅ Live            |
+| OG/Twitter metadata              | ✅ Live            |
+| Privacy notice                   | ✅ Live            |
+| Cookieless analytics             | ✅ Live            |
+| 404 page                         | ✅ Live            |
+| Manifest                         | ✅ Live            |
+| Sanity Studio                    | ✅ Live at /studio |
 
 ## Next Steps After Cutover
 
