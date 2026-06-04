@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 3 in progress (Vercel environments): code-side complete, waiting on external DNS verification.
+- Unit 4 in progress (Sanity foundation). Unit 3 is code-complete and ops-pending DNS propagation for live staging verification.
 
 ## Current Goal
 
-- Finalize Vercel branch/domain behavior for staging and then start Unit 4 (Sanity foundation).
+- Complete Sanity foundation (`siteSettings` schema, Studio route, typed client, environment contract) while staging DNS propagates.
 
 ## Completed
 
@@ -27,17 +27,30 @@ Update this file after every meaningful implementation change.
 - Production environment variables set in Vercel: `SITE_ENV=production`, `NEXT_PUBLIC_SITE_URL=https://www.promptraise.com`.
 - Development environment variables set in Vercel: `SITE_ENV=development`, `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
 - `staging.promptraise.com` added to Vercel project (DNS record still needs to be pointed to Vercel).
+- Unit 4 foundation implemented locally:
+  - Sanity packages installed,
+  - `sanity.config.ts` and `sanity.cli.ts` added,
+  - `siteSettings` schema created,
+  - typed Sanity client/env modules added,
+  - Studio route mounted at `/studio` with `noindex` metadata,
+  - `.env.example` extended with Sanity variables,
+  - Unit 4 spec added (`context/docs/specs/04-sanity-foundation.md`).
 
 ## In Progress
 
 - Unit 3 account-side setup in Vercel:
   - update DNS with `A staging.promptraise.com 76.76.21.21`,
   - verify live `staging.promptraise.com` behavior.
+- Sanity account-side setup:
+  - confirm target Sanity project ID,
+  - create/confirm datasets `production` and `staging`,
+  - add env vars in Vercel and local env files.
 
 ## Next Up
 
-- Finish Unit 3 account-side steps listed above.
-- Unit 4: set up Sanity foundation (`production` + `staging` datasets and `SiteSettings`).
+- Finish Unit 3 DNS verification on live staging.
+- Complete Unit 4 account-side Sanity setup and dataset provisioning.
+- Prepare Unit 5 (Figma extraction + ui-context population).
 
 ## Open Questions
 
@@ -45,6 +58,7 @@ Update this file after every meaningful implementation change.
 - Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
 - Final analytics pick: Vercel Web Analytics vs Plausible.
 - DNS for `staging.promptraise.com` is not yet resolvable from this environment (check propagation after GoDaddy update).
+- Sanity project ID and final dataset names for this project still need confirmation.
 
 ## Architecture Decisions
 
@@ -61,6 +75,7 @@ Update this file after every meaningful implementation change.
 - Use placeholders for missing external values and resolve during relevant unit.
 - Use Sanity MCP or CLI at implementation time; choose pragmatically.
 - Vercel CLI deploy succeeds, but live staging URL checks are blocked until DNS propagation completes.
+- Unit 4 code implementation validated locally; account-side Sanity provisioning is pending.
 
 ## Housekeeping
 
