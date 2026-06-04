@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 4 in progress (Sanity foundation). Unit 3 is code-complete and ops-pending DNS propagation for live staging verification.
+- Unit 5 blocked on Figma extraction. Units 3 and 4 are complete with noted DNS caveat.
 
 ## Current Goal
 
-- Complete Sanity foundation (`siteSettings` schema, Studio route, typed client, environment contract) while staging DNS propagates.
+- Unblock Unit 5 by extracting Figma node `63-93` and finalizing `ui-context.md`.
 
 ## Completed
 
@@ -26,7 +26,7 @@ Update this file after every meaningful implementation change.
   - `NEXT_PUBLIC_SITE_URL=https://staging.promptraise.com`
 - Production environment variables set in Vercel: `SITE_ENV=production`, `NEXT_PUBLIC_SITE_URL=https://www.promptraise.com`.
 - Development environment variables set in Vercel: `SITE_ENV=development`, `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
-- `staging.promptraise.com` added to Vercel project (DNS record still needs to be pointed to Vercel).
+- `staging.promptraise.com` added to Vercel project and aliased to staging deployment (direct resolver checks still lag in this environment).
 - Unit 4 foundation implemented locally:
   - Sanity packages installed,
   - `sanity.config.ts` and `sanity.cli.ts` added,
@@ -41,19 +41,23 @@ Update this file after every meaningful implementation change.
   - verified staging behavior via forced host mapping (`--resolve`):
     - `x-robots-tag: noindex, nofollow`,
     - `robots.txt` returns `Disallow: /`.
+- Unit 4 account-side setup completed:
+  - Sanity project identified: `4pws3pyj`,
+  - datasets confirmed/created: `production` and `staging` (staging created as public due plan limits),
+  - Vercel env vars set for production, preview(`staging`), and development:
+    - `NEXT_PUBLIC_SANITY_PROJECT_ID`,
+    - `NEXT_PUBLIC_SANITY_DATASET`,
+    - `SANITY_API_VERSION`,
+  - local `.env.local` pulled from Vercel.
 
 ## In Progress
 
-- Sanity account-side setup:
-  - confirm target Sanity project ID,
-  - create/confirm datasets `production` and `staging`,
-  - add env vars in Vercel and local env files.
+- DNS propagation verification for `staging.promptraise.com` from this local resolver.
 
 ## Next Up
 
-- Finish Unit 3 DNS verification on live staging.
-- Complete Unit 4 account-side Sanity setup and dataset provisioning.
-- Prepare Unit 5 (Figma extraction + ui-context population).
+- Unit 5: Figma extraction + `ui-context.md` population.
+- Unit 5 implementation: design system and base layout from tokens.
 
 ## Open Questions
 
@@ -61,7 +65,7 @@ Update this file after every meaningful implementation change.
 - Final social URLs/handles and org metadata for `SiteSettings` (use placeholders until provided).
 - Final analytics pick: Vercel Web Analytics vs Plausible.
 - `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
-- Sanity project ID and final dataset names for this project still need confirmation.
+- Confirm whether staging dataset can remain public on current Sanity plan or if plan upgrade/private dataset is required.
 
 ## Architecture Decisions
 
@@ -78,7 +82,7 @@ Update this file after every meaningful implementation change.
 - Use placeholders for missing external values and resolve during relevant unit.
 - Use Sanity MCP or CLI at implementation time; choose pragmatically.
 - Vercel CLI deploy succeeds, but live staging URL checks are blocked until DNS propagation completes.
-- Unit 4 code implementation validated locally; account-side Sanity provisioning is pending.
+- Unit 4 account-side provisioning is complete; only staging DNS resolver lag remains.
 
 ## Housekeeping
 
