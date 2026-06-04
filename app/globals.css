@@ -1,37 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  /*
-    Unit 5 note:
-    These are temporary scaffold values only. Replace with extracted values from
-    Figma node 63-93 before implementing visual fidelity.
-  */
-  --color-background: #ffffff;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f8fafc;
-  --color-text: #111827;
-  --color-text-muted: #475569;
-  --color-border: #e2e8f0;
-  --color-primary: #0f172a;
-  --color-primary-foreground: #ffffff;
+  /* Brand Design System v1.0 — Dark theme only */
+  --bg-base: #0f0f0f;
+  --bg-surface: #242628;
+  --bg-surface-hover: #2a2d2f;
+  --text-primary: #ffffff;
+  --text-secondary: #dedcd7;
+  --text-muted: #c9cdd2;
+  --accent-primary: #67ff67;
+  --accent-secondary: #3d6944;
+  --accent-foreground: #0f0f0f;
+  --border-default: #242628;
+  --border-subtle: #1a1a1a;
 }
 
 @theme inline {
-  --color-background: var(--color-background);
-  --color-foreground: var(--color-text);
-  --color-surface: var(--color-surface);
-  --color-surface-muted: var(--color-surface-muted);
-  --color-text: var(--color-text);
-  --color-text-muted: var(--color-text-muted);
-  --color-border: var(--color-border);
-  --color-primary: var(--color-primary);
-  --color-primary-foreground: var(--color-primary-foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-hover: var(--bg-surface-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border-default: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+  --font-sans: var(--font-geist-sans), "Geist Sans", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", monospace;
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-geist-sans), sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
 }

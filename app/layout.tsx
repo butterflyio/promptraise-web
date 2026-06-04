@@ -23,7 +23,8 @@ export const metadata: Metadata = {
     default: "PromptRaise",
     template: "%s | PromptRaise",
   },
-  description: "PromptRaise marketing website",
+  description:
+    "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
 };
 
 export default function RootLayout({
