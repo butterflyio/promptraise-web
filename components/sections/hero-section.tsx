@@ -4,7 +4,15 @@ import { useEffect, useState } from "react";
 
 const words = ["ChatGPT", "Perplexity", "Claude", "Gemini", "AI Search"];
 
-export function HeroSection() {
+interface HeroSectionProps {
+  telegramUrl?: string;
+  auditUrl?: string;
+}
+
+export function HeroSection({
+  telegramUrl = "https://t.me/promptraise",
+  auditUrl = "https://audit.promptraise.com",
+}: HeroSectionProps) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -37,13 +45,13 @@ export function HeroSection() {
 
         <div className="flex flex-wrap gap-3">
           <a
-            href="https://t.me/placeholder"
+            href={telegramUrl}
             className="inline-flex items-center rounded-full bg-[var(--accent-primary)] px-5 py-3 text-sm font-medium text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
           >
             Join Telegram
           </a>
           <a
-            href="https://audit.promptraise.com"
+            href={auditUrl}
             className="inline-flex items-center rounded-full border border-[var(--border-default)] px-5 py-3 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)]"
           >
             Get Free Audit
