@@ -23,18 +23,6 @@ export function SiteFooter() {
           >
             Privacy Policy
           </a>
-          <a
-            href="/terms"
-            className="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-          >
-            Terms of Service
-          </a>
-          <a
-            href="/cookies"
-            className="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-          >
-            Cookie Usage
-          </a>
         </nav>
 
         <div className="flex flex-wrap gap-3 text-xs tracking-wide text-[var(--text-muted)] uppercase">

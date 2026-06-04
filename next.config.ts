@@ -4,6 +4,24 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  async redirects() {
+    return [
+      // Redirect apex domain to www (uncomment when apex domain is configured)
+      // {
+      //   source: "/:path*",
+      //   has: [{ type: "host", value: "promptraise.com" }],
+      //   destination: "https://www.promptraise.com/:path*",
+      //   permanent: true,
+      // },
+      // Add legacy URL redirects here when inventory is available
+      // Example:
+      // {
+      //   source: "/old-page",
+      //   destination: "/new-page",
+      //   permanent: true,
+      // },
+    ];
+  },
   async headers() {
     const contentSecurityPolicy = [
       "default-src 'self'",
