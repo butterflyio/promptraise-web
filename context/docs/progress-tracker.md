@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Unit 5 visual fidelity correction completed. Ready for Unit 6 landing content.
+- Unit 6 landing page content completed. Ready for Unit 7 AI visibility foundation.
 
 ## Current Goal
 
-- Implement Unit 6: landing page content with exact brand fidelity (hero animation, stats, audit container, comparison table, pricing tiers, team).
+- Implement Unit 7: machine-readable surfaces and metadata (robots.txt, sitemap.xml, llms.txt, canonical/meta/OG, Organization/WebSite JSON-LD, privacy notice, search console verifications).
 
 ## Completed
 
@@ -62,14 +62,25 @@ Update this file after every meaningful implementation change.
   - Footer restyled with dark theme, legal links, "powered by Pencil" attribution
   - Manifest updated: `background_color: #0F0F0F`, `theme_color: #67FF67`
   - All quality gates pass: typecheck, lint, format:check, build
+- **Unit 6 landing page content completed:**
+  - Hero section with rotating AI surface names (ChatGPT, Perplexity, Claude, Gemini, AI Search)
+  - Stats section (50+ projects, 12 LLM surfaces, 3.2x improvement, 94% retention)
+  - How It Works section (4-step process: Audit → Optimize → Monitor → Rank)
+  - Comparison table (PromptRaise vs Traditional SEO vs DIY)
+  - Pricing tiers (Starter $2,500/mo, Growth $5,000/mo, Enterprise custom)
+  - Case studies section (3 cards: DeFi Protocol X, Layer 2 Network Y, NFT Marketplace Z)
+  - Team section (3 members with initials avatars)
+  - Final Audit CTA section
+  - All sections use brand dark tokens and green accent
+  - All quality gates pass: typecheck, lint, format:check, build
 
 ## In Progress
 
-- Unit 6 landing page content implementation.
+- Unit 7 AI visibility foundation.
 
 ## Next Up
 
-- Implement exact landing page sections with brand fidelity (hero animation, stats, audit container, comparison table, pricing tiers, team).
+- Implement machine-readable surfaces: sitemap.xml, llms.txt, Organization + WebSite JSON-LD, enhanced meta tags, privacy notice page.
 - Obtain Neutral Sans font file + web license to replace Geist fallback.
 
 ## Open Questions
@@ -97,6 +108,7 @@ Update this file after every meaningful implementation change.
 - Vercel CLI deploy succeeds, but live staging URL checks are blocked until DNS propagation completes.
 - Unit 4 account-side provisioning is complete; only staging DNS resolver lag remains.
 - Unit 5 now uses brand dark tokens; no temporary scaffold values remain.
+- Unit 6 landing page is content-complete for V1; visual polish from Figma extraction can be applied later.
 
 ## Housekeeping
 
