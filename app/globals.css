@@ -172,3 +172,194 @@ body {
     transparent 100%
   );
 }
+
+.prompt-stats-section {
+  min-height: 424px;
+  isolation: isolate;
+}
+
+.prompt-stats-section::before,
+.prompt-stats-section::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.prompt-stats-section::before {
+  z-index: 0;
+  background:
+    radial-gradient(
+      circle at 50% 52%,
+      rgba(103, 255, 103, 0.28) 0%,
+      rgba(61, 105, 68, 0.18) 19%,
+      rgba(21, 40, 25, 0.52) 34%,
+      transparent 57%
+    ),
+    radial-gradient(
+      ellipse 72% 60% at 50% 58%,
+      rgba(29, 80, 38, 0.22) 0%,
+      transparent 65%
+    ),
+    linear-gradient(180deg, #0b0d0c 0%, #070807 58%, #050505 100%);
+}
+
+.prompt-stats-section::after {
+  z-index: 1;
+  background:
+    radial-gradient(
+      ellipse 52% 40% at 50% 48%,
+      transparent 0%,
+      transparent 52%,
+      rgba(0, 0, 0, 0.48) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 18%,
+      transparent 82%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+}
+
+.prompt-stats-orbits {
+  position: absolute;
+  top: 83px;
+  left: 50%;
+  z-index: 2;
+  width: 480px;
+  height: 270px;
+  pointer-events: none;
+  border: 1px solid rgba(103, 255, 103, 0.08);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.prompt-stats-orbits::before,
+.prompt-stats-orbits::after {
+  position: absolute;
+  inset: 26px 45px;
+  border: 1px solid rgba(103, 255, 103, 0.14);
+  border-radius: 50%;
+  content: "";
+}
+
+.prompt-stats-orbits::after {
+  inset: 55px 91px;
+  border-color: rgba(103, 255, 103, 0.24);
+}
+
+.prompt-stats-grid {
+  position: absolute;
+  right: 0;
+  bottom: -36px;
+  left: 0;
+  z-index: 2;
+  height: 105px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      101deg,
+      transparent 0 16%,
+      rgba(255, 255, 255, 0.08) 16.2%,
+      transparent 16.65% 36%,
+      rgba(255, 255, 255, 0.08) 36.2%,
+      transparent 36.65% 58%,
+      rgba(255, 255, 255, 0.08) 58.2%,
+      transparent 58.65% 77%,
+      rgba(255, 255, 255, 0.08) 77.2%,
+      transparent 77.65%
+    ),
+    radial-gradient(
+      ellipse 85% 95% at 50% 115%,
+      transparent 0 62%,
+      rgba(255, 255, 255, 0.08) 62.4%,
+      transparent 63%
+    );
+}
+
+.prompt-stats-center {
+  position: absolute;
+  top: 139px;
+  left: 50%;
+  z-index: 15;
+  width: 164px;
+  height: 164px;
+  color: white;
+  transform: translateX(-50%);
+}
+
+.prompt-stats-logo-disc {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      154deg,
+      transparent 0 32%,
+      rgba(234, 255, 240, 0.22) 32.3%,
+      transparent 33.15% 100%
+    ),
+    radial-gradient(
+      ellipse 74% 56% at 74% 77%,
+      rgba(220, 255, 220, 0.95) 0%,
+      rgba(92, 255, 77, 0.82) 18%,
+      rgba(29, 139, 39, 0.58) 42%,
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 66% 50% at 20% 25%,
+      rgba(13, 38, 19, 0.82) 0%,
+      rgba(4, 10, 7, 0.9) 58%,
+      transparent 100%
+    ),
+    #0b120d;
+  box-shadow:
+    0 0 0 1px rgba(103, 255, 103, 0.08),
+    0 0 64px rgba(103, 255, 103, 0.22);
+}
+
+.prompt-stats-logo-disc::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.68'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  border-radius: inherit;
+  content: "";
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+
+.prompt-stat-card {
+  min-width: 122px;
+  padding: 13px 18px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(36, 38, 40, 0.78);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 13px 22px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+@media (max-width: 767px) {
+  .prompt-stats-orbits {
+    width: 430px;
+  }
+
+  .prompt-stats-center {
+    top: 151px;
+    width: 132px;
+    height: 132px;
+  }
+
+  .prompt-stat-card {
+    min-width: 108px;
+    padding-inline: 12px;
+  }
+}
