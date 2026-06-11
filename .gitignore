@@ -31,3 +31,4 @@ pnpm-debug.log*
 *.p12
 *.pfx
 .vercel
+.env*

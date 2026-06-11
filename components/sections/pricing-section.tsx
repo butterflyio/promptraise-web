@@ -52,15 +52,15 @@ const tiers = [
 export function PricingSection() {
   return (
     <section id="pricing" className="border-b border-[var(--border-default)]">
-      <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+      <div className="tablet:py-20 mx-auto w-full max-w-6xl px-6 py-16">
         <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
           Pricing
         </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)] md:text-4xl">
+        <h2 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
           Simple, transparent pricing
         </h2>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="tablet:grid-cols-3 mt-12 grid gap-6">
           {tiers.map((tier) => (
             <div
               key={tier.name}

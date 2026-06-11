@@ -14,9 +14,9 @@ export function HeroSection({
       <div className="absolute inset-0 bg-[#050505]">
         {/* Base dark gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0a1a0a] to-black" />
-        
+
         {/* Aurora light streaks */}
-        <div 
+        <div
           className="absolute -top-1/4 -right-1/4 h-[150%] w-[150%] opacity-60"
           style={{
             background: `
@@ -26,9 +26,9 @@ export function HeroSection({
             filter: "blur(60px)",
           }}
         />
-        
+
         {/* Secondary aurora from bottom */}
-        <div 
+        <div
           className="absolute -bottom-1/4 -left-1/4 h-[150%] w-[150%] opacity-50"
           style={{
             background: `
@@ -40,7 +40,7 @@ export function HeroSection({
         />
 
         {/* Light streak lines */}
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
             background: `
@@ -51,7 +51,7 @@ export function HeroSection({
         />
 
         {/* Noise texture overlay */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
@@ -71,7 +71,7 @@ export function HeroSection({
           </div>
 
           {/* Headline */}
-          <h1 className="mb-6 text-5xl font-normal leading-[1.1] tracking-tight text-white md:text-7xl lg:text-8xl">
+          <h1 className="tablet:text-7xl desktop:text-8xl mb-6 text-5xl leading-[1.1] font-normal tracking-tight text-white">
             Be the <em className="font-light italic">answer</em>
             <br />
             not the search result.
@@ -110,7 +110,7 @@ export function HeroSection({
                 </svg>
               </span>
             </a>
-            
+
             {/* How it works - Dark translucent pill */}
             <a
               href="#how-it-works"
@@ -122,8 +122,8 @@ export function HeroSection({
         </div>
 
         {/* Trust bar */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-black/20 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-4 md:flex-row md:justify-between">
+        <div className="absolute right-0 bottom-0 left-0 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+          <div className="tablet:flex-row tablet:justify-between mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-4">
             {/* Tracking text */}
             <div className="flex items-center gap-2 text-sm text-white/50">
               <span>Tracking visibility in</span>
@@ -131,7 +131,7 @@ export function HeroSection({
                 48 LLMs
               </span>
             </div>
-            
+
             {/* Scrolling logos */}
             <div className="flex items-center gap-6 overflow-hidden">
               {[
@@ -141,9 +141,14 @@ export function HeroSection({
                 { name: "Alt+Shift", icon: "◎" },
                 { name: "Capsule", icon: "●" },
               ].map((company) => (
-                <div key={company.name} className="flex items-center gap-2 text-white/30">
+                <div
+                  key={company.name}
+                  className="flex items-center gap-2 text-white/30"
+                >
                   <span className="text-lg">{company.icon}</span>
-                  <span className="text-sm whitespace-nowrap">{company.name}</span>
+                  <span className="text-sm whitespace-nowrap">
+                    {company.name}
+                  </span>
                 </div>
               ))}
             </div>

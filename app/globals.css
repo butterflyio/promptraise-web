@@ -13,6 +13,12 @@
   --accent-foreground: #0f0f0f;
   --border-default: #242628;
   --border-subtle: #1a1a1a;
+
+  /* Figma frame breakpoints */
+  --breakpoint-mobile-frame: 390px;
+  --breakpoint-tablet-frame: 768px;
+  --breakpoint-desktop-frame: 1024px;
+  --breakpoint-wide-frame: 1440px;
 }
 
 @theme inline {
@@ -29,6 +35,14 @@
   --color-border-subtle: var(--border-subtle);
   --font-sans: var(--font-geist-sans), "Geist Sans", system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", monospace;
+  --breakpoint-mobile: 390px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1440px;
+  --breakpoint-sm: 390px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
 }
 
 body {
