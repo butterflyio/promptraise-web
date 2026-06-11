@@ -9,7 +9,7 @@ export function AuditCtaSection({
 }: AuditCtaSectionProps) {
   return (
     <section id="audit" className="border-b border-[var(--border-default)]">
-      <div className="tablet:py-20 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-6 py-16 text-center">
+      <div className="mobile:px-6 tablet:py-20 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center">
         <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
           Free Audit
         </p>

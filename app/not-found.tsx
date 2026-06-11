@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-6 py-24 text-center">
+    <main className="mobile:px-6 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 py-24 text-center">
       <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
         404
       </p>

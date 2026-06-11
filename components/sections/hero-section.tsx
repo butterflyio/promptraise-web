@@ -60,7 +60,7 @@ export function HeroSection({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-20">
+      <div className="mobile:px-6 relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pt-20">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           {/* Tagline pill */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
@@ -123,7 +123,7 @@ export function HeroSection({
 
         {/* Trust bar */}
         <div className="absolute right-0 bottom-0 left-0 border-t border-white/10 bg-black/20 backdrop-blur-sm">
-          <div className="tablet:flex-row tablet:justify-between mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-4">
+          <div className="mobile:px-6 tablet:flex-row tablet:justify-between wide:max-w-[1440px] mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 py-4">
             {/* Tracking text */}
             <div className="flex items-center gap-2 text-sm text-white/50">
               <span>Tracking visibility in</span>
