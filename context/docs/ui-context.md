@@ -44,7 +44,8 @@
 
 - Sticky, transparent-to-solid on scroll (optional)
 - Nav items: Solutions, Pricing, Company, Resources
-- Right-side CTA: **"Get Audit"** (green pill, `accent-primary` bg, `accent-foreground` text)
+- Right-side CTA: **"Get Audit"** (white pill on hero, `accent-primary` elsewhere when the design calls for primary action emphasis)
+- Editable source: Sanity `siteSettings.headerNavItems`, `siteSettings.freeAuditCtaUrl`
 
 ### Buttons
 
@@ -56,6 +57,18 @@
 
 - `bg-bg-surface` with `border-border-default`
 - Hover: `bg-bg-surface-hover` subtle lift
+
+### Landing Hero
+
+- Editable source: Sanity `homePage.hero`
+- Editable fields: eyebrow, headline parts, body lines, primary/secondary CTA labels and hrefs, trust-bar label/badge/logo row.
+- Non-editable design-system elements: aurora background, logo mark geometry, CTA shape, trust-row mask, typography scale, and responsive placement.
+
+### Visibility Section
+
+- Editable source: Sanity `homePage.visibilitySection`
+- Editable fields: two-line headline and the four stat-card values/labels.
+- Non-editable design-system elements: orbit rings, central circular PromptRaise mark, stat-card positions, glow treatment, and responsive section framing.
 
 ### Footer
 

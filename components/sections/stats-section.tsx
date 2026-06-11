@@ -1,27 +1,51 @@
-const statCards = [
+import type { HomePageVisibilitySection } from "@/sanity/lib/queries";
+
+const statCardPositions = [
   {
-    value: "58%",
-    label: "of searches today go through AI",
     className: "top-[140px] left-4 tablet:left-[15%] tablet:top-[144px]",
   },
   {
-    value: "3–5x growth",
-    label: "growth in 90 days",
     className: "top-[124px] right-4 tablet:right-[17%] tablet:top-[126px]",
   },
   {
-    value: "2–7 projects",
-    label: "per answer",
     className: "top-[252px] left-8 tablet:left-[20.5%] tablet:top-[252px]",
   },
   {
-    value: "+40%",
-    label: "inbound growth",
     className: "top-[252px] right-8 tablet:right-[9.5%] tablet:top-[252px]",
   },
 ];
 
-export function StatsSection() {
+const defaultVisibilitySection = {
+  headline: {
+    lineOne: "If you are not in the AI responses — you do not exist,",
+    lineTwo: "and PromptRaise fixes that.",
+  },
+  statCards: [
+    { value: "58%", label: "of searches today go through AI" },
+    { value: "3–5x growth", label: "growth in 90 days" },
+    { value: "2–7 projects", label: "per answer" },
+    { value: "+40%", label: "inbound growth" },
+  ],
+};
+
+type StatsSectionProps = {
+  content?: HomePageVisibilitySection;
+};
+
+export function StatsSection({ content }: StatsSectionProps) {
+  const statCards = statCardPositions.map((position, index) => {
+    const defaultCard = defaultVisibilitySection.statCards[index] ?? {
+      value: "",
+      label: "",
+    };
+
+    return {
+      ...position,
+      value: content?.statCards?.[index]?.value ?? defaultCard.value,
+      label: content?.statCards?.[index]?.label ?? defaultCard.label,
+    };
+  });
+
   return (
     <section className="prompt-stats-section bg-bg-base relative overflow-hidden">
       <div className="prompt-stats-grid" aria-hidden="true" />
@@ -29,9 +53,13 @@ export function StatsSection() {
 
       <div className="mobile:px-6 relative z-10 mx-auto min-h-[424px] w-full max-w-[776px] px-4 pt-[58px]">
         <h2 className="mx-auto max-w-[360px] text-center text-[13px] leading-[1.15] font-normal text-white">
-          If you are not in the AI responses — you do not exist,
+          {content?.headline?.lineOne ??
+            defaultVisibilitySection.headline.lineOne}
           <br />
-          <strong className="font-semibold">and PromptRaise fixes that.</strong>
+          <strong className="font-semibold">
+            {content?.headline?.lineTwo ??
+              defaultVisibilitySection.headline.lineTwo}
+          </strong>
         </h2>
 
         <div className="prompt-stats-center" aria-hidden="true">
