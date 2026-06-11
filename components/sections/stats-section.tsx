@@ -1,116 +1,75 @@
+const statCards = [
+  {
+    value: "58%",
+    label: "of searches today go through AI",
+    className: "top-[140px] left-4 tablet:left-[15%] tablet:top-[144px]",
+  },
+  {
+    value: "3–5x growth",
+    label: "growth in 90 days",
+    className: "top-[124px] right-4 tablet:right-[17%] tablet:top-[126px]",
+  },
+  {
+    value: "2–7 projects",
+    label: "per answer",
+    className: "top-[252px] left-8 tablet:left-[20.5%] tablet:top-[252px]",
+  },
+  {
+    value: "+40%",
+    label: "inbound growth",
+    className: "top-[252px] right-8 tablet:right-[9.5%] tablet:top-[252px]",
+  },
+];
+
 export function StatsSection() {
   return (
-    <section className="tablet:py-28 relative overflow-hidden bg-[#0a0a0a] py-20">
-      {/* Noise texture overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-        }}
-      />
+    <section className="prompt-stats-section bg-bg-base relative overflow-hidden">
+      <div className="prompt-stats-grid" aria-hidden="true" />
+      <div className="prompt-stats-orbits" aria-hidden="true" />
 
-      {/* Headline */}
-      <div className="mobile:px-6 relative z-10 mx-auto mb-16 max-w-2xl px-4 text-center">
-        <h2 className="tablet:text-2xl desktop:text-3xl text-xl leading-snug font-medium text-white">
+      <div className="mobile:px-6 relative z-10 mx-auto min-h-[424px] w-full max-w-[776px] px-4 pt-[58px]">
+        <h2 className="mx-auto max-w-[360px] text-center text-[13px] leading-[1.15] font-normal text-white">
           If you are not in the AI responses — you do not exist,
           <br />
-          and PromptRaise fixes that.
+          <strong className="font-semibold">and PromptRaise fixes that.</strong>
         </h2>
-      </div>
 
-      {/* Central glow with orbiting cards */}
-      <div className="mobile:px-6 relative z-10 mx-auto max-w-5xl px-4">
-        <div
-          className="relative flex items-center justify-center"
-          style={{ minHeight: "400px" }}
-        >
-          {/* Large central green glow */}
-          <div
-            className="tablet:h-96 tablet:w-96 absolute h-72 w-72 rounded-full blur-3xl"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(103, 255, 103, 0.4) 0%, rgba(74, 222, 128, 0.2) 40%, transparent 70%)",
-            }}
-          />
-
-          {/* Secondary glow ring */}
-          <div
-            className="tablet:h-[500px] tablet:w-[500px] absolute h-96 w-96 rounded-full blur-3xl"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(103, 255, 103, 0.15) 0%, transparent 60%)",
-            }}
-          />
-
-          {/* Subtle arc lines */}
-          <svg
-            className="absolute h-full w-full opacity-20"
-            viewBox="0 0 600 400"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <ellipse
-              cx="300"
-              cy="200"
-              rx="250"
-              ry="180"
+        <div className="prompt-stats-center" aria-hidden="true">
+          <div className="prompt-stats-logo-disc">
+            <svg
+              width="92"
+              height="46"
+              viewBox="0 0 92 46"
               fill="none"
-              stroke="rgba(103, 255, 103, 0.3)"
-              strokeWidth="1"
-            />
-            <ellipse
-              cx="300"
-              cy="200"
-              rx="200"
-              ry="140"
-              fill="none"
-              stroke="rgba(103, 255, 103, 0.2)"
-              strokeWidth="1"
-            />
-          </svg>
-
-          {/* Stat Cards - positioned absolutely around the glow */}
-          {/* Top Left */}
-          <div className="tablet:left-[5%] tablet:top-[5%] absolute top-0 left-0">
-            <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/80 px-6 py-4 backdrop-blur-md">
-              <p className="tablet:text-3xl text-2xl font-semibold text-white">
-                58%
-              </p>
-              <p className="mt-1 text-xs text-white/40">
-                of searches today go through AI
-              </p>
-            </div>
-          </div>
-
-          {/* Top Right */}
-          <div className="tablet:right-[5%] tablet:top-[5%] absolute top-0 right-0">
-            <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/80 px-6 py-4 backdrop-blur-md">
-              <p className="tablet:text-3xl text-2xl font-semibold text-white">
-                3–5x growth
-              </p>
-              <p className="mt-1 text-xs text-white/40">growth in 90 days</p>
-            </div>
-          </div>
-
-          {/* Bottom Left */}
-          <div className="tablet:bottom-[10%] tablet:left-[8%] absolute bottom-0 left-0">
-            <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/80 px-6 py-4 backdrop-blur-md">
-              <p className="tablet:text-3xl text-2xl font-semibold text-white">
-                2–7 projects
-              </p>
-              <p className="mt-1 text-xs text-white/40">per answer</p>
-            </div>
-          </div>
-
-          {/* Bottom Right */}
-          <div className="tablet:bottom-[10%] tablet:right-[8%] absolute right-0 bottom-0">
-            <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/80 px-6 py-4 backdrop-blur-md">
-              <p className="tablet:text-3xl text-2xl font-semibold text-white">
-                +40%
-              </p>
-              <p className="mt-1 text-xs text-white/40">inbound growth</p>
-            </div>
+              className="relative z-10"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M24.77 2H89L72.64 18.25H43.69l-3.67 6.22h26.02L46.03 44.4H25.5l11.8-19.93H22.2L10.43 44.4H1.34L24.77 2Z"
+              />
+              <path
+                fill="var(--accent-primary)"
+                fillOpacity="0.22"
+                d="M32.97 9.84h36.13l-4.88 4.8H30.12l2.85-4.8Z"
+              />
+            </svg>
           </div>
         </div>
+
+        {statCards.map((card) => (
+          <div
+            key={card.value}
+            className={`prompt-stat-card absolute z-20 ${card.className}`}
+          >
+            <p className="tablet:text-[16px] text-center text-[15px] leading-none font-semibold text-white">
+              {card.value}
+            </p>
+            <p className="mt-1 text-center text-[7px] leading-none text-white/30">
+              {card.label}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );
