@@ -66,6 +66,12 @@
 
 ## Layout
 
+- Figma breakpoints:
+  - Mobile frame: `390px` (`mobile:`)
+  - Tablet frame: `768px` (`tablet:`)
+  - Desktop frame: `1024px` (`desktop:`)
+  - Wide desktop frame: `1440px` (`wide:`)
+- Tailwind aliases are mapped to the same Figma frame widths: `sm=390px`, `md=768px`, `lg=1024px`, `xl=1440px`.
 - Max content width: `max-w-6xl` (72rem / 1152px)
 - Horizontal padding: `px-6` (mobile), consistent gutters
 - Section vertical spacing: `py-16` to `py-20`
