@@ -48,6 +48,46 @@ export const siteSettingsType = defineType({
       initialValue: "https://audit.promptraise.com",
     }),
     defineField({
+      name: "headerNavItems",
+      title: "Header Navigation",
+      type: "array",
+      description: "Top navigation labels and anchors from the Figma header.",
+      of: [
+        {
+          type: "object",
+          name: "headerNavItem",
+          title: "Navigation Item",
+          fields: [
+            defineField({
+              name: "label",
+              title: "Label",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "href",
+              title: "URL or Anchor",
+              type: "string",
+              description: "Example: #solutions, /privacy, https://...",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "label",
+              subtitle: "href",
+            },
+          },
+        },
+      ],
+      initialValue: [
+        { label: "Solutions", href: "#solutions" },
+        { label: "Pricing", href: "#pricing" },
+        { label: "Company", href: "#company" },
+        { label: "Resources", href: "#resources" },
+      ],
+    }),
+    defineField({
       name: "socialLinks",
       title: "Social Links",
       type: "object",

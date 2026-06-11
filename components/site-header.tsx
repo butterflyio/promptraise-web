@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { getSiteSettings } from "@/sanity/lib/queries";
 
-const navItems = [
+const defaultNavItems = [
   { href: "#solutions", label: "Solutions" },
   { href: "#pricing", label: "Pricing" },
   { href: "#company", label: "Company" },
@@ -12,6 +12,10 @@ const navItems = [
 export async function SiteHeader() {
   const settings = await getSiteSettings();
   const auditUrl = settings?.freeAuditCtaUrl ?? "https://audit.promptraise.com";
+  const navItems =
+    settings?.headerNavItems && settings.headerNavItems.length > 0
+      ? settings.headerNavItems
+      : defaultNavItems;
 
   return (
     <header className="absolute top-0 right-0 left-0 z-50">

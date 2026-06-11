@@ -6,18 +6,22 @@ import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { StatsSection } from "@/components/sections/stats-section";
 import { TeamSection } from "@/components/sections/team-section";
-import { getSiteSettings } from "@/sanity/lib/queries";
+import { getHomePage, getSiteSettings } from "@/sanity/lib/queries";
 
 export default async function Home() {
-  const settings = await getSiteSettings();
+  const [settings, homePage] = await Promise.all([
+    getSiteSettings(),
+    getHomePage(),
+  ]);
 
   return (
     <main>
       <HeroSection
         telegramUrl={settings?.primaryTelegramCtaUrl}
         auditUrl={settings?.freeAuditCtaUrl}
+        content={homePage?.hero}
       />
-      <StatsSection />
+      <StatsSection content={homePage?.visibilitySection} />
       <HowItWorksSection />
       <ComparisonSection />
       <PricingSection />
