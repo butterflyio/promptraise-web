@@ -10,7 +10,7 @@ export function StatsSection() {
       />
 
       {/* Headline */}
-      <div className="relative z-10 mx-auto mb-16 max-w-2xl px-6 text-center">
+      <div className="mobile:px-6 relative z-10 mx-auto mb-16 max-w-2xl px-4 text-center">
         <h2 className="tablet:text-2xl desktop:text-3xl text-xl leading-snug font-medium text-white">
           If you are not in the AI responses — you do not exist,
           <br />
@@ -19,7 +19,7 @@ export function StatsSection() {
       </div>
 
       {/* Central glow with orbiting cards */}
-      <div className="relative z-10 mx-auto max-w-5xl px-6">
+      <div className="mobile:px-6 relative z-10 mx-auto max-w-5xl px-4">
         <div
           className="relative flex items-center justify-center"
           style={{ minHeight: "400px" }}

@@ -73,7 +73,7 @@
   - Wide desktop frame: `1440px` (`wide:`)
 - Tailwind aliases are mapped to the same Figma frame widths: `sm=390px`, `md=768px`, `lg=1024px`, `xl=1440px`.
 - Max content width: `max-w-6xl` (72rem / 1152px)
-- Horizontal padding: `px-6` (mobile), consistent gutters
+- Horizontal padding: `px-4 mobile:px-6` so sub-390px screens get tighter gutters and the 390px Figma mobile frame uses the designed 24px gutter.
 - Section vertical spacing: `py-16` to `py-20`
 - Border style: 1px solid `border-default` for section separators
 

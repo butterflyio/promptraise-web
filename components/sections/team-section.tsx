@@ -19,7 +19,7 @@ const team = [
 export function TeamSection() {
   return (
     <section id="company" className="border-b border-[var(--border-default)]">
-      <div className="tablet:py-20 mx-auto w-full max-w-6xl px-6 py-16">
+      <div className="mobile:px-6 tablet:py-20 mx-auto w-full max-w-6xl px-4 py-16">
         <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
           Team
         </p>

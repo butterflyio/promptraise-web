@@ -14,7 +14,7 @@ export async function SiteFooter() {
 
   return (
     <footer className="border-t border-[var(--border-default)] bg-[var(--bg-surface)]">
-      <div className="tablet:flex-row tablet:items-center tablet:justify-between mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-10">
+      <div className="mobile:px-6 tablet:flex-row tablet:items-center tablet:justify-between mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10">
         <div>
           <p className="font-semibold tracking-tight text-[var(--text-primary)]">
             {settings?.siteName ?? "PromptRaise"}
