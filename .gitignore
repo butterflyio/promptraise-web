@@ -30,3 +30,4 @@ pnpm-debug.log*
 *.key
 *.p12
 *.pfx
+.vercel
