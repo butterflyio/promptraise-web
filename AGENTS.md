@@ -8,10 +8,11 @@ architectural decision:
 1. `context/docs/project-overview.md` — product definition, goals, features, and scope
 2. `context/docs/architecture.md` — system structure, boundaries, storage model, and invariants
 3. `context/docs/ui-context.md` — theme, colors, typography, and component conventions
-4. `context/docs/code-standards.md` — implementation rules and conventions
-5. `context/docs/ai-workflow-rules.md` — development workflow, scoping rules, and delivery approach
-6. `context/docs/ai-visibility.md` — discoverability surface and structured-data requirements
-7. `context/docs/progress-tracker.md` — current phase, completed work, open questions, and next steps
+4. `context/docs/design-system-code-map.md` — design-system component/token map and verification commands
+5. `context/docs/code-standards.md` — implementation rules and conventions
+6. `context/docs/ai-workflow-rules.md` — development workflow, scoping rules, and delivery approach
+7. `context/docs/ai-visibility.md` — discoverability surface and structured-data requirements
+8. `context/docs/progress-tracker.md` — current phase, completed work, open questions, and next steps
 
 ## Rules
 

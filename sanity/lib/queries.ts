@@ -5,7 +5,36 @@ export interface SiteSettings {
   organizationLegalName: string;
   primaryTelegramCtaUrl: string;
   freeAuditCtaUrl: string;
+  headerCtaLabel?: string;
+  headerCtaUrl?: string;
+  logo?: {
+    asset?: {
+      url?: string;
+      metadata?: {
+        dimensions?: {
+          width?: number;
+          height?: number;
+        };
+      };
+    };
+  };
+  favicon?: {
+    asset?: {
+      url?: string;
+    };
+  };
+  openGraphImage?: {
+    asset?: {
+      url?: string;
+    };
+  };
   headerNavItems?: Array<{
+    label: string;
+    href: string;
+  }>;
+  footerPoweredByText?: string;
+  footerCopyrightText?: string;
+  footerLegalLinks?: Array<{
     label: string;
     href: string;
   }>;
@@ -19,7 +48,28 @@ export interface SiteSettings {
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
-  const query = `*[_type == "siteSettings" && _id == "site-settings"][0]`;
+  const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
+    siteName,
+    organizationLegalName,
+    primaryTelegramCtaUrl,
+    freeAuditCtaUrl,
+    headerCtaLabel,
+    headerCtaUrl,
+    headerNavItems,
+    footerPoweredByText,
+    footerCopyrightText,
+    footerLegalLinks,
+    socialLinks,
+    logo{
+      asset->{url, metadata{dimensions}}
+    },
+    favicon{
+      asset->{url, metadata{dimensions}}
+    },
+    openGraphImage{
+      asset->{url, metadata{dimensions}}
+    }
+  }`;
   return sanityClient.fetch(query);
 }
 
