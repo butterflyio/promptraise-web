@@ -11,6 +11,21 @@ just in time. Global Definition of Done is the enhanced checklist in
 - P3 Existing URL inventory from the live `www.promptraise.com`.
 - P4 Figma Dev Mode MCP running with node `63-93` selected.
 
+## Design-to-Code Gate (Mandatory for Figma-backed Units)
+
+### Entry Check (Layer 1: Design Context Required Before Coding)
+
+- For every Figma-backed section/component, pull structured design context from Figma MCP (`get_design_context`) for the exact target node(s) before implementation.
+- Screenshots (`get_screenshot`) are reference-only and cannot be used as the sole implementation source.
+- Capture and apply node-level design data: hierarchy, spacing, typography, tokens, states, assets, and breakpoint variants (minimum: mobile/tablet/desktop frames defined in the design).
+- Do not start coding until this context is retrieved and the target node IDs are identified.
+
+### Second-Layer Verification (Layer 2: Functional Parity, Not Visual Approximation)
+
+- Verify parity at design breakpoints against Figma outputs after implementation.
+- Verify behavior/functionality from design context is implemented in code (not screenshot-matched by eye): interactive states, motion/video behavior, CTA/link wiring, and CMS bindings where applicable.
+- A unit cannot be marked complete until both Layer 1 and Layer 2 checks pass and are recorded in `context/docs/progress-tracker.md`.
+
 ## Unit 1 — Repository and context docs
 
 - Create repository structure and write all context docs + `AGENTS.md`.
@@ -37,11 +52,13 @@ just in time. Global Definition of Done is the enhanced checklist in
 
 - Extract tokens from node `63-93` and populate `ui-context.md`.
 - Implement base layout, nav, footer, 404/500, favicon/manifest.
+- Apply the Design-to-Code Gate (Layer 1 + Layer 2) to all Figma-derived outputs.
 
 ## Unit 6 — Landing page
 
 - Implement all V1 landing sections from Figma.
 - Wire CTAs and placeholder-driven external links.
+- Apply the Design-to-Code Gate (Layer 1 + Layer 2) to every landing-page section.
 
 ## Unit 7 — AI visibility foundation
 

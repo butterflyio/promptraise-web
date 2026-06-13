@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  DsBadge,
+  DsButton,
+  designSystemAssets,
+} from "@/components/design-system";
 import type { HomePageHero } from "@/sanity/lib/queries";
 
 interface HeroSectionProps {
@@ -57,19 +62,30 @@ export function HeroSection({
     content?.secondaryCta?.label ?? defaultHeroContent.secondaryCta.label;
 
   return (
-    <section className="prompt-hero-bg desktop:min-h-screen relative min-h-[720px] overflow-hidden bg-[#020604]">
+    <section className="prompt-hero-bg desktop:min-h-[960px] relative min-h-[780px] overflow-hidden bg-[var(--bg-hero)]">
+      <video
+        className="absolute inset-0 h-full w-full object-cover object-center [filter:brightness(0.94)_saturate(1.06)]"
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+        poster={designSystemAssets.hero.poster}
+      >
+        <source src={designSystemAssets.hero.video} type="video/mp4" />
+      </video>
       <div className="prompt-hero-vignette" aria-hidden="true" />
 
-      <div className="mobile:px-6 tablet:pt-[200px] desktop:min-h-screen desktop:pt-[203px] relative z-10 mx-auto flex min-h-[720px] max-w-[1248px] flex-col items-center px-5 pt-[190px] text-center">
-        <div className="flex max-w-[760px] flex-col items-center">
-          <div className="mb-[13px] inline-flex h-[27px] items-center gap-2 rounded-full bg-white/10 px-3.5 backdrop-blur-md">
+      <div className="mobile:px-6 tablet:pt-[220px] desktop:min-h-[960px] desktop:pt-[255px] relative z-10 mx-auto flex min-h-[780px] max-w-[1248px] flex-col items-center px-5 pt-[170px] text-center">
+        <div className="flex max-w-[761px] flex-col items-center">
+          <div className="mb-3 inline-flex h-9 items-center gap-2 rounded-full bg-white/10 px-4 backdrop-blur-md">
             <span className="h-1 w-1 rounded-full bg-white/70" />
-            <span className="text-[11px] leading-none text-white/70">
+            <span className="prompt-hero-eyebrow text-white/70">
               {content?.eyebrow ?? defaultHeroContent.eyebrow}
             </span>
           </div>
 
-          <h1 className="mobile:text-[48px] tablet:text-[54px] mb-5 text-[42px] leading-[0.96] font-normal text-white">
+          <h1 className="prompt-hero-title mb-6 text-white">
             {content?.headlinePrefix ?? defaultHeroContent.headlinePrefix}{" "}
             <strong className="font-semibold">
               {content?.headlineHighlight ??
@@ -79,7 +95,7 @@ export function HeroSection({
             {content?.headlineSuffix ?? defaultHeroContent.headlineSuffix}
           </h1>
 
-          <p className="mb-[38px] max-w-[560px] text-[13px] leading-[1.45] text-white/80">
+          <p className="prompt-hero-body mb-12 max-w-[330px] text-white/80 tablet:max-w-[584px]">
             {bodyLines.map((line, index) => (
               <span key={line}>
                 {line}
@@ -88,57 +104,46 @@ export function HeroSection({
             ))}
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3.5">
-            <a
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <DsButton
               href={primaryHref}
-              className="group inline-flex h-[43px] items-center rounded-full bg-white pl-[18px] text-[12px] leading-none font-medium text-black transition-transform hover:scale-[1.03]"
+              variant="light"
+              showTrailingArrow
+              className="group pr-1 transition-transform hover:scale-[1.02]"
+              iconBubbleClassName="bg-[var(--accent-primary)] ring-1 ring-[var(--bg-hero-button-ring)] text-[var(--accent-foreground)]"
             >
-              <span>{primaryLabel}</span>
-              <span className="mr-1 ml-3 flex h-[34px] w-[34px] items-center justify-center rounded-full bg-[#43df4d] text-white">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  className="text-black"
-                >
-                  <path
-                    d="M3 11L11 3M11 3H4M11 3V10"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
+              {primaryLabel}
+            </DsButton>
 
-            <a
+            <DsButton
               href={secondaryHref}
-              className="inline-flex h-[43px] items-center rounded-full border border-white/10 bg-black/30 px-[19px] text-[12px] leading-none font-medium text-white backdrop-blur-md transition-colors hover:bg-black/45"
+              variant="hero-secondary"
             >
               {secondaryLabel}
-            </a>
+            </DsButton>
           </div>
         </div>
 
-        <div className="absolute right-0 bottom-[92px] left-0 flex flex-col items-center">
-          <div className="mb-5 flex items-center gap-2 text-[11px] leading-none text-white/45">
+        <div className="absolute right-0 bottom-24 left-0 flex flex-col items-center">
+          <div className="prompt-hero-trust-label mb-5 flex items-center gap-2 text-[var(--text-muted)]">
             <span>
               {content?.trustBar?.label ?? defaultHeroContent.trustBar.label}
             </span>
-            <span className="rounded-full bg-black/30 px-2 py-1 text-[9px] font-semibold text-white/80">
+            <DsBadge
+              variant="dark"
+              className="prompt-hero-trust-badge px-2 py-0.5 font-medium"
+            >
               {content?.trustBar?.badge ?? defaultHeroContent.trustBar.badge}
-            </span>
+            </DsBadge>
           </div>
 
-          <div className="prompt-trust-mask w-full max-w-[780px] overflow-hidden px-6">
-            <div className="tablet:gap-7 flex items-center justify-center gap-6">
+          <div className="prompt-trust-mask w-full max-w-[978px] overflow-hidden px-4">
+            <div className="tablet:gap-8 flex items-center justify-center gap-6">
               {trustLogos.map((company, index) => (
                 <div
                   key={`${company.name ?? "trust-logo"}-${index}`}
                   className={`flex shrink-0 items-center gap-2 text-white ${
-                    company.dimmed ? "opacity-[0.15]" : "opacity-[0.88]"
+                    company.dimmed ? "opacity-[0.15]" : "opacity-[0.92]"
                   }`}
                 >
                   <span className="text-[22px] leading-none">
