@@ -3,7 +3,6 @@
 import {
   DsBadge,
   DsButton,
-  designSystemAssets,
 } from "@/components/design-system";
 import type { HomePageHero } from "@/sanity/lib/queries";
 
@@ -70,11 +69,9 @@ export function HeroSection({
         loop
         playsInline
         aria-hidden="true"
-        poster={designSystemAssets.hero.poster}
       >
-        <source src={designSystemAssets.hero.video} type="video/mp4" />
+        <source src="/videos/bg-video-promptraise.mp4" type="video/mp4" />
       </video>
-      <div className="prompt-hero-vignette" aria-hidden="true" />
 
       <div className="mobile:px-6 tablet:pt-[220px] desktop:min-h-[960px] desktop:pt-[255px] relative z-10 mx-auto flex min-h-[780px] max-w-[1248px] flex-col items-center px-5 pt-[170px] text-center">
         <div className="flex max-w-[761px] flex-col items-center">

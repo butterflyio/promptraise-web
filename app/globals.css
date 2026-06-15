@@ -303,60 +303,6 @@ body {
   isolation: isolate;
 }
 
-.prompt-hero-bg::before,
-.prompt-hero-bg::after {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-}
-
-.prompt-hero-bg::before {
-  z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-  mix-blend-mode: overlay;
-  opacity: 0.2;
-}
-
-.prompt-hero-bg::after {
-  z-index: 1;
-  background: radial-gradient(
-      ellipse 56% 38% at 50% 44%,
-      transparent 28%,
-      rgba(0, 0, 0, 0.18) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.16) 0%,
-      transparent 30%,
-      transparent 72%,
-      rgba(0, 0, 0, 0.32) 100%
-    );
-}
-
-.prompt-hero-vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.24) 0%,
-      transparent 34%,
-      transparent 72%,
-      rgba(0, 0, 0, 0.32) 100%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.22) 0%,
-      transparent 20%,
-      transparent 80%,
-      rgba(0, 0, 0, 0.22) 100%
-    );
-}
-
 .prompt-trust-mask {
   mask-image: linear-gradient(
     90deg,
