@@ -87,7 +87,6 @@ export function StatsSection({ content }: StatsSectionProps) {
   const animatedWidth = useTransform(smoothProgress, [0, 1], [1320, 300]);
   const animatedHeight = useTransform(smoothProgress, [0, 1], [740, 300]);
   const animatedTop = useTransform(smoothProgress, [0, 1], [90, 265]);
-  const animatedRadius = useTransform(smoothProgress, [0, 1], [320, 9999]);
   const animatedOpacity = useTransform(smoothProgress, [0, 1], [0.88, 1]);
   const logoOpacity = useTransform(smoothProgress, [0.6, 0.82, 1], [0, 0.7, 1]);
   const logoScale = useTransform(smoothProgress, [0.6, 1], [0.9, 1]);
@@ -99,7 +98,7 @@ export function StatsSection({ content }: StatsSectionProps) {
         width: animatedWidth,
         height: animatedHeight,
         top: animatedTop,
-        borderRadius: animatedRadius,
+        borderRadius: 9999,
         opacity: animatedOpacity,
       }
     : {
