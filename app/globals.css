@@ -191,12 +191,14 @@ body {
   gap: 4px;
   overflow: hidden;
   padding: 12px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.91);
+  border: 1px solid rgba(95, 108, 112, 0.58);
   border-radius: 20px;
-  background: #232b28;
+  background: rgba(35, 43, 40, 0.76);
+  backdrop-filter: blur(7px);
   box-shadow:
-    0 9px 16.9px rgba(0, 0, 0, 0.25),
-    0 0 0 3px #232b28;
+    0 10px 22px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 3px rgba(35, 43, 40, 0.85);
 }
 
 .prompt-feature-card-value {
@@ -222,7 +224,7 @@ body {
   line-height: 1.4;
   letter-spacing: 0;
   font-weight: 500;
-  color: #71717a;
+  color: rgba(212, 221, 217, 0.36);
   text-align: center;
   white-space: nowrap;
 }
@@ -238,47 +240,41 @@ body {
 }
 
 .prompt-stats-core {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   border-radius: 9999px;
-  background:
-    radial-gradient(
-      circle at 74% 77%,
-      rgba(220, 255, 220, 0.98) 0%,
-      rgba(92, 255, 77, 0.88) 19%,
-      rgba(29, 139, 39, 0.58) 45%,
-      transparent 76%
-    ),
-    radial-gradient(
-      circle at 20% 25%,
-      rgba(13, 38, 19, 0.82) 0%,
-      rgba(4, 10, 7, 0.95) 58%,
-      transparent 100%
-    ),
-    linear-gradient(154deg, transparent 0 31%, rgba(234, 255, 240, 0.2) 31.2%, transparent 32% 100%),
-    #0b120d;
+  background: #0b120d;
   box-shadow:
-    0 0 0 1px rgba(103, 255, 103, 0.08),
-    0 0 64px rgba(103, 255, 103, 0.22);
+    0 0 0 1px rgba(103, 255, 103, 0.12),
+    0 0 70px rgba(103, 255, 103, 0.22);
 }
 
-.prompt-stats-core::after {
+.prompt-stats-core-bg {
+  position: absolute;
+  inset: -28%;
+  width: 156%;
+  height: 156%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.95) saturate(1.12) contrast(1.05);
+}
+
+.prompt-stats-core-overlay {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.68'/%3E%3C/svg%3E");
-  background-size: 140px 140px;
-  border-radius: inherit;
-  content: "";
-  mix-blend-mode: screen;
-  opacity: 0.35;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(165, 255, 170, 0.24), transparent 48%),
+    radial-gradient(circle at 25% 80%, rgba(0, 0, 0, 0.52), transparent 58%),
+    linear-gradient(160deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.02) 42%, rgba(0, 0, 0, 0.42) 100%);
 }
 
 .prompt-stats-core-mark {
-  width: 92px;
-  height: 46px;
+  width: 154px;
+  height: 76px;
+  color: #ffffff;
 }
 
 @media (max-width: 1439px) {

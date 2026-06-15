@@ -135,10 +135,31 @@ export function StatsSection({ content }: StatsSectionProps) {
           <span className="font-semibold">{headlineLineTwo}</span>
         </p>
 
-        <div className="prompt-stats-core absolute left-1/2 top-[142px] z-20 h-[164px] w-[164px] -translate-x-1/2">
+        <div
+          className="pointer-events-none absolute left-1/2 top-[182px] z-10 h-[470px] w-[470px] -translate-x-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(103,255,103,0.26) 0%, rgba(36,68,41,0.18) 38%, rgba(8,12,10,0) 76%)",
+            filter: "blur(8px)",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="prompt-stats-core absolute left-1/2 top-[265px] z-20 h-[300px] w-[300px] -translate-x-1/2">
+          <video
+            className="prompt-stats-core-bg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          >
+            <source src="/videos/bg-video-promptraise.mp4" type="video/mp4" />
+          </video>
+          <div className="prompt-stats-core-overlay" aria-hidden="true" />
           <svg
-            width="92"
-            height="46"
+            width="154"
+            height="76"
             viewBox="0 0 92 46"
             fill="none"
             className="prompt-stats-core-mark relative z-10"
@@ -160,17 +181,17 @@ export function StatsSection({ content }: StatsSectionProps) {
           <FeatureCard
             value={statCards[0]?.value ?? ""}
             label={statCards[0]?.label ?? ""}
-            className="left-[76px] top-[234px]"
+            className="left-0 top-[32px]"
           />
           <FeatureCard
             value={statCards[1]?.value ?? ""}
             label={statCards[1]?.label ?? ""}
-            className="left-0 top-[32px]"
+            className="left-[667px] top-0"
           />
           <FeatureCard
             value={statCards[2]?.value ?? ""}
             label={statCards[2]?.label ?? ""}
-            className="left-[667px] top-0"
+            className="left-[76px] top-[234px]"
           />
           <FeatureCard
             value={statCards[3]?.value ?? ""}
