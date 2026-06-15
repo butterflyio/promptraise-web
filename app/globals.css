@@ -239,34 +239,113 @@ body {
   transform-origin: top center;
 }
 
-.prompt-stats-core {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+.prompt-stats-rings {
+  pointer-events: none;
+}
+
+.prompt-stats-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   border-radius: 9999px;
-  background: #0b120d;
+  transform: translate(-50%, -50%);
+}
+
+.prompt-stats-ring-1 {
+  width: 1223px;
+  height: 1223px;
+  border: 1px solid rgba(103, 255, 103, 0.17);
+  opacity: 0.9;
+}
+
+.prompt-stats-ring-2 {
+  width: 1053px;
+  height: 1053px;
+  border: 1px solid rgba(103, 255, 103, 0.2);
+}
+
+.prompt-stats-ring-3 {
+  width: 883px;
+  height: 883px;
+  border: 1px solid rgba(103, 255, 103, 0.24);
+}
+
+.prompt-stats-ring-4 {
+  width: 973px;
+  height: 973px;
+  border: 1px solid rgba(103, 255, 103, 0.13);
+  transform: translate(-50%, -50%) rotate(-60deg);
+}
+
+.prompt-stats-ring-5 {
+  width: 544px;
+  height: 544px;
+  background: radial-gradient(
+    circle,
+    rgba(103, 255, 103, 0.28) 0%,
+    rgba(29, 56, 36, 0.2) 44%,
+    rgba(8, 10, 9, 0) 78%
+  );
+  filter: blur(2px);
+}
+
+.prompt-stats-vectors {
+  pointer-events: none;
+  z-index: 8;
+}
+
+.prompt-stats-vector {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid rgba(214, 223, 222, 0.17);
+}
+
+.prompt-stats-vector-top {
+  left: -248px;
+  top: 130px;
+  width: 1940px;
+  height: 760px;
+  border-color: rgba(209, 218, 217, 0.22);
+}
+
+.prompt-stats-vector-bottom {
+  left: -180px;
+  top: 442px;
+  width: 1780px;
+  height: 760px;
+  border-color: rgba(173, 188, 186, 0.22);
+}
+
+.prompt-stats-vector-bottom-secondary {
+  left: -40px;
+  top: 520px;
+  width: 1500px;
+  height: 620px;
+  border-color: rgba(156, 170, 168, 0.18);
+}
+
+.prompt-stats-video-stage {
+  background: #081009;
   box-shadow:
     0 0 0 1px rgba(103, 255, 103, 0.12),
-    0 0 70px rgba(103, 255, 103, 0.22);
+    0 0 80px rgba(103, 255, 103, 0.24);
 }
 
 .prompt-stats-core-bg {
   position: absolute;
-  inset: -28%;
-  width: 156%;
-  height: 156%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.95) saturate(1.12) contrast(1.05);
+  filter: brightness(0.95) saturate(1.15) contrast(1.04);
 }
 
 .prompt-stats-core-overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 75% 20%, rgba(165, 255, 170, 0.24), transparent 48%),
+    radial-gradient(circle at 75% 20%, rgba(165, 255, 170, 0.22), transparent 48%),
     radial-gradient(circle at 25% 80%, rgba(0, 0, 0, 0.52), transparent 58%),
     linear-gradient(160deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.02) 42%, rgba(0, 0, 0, 0.42) 100%);
 }
@@ -337,12 +416,19 @@ body {
 .prompt-stats-section::before {
   z-index: 0;
   background:
+    linear-gradient(
+      90deg,
+      rgba(103, 255, 103, 0.16) 0%,
+      rgba(17, 28, 25, 0.58) 20%,
+      rgba(17, 28, 25, 0.4) 56%,
+      rgba(9, 11, 10, 0.9) 100%
+    ),
     radial-gradient(
-      circle at 50% 52%,
-      rgba(103, 255, 103, 0.12) 0%,
-      rgba(61, 105, 68, 0.08) 18%,
-      rgba(21, 40, 25, 0.4) 34%,
-      transparent 57%
+      circle at 50% 48%,
+      rgba(103, 255, 103, 0.15) 0%,
+      rgba(61, 105, 68, 0.08) 19%,
+      rgba(21, 40, 25, 0.44) 36%,
+      transparent 59%
     ),
     linear-gradient(180deg, #0b0d0c 0%, #070807 58%, #050505 100%);
 }
