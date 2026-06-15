@@ -8,7 +8,7 @@ Update this file after every meaningful implementation change.
 
 ## Current Goal
 
-- Keep full design-system code coverage in-repo (tokens + primitives + contracts + specs) while closing the remaining hero/media fidelity gap against Figma frame `102:297`.
+- Execute section-by-section Figma DS implementation from section `11 -> 1`; section 10 now includes slice 1 (background parity + animation #1), with animation #2 pending spec.
 
 ## Completed
 
@@ -131,25 +131,106 @@ Update this file after every meaningful implementation change.
     - `footerPoweredByText`, `footerCopyrightText`, `footerLegalLinks`
   - Extended typed query contract (`sanity/lib/queries.ts`) and wired header/footer components to use CMS values with safe defaults.
   - Current command snapshot after header/footer pass: `npm run design:verify` pass, `npm run lint` pass (warnings only), `npm run build` pass.
+- **Team section Figma parity update completed (latest):**
+  - Pulled Team section from Figma desktop nodes (`353:10844`, card instances `350:10710` and `353:10814`) and applied node-accurate card media positioning in code.
+  - Materialized Team media assets in-repo under `public/images/team/`:
+    - portraits: `maxim-moris.png`, `zain-khan.png`
+    - vectors/logos: `team-card-grid.svg`, `team-card-overlay-light.svg`, `team-card-overlay-plus.svg`, `team-badge-ellipse.svg`, `cicada-logo.svg`, `oxd-logo.svg`
+  - Replaced Team-section `http://localhost:3845/assets/...` references with stable local asset paths via `components/design-system/assets.ts`.
+  - Updated Team section desktop/tablet layout behavior to match Figma composition (two 405px cards side-by-side on wider breakpoints; stacked on narrow/mobile).
+- **Team section CMS configurability pass completed (latest):**
+  - Added editable `teamSection` fields to `homePage` Sanity schema:
+    - section copy (`badgeLabel`, `heading`, `backedByTitle`)
+    - team cards (`name`, `roleLabel`, `description`, `image`, `social.x`, `social.linkedin`)
+    - backed-by items (`label`, `subtitle`, `logo`)
+  - Updated home-page query projection to resolve Team image assets (`asset->url`) for both card portraits and backed-by logos.
+  - Wired frontend Team section to Sanity `homePage.teamSection` with safe Figma defaults when CMS fields are empty.
+  - Updated `app/page.tsx` to pass Team CMS content into `TeamSection`.
+  - Deployed preview `dpl_71r9PzS6MmiFX9JonrqjLS51yGYW` and re-pointed `staging.promptraise.com` to this build.
+- **Final CTA section Figma parity + CMS configurability pass completed (latest):**
+  - Pulled Figma desktop node context and screenshot for CTA banner (`411:6768`) before coding.
+  - Rebuilt `AuditCtaSection` to match Figma section structure (left CTA copy + right preview window composition) with responsive behavior.
+  - Added editable `auditCtaSection` fields to `homePage` Sanity schema:
+    - headline parts (`headlinePrefix`, `headlineHighlight`, `headlineSuffix`)
+    - body copy (`body`)
+    - CTA (`primaryCta.label`, `primaryCta.href`)
+    - right-side preview copy (`previewPrompt`, `previewHeadingHighlight`, `previewHeadingSuffix`, `previewItems[4]`)
+  - Extended home-page query projection and typed contracts to include `auditCtaSection`.
+  - Wired `app/page.tsx` and `AuditCtaSection` to consume `homePage.auditCtaSection` with safe Figma fallback defaults when CMS fields are empty.
+  - Deployed preview `dpl_233zbQa72qgbG8K1PYun66yDEof5` and re-pointed `staging.promptraise.com` to this build.
+- **Final CTA section visual refinement pass completed (latest):**
+  - Updated CTA desktop frame to align closer to Figma composition dimensions (`1248x500`) with fixed-position left copy (`x=96`) and right visual panel (`x=648`).
+  - Tuned heading/body/button scale and spacing to match the supplied reference screenshot and Figma node proportions.
+  - Refined right-side preview window sizing/offset and background treatment to better match the Figma structure while preserving CMS-editable content fields.
+  - Deployed preview `dpl_7YhvbgzJrNKBBWQns4DQgvyb5Rrs` and re-pointed `staging.promptraise.com` to this build.
+- **Figma section-structure alignment pass completed (latest):**
+  - Mapped Figma `Main` frame (`102:148`) sections to staging/component structure in `context/docs/figma-section-mapping.md`.
+  - Added missing structure sections to match Figma flow:
+    - `DecisionSection` (`components/sections/decision-section.tsx`) for the "You&apos;re invisible where decisions are made" block.
+    - `PlansSection` (`components/sections/plans-section.tsx`) for the "Plans That Scale With You" block.
+  - Reordered `app/page.tsx` sections to follow Figma sequence and moved Team after final CTA.
+  - Remapped section intent:
+    - `PricingSection` now carries the "We create content that trains AI" section (`id=\"content-engine\"`).
+    - `CaseStudiesSection` now carries the "Why Choose PromptRaise" section (`id=\"resources\"`).
+  - Deployed preview `dpl_9eSQtzA8FAgtuy5MmVbQtCHJYRiW` and re-pointed `staging.promptraise.com` to this build.
+- **Section 11 footer DS parity refresh completed (latest):**
+  - Re-pulled Figma desktop footer component contexts/screenshots for desktop and mobile (`344:10138`, `416:12881`) before implementation.
+  - Updated `components/site-footer.tsx` to match Figma DS footer structure:
+    - text-only brand lockup (`PromptRaise · powered by Cicada`) in footer (removed footer icon mark),
+    - desktop legal/copyright stack and mobile centered stacked order aligned to component variants,
+    - legal-link typography aligned to DS intent (`12px`, medium, white).
+  - Preserved CMS editability via `siteSettings` fields:
+    - `footerPoweredByText`, `footerCopyrightText`, `footerLegalLinks`.
+  - Current command snapshot after section 11 pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- **Frame `102:148` implementation pass (current):**
+  - Ran `get_design_context` on exact frame `102:148`; response was sparse/truncated due frame size.
+  - Ran `get_metadata` for `102:148` to map node hierarchy and section coordinates.
+  - Ran `get_screenshot` on exact frame variant `102:148` and section references (`102:388`, `344:7724`) before edits.
+  - Updated `components/sections/decision-section.tsx` to match frame composition more closely:
+    - desktop-centered 721px window with `theProblem.exe` header bar and 3-dot controls,
+    - four floating side cards positioned to Figma layout pattern,
+    - updated copy and CTA label (`Go to Solution`) from screenshot context.
+  - Current command snapshot after frame pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- **Hero background video replacement completed (latest):**
+  - Added user-provided media asset `BG Video PromptRaise.mp4` to `public/videos/bg-video-promptraise.mp4`.
+  - Updated hero media mapping to use the new video (`components/design-system/assets.ts`).
+  - Removed hero image-style fallback/overlay layers in hero-only implementation:
+    - removed `poster` usage from `HeroSection` video element,
+    - removed extra hero texture/vignette layers from `app/globals.css`.
+  - Current command snapshot after hero video pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npm run design:verify` passes.
+- **Features/Stats section parity pass completed (latest):**
+  - Pulled exact Figma metadata/screenshot for the section after hero (`314:4272`) and re-aligned section geometry to that node:
+    - heading position/width,
+    - 300px center medallion placement,
+    - corrected stat-card placement order (`58%` top-left, `3-5x growth` top-right, `2-7 projects` bottom-left, `+40%` bottom-right).
+  - Updated visual treatment of cards and center medallion to match the latest Figma screenshot target while preserving existing CMS text wiring.
+  - Current command snapshot after stats pass: `npm run lint` passes with warnings only (0 errors), `npm run design:verify` passes, `npm run build` passes.
+- **Features section slice 1 animation pass completed (latest):**
+  - Re-ran MCP extraction gate for exact features nodes (`314:4272`, `102:354`, `102:367`); `get_design_context` write-to-disk is still blocked by Figma allowed-directory settings, so this pass used MCP screenshots + metadata as source of truth.
+  - Implemented scroll-driven animation #1 inside features section:
+    - background video compresses into center circle during section-local scroll progress,
+    - logo fades in smoothly in late compression phase,
+    - animation active on desktop/tablet and disabled for mobile/reduced-motion (static final circle state).
+  - Rebuilt section background layering in code (dark base + glow field + concentric ellipses + decorative vector arcs) to remove dependency on runtime localhost asset rendering for this slice.
+  - Added direct dependency: `framer-motion` in `package.json`.
+  - Current command snapshot after slice 1 pass: `npm run lint` passes with warnings only (0 errors), `npm run design:verify` passes, `npm run build` passes.
 
 ## In Progress
 
-- Exact hero background/video asset extraction and replacement is still ongoing.
 - Replacing remaining localhost-backed Figma asset references (`http://localhost:3845/assets/...`) with stable in-repo assets for full portability.
-- Verifying staging.promptraise.com parity after hero media replacement and latest header/footer deployment.
+- Verifying staging.promptraise.com parity after features slice 1 deployment.
+- Animation #2 spec + implementation for features section is pending user-provided interaction details.
+- `get_design_context` for subnodes currently returns `Path for asset writes as tool argument is required for write-to-disk option`; frame-level context/screenshot path is still usable, but fine-grained node extraction is partially blocked until tool behavior is resolved.
 
 ## Next Up
 
-- Obtain exact hero background media source matching Figma `102:297` and replace the current loop asset.
 - Re-run visual checks at 393 / 768 / 1440 and compare against Figma screenshots.
 - Localize remaining Figma-exported asset dependencies to repo-hosted files under `public/`.
 
 ## Open Questions
 
 - Final social URLs/handles and org metadata for `SiteSettings` (currently using placeholder URLs in Sanity).
-- `staging.promptraise.com` still does not resolve via this local resolver; forced mapping and Vercel alias checks pass. Re-check global DNS propagation later.
 - Confirm whether staging dataset can remain public on current Sanity plan or if plan upgrade/private dataset is required.
-- Exact hero background media export/source (clean asset matching Figma frame `102:297`) is not yet retrieved in this environment; decide final source handoff path (direct export, MCP asset endpoint, or desktop cache extraction).
 - Some design-context URLs returned by Figma MCP currently resolve to `http://localhost:3845/assets/...` paths that return `404` in this environment; confirm the stable export path for those assets.
 - Need existing URL inventory from live `www.promptraise.com` for redirect mapping (currently using placeholder config).
 
@@ -186,6 +267,25 @@ Update this file after every meaningful implementation change.
   `context/docs/specs/07-ai-visibility-foundation.md`.
 - Materialized design-system code coverage across tokens/primitives/contracts and added automated design-contract verification (`npm run design:verify`).
 - Pulled fresh Figma desktop MCP contexts and screenshots for header/footer components (`312:4199`, `415:9170`, `344:10138`, `416:12881`, `417:21098`) before implementing latest header/footer parity changes.
+- Pulled fresh Figma desktop MCP context/screenshot for Team (`353:10844`) and both card instances (`350:10710`, `353:10814`) before implementing Team parity patch.
+- Current command snapshot after Team patch: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Current command snapshot after Team CMS pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Staging deployment check after Team CMS pass: `https://staging.promptraise.com` returns `200` and `https://staging.promptraise.com/studio` returns `200`.
+- Pulled fresh Figma desktop MCP context/screenshot for final CTA (`411:6768`) before implementing the CTA parity patch.
+- Current command snapshot after CTA CMS pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Staging deployment check after CTA CMS pass: `https://staging.promptraise.com` returns `200` and `https://staging.promptraise.com/studio` returns `200`.
+- Current command snapshot after CTA refinement pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Pulled fresh Figma desktop MCP metadata/screenshot for Features section (`314:4272`) and applied next-section (post-hero) parity update before staging publish.
+- Staging deployment check after CTA refinement pass: `https://staging.promptraise.com` returns `200` and `https://staging.promptraise.com/studio` returns `200`.
+- Current command snapshot after section-structure alignment pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Staging deployment check after section-structure alignment pass: `https://staging.promptraise.com` returns `200` and `https://staging.promptraise.com/studio` returns `200`.
+- Pulled fresh Figma desktop MCP context/screenshot for section 11 footer variants (`344:10138`, `416:12881`) before patching.
+- Current command snapshot after section 11 footer pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Pulled frame-level Figma context/metadata/screenshot for `102:148` and screenshot references for `102:388` + `344:7724` before current section updates.
+- Current command snapshot after frame `102:148` pass: `npm run lint` passes with warnings only (0 errors), `npm run build` passes.
+- Wired user-provided hero video asset (`/Users/zkhan/Downloads/BG Video PromptRaise.mp4`) into app as `public/videos/bg-video-promptraise.mp4`.
+- Removed hero poster usage and hero-only image/texture overlays to keep background driven by video media only.
+- Current command snapshot after hero video replacement: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npm run design:verify` passes.
 
 ## Housekeeping
 

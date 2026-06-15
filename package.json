@@ -11,6 +11,9 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "figma:connect:help": "figma connect --help",
+    "figma:connect:parse": "figma connect parse -c figma.config.json",
+    "figma:connect:publish": "figma connect publish -c figma.config.json",
     "sanity:dev": "sanity dev",
     "sanity:dataset:production": "sanity dataset create production --visibility private --if-not-exists",
     "sanity:dataset:staging": "sanity dataset create staging --visibility private --if-not-exists"
@@ -19,6 +22,7 @@
     "@sanity/client": "^7.22.1",
     "@sanity/vision": "^6.0.0",
     "@vercel/analytics": "^2.0.1",
+    "framer-motion": "^12.40.0",
     "next": "16.2.7",
     "next-sanity": "^13.0.11",
     "react": "19.2.4",
@@ -26,6 +30,7 @@
     "sanity": "^6.0.0"
   },
   "devDependencies": {
+    "@figma/code-connect": "^1.4.8",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
