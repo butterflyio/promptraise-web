@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useLayoutEffect } from 'react';
 
 interface Problem {
   id: number;
@@ -19,10 +19,14 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [canAnimate, setCanAnimate] = useState(false);
 
   // Detect mobile/reduced motion after hydration
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsHydrated(true);
+    setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -31,22 +35,31 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Defer animation setup until after layout is stable
+  useEffect(() => {
+    if (isHydrated && !isMobile && !prefersReducedMotion) {
+      // Defer to next frame to ensure DOM is ready
+      const timer = requestAnimationFrame(() => {
+        setCanAnimate(true);
+      });
+      return () => cancelAnimationFrame(timer);
+    }
+  }, [isHydrated, isMobile, prefersReducedMotion]);
+
+  // Initialize scroll tracking only after animation is enabled and DOM is ready
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: canAnimate ? sectionRef : null,
     offset: ['start 60%', 'end 40%'],
   });
 
-  const prefersReducedMotion =
-    typeof window !== 'undefined'
-      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      : false;
-
-  // Build motion values for each card
-  const cardMotions = problems.map((_, idx) => ({
-    opacity: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0, 1]),
-    y: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [60, 0]),
-    scale: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0.92, 1]),
-  }));
+  // Build motion values for each card only when animating
+  const cardMotions = canAnimate 
+    ? problems.map((_, idx) => ({
+        opacity: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0, 1]),
+        y: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [60, 0]),
+        scale: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0.92, 1]),
+      }))
+    : [];
 
   // On mobile or reduced-motion, render static stacked layout
   if (!isHydrated || isMobile || prefersReducedMotion) {
@@ -138,23 +151,25 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
           </div>
 
           {/* Floating problem cards */}
-          {problems.map((problem, idx) => (
-            <motion.div
-              key={problem.id}
-              className="absolute prompt-problem-card"
-              style={{
-                top: problem.pos.top,
-                left: problem.pos.left,
-                right: problem.pos.right,
-                opacity: cardMotions[idx].opacity,
-                y: cardMotions[idx].y,
-                scale: cardMotions[idx].scale,
-              }}
-            >
-              <h4 className="prompt-problem-card-title">{problem.title}</h4>
-              <p className="prompt-problem-card-body">{problem.desc}</p>
-            </motion.div>
-          ))}
+          {canAnimate && cardMotions.length > 0
+            ? problems.map((problem, idx) => (
+                <motion.div
+                  key={problem.id}
+                  className="absolute prompt-problem-card"
+                  style={{
+                    top: problem.pos.top,
+                    left: problem.pos.left,
+                    right: problem.pos.right,
+                    opacity: cardMotions[idx].opacity,
+                    y: cardMotions[idx].y,
+                    scale: cardMotions[idx].scale,
+                  }}
+                >
+                  <h4 className="prompt-problem-card-title">{problem.title}</h4>
+                  <p className="prompt-problem-card-body">{problem.desc}</p>
+                </motion.div>
+              ))
+            : null}
         </div>
       </div>
     </section>
