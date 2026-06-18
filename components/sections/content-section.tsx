@@ -1,5 +1,5 @@
-import { DsBadge, DsSection, DsSectionContainer } from "@/components/design-system";
-import { CheckCircleIcon } from "@radix-ui/react-icons";
+import { DsSection, DsSectionContainer } from "@/components/design-system";
+import { CheckIcon } from "@/components/design-system/icons";
 
 const contentFeatures = [
   {
@@ -65,7 +65,7 @@ export function ContentSection() {
               <div className="space-y-3 pl-16">
                 {feature.features.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <CheckCircleIcon className="mt-1 h-4 w-4 flex-shrink-0 text-[#67FF67]" />
+                    <CheckIcon className="mt-1 h-4 w-4 flex-shrink-0 text-[#67FF67]" />
                     <span className="text-[12px] leading-[1.4] tracking-[-0.01em] text-white/60 tablet:text-[13px]">
                       {item}
                     </span>
