@@ -1,5 +1,4 @@
 import { AuditCtaSection } from "@/components/sections/audit-cta-section";
-import { CaseStudiesSection } from "@/components/sections/case-studies-section";
 import { ComparisonSection } from "@/components/sections/comparison-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
@@ -28,7 +27,6 @@ export default async function Home() {
       <HowItWorksSection />
       <ComparisonSection />
       <PricingSection />
-      <CaseStudiesSection />
       <AuditCtaSection
         telegramUrl={settings?.primaryTelegramCtaUrl}
         auditUrl={settings?.freeAuditCtaUrl}
