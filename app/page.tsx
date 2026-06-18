@@ -4,6 +4,7 @@ import { ComparisonSection } from "@/components/sections/comparison-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { PricingSection } from "@/components/sections/pricing-section";
+import { ProblemSection } from "@/components/sections/problem-section";
 import { StatsSection } from "@/components/sections/stats-section";
 import { TeamSection } from "@/components/sections/team-section";
 import { getHomePage, getSiteSettings } from "@/sanity/lib/queries";
@@ -22,6 +23,7 @@ export default async function Home() {
         content={homePage?.hero}
       />
       <StatsSection content={homePage?.visibilitySection} />
+      <ProblemSection />
       <HowItWorksSection />
       <ComparisonSection />
       <PricingSection />
