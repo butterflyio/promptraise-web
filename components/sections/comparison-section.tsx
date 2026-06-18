@@ -1,134 +1,113 @@
-const features = [
-  {
-    name: "LLM Surface Coverage",
-    promptraise: true,
-    traditional: false,
-    diy: false,
-  },
-  {
-    name: "AI Summary Optimization",
-    promptraise: true,
-    traditional: false,
-    diy: false,
-  },
-  {
-    name: "Perplexity Ranking",
-    promptraise: true,
-    traditional: false,
-    diy: false,
-  },
-  {
-    name: "ChatGPT Citation Strategy",
-    promptraise: true,
-    traditional: false,
-    diy: false,
-  },
-  {
-    name: "Monthly AI Ranking Report",
-    promptraise: true,
-    traditional: false,
-    diy: false,
-  },
-  { name: "Technical SEO", promptraise: true, traditional: true, diy: true },
-  { name: "Content Strategy", promptraise: true, traditional: true, diy: true },
-  {
-    name: "Backlink Building",
-    promptraise: true,
-    traditional: true,
-    diy: false,
-  },
-];
+import {
+  CheckIcon,
+  DsBadge,
+  DsCard,
+  DsSection,
+  DsSectionContainer,
+  MinusIcon,
+} from "@/components/design-system";
 
-function Check() {
-  return (
-    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent-secondary)] text-[var(--accent-primary)]">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path
-          d="M2 6L5 9L10 3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  );
-}
+const competitors = [
+  { name: "PromptRaise", highlight: true, price: "$3,000" },
+  { name: "Profound", price: "$499" },
+  { name: "AthenaHQ", price: "$49" },
+  { name: "coinbound", price: "Custom" },
+] as const;
 
-function Cross() {
-  return (
-    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--border-subtle)] text-[var(--text-muted)]">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path
-          d="M3 3L9 9M9 3L3 9"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    </span>
+const rows = [
+  "Content gap analysis",
+  "LLM tracking (ChatGPT, Gemini...)",
+  "Content from real creators",
+  "On-chain verification",
+  "Tier-1–2 Web3 media PR",
+  "Web3 specialization",
+  "Price/mo (start)",
+] as const;
+
+const rowMatrix = [
+  [true, false, false, false],
+  [true, true, true, false],
+  [true, false, false, true],
+  [true, false, false, false],
+  [true, false, false, true],
+  [true, false, false, true],
+  [true, false, false, false],
+] as const;
+
+function CheckMark({ active }: { active?: boolean }) {
+  return active ? (
+    <CheckIcon className="h-5 w-5 text-[var(--accent-primary)]" />
+  ) : (
+    <MinusIcon className="h-5 w-5 text-white/26" />
   );
 }
 
 export function ComparisonSection() {
   return (
-    <section className="border-b border-[var(--border-default)]">
-      <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
-        <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
-          Comparison
-        </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)] md:text-4xl">
-          AI visibility is not traditional SEO
-        </h2>
+    <DsSection className="relative overflow-hidden ds-section-alt">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,rgba(67,255,119,0.22),transparent_18%),radial-gradient(circle_at_100%_32%,rgba(67,255,119,0.26),transparent_18%)]" />
 
-        <div className="mt-12 overflow-hidden rounded-xl border border-[var(--border-default)]">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-[var(--border-default)] bg-[var(--bg-surface)]">
-                  <th className="px-6 py-4 font-medium text-[var(--text-primary)]">
-                    Feature
-                  </th>
-                  <th className="px-6 py-4 font-medium text-[var(--accent-primary)]">
-                    PromptRaise
-                  </th>
-                  <th className="px-6 py-4 font-medium text-[var(--text-muted)]">
-                    Traditional SEO
-                  </th>
-                  <th className="px-6 py-4 font-medium text-[var(--text-muted)]">
-                    DIY
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {features.map((feature, i) => (
-                  <tr
-                    key={feature.name}
-                    className={
-                      i % 2 === 0
-                        ? "bg-[var(--bg-base)]"
-                        : "bg-[var(--bg-surface)]"
-                    }
-                  >
-                    <td className="px-6 py-4 text-[var(--text-secondary)]">
-                      {feature.name}
-                    </td>
-                    <td className="px-6 py-4">
-                      <Check />
-                    </td>
-                    <td className="px-6 py-4">
-                      {feature.traditional ? <Check /> : <Cross />}
-                    </td>
-                    <td className="px-6 py-4">
-                      {feature.diy ? <Check /> : <Cross />}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <DsSectionContainer className="relative">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <DsBadge variant="muted">Comparison</DsBadge>
+          <h2 className="text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px]">
+            PromptRaise vs Competitors
+          </h2>
+          <p className="max-w-[540px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
+            Competitors can track. We close the full loop - from analysis to publication and measurable result.
+          </p>
         </div>
-      </div>
-    </section>
+
+        <DsCard className="mt-12 overflow-hidden border-white/6 bg-[linear-gradient(180deg,rgba(9,11,10,0.98),rgba(8,9,8,1))] px-5 py-6 tablet:px-8">
+          <div className="grid grid-cols-[1.5fr_repeat(4,minmax(0,1fr))] gap-4 pb-4 text-[12px] tracking-[-0.02em] text-white/42">
+            <div />
+            {competitors.map((competitor) => (
+              <div
+                key={competitor.name}
+                className={`flex items-center justify-center gap-2 rounded-[20px] px-3 py-2 ${
+                  competitor.name === "PromptRaise" ? "bg-[rgba(67,255,119,0.08)] text-white" : "text-white/72"
+                }`}
+              >
+                <span className="text-[12px] font-semibold tracking-[-0.02em]">
+                  {competitor.name}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid gap-y-2">
+            {rows.map((row, rowIndex) => (
+              <div
+                key={row}
+                className="grid grid-cols-[1.5fr_repeat(4,minmax(0,1fr))] items-center gap-4"
+              >
+                <div className="py-4 text-[16px] leading-[1.5] tracking-[-0.02em] text-white/72">
+                  {row}
+                </div>
+
+                {competitors.map((competitor) => (
+                <div
+                  key={`${competitor.name}-${row}`}
+                  className={`flex min-h-[56px] items-center justify-center rounded-[20px] px-3 text-center ${
+                      competitor.name === "PromptRaise"
+                        ? "bg-[linear-gradient(180deg,rgba(103,255,103,0.18),rgba(103,255,103,0.05))] shadow-[0_0_0_1px_rgba(103,255,103,0.28)]"
+                        : "bg-transparent"
+                    }`}
+                >
+                  {rowIndex === rows.length - 1 ? (
+                      <span className={`text-[16px] tracking-[-0.02em] ${competitor.name === "PromptRaise" ? "text-[var(--accent-primary)]" : "text-white/72"}`}>
+                        {competitor.price}
+                      </span>
+                    ) : (
+                      <CheckMark active={rowMatrix[rowIndex]?.[competitors.indexOf(competitor)] ?? false} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </DsCard>
+      </DsSectionContainer>
+    </DsSection>
   );
 }

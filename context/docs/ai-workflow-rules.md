@@ -54,6 +54,18 @@ Update the relevant context file in the same change whenever implementation chan
 
 Update `progress-tracker.md` when a unit is completed (what was done, status, new open questions). Do not let docs and code drift — if they conflict, stop and reconcile before continuing.
 
+## Docs-Sync Checklist (Mandatory Every Implementation Turn)
+
+Before closing any implementation task:
+
+1. Run a quick changed-files check (`git diff --name-only` or equivalent) and list what changed.
+2. Update `progress-tracker.md` in the same turn whenever any meaningful code or config change was made.
+3. If the change affects architecture, scope, standards, UI tokens/patterns, or discoverability surfaces, update the corresponding context doc in the same turn.
+4. Reconcile contradictions between `progress-tracker.md` and the spec/build-plan docs before finishing.
+5. In the completion message, explicitly state docs-sync status and which docs were updated.
+
+If any checklist item cannot be satisfied, stop and report the blocker instead of marking the task complete.
+
 ## Before Moving to the Next Unit
 
 1. The current unit works end to end within its defined scope, and `npm run build` passes (with `tsc --noEmit`, ESLint, and Prettier clean).

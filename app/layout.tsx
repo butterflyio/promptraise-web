@@ -1,94 +1,101 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 
 import { SiteShell } from "@/components/site-shell";
+import { getSiteSettings } from "@/sanity/lib/queries";
 
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "PromptRaise — AI Visibility for Web3",
-    template: "%s | PromptRaise",
-  },
-  description:
-    "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery. We help projects appear in ChatGPT, Perplexity, Claude, and Gemini.",
-  keywords: [
-    "AI visibility",
-    "LLM ranking",
-    "Web3 marketing",
-    "ChatGPT optimization",
-    "Perplexity SEO",
-    "AI search",
-    "Web3 discovery",
-  ],
-  authors: [{ name: "PromptRaise" }],
-  creator: "PromptRaise",
-  publisher: "PromptRaise",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const faviconUrl = settings?.favicon?.asset?.url ?? `${siteUrl}/favicon.ico`;
+  const socialImageUrl =
+    settings?.openGraphImage?.asset?.url ??
+    settings?.logo?.asset?.url ??
+    faviconUrl;
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: "PromptRaise — AI Visibility for Web3",
+      template: "%s | PromptRaise",
+    },
+    description:
+      "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery. We help projects appear in ChatGPT, Perplexity, Claude, and Gemini.",
+    keywords: [
+      "AI visibility",
+      "LLM ranking",
+      "Web3 marketing",
+      "ChatGPT optimization",
+      "Perplexity SEO",
+      "AI search",
+      "Web3 discovery",
+    ],
+    authors: [{ name: "PromptRaise" }],
+    creator: "PromptRaise",
+    publisher: "PromptRaise",
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteUrl,
-    siteName: "PromptRaise",
-    title: "PromptRaise — AI Visibility for Web3",
-    description:
-      "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "PromptRaise — AI Visibility for Web3",
-    description:
-      "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
-    creator: "@promptraise",
-  },
-  alternates: {
-    canonical: siteUrl,
-    types: {
-      "text/plain": `${siteUrl}/llms.txt`,
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: siteUrl,
+      siteName: "PromptRaise",
+      title: "PromptRaise — AI Visibility for Web3",
+      description:
+        "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
+      images: [socialImageUrl],
     },
-  },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
-    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
-      ? {
-          "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
-        }
-      : undefined,
-  },
-};
+    twitter: {
+      card: "summary_large_image",
+      title: "PromptRaise — AI Visibility for Web3",
+      description:
+        "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
+      creator: "@promptraise",
+      images: [socialImageUrl],
+    },
+    icons: {
+      icon: faviconUrl,
+      shortcut: faviconUrl,
+      apple: faviconUrl,
+    },
+    alternates: {
+      canonical: siteUrl,
+      types: {
+        "text/plain": `${siteUrl}/llms.txt`,
+      },
+    },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+      other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+        ? {
+            "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+          }
+        : undefined,
+    },
+  };
+}
 
 function StructuredData() {
+  const brandLogo = `${siteUrl}/brand/promptraise-mark.svg`;
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "PromptRaise",
     url: siteUrl,
-    logo: `${siteUrl}/favicon.ico`,
+    logo: brandLogo,
     description:
       "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
     sameAs: ["https://twitter.com/promptraise", "https://t.me/promptraise"],
@@ -138,10 +145,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <head>
         <StructuredData />
       </head>

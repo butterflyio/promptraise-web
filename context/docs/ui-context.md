@@ -44,7 +44,8 @@
 
 - Sticky, transparent-to-solid on scroll (optional)
 - Nav items: Solutions, Pricing, Company, Resources
-- Right-side CTA: **"Get Audit"** (green pill, `accent-primary` bg, `accent-foreground` text)
+- Right-side CTA: **"Get Audit"** (white pill on hero, `accent-primary` elsewhere when the design calls for primary action emphasis)
+- Editable source: Sanity `siteSettings.headerNavItems`, `siteSettings.freeAuditCtaUrl`
 
 ### Buttons
 
@@ -57,17 +58,36 @@
 - `bg-bg-surface` with `border-border-default`
 - Hover: `bg-bg-surface-hover` subtle lift
 
+### Landing Hero
+
+- Editable source: Sanity `homePage.hero`
+- Editable fields: eyebrow, headline parts, body lines, primary/secondary CTA labels and hrefs, trust-bar label/badge/logo row.
+- Non-editable design-system elements: aurora background, logo mark geometry, CTA shape, trust-row mask, typography scale, and responsive placement.
+
+### Visibility Section
+
+- Editable source: Sanity `homePage.visibilitySection`
+- Editable fields: two-line headline and the four stat-card values/labels.
+- Non-editable design-system elements: orbit rings, central circular PromptRaise mark, stat-card positions, glow treatment, and responsive section framing.
+
 ### Footer
 
 - Dark band (`bg-bg-base` or `bg-bg-surface`)
-- "powered by Pencil" attribution
+- Brand row with PromptRaise mark/wordmark
+- "powered by Cicada" attribution
 - Legal links: Privacy Policy · Terms of Service · Cookie Usage
 - Social links (placeholder URLs until provided)
 
 ## Layout
 
-- Max content width: `max-w-6xl` (72rem / 1152px)
-- Horizontal padding: `px-6` (mobile), consistent gutters
+- Figma breakpoints:
+  - Mobile frame: `393px` (`mobile:`)
+  - Tablet frame: `768px` (`tablet:`)
+  - Desktop frame: `1024px` (`desktop:`)
+  - Wide desktop frame: `1440px` (`wide:`)
+- Tailwind aliases are mapped to the same Figma frame widths: `sm=393px`, `md=768px`, `lg=1024px`, `xl=1440px`.
+- Max content width: `max-w-[1248px]` for primary page bands and section internals.
+- Horizontal padding: `px-4 mobile:px-6` so sub-393px screens get tighter gutters and the 393px Figma mobile frame uses the designed 24px gutter.
 - Section vertical spacing: `py-16` to `py-20`
 - Border style: 1px solid `border-default` for section separators
 

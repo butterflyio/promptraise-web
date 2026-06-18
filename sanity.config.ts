@@ -10,7 +10,30 @@ export default defineConfig({
   title: "PromptRaise CMS",
   projectId: sanityEnv.projectId,
   dataset: sanityEnv.dataset,
-  plugins: [deskTool(), visionTool()],
+  plugins: [
+    deskTool({
+      structure: (S) =>
+        S.list()
+          .title("Content")
+          .items([
+            S.listItem()
+              .title("Site Settings")
+              .schemaType("siteSettings")
+              .child(
+                S.document()
+                  .schemaType("siteSettings")
+                  .documentId("site-settings"),
+              ),
+            S.listItem()
+              .title("Home Page")
+              .schemaType("homePage")
+              .child(
+                S.document().schemaType("homePage").documentId("home-page"),
+              ),
+          ]),
+    }),
+    visionTool(),
+  ],
   schema: {
     types: schemaTypes,
   },

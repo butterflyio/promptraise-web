@@ -6,11 +6,11 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-16 md:py-20">
+    <main className="mobile:px-6 tablet:py-20 mx-auto w-full max-w-3xl px-4 py-16">
       <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
         Legal
       </p>
-      <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)] md:text-4xl">
+      <h1 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
         Privacy Notice
       </h1>
 
