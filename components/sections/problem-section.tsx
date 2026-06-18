@@ -12,20 +12,20 @@ const PROBLEMS = [
   },
   {
     id: 2,
-    title: 'Traditional marketing doesn't reach AI',
-    desc: 'Your SEO tactics won't work on Claude, ChatGPT, or Perplexity.',
+    title: 'Traditional marketing doesn&apos;t reach AI',
+    desc: 'Your SEO tactics won&apos;t work on Claude, ChatGPT, or Perplexity.',
     pos: { top: '58%', left: '6%' },
   },
   {
     id: 3,
-    title: "You're invisible where decisions are made",
-    desc: 'Founders, investors, and users discover you through AI. Or they don't.',
+    title: 'You&apos;re invisible where decisions are made',
+    desc: 'Founders, investors, and users discover you through AI. Or they don&apos;t.',
     pos: { top: '28%', right: '7%' },
   },
   {
     id: 4,
     title: 'Competitors are already in ChatGPT',
-    desc: 'They're getting cited. They're getting traffic. You're not.',
+    desc: 'They&apos;re getting cited. They&apos;re getting traffic. You&apos;re not.',
     pos: { top: '64%', right: '6%' },
   },
 ];
@@ -51,17 +51,12 @@ export function ProblemSection() {
   });
 
   // Map scroll to card indices (drop them in sequence as you scroll through the section)
-  const cardAnimations = useMemo(() => {
-    return PROBLEMS.map((_, idx) => {
-      const start = idx * 0.25; // Each card enters at 25% of scroll
-      const end = start + 0.25;
-      return {
-        opacity: useTransform(scrollYProgress, [start, end], [0, 1]),
-        y: useTransform(scrollYProgress, [start, end], [60, 0]),
-        scale: useTransform(scrollYProgress, [start, end], [0.92, 1]),
-      };
-    });
-  }, [scrollYProgress]);
+  // Note: useTransform must be called directly in render, not in useMemo, to avoid hydration issues
+  const getCardAnimations = (idx: number) => ({
+    opacity: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0, 1]),
+    y: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [60, 0]),
+    scale: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0.92, 1]),
+  });
 
   const prefersReducedMotion =
     typeof window !== 'undefined'
@@ -99,7 +94,7 @@ export function ProblemSection() {
           <div className="flex justify-end mt-8">
             <a
               href="#solutions"
-              className="px-6 py-2 rounded-full bg-[#67FF67] text-[#0F0F0F] text-sm font-semibold hover:bg-[#5de65d] transition-colors"
+              className="px-6 py-2 rounded-full bg-accent text-bg-base text-sm font-semibold hover:opacity-90 transition-opacity"
             >
               Go to Solution
             </a>
@@ -140,17 +135,17 @@ export function ProblemSection() {
               </div>
             </div>
 
-            <h3 className="text-xl font-bold leading-snug text-[var(--text-primary)] mb-2">
+            <h3 className="text-xl font-bold leading-snug text-text-primary mb-2">
               You&apos;re invisible where decisions are made
             </h3>
-            <p className="text-sm text-[rgba(212,221,217,0.6)] leading-relaxed">
+            <p className="text-sm text-text-muted leading-relaxed">
               Founders, investors, and users discover you through AI. Or they don&apos;t.
             </p>
 
             <div className="mt-6">
               <a
                 href="#solutions"
-                className="inline-block px-5 py-2.5 rounded-lg bg-[#67FF67] text-[#0F0F0F] text-xs font-bold hover:bg-[#5de65d] transition-colors"
+                className="inline-block px-5 py-2.5 rounded-lg bg-accent text-bg-base text-xs font-bold hover:opacity-90 transition-opacity"
               >
                 Go to Solution
               </a>
@@ -158,23 +153,26 @@ export function ProblemSection() {
           </div>
 
           {/* Floating problem cards */}
-          {PROBLEMS.map((problem, idx) => (
-            <motion.div
-              key={problem.id}
-              className="absolute prompt-problem-card"
-              style={{
-                top: problem.pos.top,
-                left: problem.pos.left,
-                right: problem.pos.right,
-                opacity: cardAnimations[idx].opacity,
-                y: cardAnimations[idx].y,
-                scale: cardAnimations[idx].scale,
-              }}
-            >
-              <h4 className="prompt-problem-card-title">{problem.title}</h4>
-              <p className="prompt-problem-card-body">{problem.desc}</p>
-            </motion.div>
-          ))}
+          {PROBLEMS.map((problem, idx) => {
+            const anims = getCardAnimations(idx);
+            return (
+              <motion.div
+                key={problem.id}
+                className="absolute prompt-problem-card"
+                style={{
+                  top: problem.pos.top,
+                  left: problem.pos.left,
+                  right: problem.pos.right,
+                  opacity: anims.opacity,
+                  y: anims.y,
+                  scale: anims.scale,
+                }}
+              >
+                <h4 className="prompt-problem-card-title">{problem.title}</h4>
+                <p className="prompt-problem-card-body">{problem.desc}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
