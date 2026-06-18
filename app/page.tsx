@@ -23,7 +23,7 @@ export default async function Home() {
         content={homePage?.hero}
       />
       <StatsSection content={homePage?.visibilitySection} />
-      {/* <ProblemSection /> */}
+      <ProblemSection />
       <HowItWorksSection />
       <ComparisonSection />
       <PricingSection />
