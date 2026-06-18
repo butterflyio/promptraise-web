@@ -17,12 +17,12 @@ interface ProblemSectionClientProps {
 export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  // Detect mobile/reduced motion on client side only
+  // Only mount animated content on client after hydration
   useEffect(() => {
-    setIsHydrated(true);
+    setMounted(true);
     setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     
     const handleResize = () => {
@@ -33,21 +33,8 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Always call hooks at top level (required by React)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 60%', 'end 40%'],
-  });
-
-  // Build motion values for each card
-  const cardMotions = problems.map((_, idx) => ({
-    opacity: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0, 1]),
-    y: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [60, 0]),
-    scale: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0.92, 1]),
-  }));
-
-  // On mobile or reduced-motion, render static stacked layout
-  if (!isHydrated || isMobile || prefersReducedMotion) {
+  // Render static fallback until mounted
+  if (!mounted || isMobile || prefersReducedMotion) {
     return (
       <section className="prompt-problem-section py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-6">
@@ -87,7 +74,25 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
     );
   }
 
-  // Desktop: floating card animation on scroll
+  // Only render animated version on desktop after hydration
+  return <ProblemSectionAnimated problems={problems} />;
+}
+
+// Separate component for animated desktop view (only called after hydration)
+function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 60%', 'end 40%'],
+  });
+
+  const cardMotions = problems.map((_, idx) => ({
+    opacity: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0, 1]),
+    y: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [60, 0]),
+    scale: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0.92, 1]),
+  }));
+
   return (
     <section
       ref={sectionRef}
@@ -102,7 +107,7 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
       <div className="prompt-problem-edge prompt-problem-edge-bottom" />
 
       <div className="mx-auto max-w-6xl px-6 relative z-10">
-        <div className="prompt-problem-stage" ref={stageRef}>
+        <div className="prompt-problem-stage">
           {/* Central window */}
           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 mx-auto w-full max-w-xl prompt-problem-window p-8">
             <div className="prompt-problem-window-bar pb-4 mb-6">
