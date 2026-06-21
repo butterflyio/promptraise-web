@@ -85,14 +85,19 @@ const STEPS = [
 ];
 
 /* ── Waveform bar heights ─────────────────────────────────────────── */
-const BAR_HEIGHTS = [
-  6,8,10,12,14,16,18,20,22,20,18,16,14,12,10,12,14,16,18,20,
-  22,24,20,18,16,14,12,10,8,10,12,14,16,18,20,22,20,18,16,14,
-  12,10,8,6,8,10,12,14,16,18,20,18,16,14,12,10,12,14,16,14,
-  12,10,8,10,12,14,16,18,20,22,20,18,16,14,12,10,8,10,12,14,
-  16,14,12,10,8,6,8,10,12,14,16,18,20,18,16,14,12,10,8,6,
-];
-const TOTAL_BARS = BAR_HEIGHTS.length;
+// 120 bars generating a multi-peak sine envelope (matches 34566.png).
+// Heights range 4–32px. Each bar is flex:1 with no max-width so they
+// collectively fill 100% of the section width with no padding.
+const TOTAL_BARS = 120;
+const BAR_HEIGHTS: number[] = Array.from({ length: TOTAL_BARS }, (_, i) => {
+  const t = i / (TOTAL_BARS - 1); // 0 → 1
+  // Envelope: two overlapping sine humps — matches the screenshot's
+  // mountain-curve shape (low at edges, two peaks in left-center and right-center)
+  const hump1 = Math.sin(Math.PI * t * 1.1) * 28;
+  const hump2 = Math.sin(Math.PI * t * 2.2 + 0.3) * 12;
+  const noise = Math.sin(i * 1.7) * 3 + Math.sin(i * 3.1) * 2;
+  return Math.max(4, Math.round(Math.abs(hump1 + hump2 + noise)));
+});
 
 /* ── Card X offsets per step (% of container width) ─────────────── */
 // These are the left-edge positions of the card (310px wide).
@@ -312,7 +317,7 @@ export function ProcessSection() {
             className="absolute inset-x-0"
             style={{ top: 396 }}
           >
-            <div className="relative flex items-end gap-[2px] w-full h-8 px-4">
+            <div className="relative flex items-end gap-[2px] w-full h-8">
               {BAR_HEIGHTS.map((h, i) => {
                 const isActive = i < activeBarsCount;
                 return (
@@ -320,10 +325,9 @@ export function ProcessSection() {
                     key={i}
                     style={{
                       flex: '1 1 0',
-                      maxWidth: 5,
                       height: h,
                       borderRadius: 2,
-                      background: isActive ? '#67FF67' : 'rgba(255,255,255,0.12)',
+                      background: isActive ? '#67FF67' : 'rgba(255,255,255,0.14)',
                       transition: 'background 0.35s',
                     }}
                   />
@@ -341,7 +345,7 @@ export function ProcessSection() {
           </div>
         </div>
 
-        {/* ── Dot navigation ──────────────────────────────────── */}
+        {/* ── Dot navigation ───────────────────────────��──────── */}
         <div className="relative z-10 flex justify-center gap-3 mt-5">
           {STEPS.map((s, i) => (
             <div
