@@ -1,5 +1,6 @@
 import { AuditCtaSection } from "@/components/sections/audit-cta-section";
 import { ComparisonSection } from "@/components/sections/comparison-section";
+import { WhyChooseSection } from "@/components/sections/why-choose-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { PricingSection } from "@/components/sections/pricing-section";
@@ -26,6 +27,7 @@ export default async function Home() {
       <ProcessSection />
       <HowItWorksSection />
       <ComparisonSection />
+      <WhyChooseSection />
       <PricingSection />
       <AuditCtaSection
         telegramUrl={settings?.primaryTelegramCtaUrl}
