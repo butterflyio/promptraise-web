@@ -95,12 +95,14 @@ const BAR_HEIGHTS = [
 const TOTAL_BARS = BAR_HEIGHTS.length;
 
 /* ── Card X offsets per step (% of container width) ─────────────── */
-// Step 0 (Audit): far left ~5%
-// Step 1 (PromptRaise): ~25%
-// Step 2 (Creators): ~45%
-// Step 3 (PR): ~62%
-// Step 4 (Analytics): ~72%
-const CARD_OFFSETS = ['5%', '25%', '45%', '60%', '72%'];
+// These are the left-edge positions of the card (310px wide).
+// The card's center is at offset + CARD_WIDTH/2, which we use for the connector line.
+const CARD_OFFSETS = ['2%', '18%', '36%', '52%', '66%'];
+const CARD_WIDTH_PX = 310;
+
+/* ── Waveform bar fill per step (as fraction of TOTAL_BARS) ──────── */
+// Step 0 → first ~20% green, step 4 → ~100% green
+const STEP_BAR_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0];
 
 /* ── Component ───────────────────────────────────────────────────── */
 export function ProcessSection() {
@@ -134,7 +136,7 @@ export function ProcessSection() {
   }, []);
 
   const step = STEPS[activeStep];
-  const activeBarsCount = Math.round(((activeStep + 1) / STEPS.length) * TOTAL_BARS);
+  const activeBarsCount = Math.round(STEP_BAR_FRACTIONS[activeStep] * TOTAL_BARS);
 
   return (
     /*
@@ -192,14 +194,28 @@ export function ProcessSection() {
           </p>
         </div>
 
-        {/* ── Stage: card + perspective grid ──────────────────── */}
-        <div className="relative z-10 w-full" style={{ height: 320 }}>
-          {/* Card — animates left→right as step increases */}
+        {/* ── Stage: card + connector + waveform ──────────────── */}
+        {/*
+         * Everything from the card down to the waveform lives in one
+         * relative container so we can use a SINGLE absolute connector
+         * line whose left position tracks the card center exactly.
+         *
+         * Card center (px) = CARD_OFFSETS[step] expressed as vw + CARD_WIDTH/2.
+         * We pass this as a CSS left value on the connector so it always
+         * touches both the card bottom and the waveform top.
+         *
+         * The waveform is full-width (no centering padding) so its
+         * coordinate space matches the viewport — the pill position
+         * (% of bars) maps directly to % of full screen width.
+         */}
+        <div className="relative z-10 w-full" style={{ height: 420 }}>
+
+          {/* Card */}
           <motion.div
             className="absolute top-0"
             animate={{ left: CARD_OFFSETS[activeStep] }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-            style={{ width: 'min(310px, 80vw)' }}
+            style={{ width: CARD_WIDTH_PX }}
           >
             <div
               className="relative rounded-2xl overflow-hidden"
@@ -220,7 +236,7 @@ export function ProcessSection() {
                 }}
               />
 
-              {/* Icon area — crossfades between steps */}
+              {/* Icon area */}
               <div className="relative flex items-center justify-center pt-10 pb-14" style={{ minHeight: 130 }}>
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -244,7 +260,7 @@ export function ProcessSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Text area — crossfades between steps */}
+              {/* Text area */}
               <div className="relative px-5 pb-6">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -264,47 +280,64 @@ export function ProcessSection() {
                 </AnimatePresence>
               </div>
             </div>
-
-            {/* Vertical connector line card → progress bar */}
-            <div
-              aria-hidden
-              className="mx-auto"
-              style={{
-                width: 1,
-                height: 48,
-                background: 'linear-gradient(180deg, rgba(103,255,103,0.7) 0%, rgba(103,255,103,0.12) 100%)',
-              }}
-            />
           </motion.div>
-        </div>
 
-        {/* ── Waveform progress bar ───────────────────────────── */}
-        <div className="relative z-10 w-full overflow-hidden mt-0">
-          <div className="relative flex items-end justify-center gap-[2px] h-8 px-2">
-            {BAR_HEIGHTS.map((h, i) => {
-              const isActive = i < activeBarsCount;
-              return (
-                <div
-                  key={i}
-                  style={{
-                    width: 3,
-                    height: h,
-                    borderRadius: 2,
-                    background: isActive ? '#67FF67' : 'rgba(255,255,255,0.12)',
-                    transition: 'background 0.35s',
-                    flexShrink: 0,
-                  }}
-                />
-              );
-            })}
+          {/*
+           * Connector line — absolutely positioned so its left edge matches
+           * the horizontal center of the card at each step.
+           * `calc(CARD_OFFSET + CARD_WIDTH/2)` keeps it perfectly centred
+           * under the card no matter where it travels.
+           */}
+          <motion.div
+            aria-hidden
+            className="absolute"
+            animate={{ left: `calc(${CARD_OFFSETS[activeStep]} + ${CARD_WIDTH_PX / 2}px)` }}
+            transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+            style={{
+              top: 340,           // bottom of card (approx)
+              width: 1,
+              height: 56,
+              transform: 'translateX(-50%)',
+              background: 'linear-gradient(180deg, rgba(103,255,103,0.75) 0%, rgba(103,255,103,0.08) 100%)',
+            }}
+          />
 
-            {/* Floating step pill */}
-            <StepPill
-              label={step.label}
-              number={step.number}
-              totalBars={TOTAL_BARS}
-              activeBars={activeBarsCount}
-            />
+          {/* ── Waveform progress bar — full viewport width ─── */}
+          {/*
+           * No padding, no justify-center. Bars span the full width so
+           * that percentage-based pill positioning maps 1-to-1 with
+           * screen coordinates. Bar width + gap auto-fill via flex.
+           */}
+          <div
+            className="absolute inset-x-0"
+            style={{ top: 396 }}
+          >
+            <div className="relative flex items-end gap-[2px] w-full h-8 px-4">
+              {BAR_HEIGHTS.map((h, i) => {
+                const isActive = i < activeBarsCount;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      flex: '1 1 0',
+                      maxWidth: 5,
+                      height: h,
+                      borderRadius: 2,
+                      background: isActive ? '#67FF67' : 'rgba(255,255,255,0.12)',
+                      transition: 'background 0.35s',
+                    }}
+                  />
+                );
+              })}
+
+              {/* Floating step pill — left% maps to bar fraction of full width */}
+              <StepPill
+                label={step.label}
+                number={step.number}
+                totalBars={TOTAL_BARS}
+                activeBars={activeBarsCount}
+              />
+            </div>
           </div>
         </div>
 
