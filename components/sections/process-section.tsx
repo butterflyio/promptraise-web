@@ -194,9 +194,6 @@ export function ProcessSection() {
 
         {/* ── Stage: card + perspective grid ──────────────────── */}
         <div className="relative z-10 w-full" style={{ height: 320 }}>
-          {/* Perspective grid — right side */}
-          <PerspectiveGrid />
-
           {/* Card — animates left→right as step increases */}
           <motion.div
             className="absolute top-0"
@@ -334,41 +331,7 @@ export function ProcessSection() {
 
 /* ── Sub-components ───────────────────────────────────────────────── */
 
-function PerspectiveGrid() {
-  return (
-    <div
-      aria-hidden
-      className="absolute inset-y-0 right-0 pointer-events-none"
-      style={{ width: '62%' }}
-    >
-      <div
-        className="absolute inset-y-0 left-0 z-10"
-        style={{
-          width: 120,
-          background: 'linear-gradient(90deg, #090b0a 0%, transparent 100%)',
-        }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 z-10"
-        style={{
-          height: 80,
-          background: 'linear-gradient(0deg, #090b0a 0%, transparent 100%)',
-        }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(103,255,103,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(103,255,103,0.22) 1px, transparent 1px)',
-          backgroundSize: '52px 52px',
-          transform: 'perspective(600px) rotateX(52deg)',
-          transformOrigin: '50% 0%',
-          opacity: 0.7,
-        }}
-      />
-    </div>
-  );
-}
+
 
 function StepPill({
   label,
