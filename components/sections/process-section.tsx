@@ -107,13 +107,32 @@ export function ProcessSection() {
       {/* ── Section header ─────────────────────────────────────── */}
       <div className="relative z-10 px-6 text-center mb-14 md:mb-20">
 
-        {/* "Process" badge with circuit-board connectors */}
+        {/* "Process" badge with circuit-board connectors — exact Figma SVG assets */}
         <div className="inline-flex items-center gap-0 mb-6">
-          {/* Left connector */}
-          <ConnectorLine side="left" />
+          {/* Left chevron connector (inner-frame.svg — points right toward badge) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/inner-frame.svg"
+            alt=""
+            aria-hidden
+            width={80}
+            height={50}
+            className="shrink-0"
+          />
+          {/* Left gradient line */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/decorative-vector-9.svg"
+            alt=""
+            aria-hidden
+            width={120}
+            height={12}
+            className="shrink-0"
+            style={{ transform: 'scaleX(-1)' }}
+          />
           {/* Badge pill */}
           <div
-            className="px-4 py-1.5 rounded-full text-xs tracking-wide font-medium text-white/80 select-none"
+            className="shrink-0 px-5 py-2 rounded-full text-xs tracking-wide font-medium text-white/80 select-none"
             style={{
               background: 'rgba(20,22,20,0.85)',
               border: '1px solid rgba(255,255,255,0.14)',
@@ -123,8 +142,26 @@ export function ProcessSection() {
           >
             Process
           </div>
-          {/* Right connector */}
-          <ConnectorLine side="right" />
+          {/* Right gradient line */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/decorative-vector-9.svg"
+            alt=""
+            aria-hidden
+            width={120}
+            height={12}
+            className="shrink-0"
+          />
+          {/* Right chevron connector (inner-frame-1.svg — points left toward badge) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/inner-frame-1.svg"
+            alt=""
+            aria-hidden
+            width={80}
+            height={50}
+            className="shrink-0"
+          />
         </div>
 
         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight text-balance mb-3">
@@ -261,56 +298,7 @@ export function ProcessSection() {
 
 /* ── Sub-components ──────────────────────────────────────────────── */
 
-function ConnectorLine({ side }: { side: 'left' | 'right' }) {
-  return (
-    <div className="flex items-center gap-1.5">
-      {side === 'left' ? (
-        <>
-          <Dot size={3} opacity={0.35} />
-          <Dot size={5} opacity={0.55} />
-          <Line />
-          <Dot size={7} opacity={0.8} />
-        </>
-      ) : (
-        <>
-          <Dot size={7} opacity={0.8} />
-          <Line />
-          <Dot size={5} opacity={0.55} />
-          <Dot size={3} opacity={0.35} />
-        </>
-      )}
-    </div>
-  );
-}
 
-function Dot({ size, opacity }: { size: number; opacity: number }) {
-  return (
-    <div
-      aria-hidden
-      style={{
-        width: size,
-        height: size,
-        borderRadius: '50%',
-        background: `rgba(180,200,180,${opacity})`,
-        flexShrink: 0,
-      }}
-    />
-  );
-}
-
-function Line() {
-  return (
-    <div
-      aria-hidden
-      style={{
-        width: 36,
-        height: 1,
-        background: 'linear-gradient(90deg, rgba(180,200,180,0.15), rgba(180,200,180,0.45))',
-        flexShrink: 0,
-      }}
-    />
-  );
-}
 
 function PerspectiveGrid() {
   return (
