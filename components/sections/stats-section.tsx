@@ -133,11 +133,41 @@ export function StatsSection({ content }: StatsSectionProps) {
       <SectionLabel name="StatsSection" />
       <div className="prompt-stats-canvas pointer-events-none absolute left-1/2 top-0 z-10 h-[782px] w-[1440px] -translate-x-1/2">
         <div className="prompt-stats-rings absolute left-1/2 top-[80px] h-[696px] w-[1419px] -translate-x-1/2">
-          <div className="prompt-stats-ring prompt-stats-ring-1" />
-          <div className="prompt-stats-ring prompt-stats-ring-2" />
-          <div className="prompt-stats-ring prompt-stats-ring-3" />
-          <div className="prompt-stats-ring prompt-stats-ring-4" />
-          <div className="prompt-stats-ring prompt-stats-ring-5" />
+          <img
+            src="/images/ellipse-1.png"
+            alt=""
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ width: "300px", height: "300px", opacity: 0.6 }}
+            aria-hidden="true"
+          />
+          <img
+            src="/images/ellipse-2.png"
+            alt=""
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ width: "420px", height: "340px", opacity: 0.5 }}
+            aria-hidden="true"
+          />
+          <img
+            src="/images/ellipse-3.png"
+            alt=""
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ width: "580px", height: "420px", opacity: 0.4 }}
+            aria-hidden="true"
+          />
+          <img
+            src="/images/ellipse-4.png"
+            alt=""
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ width: "720px", height: "520px", opacity: 0.35 }}
+            aria-hidden="true"
+          />
+          <img
+            src="/images/ellipse-5.png"
+            alt=""
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ width: "900px", height: "640px", opacity: 0.3 }}
+            aria-hidden="true"
+          />
         </div>
 
         <div className="prompt-stats-vectors absolute inset-0">
