@@ -1,3 +1,4 @@
+import { AiTrainingSection } from "@/components/sections/ai-training-section";
 import { AuditCtaSection } from "@/components/sections/audit-cta-section";
 import { ComparisonSection } from "@/components/sections/comparison-section";
 import { WhyChooseSection } from "@/components/sections/why-choose-section";
@@ -24,6 +25,7 @@ export default async function Home() {
       />
       <StatsSection content={homePage?.visibilitySection} />
       <ProblemSection />
+      <AiTrainingSection />
       <ProcessSection />
       <HowItWorksSection />
       <ComparisonSection />
