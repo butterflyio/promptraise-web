@@ -13,7 +13,7 @@ export function DsSection({ children, className, id }: DsSectionProps) {
     <section
       id={id}
       className={cn(
-        "border-b border-[var(--border-default)] bg-[var(--bg-base)]",
+        "relative border-b border-[var(--border-default)] bg-[var(--bg-base)]",
         className,
       )}
     >
