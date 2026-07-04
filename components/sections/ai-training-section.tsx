@@ -2,6 +2,7 @@
 
 import { DsBadge, DsSection, DsSectionContainer } from '@/components/design-system';
 import { CheckCircle2 } from 'lucide-react';
+import { SectionLabel } from '@/components/section-label';
 
 const LAYERS = [
   {
@@ -37,6 +38,7 @@ const LAYERS = [
 export function AiTrainingSection() {
   return (
     <DsSection>
+      <SectionLabel name="AiTrainingSection" />
       <DsSectionContainer>
         {/* Header with badge */}
         <div className="relative mb-16 flex items-start justify-between">

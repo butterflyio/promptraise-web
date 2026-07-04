@@ -4,6 +4,7 @@ import {
   DsBadge,
   DsButton,
 } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 import type { HomePageHero } from "@/sanity/lib/queries";
 
 interface HeroSectionProps {
@@ -62,6 +63,7 @@ export function HeroSection({
 
   return (
     <section className="prompt-hero-bg desktop:min-h-[960px] relative min-h-[780px] overflow-hidden bg-[var(--bg-hero)]">
+      <SectionLabel name="HeroSection" />
       <video
         className="absolute inset-0 h-full w-full object-cover object-center [filter:brightness(0.94)_saturate(1.06)]"
         autoPlay

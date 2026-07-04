@@ -4,6 +4,7 @@ import {
   DsSection,
   DsSectionContainer,
 } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 
 const layers = [
   {
@@ -49,6 +50,7 @@ function BenefitBullet({ children }: { children: string }) {
 export function PricingSection() {
   return (
     <DsSection id="pricing" className="relative overflow-hidden ds-section-alt">
+      <SectionLabel name="PricingSection" />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_58%_20%,rgba(109,255,146,0.42),rgba(109,255,146,0.12)_24%,transparent_60%)]" />
         <div className="absolute left-1/2 top-14 h-[34rem] w-[52rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(87,255,129,0.18)_0%,rgba(87,255,129,0.06)_38%,transparent_72%)] blur-2xl" />

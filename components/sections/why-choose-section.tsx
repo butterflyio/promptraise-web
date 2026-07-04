@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { DsBadge, DsSection, DsSectionContainer } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared card shell — dark #0e0f10 bg, subtle border, rounded-2xl
@@ -326,7 +327,7 @@ function NumbersCard() {
 /* ─────────────────────────────────────────────────────────────────────────────
    Card 5 — "Web3 from the inside"
    Figma: card-21.png background + Cicada logo centered
-───────────────────────────────────────────────────────────────────────────── */
+───────────────────────────────────────────────────────────────��───────────── */
 function Web3InsideCard() {
   return (
     <BentoCard>
@@ -429,6 +430,7 @@ function NarrativeCard() {
 export function WhyChooseSection() {
   return (
     <DsSection>
+      <SectionLabel name="WhyChooseSection" />
       <DsSectionContainer>
         {/* Header row: title left, badge right */}
         <div className="flex items-start justify-between mb-12">

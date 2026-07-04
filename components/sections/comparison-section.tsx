@@ -6,6 +6,7 @@ import {
   DsSectionContainer,
   MinusIcon,
 } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 
 const competitors = [
   { name: "PromptRaise", highlight: true, price: "$3,000" },
@@ -45,6 +46,7 @@ function CheckMark({ active }: { active?: boolean }) {
 export function ComparisonSection() {
   return (
     <DsSection className="relative overflow-hidden ds-section-alt">
+      <SectionLabel name="ComparisonSection" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,rgba(67,255,119,0.22),transparent_18%),radial-gradient(circle_at_100%_32%,rgba(67,255,119,0.26),transparent_18%)]" />
 
       <DsSectionContainer className="relative">

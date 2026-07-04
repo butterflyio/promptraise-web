@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import type { HomePageVisibilitySection } from "@/sanity/lib/queries";
+import { SectionLabel } from "@/components/section-label";
 
 const defaultVisibilitySection = {
   headline: {
@@ -129,6 +130,7 @@ export function StatsSection({ content }: StatsSectionProps) {
       id="features"
       className="prompt-stats-section relative isolate overflow-hidden bg-[var(--bg-base)]"
     >
+      <SectionLabel name="StatsSection" />
       <div className="prompt-stats-canvas pointer-events-none absolute left-1/2 top-0 z-10 h-[782px] w-[1440px] -translate-x-1/2">
         <div className="prompt-stats-rings absolute left-1/2 top-[80px] h-[696px] w-[1419px] -translate-x-1/2">
           <div className="prompt-stats-ring prompt-stats-ring-1" />

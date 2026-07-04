@@ -1,4 +1,5 @@
 import { ProblemSectionClient } from './problem-section-client';
+import { SectionLabel } from '@/components/section-label';
 
 const PROBLEMS = [
   {
@@ -28,5 +29,10 @@ const PROBLEMS = [
 ];
 
 export function ProblemSection() {
-  return <ProblemSectionClient problems={PROBLEMS} />;
+  return (
+    <div className="relative">
+      <SectionLabel name="ProblemSection" />
+      <ProblemSectionClient problems={PROBLEMS} />
+    </div>
+  );
 }

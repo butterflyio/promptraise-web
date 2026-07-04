@@ -1,4 +1,5 @@
 import { DsButton, DsSection, DsSectionContainer } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 
 interface AuditCtaSectionProps {
   telegramUrl?: string;
@@ -10,6 +11,7 @@ export function AuditCtaSection({
 }: AuditCtaSectionProps) {
   return (
     <DsSection id="audit" className="ds-section-base">
+      <SectionLabel name="AuditCtaSection" />
       <DsSectionContainer className="py-20 tablet:py-28">
         <div className="max-w-[275px]">
           <div className="flex flex-col gap-4">

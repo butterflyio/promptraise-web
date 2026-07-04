@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { SectionLabel } from '@/components/section-label';
 
 /* ── Step data ───────────────────────────────────────────────────── */
 const STEPS = [
@@ -153,6 +154,7 @@ export function ProcessSection() {
       style={{ height: `${STEPS.length * 100}vh` }}
       className="relative"
     >
+      <SectionLabel name="ProcessSection" />
       {/* ── Sticky viewport ─────────────────────────────────────── */}
       <div className="sticky top-0 overflow-hidden bg-[#090b0a]" style={{ height: '100vh' }}>
 
