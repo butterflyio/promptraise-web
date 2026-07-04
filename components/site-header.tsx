@@ -40,7 +40,7 @@ export async function SiteHeader() {
               siteName={siteName}
               logoUrl={logoUrl}
               className="gap-3"
-              markClassName="h-4 w-auto shrink-0 mix-blend-luminosity"
+              markClassName="h-8 w-8 shrink-0 rounded-full object-cover"
               wordmarkClassName="text-[18px] leading-[1.5] tracking-[-0.396px] font-normal text-white"
             />
           </div>
