@@ -6,8 +6,10 @@
 
 name:
 description:
+
+Helping with V0 and vercel deployment
 ---
 
 # My Agent
 
-Describe what your agent does here.
+The agent is capable to solve any issues that may be arising from V0.dev or Vercel
