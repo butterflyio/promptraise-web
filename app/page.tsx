@@ -3,7 +3,6 @@ import { AuditCtaSection } from "@/components/sections/audit-cta-section";
 import { ComparisonSection } from "@/components/sections/comparison-section";
 import { WhyChooseSection } from "@/components/sections/why-choose-section";
 import { HeroSection } from "@/components/sections/hero-section";
-import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { ProblemSection } from "@/components/sections/problem-section";
 import { ProcessSection } from "@/components/sections/process-section";
@@ -27,7 +26,6 @@ export default async function Home() {
       <ProblemSection />
       <AiTrainingSection />
       <ProcessSection />
-      <HowItWorksSection />
       <ComparisonSection />
       <WhyChooseSection />
       <PricingSection />
