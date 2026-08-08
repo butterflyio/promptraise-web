@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 
 interface Problem {
@@ -15,22 +15,25 @@ interface ProblemSectionClientProps {
 }
 
 export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   // Only mount animated content on client after hydration
   useEffect(() => {
-    setMounted(true);
-    setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    
+    const frameId = window.requestAnimationFrame(() => {
+      setMounted(true);
+    });
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Render static fallback until mounted
@@ -87,12 +90,6 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
     offset: ['start 60%', 'end 40%'],
   });
 
-  const cardMotions = problems.map((_, idx) => ({
-    opacity: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0, 1]),
-    y: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [60, 0]),
-    scale: useTransform(scrollYProgress, [idx * 0.25, idx * 0.25 + 0.25], [0.92, 1]),
-  }));
-
   return (
     <section
       ref={sectionRef}
@@ -142,24 +139,49 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
 
           {/* Floating problem cards */}
           {problems.map((problem, idx) => (
-            <motion.div
+            <FloatingProblemCard
               key={problem.id}
-              className="absolute prompt-problem-card"
-              style={{
-                top: problem.pos.top,
-                left: problem.pos.left,
-                right: problem.pos.right,
-                opacity: cardMotions[idx].opacity,
-                y: cardMotions[idx].y,
-                scale: cardMotions[idx].scale,
-              }}
-            >
-              <h4 className="prompt-problem-card-title">{problem.title}</h4>
-              <p className="prompt-problem-card-body">{problem.desc}</p>
-            </motion.div>
+              problem={problem}
+              index={idx}
+              scrollYProgress={scrollYProgress}
+            />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function FloatingProblemCard({
+  problem,
+  index,
+  scrollYProgress,
+}: {
+  problem: Problem;
+  index: number;
+  scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
+}) {
+  const start = index * 0.25;
+  const end = start + 0.25;
+
+  const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
+  const y = useTransform(scrollYProgress, [start, end], [60, 0]);
+  const scale = useTransform(scrollYProgress, [start, end], [0.92, 1]);
+
+  return (
+    <motion.div
+      className="absolute prompt-problem-card"
+      style={{
+        top: problem.pos.top,
+        left: problem.pos.left,
+        right: problem.pos.right,
+        opacity,
+        y,
+        scale,
+      }}
+    >
+      <h4 className="prompt-problem-card-title">{problem.title}</h4>
+      <p className="prompt-problem-card-body">{problem.desc}</p>
+    </motion.div>
   );
 }

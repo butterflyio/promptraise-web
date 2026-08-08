@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   DsBadge,
   DsCard,
@@ -63,26 +64,56 @@ function TeamCard({
   return (
     <DsCard className="relative overflow-hidden rounded-[var(--radius-card-lg)] border-[rgba(255,255,255,0.1)] bg-[var(--bg-surface-panel)] shadow-[0_0_0_4px_rgba(255,255,255,0.07)]">
       <div className="absolute left-1/2 top-1/2 h-[444px] w-[962px] -translate-x-1/2 -translate-y-1/2 mix-blend-overlay">
-        <img alt="" aria-hidden="true" src={figmaAssets.overlayVector} className="block h-full w-full max-w-none" />
+        <Image
+          alt=""
+          aria-hidden
+          src={figmaAssets.overlayVector}
+          fill
+          sizes="962px"
+          className="block h-full w-full max-w-none object-cover"
+        />
       </div>
 
       <div className="relative px-3 pt-3">
         <div className="relative h-[260px] overflow-hidden rounded-[24px]">
-          <img
+          <Image
             alt=""
-            aria-hidden="true"
+            aria-hidden
             src={image}
+            fill
+            sizes="(max-width: 768px) 100vw, 420px"
             className="absolute inset-0 block h-full w-full max-w-none object-cover"
           />
           <div className="absolute inset-0 mix-blend-lighten">
-            <img alt="" aria-hidden="true" src={overlay[0]} className="block h-full w-full max-w-none object-cover" />
+            <Image
+              alt=""
+              aria-hidden
+              src={overlay[0]}
+              fill
+              sizes="(max-width: 768px) 100vw, 420px"
+              className="block h-full w-full max-w-none object-cover"
+            />
           </div>
           <div className="absolute inset-0 mix-blend-plus-lighter">
-            <img alt="" aria-hidden="true" src={overlay[1]} className="block h-full w-full max-w-none object-cover" />
+            <Image
+              alt=""
+              aria-hidden
+              src={overlay[1]}
+              fill
+              sizes="(max-width: 768px) 100vw, 420px"
+              className="block h-full w-full max-w-none object-cover"
+            />
           </div>
           <div className="absolute left-[23px] top-[23px] inline-flex items-center gap-2 rounded-[38px] border border-black bg-[rgba(0,0,0,0.35)] px-3 py-2 text-[12px] leading-[1.4] text-white backdrop-blur-[6px]">
             <div className="absolute left-[-21px] top-[11px] h-[120px] w-[120px]">
-              <img alt="" aria-hidden="true" src={figmaAssets.ellipse} className="block h-full w-full max-w-none" />
+              <Image
+                alt=""
+                aria-hidden
+                src={figmaAssets.ellipse}
+                width={120}
+                height={120}
+                className="block h-full w-full max-w-none"
+              />
             </div>
             <span className="relative z-10 whitespace-nowrap">{label}</span>
           </div>
@@ -128,7 +159,14 @@ function BackedByChip({
   return (
     <div className="flex flex-col gap-2 items-center">
       <div className={`flex items-center justify-center rounded-[38px] border border-black bg-[rgba(0,0,0,0.35)] px-6 py-4 backdrop-blur-[6px] ${widthClassName}`}>
-        <img alt="" aria-hidden="true" src={src} className="block h-6 w-full max-w-none object-contain" />
+        <Image
+          alt=""
+          aria-hidden
+          src={src}
+          width={128}
+          height={24}
+          className="block h-6 w-full max-w-none object-contain"
+        />
       </div>
       <p className="text-[16px] leading-[1.5] tracking-[-0.02em] text-white/40">
         {label}

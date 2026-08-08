@@ -140,8 +140,22 @@ export function ProcessSection() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const step = STEPS[activeStep];
-  const activeBarsCount = Math.round(STEP_BAR_FRACTIONS[activeStep] * TOTAL_BARS);
+  const firstStep = STEPS[0];
+  if (!firstStep) {
+    return null;
+  }
+
+  const safeActiveStep = Math.min(Math.max(activeStep, 0), STEPS.length - 1);
+  const step = STEPS[safeActiveStep] ?? firstStep;
+  const activeBarFraction =
+    STEP_BAR_FRACTIONS[safeActiveStep] ??
+    STEP_BAR_FRACTIONS[STEP_BAR_FRACTIONS.length - 1] ??
+    1;
+  const cardOffset =
+    CARD_OFFSETS[safeActiveStep] ??
+    CARD_OFFSETS[CARD_OFFSETS.length - 1] ??
+    '0%';
+  const activeBarsCount = Math.round(activeBarFraction * TOTAL_BARS);
 
   return (
     /*
@@ -218,7 +232,7 @@ export function ProcessSection() {
           {/* Card */}
           <motion.div
             className="absolute top-0"
-            animate={{ left: CARD_OFFSETS[activeStep] }}
+            animate={{ left: cardOffset }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
             style={{ width: CARD_WIDTH_PX }}
           >
@@ -296,7 +310,7 @@ export function ProcessSection() {
           <motion.div
             aria-hidden
             className="absolute"
-            animate={{ left: `calc(${CARD_OFFSETS[activeStep]} + ${CARD_WIDTH_PX / 2}px)` }}
+            animate={{ left: `calc(${cardOffset} + ${CARD_WIDTH_PX / 2}px)` }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
             style={{
               top: 340,           // bottom of card (approx)
