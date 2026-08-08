@@ -24,10 +24,10 @@
     "@sanity/vision": "^6.0.0",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.40.0",
-    "next": "16.2.7",
+    "next": "^16.3.0",
     "next-sanity": "^13.0.11",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "sanity": "^6.0.0"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.7",
+    "eslint-config-next": "^16.3.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",

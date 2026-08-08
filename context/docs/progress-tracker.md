@@ -214,6 +214,11 @@ Update this file after every meaningful implementation change.
   - Rebuilt section background layering in code (dark base + glow field + concentric ellipses + decorative vector arcs) to remove dependency on runtime localhost asset rendering for this slice.
   - Added direct dependency: `framer-motion` in `package.json`.
   - Current command snapshot after slice 1 pass: `npm run lint` passes with warnings only (0 errors), `npm run design:verify` passes, `npm run build` passes.
+- **Security + quality remediation pass completed (latest):**
+  - Fixed blocking lint/type issues in `problem-section-client.tsx` and `process-section.tsx` (hooks usage, state-effect lint, and strict indexed-access safety).
+  - Replaced currently flagged `<img>` usages in `team-section.tsx` and `site-brand.tsx` with `next/image`.
+  - Upgraded frontend runtime/lint stack to patched versions (`next@16.3.0`, `eslint-config-next@16.3.0`, `react@19.2.8`, `react-dom@19.2.8`) and applied non-breaking `npm audit fix`.
+  - Current command snapshot after remediation: `npm run typecheck` passes, `npm run lint` passes; `npm run build` fails in this sandbox due unresolved placeholder Sanity host (`your-project-id.apicdn.sanity.io`) when env vars are not populated.
 
 ## In Progress
 
