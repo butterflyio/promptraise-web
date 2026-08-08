@@ -1,4 +1,5 @@
 import { sanityClient } from "./client";
+import { sanityEnv } from "./env";
 
 export interface SiteSettings {
   siteName: string;
@@ -48,6 +49,10 @@ export interface SiteSettings {
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
+  if (!sanityEnv.hasConfiguredSanityProjectId) {
+    return null;
+  }
+
   const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
     siteName,
     organizationLegalName,
@@ -70,7 +75,11 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       asset->{url, metadata{dimensions}}
     }
   }`;
-  return sanityClient.fetch(query);
+  try {
+    return await sanityClient.fetch(query);
+  } catch {
+    return null;
+  }
 }
 
 export interface HomePageCta {
@@ -118,6 +127,14 @@ export interface HomePage {
 }
 
 export async function getHomePage(): Promise<HomePage | null> {
+  if (!sanityEnv.hasConfiguredSanityProjectId) {
+    return null;
+  }
+
   const query = `*[_type == "homePage" && _id == "home-page"][0]`;
-  return sanityClient.fetch(query);
+  try {
+    return await sanityClient.fetch(query);
+  } catch {
+    return null;
+  }
 }

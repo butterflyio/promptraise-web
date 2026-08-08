@@ -219,6 +219,10 @@ Update this file after every meaningful implementation change.
   - Replaced currently flagged `<img>` usages in `team-section.tsx` and `site-brand.tsx` with `next/image`.
   - Upgraded frontend runtime/lint stack to patched versions (`next@16.3.0`, `eslint-config-next@16.3.0`, `react@19.2.8`, `react-dom@19.2.8`) and applied non-breaking `npm audit fix`.
   - Current command snapshot after remediation: `npm run typecheck` passes, `npm run lint` passes; `npm run build` fails in this sandbox due unresolved placeholder Sanity host (`your-project-id.apicdn.sanity.io`) when env vars are not populated.
+- **Security + quality remediation follow-up completed (latest):**
+  - Hardened Sanity query reads to return `null` when `NEXT_PUBLIC_SANITY_PROJECT_ID` is unset/placeholder and to fail closed on fetch exceptions.
+  - Updated Sanity package stack to patched versions (`sanity@6.9.1`, `@sanity/vision@6.9.1`, `next-sanity@13.3.1`) and refreshed lockfile.
+  - Current command snapshot after follow-up: `npm audit` (0 vulnerabilities), `npm run lint` pass, `npm run typecheck` pass, `npm run build` pass.
 
 ## In Progress
 
