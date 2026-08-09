@@ -121,6 +121,43 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
       <div className="prompt-problem-bg" />
       <div className="prompt-problem-grid" />
 
+      {/* Dark separator-grid layer + scattered marks (Figma 102:185 mask group, #1E1E1E decorative vectors) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[746px] w-[1441px] -translate-x-1/2 -rotate-180 opacity-70"
+        style={{
+          WebkitMaskImage: "url(/figma/problem-mask.svg)",
+          maskImage: "url(/figma/problem-mask.svg)",
+          WebkitMaskSize: "1441px 1075px",
+          maskSize: "1441px 1075px",
+          WebkitMaskPosition: "-3px 96px",
+          maskPosition: "-3px 96px",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+        }}
+      >
+        <img
+          src="/figma/problem-bg-layer.svg"
+          alt=""
+          className="absolute left-[-259px] top-[-1476px] block h-[2222px] w-[1959px] max-w-none"
+        />
+        {/* Scattered decorative marks */}
+        <img src="/figma/problem-mark-2.svg" alt="" className="absolute left-[191px] top-[123px] h-[24px] w-[25px]" />
+        <img src="/figma/problem-mark-3.svg" alt="" className="absolute left-[51px] top-0 h-[24px] w-[25px]" />
+        <img src="/figma/problem-mark-4.svg" alt="" className="absolute left-0 top-[106px] h-[24px] w-[25px]" />
+        <img src="/figma/problem-mark-5.svg" alt="" className="absolute left-[134px] top-[246px] size-[24px]" />
+        <img src="/figma/problem-mark-6.svg" alt="" className="absolute left-[345px] top-[214px] size-[23px]" />
+        <img src="/figma/problem-mark-7.svg" alt="" className="absolute left-[281px] top-[348px] h-[23px] w-[24px]" />
+        <img src="/figma/problem-mark-8.svg" alt="" className="absolute left-[513px] top-[276px] h-[24px] w-[26px]" />
+        <img src="/figma/problem-mark-9.svg" alt="" className="absolute left-[443px] top-[423px] h-[24px] w-[28px]" />
+        <img src="/figma/problem-mark-10.svg" alt="" className="absolute left-[694px] top-[307px] h-[24px] w-[27px]" />
+        <img src="/figma/problem-mark-11.svg" alt="" className="absolute left-[618px] top-[466px] h-[25px] w-[27px]" />
+        <img src="/figma/problem-mark-12.svg" alt="" className="absolute left-[895px] top-[298px] h-[24px] w-[28px]" />
+        <img src="/figma/problem-mark-13.svg" alt="" className="absolute left-[812px] top-[473px] h-[25px] w-[29px]" />
+        <img src="/figma/problem-mark-14.svg" alt="" className="absolute left-[1124px] top-[233px] h-[31px] w-[27px]" />
+        <img src="/figma/problem-mark-15.svg" alt="" className="absolute left-[1028px] top-[436px] h-[26px] w-[28px]" />
+      </div>
+
       {/* Red decorative glows (per Figma: Decorative Vector 102:184 + Decorative Ellipse 102:387) */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
         <img

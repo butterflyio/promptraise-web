@@ -292,42 +292,108 @@ export function StatsSection({ content }: StatsSectionProps) {
       <div className="hidden desktop:block">
         <SectionLabel name="StatsSection" />
         <div className="prompt-stats-canvas pointer-events-none absolute left-1/2 top-0 z-10 h-[782px] w-[1440px] -translate-x-1/2">
+          {/* Figma ring visual - masked ellipse layers */}
           <div className="prompt-stats-rings absolute left-1/2 top-[80px] h-[696px] w-[1419px] -translate-x-1/2">
-            <img
-              src="/images/ellipse-1.png"
-              alt=""
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ width: "300px", height: "300px", opacity: 0.6 }}
-              aria-hidden="true"
-            />
-            <img
-              src="/images/ellipse-2.png"
-              alt=""
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ width: "420px", height: "340px", opacity: 0.5 }}
-              aria-hidden="true"
-            />
-            <img
-              src="/images/ellipse-3.png"
-              alt=""
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ width: "580px", height: "420px", opacity: 0.4 }}
-              aria-hidden="true"
-            />
-            <img
-              src="/images/ellipse-4.png"
-              alt=""
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ width: "720px", height: "520px", opacity: 0.35 }}
-              aria-hidden="true"
-            />
-            <img
-              src="/images/ellipse-5.png"
-              alt=""
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ width: "900px", height: "640px", opacity: 0.3 }}
-              aria-hidden="true"
-            />
+            <div
+              className="absolute left-1/2 top-1/2 size-[1223px] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
+                maskImage: "url(/figma/stats-ellipse-mask.svg)",
+                WebkitMaskSize: "1985px 866px",
+                maskSize: "1985px 866px",
+                WebkitMaskPosition: "-391px 179px",
+                maskPosition: "-391px 179px",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
+            >
+              <img
+                src="/figma/stats-ellipse-1.svg"
+                alt=""
+                className="block h-full w-full"
+                aria-hidden="true"
+              />
+            </div>
+            <div
+              className="absolute left-1/2 top-1/2 size-[1053px] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
+                maskImage: "url(/figma/stats-ellipse-mask.svg)",
+                WebkitMaskSize: "1985px 866px",
+                maskSize: "1985px 866px",
+                WebkitMaskPosition: "-476px 94px",
+                maskPosition: "-476px 94px",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
+            >
+              <img
+                src="/figma/stats-ellipse-2.svg"
+                alt=""
+                className="block h-full w-full"
+                aria-hidden="true"
+              />
+            </div>
+            <div
+              className="absolute left-1/2 top-1/2 size-[883px] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
+                maskImage: "url(/figma/stats-ellipse-mask.svg)",
+                WebkitMaskSize: "1985px 866px",
+                maskSize: "1985px 866px",
+                WebkitMaskPosition: "-561px 9px",
+                maskPosition: "-561px 9px",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
+            >
+              <img
+                src="/figma/stats-ellipse-3.svg"
+                alt=""
+                className="block h-full w-full"
+                aria-hidden="true"
+              />
+            </div>
+            <div
+              className="absolute left-1/2 top-1/2 size-[713px] -translate-x-1/2 -translate-y-1/2 rotate-[-60.22deg]"
+              style={{
+                WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
+                maskImage: "url(/figma/stats-ellipse-mask.svg)",
+                WebkitMaskSize: "1985px 866px",
+                maskSize: "1985px 866px",
+                WebkitMaskPosition: "-516px 54px",
+                maskPosition: "-516px 54px",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
+            >
+              <img
+                src="/figma/stats-ellipse-4.svg"
+                alt=""
+                className="block h-full w-full"
+                aria-hidden="true"
+              />
+            </div>
+            <div
+              className="absolute left-1/2 top-1/2 size-[544px] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
+                maskImage: "url(/figma/stats-ellipse-mask.svg)",
+                WebkitMaskSize: "1985px 866px",
+                maskSize: "1985px 866px",
+                WebkitMaskPosition: "-730px -161px",
+                maskPosition: "-730px -161px",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
+            >
+              <img
+                src="/figma/stats-ellipse-5.svg"
+                alt=""
+                className="block h-full w-full"
+                aria-hidden="true"
+              />
+            </div>
           </div>
 
           <div className="prompt-stats-vectors absolute inset-0">
