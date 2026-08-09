@@ -67,7 +67,8 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const resolved = await params;
   const slug = parseSlug(resolved);
-  const doc = slug === HOME_SLUG ? null : await getPageBySlug(slug);
+  // Fetch the page doc for the home slug too - it carries real metadata.
+  const doc = await getPageBySlug(slug);
 
   if (!doc) {
     return {
