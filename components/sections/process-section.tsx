@@ -151,6 +151,7 @@ export function ProcessSection() {
      */
     <div
       ref={sectionRef}
+      id="how-it-works"
       style={{ height: `${STEPS.length * 100}vh` }}
       className="relative"
     >
