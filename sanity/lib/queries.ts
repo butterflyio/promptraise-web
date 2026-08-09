@@ -183,3 +183,57 @@ export async function getHomePage(): Promise<HomePage | null> {
   const query = `*[_type == "homePage" && _id == "home-page"][0]`;
   return sanityClient.fetch(query);
 }
+
+export interface PageDoc {
+  _id: string;
+  _updatedAt?: string;
+  title?: string;
+  slug?: { current?: string };
+  metaTitle?: string;
+  metaDescription?: string;
+  noindex?: boolean;
+  ogImage?: {
+    asset?: {
+      url?: string;
+    };
+  };
+  sections?: Array<Record<string, unknown> & { _type: string }>;
+}
+
+/** The canonical home slug. Pages with slug "/" (or empty) resolve to "/". */
+export const HOME_SLUG = "/";
+
+export function normalizePageSlug(slug: string | undefined): string {
+  if (!slug || slug === "" || slug === "index") {
+    return HOME_SLUG;
+  }
+  return slug.startsWith("/") ? slug : `/${slug}`;
+}
+
+export async function getPageBySlug(
+  rawSlug: string,
+): Promise<PageDoc | null> {
+  const slug = normalizePageSlug(rawSlug);
+  const query = `*[_type == "page" && slug.current == $slug][0]{
+    _id,
+    _updatedAt,
+    title,
+    slug,
+    metaTitle,
+    metaDescription,
+    noindex,
+    ogImage{asset->{url}},
+    sections,
+  }`;
+  return sanityClient.fetch(query, { slug });
+}
+
+export async function getAllPages(): Promise<PageDoc[]> {
+  const query = `*[_type == "page"]{
+    _id,
+    _updatedAt,
+    slug,
+    noindex,
+  }`;
+  return sanityClient.fetch(query);
+}

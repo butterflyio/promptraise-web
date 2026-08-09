@@ -30,6 +30,10 @@ export default defineConfig({
               .child(
                 S.document().schemaType("homePage").documentId("home-page"),
               ),
+            S.listItem()
+              .title("Pages")
+              .schemaType("page")
+              .child(S.documentTypeList("page").title("Pages")),
           ]),
     }),
     visionTool(),
