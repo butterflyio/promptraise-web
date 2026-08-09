@@ -19,10 +19,30 @@ export async function POST(request: Request) {
   }
 
   try {
+    // Sanity webhook payloads: {_id, _type, slug: {current}, _rev, ...}
+    // Accept the raw document body (Sanity posts the document directly) OR
+    // a wrapped {slug} / {document: {...}} shape.
     let slug: string | undefined;
     try {
-      const body = (await request.json()) as { slug?: string };
-      slug = body.slug;
+      const body = (await request.json()) as Record<string, unknown>;
+
+      const doc = (body.document ?? body) as Record<string, unknown>;
+      const rawSlug = doc.slug as
+        | string
+        | { current?: string }
+        | undefined;
+
+      if (typeof rawSlug === "string") {
+        slug = rawSlug;
+      } else if (rawSlug && typeof rawSlug.current === "string") {
+        slug = rawSlug.current;
+      }
+
+      // _id fallback: "drafts.page-home" or "page-home" -> home "/"
+      if (!slug && typeof doc._id === "string") {
+        const id = doc._id.replace(/^drafts\./, "");
+        slug = id.startsWith("page-") ? "/" : undefined;
+      }
     } catch {
       // Body is optional - revalidate the whole site on webhook ping.
     }
