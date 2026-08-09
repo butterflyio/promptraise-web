@@ -63,155 +63,182 @@ function useIsMobileBreakpoint() {
   return isMobile;
 }
 
-/** Figma mobile/tablet "Features Section" - heading, badge, rings, stacked cards */
-function StatsMobileLayout() {
+/** Figma mobile "Features Section" (frame 415:7299 + heading 415:9260) -
+ * 24px headline, 5 masked ellipse rings, 92x92 center mark, 4 stat cards
+ * overlaying the rings in a staggered 2-col grid. All copy from CMS
+ * (visibility block) with the same Figma defaults as desktop. */
+function StatsMobileLayout({
+  content,
+}: {
+  content?: HomePageVisibilitySection;
+}) {
+  const headlineLineOne =
+    content?.headline?.lineOne ?? defaultVisibilitySection.headline.lineOne;
+  const headlineLineTwo =
+    content?.headline?.lineTwo ?? defaultVisibilitySection.headline.lineTwo;
+
+  const statCards = defaultVisibilitySection.statCards.map((card, index) => ({
+    value: content?.statCards?.[index]?.value ?? card.value,
+    label: content?.statCards?.[index]?.label ?? card.label,
+  }));
+
+  const ringLayers = [
+    {
+      img: "/figma/mobile-ring-1.svg",
+      wrapperClass: "left-[calc(50%+6px)] top-1/2 size-[612px]",
+      inset: "inset-[-27.34%_-42.35%_-57.37%_-42.35%]",
+      maskPosition: "-196px 89px",
+    },
+    {
+      img: "/figma/mobile-ring-2.svg",
+      wrapperClass: "left-[calc(50%+6.5px)] top-[calc(50%+0.5px)] size-[527px]",
+      inset: "inset-[-31.75%_-49.18%_-66.62%_-49.18%]",
+      maskPosition: "-239px 46px",
+    },
+    {
+      img: "/figma/mobile-ring-3.svg",
+      wrapperClass: "left-[calc(50%+6px)] top-1/2 size-[442px]",
+      inset: "inset-[-37.85%_-58.64%_-79.44%_-58.64%]",
+      maskPosition: "-281px 4px",
+    },
+    {
+      img: "/figma/mobile-ring-4.svg",
+      wrapperClass: "left-[calc(50%+6.58px)] top-[calc(50%-0.29px)] size-[487.158px]",
+      inset: "inset-[-46.86%_-72.61%_-98.35%_-72.61%]",
+      maskPosition: "-259px 26.865px",
+      rotate: true,
+    },
+    {
+      img: "/figma/mobile-ring-5.svg",
+      wrapperClass: "left-[calc(50%+6px)] top-1/2 size-[272px]",
+      inset: "inset-[-61.51%_-95.3%_-129.08%_-95.3%]",
+      maskPosition: "-366px -81px",
+    },
+  ];
+
+  const ringMaskStyle = (maskPosition: string): React.CSSProperties => ({
+    WebkitMaskImage: "url(/figma/mobile-ring-mask.svg)",
+    maskImage: "url(/figma/mobile-ring-mask.svg)",
+    WebkitMaskSize: "993px 433px",
+    maskSize: "993px 433px",
+    WebkitMaskPosition: maskPosition,
+    maskPosition,
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+  });
+
   return (
     <div className="desktop:hidden tablet:py-24 relative overflow-hidden py-16">
       <SectionLabel name="StatsSection" />
-      <div className="mx-auto max-w-[1248px] px-6">
-        {/* Heading row: tracking label + 48 LLMs badge */}
-        <div className="flex flex-col items-center gap-5">
-          <div className="flex items-center justify-center gap-2">
-            <span className="text-[16px] tracking-[-0.02em] text-[#d4d4d8]">
-              Tracking visibility in
-            </span>
-            <span className="rounded-full border border-black/90 bg-black/35 px-3 pt-0.5 pb-[2px] text-[12px] font-medium tracking-[-0.02em] text-white backdrop-blur-[6px]">
-              48 LLMs
-            </span>
-          </div>
-          {/* Slider / divider line */}
-          <div className="relative h-8 w-full max-w-[392px]">
-            <div
-              className="absolute top-0 left-1/2 h-[43px] w-full max-w-[393px] -translate-x-1/2"
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 25%, #fff 75%, rgba(255,255,255,0) 100%)",
-                WebkitMaskImage: "url(/figma/mobile-slider-mask.svg)",
-                maskImage: "url(/figma/mobile-slider-mask.svg)",
-                WebkitMaskSize: "100% 32px",
-                maskSize: "100% 32px",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                opacity: 0.7,
-              }}
-              aria-hidden="true"
-            />
-          </div>
-        </div>
+      <div className="mx-auto max-w-[1248px]">
+        {/* Heading (Figma 415:9260): 24px regular + bold, mix-blend-luminosity */}
+        <p className="relative z-10 mx-auto max-w-[361px] text-center text-[24px] text-white mix-blend-luminosity">
+          <span className="leading-[1.5] font-normal tracking-[-0.02em]">
+            {headlineLineOne}
+          </span>
+          <br aria-hidden />
+          <span className="leading-[1.3] font-bold tracking-[-0.02em]">
+            {headlineLineTwo}
+          </span>
+        </p>
 
-        {/* Rings visual behind the cards */}
-        <div
-          className="pointer-events-none absolute top-1/2 left-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 opacity-50"
-          aria-hidden="true"
-        >
+        {/* Composition: rings + center mark + 4 stat cards (Figma 415:7299) */}
+        <div className="relative mx-auto mt-2 h-[420px] w-full max-w-[393px]">
+          {/* Rings visual - 5 masked ellipse layers (415:7304..415:7308) */}
           <div
-            className="relative h-[391px] w-[710px]"
-            style={{
-              WebkitMaskImage: "url(/figma/mobile-ring-mask.svg)",
-              maskImage: "url(/figma/mobile-ring-mask.svg)",
-              WebkitMaskSize: "993px 433px",
-              maskSize: "993px 433px",
-              WebkitMaskPosition: "-196px 89px",
-              maskPosition: "-196px 89px",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-            }}
+            className="pointer-events-none absolute bottom-[3px] top-[40px] left-1/2 w-[710px] -translate-x-1/2"
+            aria-hidden="true"
           >
-            <img
-              src="/figma/mobile-ring-1.svg"
-              alt=""
-              className="absolute inset-0 block h-full w-full max-w-none"
-            />
-          </div>
-        </div>
-
-        {/* Two stacked glass cards */}
-        <div className="tablet:gap-6 relative mt-10 grid gap-4">
-          {/* Card 1: Current Visibility Audit */}
-          <div className="tablet:p-7 overflow-hidden rounded-[16px] border-[0.5px] border-white bg-black/25 p-5 shadow-[0_0_0_2px_rgba(255,255,255,0.07)] backdrop-blur-[3.25px]">
-            {/* Decorative visual strip */}
-            <div className="relative mx-auto mb-4 h-[178px] w-full max-w-[340px]">
-              <img
-                src="/figma/mobile-audit-vec-1.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-1/2 left-0 h-auto w-[112px] -translate-y-1/2 opacity-60"
-              />
-              <img
-                src="/figma/mobile-audit-vec-2.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-1/3 right-4 h-auto w-[112px] -translate-y-1/2 rotate-180 opacity-60"
-              />
-              <img
-                src="/figma/mobile-audit-ellipse.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-1/2 left-1/2 h-auto w-[270px] -translate-x-1/2 -translate-y-1/2 opacity-40"
-              />
-              <img
-                src="/figma/mobile-audit-card.svg"
-                alt=""
-                className="absolute top-1/2 left-0 h-auto w-[165px] max-w-none -translate-y-1/2"
-              />
-              <img
-                src="/figma/mobile-audit-card-2.svg"
-                alt=""
-                className="absolute top-1/2 right-0 h-auto w-[165px] max-w-none -translate-y-1/2 -scale-x-100"
-              />
-              <img
-                src="/figma/mobile-audit-center.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-1/2 left-1/2 h-[53px] w-[53px] -translate-x-1/2 -translate-y-1/2"
-              />
+            <div className="absolute top-[57px] left-[-41px]">
+              <div className="absolute top-1/2 left-[calc(50%+6px)] -translate-x-1/2 -translate-y-1/2">
+                {ringLayers.map((layer) => (
+                  <div
+                    key={layer.img}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 ${layer.wrapperClass}`}
+                    style={ringMaskStyle(layer.maskPosition)}
+                  >
+                    {layer.rotate ? (
+                      <div className="flex items-center justify-center rotate-[-60.22deg]">
+                        <div className="relative size-[357px]">
+                          <div className={`absolute ${layer.inset}`}>
+                            <img
+                              src={layer.img}
+                              alt=""
+                              className="block size-full max-w-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={`absolute ${layer.inset}`}>
+                        <img
+                          src={layer.img}
+                          alt=""
+                          className="block size-full max-w-none"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-            <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-[18px] leading-[1.4] font-bold tracking-[-0.02em] text-transparent">
-              Current Visibility Audit
-            </h3>
-            <p className="mt-2 text-[12px] leading-[1.5] text-white/40">
-              We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you
-              now. We fix the baseline - how often you&apos;re mentioned in
-              target queries and alongside which competitors.
-            </p>
           </div>
 
-          {/* Card 2: Real creators, not AI text */}
-          <div className="tablet:p-7 overflow-hidden rounded-[24px] border border-white/[0.03] bg-[rgba(19,22,25,0.25)] p-5 backdrop-blur-[6.5px]">
-            {/* Logos grid visual */}
-            <div className="relative mx-auto mb-4 grid max-w-[340px] grid-cols-6 gap-2 overflow-hidden opacity-70">
-              {Array.from({ length: 18 }).map((_, i) => (
-                <img
-                  key={i}
-                  src={`/figma/mobile-creators-dot-${i + 1}.png`}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-[38px] w-[38px] rounded-full object-cover"
-                />
-              ))}
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-[#22c55e] to-[#127637] shadow-[0_0_0_2px_rgba(0,222,78,0.2)]">
-                <img
-                  src="/figma/mobile-creators-logo.svg"
-                  alt=""
-                  aria-hidden="true"
-                  className="h-5 w-5"
-                />
-              </span>
-              <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-[16px] leading-[1.5] font-bold tracking-[-0.02em] text-transparent">
-                Real creators, not AI text
-              </h3>
-            </div>
-            <p className="mt-3 text-[12px] leading-[1.4] text-white/40">
-              LLMs filter AI-generated content. Real person with real audience -
-              an EEAT signal that can&apos;t be faked.
-            </p>
-          </div>
+          {/* Center mark (415:9269 Background Container 92x92 at ring center) */}
+          <img
+            src="/images/logo-stats-section.png"
+            alt="PromptRaise mark"
+            className="absolute top-1/2 left-1/2 z-10 size-[92px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
+          />
+
+          {/* 4 stat cards overlaying the rings (Figma 415:9261/8199/9265/8200) */}
+          <StatCardMobile
+            value={statCards[0]?.value ?? ""}
+            label={statCards[0]?.label ?? ""}
+            className="left-[16px] top-[25px] h-[86px] w-[173px]"
+          />
+          <StatCardMobile
+            value={statCards[1]?.value ?? ""}
+            label={statCards[1]?.label ?? ""}
+            className="left-[205px] top-[90px] h-[69px] w-[172px]"
+          />
+          <StatCardMobile
+            value={statCards[2]?.value ?? ""}
+            label={statCards[2]?.label ?? ""}
+            className="left-[16px] top-[241px] h-[69px] w-[173px]"
+          />
+          <StatCardMobile
+            value={statCards[3]?.value ?? ""}
+            label={statCards[3]?.label ?? ""}
+            className="left-[205px] top-[310px] h-[69px] w-[172px]"
+          />
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Figma features-card (415:9261 instance) - bg #232b28, white/91 border,
+ * rounded-20, drop shadow + 3px inset ring; 16px bold value / 12px #71717a label. */
+function StatCardMobile({
+  value,
+  label,
+  className,
+}: {
+  value: string;
+  label: string;
+  className: string;
+}) {
+  return (
+    <div
+      className={`absolute flex flex-col items-center justify-center gap-1 overflow-hidden rounded-[20px] border border-white/[0.91] bg-[#232b28] px-6 py-3 text-center shadow-[0px_9px_16.9px_0px_rgba(0,0,0,0.25),0px_0px_0px_3px_#232b28] ${className}`}
+    >
+      <p className="text-[16px] leading-[1.5] font-bold tracking-[-0.02em] whitespace-nowrap text-white">
+        {value}
+      </p>
+      <p className="text-[12px] leading-[1.4] font-medium text-[#71717a]">
+        {label}
+      </p>
     </div>
   );
 }
@@ -284,7 +311,7 @@ export function StatsSection({ content }: StatsSectionProps) {
       className="prompt-stats-section relative isolate overflow-hidden bg-[var(--bg-base)]"
     >
       {/* Mobile / tablet layout (below desktop) */}
-      <StatsMobileLayout />
+      <StatsMobileLayout content={content} />
 
       {/* Desktop animated canvas (>= 1024px) */}
       <div className="desktop:block hidden">
