@@ -145,7 +145,7 @@ export interface HomePage {
     badge?: string;
     heading?: string;
     subtext?: string;
-    steps?: Array<{ title?: string; desc?: string }>;
+    steps?: Array<{ number?: string; label?: string; title?: string; desc?: string }>;
   };
   comparison?: {
     badge?: string;
