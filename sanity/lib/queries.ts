@@ -81,6 +81,7 @@ export interface HomePageCta {
 export interface HomePageHeroTrustLogo {
   name?: string;
   symbol?: string;
+  logo?: string;
   dimmed?: boolean;
 }
 
@@ -115,6 +116,67 @@ export interface HomePageVisibilitySection {
 export interface HomePage {
   hero?: HomePageHero;
   visibilitySection?: HomePageVisibilitySection;
+  problem?: {
+    windowTitle?: string;
+    heading?: string;
+    subtext?: string;
+    ctaLabel?: string;
+    problems?: Array<{ title?: string; desc?: string }>;
+  };
+  aiTraining?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    layers?: Array<{
+      number?: string;
+      title?: string;
+      description?: string;
+      benefits?: string[];
+    }>;
+  };
+  process?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    steps?: Array<{ title?: string; desc?: string }>;
+  };
+  comparison?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    features?: string[];
+  };
+  whyChoose?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    cards?: Array<{ title?: string; desc?: string }>;
+  };
+  plans?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    ctaLabel?: string;
+  };
+  auditCta?: {
+    heading?: string;
+    subtext?: string;
+    ctaLabel?: string;
+    checklistHeading?: string;
+    checklist?: string[];
+  };
+  team?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    members?: Array<{ name?: string; role?: string; bio?: string }>;
+  };
+  askAi?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    prompt?: string;
+  };
 }
 
 export async function getHomePage(): Promise<HomePage | null> {

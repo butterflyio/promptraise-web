@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SectionLabel } from '@/components/section-label';
+import type { HomePage } from '@/sanity/lib/queries';
 
 /* ── Step data ───────────────────────────────────────────────────── */
 const STEPS = [
@@ -111,9 +112,20 @@ const CARD_WIDTH_PX = 310;
 const STEP_BAR_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0];
 
 /* ── Component ───────────────────────────────────────────────────── */
-export function ProcessSection() {
+interface ProcessSectionProps {
+  content?: HomePage['process'];
+}
+
+export function ProcessSection({ content }: ProcessSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+
+  // Override step copy from CMS while keeping the fixed 5-step structure/icons
+  const steps = STEPS.map((step, i) => ({
+    ...step,
+    title: content?.steps?.[i]?.title ?? step.title,
+    description: content?.steps?.[i]?.desc ?? step.description,
+  }));
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -141,7 +153,7 @@ export function ProcessSection() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const step = STEPS[activeStep]!;
+  const step = steps[activeStep]!;
   const activeBarsCount = Math.round(STEP_BAR_FRACTIONS[activeStep]! * TOTAL_BARS);
 
   return (
@@ -186,7 +198,7 @@ export function ProcessSection() {
                 backdropFilter: 'blur(8px)',
               }}
             >
-              Process
+              {content?.badge ?? "Process"}
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/figma/decorative-vector-9.svg" alt="" aria-hidden width={120} height={12} className="shrink-0" />
@@ -195,10 +207,11 @@ export function ProcessSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight text-balance mb-3">
-            From analysis to ChatGPT answer
+            {content?.heading ?? "From analysis to ChatGPT answer"}
           </h2>
           <p className="text-sm md:text-base text-white/45 max-w-xl mx-auto">
-            Five steps — from a visibility audit to measurable growth in AI mentions.
+            {content?.subtext ??
+              "Five steps — from a visibility audit to measurable growth in AI mentions."}
           </p>
         </div>
 

@@ -28,26 +28,27 @@ export default async function Home() {
       {/* 2. Stats (animated) */}
       <StatsSection content={homePage?.visibilitySection} />
       {/* 3. Problem (animated) */}
-      <ProblemSection />
+      <ProblemSection content={homePage?.problem} />
       {/* 4. We create content that trains AI */}
-      <AiTrainingSection />
+      <AiTrainingSection content={homePage?.aiTraining} />
       {/* 5. Process / Audit */}
-      <ProcessSection />
+      <ProcessSection content={homePage?.process} />
       {/* 6. PromptRaise vs Competitors */}
-      <ComparisonSection />
+      <ComparisonSection content={homePage?.comparison} />
       {/* 7. Why Choose PromptRaise */}
-      <WhyChooseSection />
+      <WhyChooseSection content={homePage?.whyChoose} />
       {/* 8. Plans That Scale With You + lead form */}
-      <PlansSection />
+      <PlansSection content={homePage?.plans} />
       {/* 9. CTA banner */}
       <AuditCtaSection
         telegramUrl={settings?.primaryTelegramCtaUrl}
         auditUrl={settings?.freeAuditCtaUrl}
+        copy={homePage?.auditCta}
       />
       {/* 10. Built by Web3 Veterans */}
-      <TeamSection />
+      <TeamSection content={homePage?.team} />
       {/* 11. Ask AI */}
-      <AskAiSection />
+      <AskAiSection content={homePage?.askAi} />
       {/* 12. Footer is rendered by SiteShell in app/layout.tsx */}
     </main>
   );

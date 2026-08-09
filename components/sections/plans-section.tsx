@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 
-import {
-  DsBadge,
-  DsCard,
-  DsSection,
-  DsSectionContainer,
-} from "@/components/design-system";
+import { DsBadge, DsCard, DsSection, DsSectionContainer } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
+import type { HomePage } from "@/sanity/lib/queries";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -71,7 +67,7 @@ function Field({
   );
 }
 
-export function PlansSection() {
+export function PlansSection({ content }: { content?: HomePage["plans"] }) {
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -148,13 +144,13 @@ export function PlansSection() {
 
       <DsSectionContainer className="relative">
         <div className="flex flex-col items-center gap-3 text-center">
-          <DsBadge variant="muted">Plans</DsBadge>
+          <DsBadge variant="muted">{content?.badge ?? "Plans"}</DsBadge>
           <h2 className="max-w-[649px] text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px] tablet:leading-[1.15]">
-            Plans That Scale With You
+            {content?.heading ?? "Plans That Scale With You"}
           </h2>
           <p className="max-w-[560px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
-            Start with a free audit. Upgrade when you&apos;re ready to dominate
-            AI answers.
+            {content?.subtext ??
+              "Start with a free audit. Upgrade when you&apos;re ready to dominate AI answers."}
           </p>
         </div>
 
@@ -230,7 +226,7 @@ export function PlansSection() {
               disabled={isSubmitting}
               className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-[var(--accent-primary)] px-8 text-[16px] leading-none tracking-[0] text-[var(--accent-foreground)] shadow-[var(--shadow-cta)] transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSubmitting ? "Sending..." : "Get Pricing"}
+              {isSubmitting ? "Sending..." : (content?.ctaLabel ?? "Get Pricing")}
             </button>
 
             <p className="text-center text-[11px] leading-[1.5] text-white/30">

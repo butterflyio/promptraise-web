@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { DsBadge, DsSection, DsSectionContainer } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
+import type { HomePage } from "@/sanity/lib/queries";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared card shell — dark #0e0f10 bg, subtle border, rounded-2xl
@@ -427,7 +428,8 @@ function NarrativeCard() {
 /* ─────────────────────────────────────────────────────────────────────────────
    Main export
 ───────────────────────────────────────────────────────────────────────────── */
-export function WhyChooseSection() {
+export function WhyChooseSection({ content }: { content?: HomePage["whyChoose"] }) {
+  const cmsCards = content?.cards?.length ? content.cards : null;
   return (
     <DsSection>
       <SectionLabel name="WhyChooseSection" />
@@ -436,10 +438,11 @@ export function WhyChooseSection() {
         <div className="flex items-start justify-between mb-12">
           <div>
             <h2 className="text-[40px] tablet:text-[52px] font-bold text-white leading-tight mb-3">
-              Why Choose PromptRaise
+              {content?.heading ?? "Why Choose PromptRaise"}
             </h2>
             <p className="text-[14px] text-white/40">
-              Real creators. On-chain transparency. Measurable results.
+              {content?.subtext ??
+                "Real creators. On-chain transparency. Measurable results."}
             </p>
           </div>
 
@@ -450,7 +453,7 @@ export function WhyChooseSection() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/figma/decorative-vector-9.svg" alt="" aria-hidden width={100} height={10} className="shrink-0" style={{ transform: "scaleX(-1)" }} />
             <DsBadge variant="section" className="shrink-0 whitespace-nowrap">
-              Why Choose us
+              {content?.badge ?? "Why Choose us"}
             </DsBadge>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/figma/decorative-vector-9.svg" alt="" aria-hidden width={100} height={10} className="shrink-0" />
@@ -459,14 +462,29 @@ export function WhyChooseSection() {
           </div>
         </div>
 
-        {/* Bento grid — 3 columns, rows of varying heights */}
-        {/*
-          Layout (matches screenshot):
-          Col 1 (left):  row1=FullCycle (tall), row2=Numbers (shorter)
-          Col 2 (center): row1=RealCreators (tall), row2=Web3Inside (shorter)
-          Col 3 (right):  row1=Transparency (shorter), row2=Narrative (taller)
-        */}
-        <div className="grid grid-cols-1 tablet:grid-cols-3 gap-4">
+        {cmsCards ? (
+          /* CMS-driven simple cards when content is provided */
+          <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
+            {cmsCards.map((card, i) => (
+              <div
+                key={i}
+                className="relative overflow-hidden rounded-2xl flex flex-col p-8"
+                style={{
+                  background: "#0e0f10",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                }}
+              >
+                <h3 className="text-[15px] font-bold text-white leading-snug mb-3">
+                  {card.title}
+                </h3>
+                <p className="text-[12px] leading-[1.6] text-white/40">
+                  {card.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 tablet:grid-cols-3 gap-4">
           {/* Column 1 */}
           <div className="flex flex-col gap-4">
             <FullCycleCard />
@@ -485,6 +503,7 @@ export function WhyChooseSection() {
             <NarrativeCard />
           </div>
         </div>
+        )}
       </DsSectionContainer>
     </DsSection>
   );

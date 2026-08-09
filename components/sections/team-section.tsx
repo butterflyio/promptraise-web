@@ -7,6 +7,7 @@ import {
   TwitterXIcon,
   designSystemAssets,
 } from "@/components/design-system";
+import type { HomePage } from "@/sanity/lib/queries";
 
 const figmaAssets = designSystemAssets.figma.team;
 
@@ -59,7 +60,13 @@ function TeamCard({
   label,
   image,
   overlay,
-}: (typeof teamCards)[number]) {
+}: {
+  name: string;
+  description: string;
+  label: string;
+  image: string;
+  overlay: readonly string[];
+}) {
   return (
     <DsCard className="relative overflow-hidden rounded-[var(--radius-card-lg)] border-[rgba(255,255,255,0.1)] bg-[var(--bg-surface-panel)] shadow-[0_0_0_4px_rgba(255,255,255,0.07)]">
       <div className="absolute left-1/2 top-1/2 h-[444px] w-[962px] -translate-x-1/2 -translate-y-1/2 mix-blend-overlay">
@@ -137,7 +144,24 @@ function BackedByChip({
   );
 }
 
-export function TeamSection() {
+export function TeamSection({
+  content,
+}: {
+  content?: HomePage["team"];
+}) {
+  // Override name/role/bio from CMS while keeping the fixed portrait/overlay art
+  const cards: {
+    name: string;
+    label: string;
+    description: string;
+    image: string;
+    overlay: readonly string[];
+  }[] = teamCards.map((card, i) => ({
+    ...card,
+    name: content?.members?.[i]?.name ?? card.name,
+    label: content?.members?.[i]?.role ?? card.label,
+    description: content?.members?.[i]?.bio ?? card.description,
+  }));
   return (
     <DsSection id="company" className="ds-section-contrast">
       <DsSectionContainer>
@@ -146,15 +170,15 @@ export function TeamSection() {
             variant="section"
             className="relative px-6 py-2 text-[15px] leading-[1.5]"
           >
-            Team
+            {content?.badge ?? "Team"}
           </DsBadge>
           <h2 className="text-center text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white">
-            Built by Web3 Veterans
+            {content?.heading ?? "Built by Web3 Veterans"}
           </h2>
         </div>
 
         <div className="mt-10 flex flex-col gap-6">
-          {teamCards.map((card) => (
+          {cards.map((card) => (
             <TeamCard key={card.name} {...card} />
           ))}
         </div>

@@ -31,13 +31,14 @@ const defaultHeroContent = {
     label: "Tracking visibility in",
     badge: "48 LLMs",
     logos: [
-      { name: "Octals", symbol: "◌", dimmed: true },
-      { name: "45 Degrees°", symbol: "↗" },
-      { name: "Acme Corp", symbol: "✦" },
-      { name: "AlphaWave", symbol: "⬢" },
-      { name: "Alt+Shift", symbol: "◍" },
-      { name: "Capsule", symbol: "●" },
-      { name: "Basis", symbol: "✶", dimmed: true },
+      { name: "ChatGPT", logo: "/logos/llm-chatgpt.svg" },
+      { name: "Claude", logo: "/logos/llm-claude.svg" },
+      { name: "Gemini", logo: "/logos/llm-gemini.svg" },
+      { name: "Perplexity", logo: "/logos/llm-perplexity.svg" },
+      { name: "DeepSeek", logo: "/logos/llm-deepseek.svg" },
+      { name: "Grok", logo: "/logos/llm-grok.svg" },
+      { name: "Llama", logo: "/logos/llm-llama.svg" },
+      { name: "Mistral", logo: "/logos/llm-mistral.svg" },
     ],
   },
 };
@@ -137,17 +138,28 @@ export function HeroSection({
           </div>
 
           <div className="prompt-trust-mask w-full max-w-[978px] overflow-hidden px-4">
-            <div className="tablet:gap-8 flex items-center justify-center gap-6">
+            <div className="tablet:gap-10 flex items-center justify-center gap-8">
               {trustLogos.map((company, index) => (
                 <div
                   key={`${company.name ?? "trust-logo"}-${index}`}
                   className={`flex shrink-0 items-center gap-2 text-white ${
-                    company.dimmed ? "opacity-[0.15]" : "opacity-[0.92]"
+                    "dimmed" in company && company.dimmed
+                      ? "opacity-[0.15]"
+                      : "opacity-[0.92]"
                   }`}
                 >
-                  <span className="text-[22px] leading-none">
-                    {company.symbol}
-                  </span>
+                  {company.logo ? (
+                    <img
+                      src={company.logo}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-[18px] w-[18px]"
+                    />
+                  ) : (
+                    <span className="text-[22px] leading-none">
+                      {"symbol" in company ? company.symbol : ""}
+                    </span>
+                  )}
                   <span className="text-[13px] leading-none font-semibold whitespace-nowrap">
                     {company.name}
                   </span>

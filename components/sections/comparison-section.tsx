@@ -7,6 +7,7 @@ import {
   MinusIcon,
 } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
+import type { HomePage } from "@/sanity/lib/queries";
 
 const competitors = [
   { name: "PromptRaise", highlight: true, price: "$3,000" },
@@ -43,7 +44,17 @@ function CheckMark({ active }: { active?: boolean }) {
   );
 }
 
-export function ComparisonSection() {
+interface ComparisonSectionProps {
+  content?: HomePage['comparison'];
+}
+
+export function ComparisonSection({ content }: ComparisonSectionProps) {
+  // Keep the fixed 7-row matrix shape; override row labels only when CMS
+  // provides exactly 7 labels. The final "Price/mo" row always stays.
+  const displayRows =
+    content?.features && content.features.length === rows.length
+      ? (content.features as readonly string[])
+      : rows;
   return (
     <DsSection className="relative overflow-hidden ds-section-alt">
       <SectionLabel name="ComparisonSection" />
@@ -51,12 +62,13 @@ export function ComparisonSection() {
 
       <DsSectionContainer className="relative">
         <div className="flex flex-col items-center gap-3 text-center">
-          <DsBadge variant="muted">Comparison</DsBadge>
+          <DsBadge variant="muted">{content?.badge ?? "Comparison"}</DsBadge>
           <h2 className="text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px]">
-            PromptRaise vs Competitors
+            {content?.heading ?? "PromptRaise vs Competitors"}
           </h2>
           <p className="max-w-[540px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
-            Competitors can track. We close the full loop - from analysis to publication and measurable result.
+            {content?.subtext ??
+              "Competitors can track. We close the full loop - from analysis to publication and measurable result."}
           </p>
         </div>
 
@@ -78,7 +90,7 @@ export function ComparisonSection() {
           </div>
 
           <div className="grid gap-y-2">
-            {rows.map((row, rowIndex) => (
+            {displayRows.map((row, rowIndex) => (
               <div
                 key={row}
                 className="grid grid-cols-[1.5fr_repeat(4,minmax(0,1fr))] items-center gap-4"

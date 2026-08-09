@@ -1,6 +1,14 @@
 import { DsSection, DsSectionContainer } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import { cn } from "@/lib/cn";
+import type { HomePage } from "@/sanity/lib/queries";
+
+const DEFAULT_CHECKLIST = [
+  "Content gap analysis across AI + communities",
+  "Real creators (not AI-generated content)",
+  "Tier-1 crypto media placements",
+  "Measurable growth in AI mentions",
+];
 
 interface AuditCtaSectionProps {
   telegramUrl?: string;
@@ -17,9 +25,11 @@ interface AuditCtaSectionProps {
 function ButtonIcon({
   auditUrl,
   className,
+  label = "Get Free Audit",
 }: {
   auditUrl: string;
   className?: string;
+  label?: string;
 }) {
   return (
     <a
@@ -31,7 +41,7 @@ function ButtonIcon({
       data-node-id="312:4029"
     >
       <p className="relative shrink-0 whitespace-nowrap text-[16px] leading-[1.5] tracking-[-0.32px] text-[#09090b] [word-break:break-word]">
-        Get Free Audit
+        {label}
       </p>
       <div
         className="flex shrink-0 items-center rounded-full bg-white p-[12px]"
@@ -163,7 +173,15 @@ function WindowMockup({ className }: { className?: string }) {
 }
 
 /** PromptRaise identity panel - Figma 411:6853 (fixed 396x209 content) */
-function IdentityPanel({ className }: { className?: string }) {
+function IdentityPanel({
+  className,
+  heading = "PromptRaise - full-cycle AI visibility agency for Web3.",
+  checklist = DEFAULT_CHECKLIST,
+}: {
+  className?: string;
+  heading?: string;
+  checklist?: string[];
+}) {
   return (
     <div
       className={cn("absolute h-[209px] w-[396px]", className)}
@@ -214,121 +232,40 @@ function IdentityPanel({ className }: { className?: string }) {
           data-node-id="411:6864"
         >
           <span className="text-[#67ff67]">{`PromptRaise `}</span>
-          <span className="font-medium">- full-cycle AI visibility agency for Web3.</span>
+          <span className="font-medium">{heading}</span>
         </p>
         <div
           className="relative flex h-[104px] w-full shrink-0 flex-col items-start gap-[4.481px]"
           data-node-id="411:6865"
           data-name="List"
         >
-          {/* Item 1 - 411:6866 */}
-          <div
-            className="relative flex h-[22px] w-full shrink-0 items-start gap-[4px]"
-            data-node-id="411:6866"
-            data-name="Item"
-          >
+          {checklist.map((item, idx) => (
             <div
-              className="relative flex size-[22px] shrink-0 items-center"
-              data-node-id="411:6867"
-              data-name="Inner Frame"
+              key={idx}
+              className={`relative flex w-full shrink-0 items-start gap-[4px] ${
+                idx === 0 ? "h-[22px]" : "h-[23px]"
+              }`}
+              data-name="Item"
             >
               <div
-                className="relative flex size-[22px] shrink-0 items-center"
-                data-node-id="411:6868"
+                className={`relative shrink-0 ${
+                  idx === 0 ? "flex size-[22px] items-center" : "size-[23px]"
+                }`}
                 data-name="Inner Frame"
               >
-                <div
-                  className="relative size-[22px] shrink-0"
-                  data-node-id="411:6869"
-                  data-name="Inner Frame"
-                >
+                <div className="relative size-[22px] shrink-0">
                   <img
                     alt=""
                     className="absolute inset-0 block size-full max-w-none"
-                    src="/figma/cta-check.svg"
+                    src={idx === 0 ? "/figma/cta-check.svg" : "/figma/cta-check-2.svg"}
                   />
                 </div>
               </div>
+              <div className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]">
+                <p className="whitespace-pre-wrap">{item}</p>
+              </div>
             </div>
-            <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
-              data-node-id="411:6871"
-            >
-              <p className="whitespace-pre-wrap">{`Content gap analysis across AI + communities  `}</p>
-            </div>
-          </div>
-          {/* Item 2 - 411:6872 */}
-          <div
-            className="relative flex h-[23px] w-full shrink-0 items-center gap-[4px]"
-            data-node-id="411:6872"
-            data-name="Item"
-          >
-            <div
-              className="relative size-[23px] shrink-0"
-              data-node-id="411:6873"
-              data-name="Inner Frame"
-            >
-              <img
-                alt=""
-                className="absolute inset-0 block size-full max-w-none"
-                src="/figma/cta-check-2.svg"
-              />
-            </div>
-            <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
-              data-node-id="411:6875"
-            >
-              <p className="whitespace-pre-wrap">{`Real creators (not AI-generated content)  `}</p>
-            </div>
-          </div>
-          {/* Item 3 - 411:6876 */}
-          <div
-            className="relative flex h-[23px] w-full shrink-0 items-center gap-[4px]"
-            data-node-id="411:6876"
-            data-name="Item"
-          >
-            <div
-              className="relative size-[23px] shrink-0"
-              data-node-id="411:6877"
-              data-name="Inner Frame"
-            >
-              <img
-                alt=""
-                className="absolute inset-0 block size-full max-w-none"
-                src="/figma/cta-check-2.svg"
-              />
-            </div>
-            <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
-              data-node-id="411:6879"
-            >
-              <p className="whitespace-pre-wrap">{`Tier-1 crypto media placements  `}</p>
-            </div>
-          </div>
-          {/* Item 4 - 411:6880 */}
-          <div
-            className="relative flex h-[23px] w-full shrink-0 items-center gap-[4px]"
-            data-node-id="411:6880"
-            data-name="Item"
-          >
-            <div
-              className="relative size-[23px] shrink-0"
-              data-node-id="411:6881"
-              data-name="Inner Frame"
-            >
-              <img
-                alt=""
-                className="absolute inset-0 block size-full max-w-none"
-                src="/figma/cta-check-2.svg"
-              />
-            </div>
-            <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
-              data-node-id="411:6883"
-            >
-              <p className="whitespace-pre-wrap">{`Measurable growth in AI mentions  `}</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -547,10 +484,21 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
 function LeftColumn({
   className,
   auditUrl,
+  heading = "Ready to be the answer, not the search result?",
+  subtext = "Start with a free audit and see how AI talks about your project today.",
+  ctaLabel,
 }: {
   className?: string;
   auditUrl: string;
+  heading?: string;
+  subtext?: string;
+  ctaLabel?: string;
 }) {
+  // Figma split: green "Ready to be the answer," + gradient "not the search result?"
+  const greenPart = heading.split("not the search result?")[0] ?? "Ready to be the answer,";
+  const restPart = heading.includes("not the search result?")
+    ? "not the search result?"
+    : heading;
   return (
     <div
       className={cn(
@@ -576,11 +524,11 @@ function LeftColumn({
             <p className="mb-0">
               <span className="leading-[1.2]">{`Ready `}</span>
               <span className="leading-[1.2] text-[#b1ffb1]">
-                to be the answer,
+                {greenPart}
               </span>
             </p>
             <p className="bg-gradient-to-b from-white to-[rgba(255,255,255,0.5)] bg-clip-text font-medium leading-[1.2] text-[transparent]">
-              not the search result?
+              {restPart}
             </p>
           </div>
         </div>
@@ -588,15 +536,13 @@ function LeftColumn({
           className="relative w-[538px] shrink-0 text-[16px] leading-[1.5] tracking-[-0.32px] text-[#52525b] [word-break:break-word]"
           data-node-id="411:6890"
         >
-          <p>
-            Start with a free audit and see how AI talks about your project
-            today.
-          </p>
+          <p>{subtext}</p>
         </div>
       </div>
       <ButtonIcon
         auditUrl={auditUrl}
         className="shrink-0"
+        label={ctaLabel}
       />
     </div>
   );
@@ -604,7 +550,16 @@ function LeftColumn({
 
 export function AuditCtaSection({
   auditUrl = "https://audit.promptraise.com",
-}: AuditCtaSectionProps) {
+  copy,
+}: AuditCtaSectionProps & { copy?: HomePage["auditCta"] }) {
+  const heading = copy?.heading ?? "Ready to be the answer, not the search result?";
+  const subtext =
+    copy?.subtext ??
+    "Start with a free audit and see how AI talks about your project today.";
+  const ctaLabel = copy?.ctaLabel ?? "Get Free Audit";
+  const checklistHeading =
+    copy?.checklistHeading ?? "PromptRaise - full-cycle AI visibility agency for Web3.";
+  const checklist = copy?.checklist?.length ? copy.checklist : DEFAULT_CHECKLIST;
   return (
     <DsSection className="ds-section-base">
       <SectionLabel name="AuditCtaSection" />
@@ -634,7 +589,11 @@ export function AuditCtaSection({
                   data-name="Inner Frame"
                 />
                 <Sep className="left-[590px] top-[83px]" src="/figma/cta-sep-1.svg" />
-                <IdentityPanel className="left-[145px] top-[253px]" />
+                <IdentityPanel
+                  className="left-[145px] top-[253px]"
+                  heading={checklistHeading}
+                  checklist={checklist}
+                />
                 {/* Decorative Ellipse - 411:6884 */}
                 <div
                   className="-translate-x-1/2 absolute bottom-0 left-[calc(50%+207px)] size-[120px]"
@@ -651,7 +610,13 @@ export function AuditCtaSection({
                 </div>
               </div>
 
-              <LeftColumn className="left-[96px] top-1/2" auditUrl={auditUrl} />
+              <LeftColumn
+                className="left-[96px] top-1/2"
+                auditUrl={auditUrl}
+                heading={heading}
+                subtext={subtext}
+                ctaLabel={ctaLabel}
+              />
             </div>
           </div>
 
@@ -674,7 +639,11 @@ export function AuditCtaSection({
                   data-name="Inner Frame"
                 />
                 <Sep className="left-[648px] top-[83px]" src="/figma/cta-sep-1.svg" />
-                <IdentityPanel className="left-[180px] top-[253px]" />
+                <IdentityPanel
+                  className="left-[180px] top-[253px]"
+                  heading={checklistHeading}
+                  checklist={checklist}
+                />
                 {/* Decorative Ellipse - 411:7016 */}
                 <div
                   className="-translate-x-1/2 absolute bottom-[-16px] left-[calc(50%+194px)] size-[120px]"
@@ -694,6 +663,9 @@ export function AuditCtaSection({
               <LeftColumn
                 className="left-[64px] top-[calc(50%-198.5px)]"
                 auditUrl={auditUrl}
+                heading={heading}
+                subtext={subtext}
+                ctaLabel={ctaLabel}
               />
             </div>
           </div>
@@ -715,7 +687,11 @@ export function AuditCtaSection({
                 today.
               </p>
             </div>
-            <ButtonIcon auditUrl={auditUrl} className="shrink-0" />
+            <ButtonIcon
+              auditUrl={auditUrl}
+              className="shrink-0"
+              label={ctaLabel}
+            />
           </div>
         </div>
       </DsSectionContainer>

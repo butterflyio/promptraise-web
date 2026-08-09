@@ -1,5 +1,6 @@
 import { ProblemSectionClient } from './problem-section-client';
 import { SectionLabel } from '@/components/section-label';
+import type { HomePage } from '@/sanity/lib/queries';
 
 const PROBLEMS = [
   {
@@ -28,11 +29,27 @@ const PROBLEMS = [
   },
 ];
 
-export function ProblemSection() {
+interface ProblemSectionProps {
+  content?: HomePage['problem'];
+}
+
+export function ProblemSection({ content }: ProblemSectionProps) {
+  const problems = PROBLEMS.map((p, i) => ({
+    ...p,
+    title: content?.problems?.[i]?.title ?? p.title,
+    desc: content?.problems?.[i]?.desc ?? p.desc,
+  }));
+
   return (
     <div className="relative">
       <SectionLabel name="ProblemSection" />
-      <ProblemSectionClient problems={PROBLEMS} />
+      <ProblemSectionClient
+        problems={problems}
+        windowTitle={content?.windowTitle}
+        heading={content?.heading}
+        subtext={content?.subtext}
+        ctaLabel={content?.ctaLabel}
+      />
     </div>
   );
 }

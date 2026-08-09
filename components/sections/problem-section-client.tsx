@@ -12,6 +12,10 @@ interface Problem {
 
 interface ProblemSectionClientProps {
   problems: Problem[];
+  windowTitle?: string;
+  heading?: string;
+  subtext?: string;
+  ctaLabel?: string;
 }
 
 // -- Client-only mount guard without setState-in-effect -----------------------
@@ -38,7 +42,7 @@ function useMediaQuery(query: string) {
   );
 }
 
-export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
+export function ProblemSectionClient({ problems, windowTitle, heading, subtext, ctaLabel }: ProblemSectionClientProps) {
   const isClient = useIsClient();
   const isMobile = useMediaQuery('(max-width: 767px)');
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
@@ -67,7 +71,7 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
             <div className="prompt-problem-window-bar pb-4 mb-6">
               <div className="flex items-center justify-between">
                 <h2 className="prompt-problem-window-title font-mono text-sm">
-                  &gt; theProblem.exe
+                  {windowTitle ?? "&gt; theProblem.exe"}
                 </h2>
                 <div className="prompt-problem-dots">
                   <i />
@@ -91,7 +95,7 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
               href="#solutions"
               className="px-6 py-2 rounded-full bg-[#67FF67] text-[#0F0F0F] text-sm font-semibold hover:opacity-90 transition-opacity"
             >
-              Go to Solution
+              {ctaLabel ?? "Go to Solution"}
             </a>
           </div>
         </div>
@@ -100,11 +104,25 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
   }
 
   // Only render animated version on desktop after hydration
-  return <ProblemSectionAnimated problems={problems} />;
+  return (
+    <ProblemSectionAnimated
+      problems={problems}
+      windowTitle={windowTitle}
+      heading={heading}
+      subtext={subtext}
+      ctaLabel={ctaLabel}
+    />
+  );
 }
 
 // Separate component for animated desktop view (only called after hydration)
-function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
+function ProblemSectionAnimated({
+  problems,
+  windowTitle,
+  heading,
+  subtext,
+  ctaLabel,
+}: ProblemSectionClientProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -185,7 +203,7 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
             <div className="prompt-problem-window-bar pb-4 mb-6">
               <div className="flex items-center justify-between">
                 <h2 className="prompt-problem-window-title font-mono text-sm">
-                  &gt; theProblem.exe
+                  {windowTitle ?? "&gt; theProblem.exe"}
                 </h2>
                 <div className="prompt-problem-dots">
                   <i />
@@ -196,10 +214,11 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
             </div>
 
             <h3 className="text-xl font-bold leading-snug text-white mb-2">
-              You&apos;re invisible where decisions are made
+              {heading ?? "You&apos;re invisible where decisions are made"}
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
-              Founders, investors, and users discover you through AI. Or they don&apos;t.
+              {subtext ??
+                "Founders, investors, and users discover you through AI. Or they don&apos;t."}
             </p>
 
             <div className="mt-6">
@@ -207,7 +226,7 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
                 href="#solutions"
                 className="inline-block px-5 py-2.5 rounded-lg bg-[#67FF67] text-[#0F0F0F] text-xs font-bold hover:opacity-90 transition-opacity"
               >
-                Go to Solution
+                {ctaLabel ?? "Go to Solution"}
               </a>
             </div>
           </div>
