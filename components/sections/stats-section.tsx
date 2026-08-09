@@ -240,7 +240,7 @@ export function StatsSection({ content }: StatsSectionProps) {
 
   const animatedWidth = useTransform(smoothProgress, [0, 1], [1320, 300]);
   const animatedHeight = useTransform(smoothProgress, [0, 1], [740, 300]);
-  const animatedTop = useTransform(smoothProgress, [0, 1], [58, 278]);
+  const animatedTop = useTransform(smoothProgress, [0, 1], [90, 278]);
   const animatedOpacity = useTransform(smoothProgress, [0, 1], [0.88, 1]);
   const logoOpacity = useTransform(smoothProgress, [0.6, 0.82, 1], [0, 0.7, 1]);
   const logoScale = useTransform(smoothProgress, [0.6, 1], [0.9, 1]);
