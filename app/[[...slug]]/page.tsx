@@ -15,7 +15,7 @@ import {
   type PageDoc,
 } from "@/sanity/lib/queries";
 
-export const revalidate = 300;
+export const revalidate = 30;
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
