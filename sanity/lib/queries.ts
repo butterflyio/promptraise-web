@@ -213,7 +213,10 @@ export function normalizePageSlug(slug: string | undefined): string {
 export async function getPageBySlug(
   rawSlug: string,
 ): Promise<PageDoc | null> {
-  const slug = normalizePageSlug(rawSlug);
+  const path = normalizePageSlug(rawSlug);
+  // Sanity slugs are stored without a leading slash ("campaign-x"); the
+  // home page is the exception and stores "/" as its slug value.
+  const storedSlug = path === HOME_SLUG ? HOME_SLUG : path.replace(/^\/+/, "");
   const query = `*[_type == "page" && slug.current == $slug][0]{
     _id,
     _updatedAt,
@@ -225,7 +228,7 @@ export async function getPageBySlug(
     ogImage{asset->{url}},
     sections,
   }`;
-  return sanityClient.fetch(query, { slug });
+  return sanityClient.fetch(query, { slug: storedSlug });
 }
 
 export async function getAllPages(): Promise<PageDoc[]> {
