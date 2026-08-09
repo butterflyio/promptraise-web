@@ -1,35 +1,35 @@
-'use client';
+"use client";
 
-import { DsSection, DsSectionContainer } from '@/components/design-system';
-import { SectionLabel } from '@/components/section-label';
+import { DsSection, DsSectionContainer } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 
 const LAYERS = [
   {
     id: 1,
-    number: '01',
-    title: 'PromptRaise Engine',
+    number: "01",
+    title: "PromptRaise Engine",
     description:
-      'AI content gap analysis engine. Scans Reddit, Twitter/X, Telegram, and the LLM landscape - delivers a precise plan: what to write, for whom, on which platforms.',
+      "AI content gap analysis engine. Scans Reddit, Twitter/X, Telegram, and the LLM landscape - delivers a precise plan: what to write, for whom, on which platforms.",
     benefits: [
-      'Community and audience question analysis',
-      'Competitive content audit',
-      'High LLM-intent keyword identification',
-      'Individual briefs for each creator',
-      'Atlas Dashboard: three priority cards',
+      "Community and audience question analysis",
+      "Competitive content audit",
+      "High LLM-intent keyword identification",
+      "Individual briefs for each creator",
+      "Atlas Dashboard: three priority cards",
     ],
   },
   {
     id: 2,
-    number: '02',
-    title: 'Content from Real People',
+    number: "02",
+    title: "Content from Real People",
     description:
-      'Every piece is created by a real author with a real audience and published on platforms LLM models trust. No AI-generated filler. Real voices in authoritative sources.',
+      "Every piece is created by a real author with a real audience and published on platforms LLM models trust. No AI-generated filler. Real voices in authoritative sources.",
     benefits: [
-      'Unique angle and voice for each creator',
-      'Publications in Tier 1-2 crypto media',
-      'Medium, Twitter, Substack, niche blogs',
-      'Quality control before every publication',
-      'Transparent reporting: client sees everything',
+      "Unique angle and voice for each creator",
+      "Publications in Tier 1-2 crypto media",
+      "Medium, Twitter, Substack, niche blogs",
+      "Quality control before every publication",
+      "Transparent reporting: client sees everything",
     ],
   },
 ];
@@ -45,7 +45,7 @@ export function AiTrainingSection() {
         {/* Header */}
         <div className="mb-12 flex items-start justify-between gap-8">
           <div>
-            <h2 className="font-sans text-4xl font-bold leading-tight text-white max-w-2xl">
+            <h2 className="max-w-2xl font-sans text-4xl leading-tight font-bold text-white">
               We create content
               <br />
               that trains AI
@@ -58,21 +58,21 @@ export function AiTrainingSection() {
             </p>
           </div>
 
-          <div className="hidden shrink-0 items-center gap-0 tablet:flex">
+          <div className="tablet:flex hidden shrink-0 items-center gap-0">
             <div
               style={{
                 width: 60,
                 height: 1,
                 background:
-                  'linear-gradient(90deg, transparent, rgba(255,255,255,0.2))',
+                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.2))",
               }}
             />
             <div
               className="shrink-0 rounded-full px-4 py-1.5 text-xs font-medium tracking-wide text-white/60"
               style={{
-                background: 'rgba(20,22,20,0.6)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(4px)',
+                background: "rgba(20,22,20,0.6)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                backdropFilter: "blur(4px)",
               }}
             >
               How we solve it
@@ -82,14 +82,14 @@ export function AiTrainingSection() {
                 width: 60,
                 height: 1,
                 background:
-                  'linear-gradient(90deg, rgba(255,255,255,0.2), transparent)',
+                  "linear-gradient(90deg, rgba(255,255,255,0.2), transparent)",
               }}
             />
           </div>
         </div>
 
         {/* Column labels */}
-        <div className="mb-3 hidden w-full max-w-[1200px] items-center justify-between text-xs text-white/40 tablet:flex">
+        <div className="tablet:flex mb-3 hidden w-full max-w-[1200px] items-center justify-between text-xs text-white/40">
           <div className="flex items-center gap-4">
             <span className="w-[72px]">Layer</span>
             <span className="w-[200px]">Layer Name</span>
@@ -102,8 +102,8 @@ export function AiTrainingSection() {
           {LAYERS.map((layer) => (
             <div
               key={layer.id}
-              className="flex w-full flex-col gap-6 p-5 tablet:flex-row tablet:items-start tablet:justify-between tablet:gap-4 tablet:p-6"
-              style={{ background: 'rgba(19,22,25,0.25)' }}
+              className="tablet:flex-row tablet:items-start tablet:justify-between tablet:gap-4 tablet:p-6 flex w-full flex-col gap-6 p-5"
+              style={{ background: "rgba(19,22,25,0.25)" }}
             >
               {/* Number */}
               <div className="tablet:w-[72px]">
@@ -121,16 +121,16 @@ export function AiTrainingSection() {
               </div>
 
               {/* Benefit pills */}
-              <div className="flex tablet:w-[380px] tablet:flex-col tablet:gap-1">
+              <div className="tablet:w-[380px] tablet:flex-col tablet:gap-1 flex">
                 {layer.benefits.map((benefit) => (
                   <div
                     key={benefit}
-                    className="flex items-center gap-2 overflow-hidden rounded-[20px] py-1 pl-3 pr-5"
+                    className="flex items-center gap-2 overflow-hidden rounded-[20px] py-1 pr-5 pl-3"
                   >
                     <span className="relative block h-[14px] w-[14px] shrink-0">
                       <span className="absolute inset-[12.5%] rounded-full bg-[var(--accent-primary)]" />
                     </span>
-                    <span className="whitespace-nowrap text-xs text-[#d4d4d8]">
+                    <span className="text-xs whitespace-nowrap text-[#d4d4d8]">
                       {benefit}
                     </span>
                   </div>

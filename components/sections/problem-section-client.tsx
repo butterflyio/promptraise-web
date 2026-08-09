@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
-import { useRef, useSyncExternalStore } from 'react';
+import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import { useRef, useSyncExternalStore } from "react";
 
 interface Problem {
   id: number;
@@ -22,7 +22,7 @@ function useIsClient() {
   return useSyncExternalStore(
     subscribe,
     () => true, // client snapshot
-    () => false // server snapshot -> static fallback during SSR
+    () => false, // server snapshot -> static fallback during SSR
   );
 }
 
@@ -30,41 +30,46 @@ function useMediaQuery(query: string) {
   return useSyncExternalStore(
     (onStoreChange) => {
       const mql = window.matchMedia(query);
-      mql.addEventListener('change', onStoreChange);
-      return () => mql.removeEventListener('change', onStoreChange);
+      mql.addEventListener("change", onStoreChange);
+      return () => mql.removeEventListener("change", onStoreChange);
     },
     () => window.matchMedia(query).matches,
-    () => false
+    () => false,
   );
 }
 
 export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
   const isClient = useIsClient();
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const prefersReducedMotion = useMediaQuery(
+    "(prefers-reduced-motion: reduce)",
+  );
 
   // Render static fallback until hydrated, on mobile, or if user prefers reduced motion
   if (!isClient || isMobile || prefersReducedMotion) {
     return (
       <section className="prompt-problem-section py-20 md:py-28">
         {/* Red decorative glows per Figma (Decorative Vector + Decorative Ellipse) */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip opacity-60">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0 overflow-clip opacity-60"
+        >
           <img
             src="/figma/problem-decorative-ellipse.svg"
             alt=""
-            className="absolute left-1/2 top-[46%] -translate-x-1/2 mix-blend-plus-lighter"
+            className="absolute top-[46%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
             style={{ width: "min(1300px, 130%)" }}
           />
           <img
             src="/figma/problem-decorative-vector.svg"
             alt=""
-            className="absolute left-1/2 top-[50%] -translate-x-1/2 mix-blend-plus-lighter"
+            className="absolute top-[50%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
             style={{ width: "min(1340px, 134%)" }}
           />
         </div>
-        <div className="mx-auto max-w-6xl px-6 relative">
+        <div className="relative mx-auto max-w-6xl px-6">
           <div className="prompt-problem-window p-6 md:p-8">
-            <div className="prompt-problem-window-bar pb-4 mb-6">
+            <div className="prompt-problem-window-bar mb-6 pb-4">
               <div className="flex items-center justify-between">
                 <h2 className="prompt-problem-window-title font-mono text-sm">
                   &gt; theProblem.exe
@@ -86,10 +91,10 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
             </div>
           </div>
 
-          <div className="flex justify-end mt-8">
+          <div className="mt-8 flex justify-end">
             <a
               href="#solutions"
-              className="px-6 py-2 rounded-full bg-[#67FF67] text-[#0F0F0F] text-sm font-semibold hover:opacity-90 transition-opacity"
+              className="rounded-full bg-[#67FF67] px-6 py-2 text-sm font-semibold text-[#0F0F0F] transition-opacity hover:opacity-90"
             >
               Go to Solution
             </a>
@@ -109,14 +114,11 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start 60%', 'end 40%'],
+    offset: ["start 60%", "end 40%"],
   });
 
   return (
-    <section
-      ref={sectionRef}
-      className="prompt-problem-section py-20 md:py-28"
-    >
+    <section ref={sectionRef} className="prompt-problem-section py-20 md:py-28">
       {/* Background backdrop */}
       <div className="prompt-problem-bg" />
       <div className="prompt-problem-grid" />
@@ -124,7 +126,7 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
       {/* Dark separator-grid layer + scattered marks (Figma 102:185 mask group, #1E1E1E decorative vectors) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[746px] w-[1441px] -translate-x-1/2 -rotate-180 opacity-70"
+        className="pointer-events-none absolute top-[38%] left-1/2 z-0 h-[746px] w-[1441px] -translate-x-1/2 -rotate-180 opacity-70"
         style={{
           WebkitMaskImage: "url(/figma/problem-mask.svg)",
           maskImage: "url(/figma/problem-mask.svg)",
@@ -139,37 +141,96 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
         <img
           src="/figma/problem-bg-layer.svg"
           alt=""
-          className="absolute left-[-259px] top-[-1476px] block h-[2222px] w-[1959px] max-w-none"
+          className="absolute top-[-1476px] left-[-259px] block h-[2222px] w-[1959px] max-w-none"
         />
         {/* Scattered decorative marks */}
-        <img src="/figma/problem-mark-2.svg" alt="" className="absolute left-[191px] top-[123px] h-[24px] w-[25px]" />
-        <img src="/figma/problem-mark-3.svg" alt="" className="absolute left-[51px] top-0 h-[24px] w-[25px]" />
-        <img src="/figma/problem-mark-4.svg" alt="" className="absolute left-0 top-[106px] h-[24px] w-[25px]" />
-        <img src="/figma/problem-mark-5.svg" alt="" className="absolute left-[134px] top-[246px] size-[24px]" />
-        <img src="/figma/problem-mark-6.svg" alt="" className="absolute left-[345px] top-[214px] size-[23px]" />
-        <img src="/figma/problem-mark-7.svg" alt="" className="absolute left-[281px] top-[348px] h-[23px] w-[24px]" />
-        <img src="/figma/problem-mark-8.svg" alt="" className="absolute left-[513px] top-[276px] h-[24px] w-[26px]" />
-        <img src="/figma/problem-mark-9.svg" alt="" className="absolute left-[443px] top-[423px] h-[24px] w-[28px]" />
-        <img src="/figma/problem-mark-10.svg" alt="" className="absolute left-[694px] top-[307px] h-[24px] w-[27px]" />
-        <img src="/figma/problem-mark-11.svg" alt="" className="absolute left-[618px] top-[466px] h-[25px] w-[27px]" />
-        <img src="/figma/problem-mark-12.svg" alt="" className="absolute left-[895px] top-[298px] h-[24px] w-[28px]" />
-        <img src="/figma/problem-mark-13.svg" alt="" className="absolute left-[812px] top-[473px] h-[25px] w-[29px]" />
-        <img src="/figma/problem-mark-14.svg" alt="" className="absolute left-[1124px] top-[233px] h-[31px] w-[27px]" />
-        <img src="/figma/problem-mark-15.svg" alt="" className="absolute left-[1028px] top-[436px] h-[26px] w-[28px]" />
+        <img
+          src="/figma/problem-mark-2.svg"
+          alt=""
+          className="absolute top-[123px] left-[191px] h-[24px] w-[25px]"
+        />
+        <img
+          src="/figma/problem-mark-3.svg"
+          alt=""
+          className="absolute top-0 left-[51px] h-[24px] w-[25px]"
+        />
+        <img
+          src="/figma/problem-mark-4.svg"
+          alt=""
+          className="absolute top-[106px] left-0 h-[24px] w-[25px]"
+        />
+        <img
+          src="/figma/problem-mark-5.svg"
+          alt=""
+          className="absolute top-[246px] left-[134px] size-[24px]"
+        />
+        <img
+          src="/figma/problem-mark-6.svg"
+          alt=""
+          className="absolute top-[214px] left-[345px] size-[23px]"
+        />
+        <img
+          src="/figma/problem-mark-7.svg"
+          alt=""
+          className="absolute top-[348px] left-[281px] h-[23px] w-[24px]"
+        />
+        <img
+          src="/figma/problem-mark-8.svg"
+          alt=""
+          className="absolute top-[276px] left-[513px] h-[24px] w-[26px]"
+        />
+        <img
+          src="/figma/problem-mark-9.svg"
+          alt=""
+          className="absolute top-[423px] left-[443px] h-[24px] w-[28px]"
+        />
+        <img
+          src="/figma/problem-mark-10.svg"
+          alt=""
+          className="absolute top-[307px] left-[694px] h-[24px] w-[27px]"
+        />
+        <img
+          src="/figma/problem-mark-11.svg"
+          alt=""
+          className="absolute top-[466px] left-[618px] h-[25px] w-[27px]"
+        />
+        <img
+          src="/figma/problem-mark-12.svg"
+          alt=""
+          className="absolute top-[298px] left-[895px] h-[24px] w-[28px]"
+        />
+        <img
+          src="/figma/problem-mark-13.svg"
+          alt=""
+          className="absolute top-[473px] left-[812px] h-[25px] w-[29px]"
+        />
+        <img
+          src="/figma/problem-mark-14.svg"
+          alt=""
+          className="absolute top-[233px] left-[1124px] h-[31px] w-[27px]"
+        />
+        <img
+          src="/figma/problem-mark-15.svg"
+          alt=""
+          className="absolute top-[436px] left-[1028px] h-[26px] w-[28px]"
+        />
       </div>
 
       {/* Red decorative glows (per Figma: Decorative Vector 102:184 + Decorative Ellipse 102:387) */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 overflow-clip"
+      >
         <img
           src="/figma/problem-decorative-ellipse.svg"
           alt=""
-          className="absolute left-1/2 top-[46%] -translate-x-1/2 mix-blend-plus-lighter"
+          className="absolute top-[46%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
           style={{ width: "min(1300px, 130%)", opacity: 0.9 }}
         />
         <img
           src="/figma/problem-decorative-vector.svg"
           alt=""
-          className="absolute left-1/2 top-[50%] -translate-x-1/2 mix-blend-plus-lighter"
+          className="absolute top-[50%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
           style={{ width: "min(1340px, 134%)", opacity: 0.9 }}
         />
       </div>
@@ -178,11 +239,11 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
       <div className="prompt-problem-edge prompt-problem-edge-top" />
       <div className="prompt-problem-edge prompt-problem-edge-bottom" />
 
-      <div className="mx-auto max-w-6xl px-6 relative z-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         <div className="prompt-problem-stage">
           {/* Central window */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 mx-auto w-full max-w-xl prompt-problem-window p-8">
-            <div className="prompt-problem-window-bar pb-4 mb-6">
+          <div className="prompt-problem-window absolute inset-x-0 top-1/2 mx-auto w-full max-w-xl -translate-y-1/2 p-8">
+            <div className="prompt-problem-window-bar mb-6 pb-4">
               <div className="flex items-center justify-between">
                 <h2 className="prompt-problem-window-title font-mono text-sm">
                   &gt; theProblem.exe
@@ -195,17 +256,18 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
               </div>
             </div>
 
-            <h3 className="text-xl font-bold leading-snug text-white mb-2">
+            <h3 className="mb-2 text-xl leading-snug font-bold text-white">
               You&apos;re invisible where decisions are made
             </h3>
-            <p className="text-sm text-white/60 leading-relaxed">
-              Founders, investors, and users discover you through AI. Or they don&apos;t.
+            <p className="text-sm leading-relaxed text-white/60">
+              Founders, investors, and users discover you through AI. Or they
+              don&apos;t.
             </p>
 
             <div className="mt-6">
               <a
                 href="#solutions"
-                className="inline-block px-5 py-2.5 rounded-lg bg-[#67FF67] text-[#0F0F0F] text-xs font-bold hover:opacity-90 transition-opacity"
+                className="inline-block rounded-lg bg-[#67FF67] px-5 py-2.5 text-xs font-bold text-[#0F0F0F] transition-opacity hover:opacity-90"
               >
                 Go to Solution
               </a>
@@ -245,7 +307,7 @@ function FloatingProblemCard({
 
   return (
     <motion.div
-      className="absolute prompt-problem-card"
+      className="prompt-problem-card absolute"
       style={{
         top: problem.pos.top,
         left: problem.pos.left,

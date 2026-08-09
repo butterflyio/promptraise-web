@@ -25,12 +25,12 @@ function ButtonIcon({
     <a
       href={auditUrl}
       className={cn(
-        "flex w-[192px] items-center justify-between rounded-full border border-solid border-[rgba(0,0,0,0.91)] bg-[#67ff67] py-1 pl-6 pr-1 drop-shadow-[0px_8px_12px_rgba(0,0,0,0.32)] transition-transform hover:scale-[1.02]",
+        "flex w-[192px] items-center justify-between rounded-full border border-solid border-[rgba(0,0,0,0.91)] bg-[#67ff67] py-1 pr-1 pl-6 drop-shadow-[0px_8px_12px_rgba(0,0,0,0.32)] transition-transform hover:scale-[1.02]",
         className,
       )}
       data-node-id="312:4029"
     >
-      <p className="relative shrink-0 whitespace-nowrap text-[16px] leading-[1.5] tracking-[-0.32px] text-[#09090b] [word-break:break-word]">
+      <p className="relative shrink-0 text-[16px] leading-[1.5] tracking-[-0.32px] [word-break:break-word] whitespace-nowrap text-[#09090b]">
         Get Free Audit
       </p>
       <div
@@ -75,12 +75,12 @@ function WindowMockup({ className }: { className?: string }) {
     >
       {/* Window buttons top bar - 411:6829 */}
       <div
-        className="absolute left-[-1px] right-[-1px] top-[-1px] flex h-[61px] items-center bg-[rgba(249,249,250,0.05)] p-[22.177px]"
+        className="absolute top-[-1px] right-[-1px] left-[-1px] flex h-[61px] items-center bg-[rgba(249,249,250,0.05)] p-[22.177px]"
         data-node-id="411:6829"
         data-name="Window buttons"
       >
         <div
-          className="absolute left-[22px] top-[22px] h-[17px] w-[64px]"
+          className="absolute top-[22px] left-[22px] h-[17px] w-[64px]"
           data-node-id="411:6830"
           data-name="Button Icon Frame"
         >
@@ -96,7 +96,7 @@ function WindowMockup({ className }: { className?: string }) {
 
       {/* Chat bubble row - 411:6834 */}
       <div
-        className="absolute left-[55px] top-[84px] flex w-[359px] items-end gap-[18px]"
+        className="absolute top-[84px] left-[55px] flex w-[359px] items-end gap-[18px]"
         data-node-id="411:6834"
         data-name="Best web3 marketing agency Container"
       >
@@ -106,7 +106,7 @@ function WindowMockup({ className }: { className?: string }) {
           data-name="Bubble - Person"
         >
           <div
-            className="absolute left-0 top-0 h-[45px] w-[293px]"
+            className="absolute top-0 left-0 h-[45px] w-[293px]"
             data-node-id="411:6836"
             data-name="Inner Frame"
           >
@@ -117,7 +117,7 @@ function WindowMockup({ className }: { className?: string }) {
             />
           </div>
           <div
-            className="absolute bottom-0 right-[-7px] h-[21px] w-[30px]"
+            className="absolute right-[-7px] bottom-0 h-[21px] w-[30px]"
             data-node-id="411:6838"
             data-name="Tail"
           >
@@ -127,16 +127,19 @@ function WindowMockup({ className }: { className?: string }) {
               src="/figma/cta-bubble-tail.svg"
             />
           </div>
-          <p className="absolute left-[22px] right-[20px] top-[9px] text-[18px] leading-[24px] text-white [word-break:break-word]">
+          <p className="absolute top-[9px] right-[20px] left-[22px] text-[18px] leading-[24px] [word-break:break-word] text-white">
             Best web3 marketing agency
           </p>
         </div>
         <div
-          className="relative flex size-[48px] shrink-0 items-center justify-center rounded-[112.5px] bg-[#171919] backdrop-blur-[9px] mix-blend-difference"
+          className="relative flex size-[48px] shrink-0 items-center justify-center rounded-[112.5px] bg-[#171919] mix-blend-difference backdrop-blur-[9px]"
           data-node-id="411:6840"
           data-name="Inner Frame"
         >
-          <div className="relative size-[24px] shrink-0" data-node-id="411:6841">
+          <div
+            className="relative size-[24px] shrink-0"
+            data-node-id="411:6841"
+          >
             <img
               alt=""
               className="absolute inset-0 block size-full max-w-none"
@@ -148,7 +151,7 @@ function WindowMockup({ className }: { className?: string }) {
 
       {/* Window controls - 411:6844 */}
       <div
-        className="absolute left-[23px] top-[235px] size-[48px]"
+        className="absolute top-[235px] left-[23px] size-[48px]"
         data-node-id="411:6844"
         data-name="Window Controls"
       >
@@ -172,7 +175,7 @@ function IdentityPanel({ className }: { className?: string }) {
     >
       {/* Logo Shape - 411:6854 */}
       <div
-        className="absolute left-[0.31px] top-0 h-[209px] w-[395.689px]"
+        className="absolute top-0 left-[0.31px] h-[209px] w-[395.689px]"
         data-node-id="411:6854"
         data-name="Logo Shape"
       >
@@ -186,12 +189,12 @@ function IdentityPanel({ className }: { className?: string }) {
       </div>
       {/* Mask Group - 411:6857 */}
       <div
-        className="absolute left-[0.31px] top-0 contents"
+        className="absolute top-0 left-[0.31px] contents"
         data-node-id="411:6857"
         data-name="Mask Group"
       >
         <div
-          className="absolute left-[0.31px] top-0 h-[209px] w-[395.689px]"
+          className="absolute top-0 left-[0.31px] h-[209px] w-[395.689px]"
           data-node-id="411:6858"
           data-name="Mask Group"
         >
@@ -206,15 +209,17 @@ function IdentityPanel({ className }: { className?: string }) {
       </div>
       {/* Heading + checklist - 411:6863 */}
       <div
-        className="absolute left-[38px] top-[calc(50%+0.5px)] flex h-[160px] w-[330px] -translate-y-1/2 flex-col items-start gap-[16px]"
+        className="absolute top-[calc(50%+0.5px)] left-[38px] flex h-[160px] w-[330px] -translate-y-1/2 flex-col items-start gap-[16px]"
         data-node-id="411:6863"
       >
         <p
-          className="relative w-full shrink-0 text-[16px] font-bold leading-[1.25] tracking-[-0.32px] text-white [word-break:break-word]"
+          className="relative w-full shrink-0 text-[16px] leading-[1.25] font-bold tracking-[-0.32px] [word-break:break-word] text-white"
           data-node-id="411:6864"
         >
           <span className="text-[#67ff67]">{`PromptRaise `}</span>
-          <span className="font-medium">- full-cycle AI visibility agency for Web3.</span>
+          <span className="font-medium">
+            - full-cycle AI visibility agency for Web3.
+          </span>
         </p>
         <div
           className="relative flex h-[104px] w-full shrink-0 flex-col items-start gap-[4.481px]"
@@ -251,7 +256,7 @@ function IdentityPanel({ className }: { className?: string }) {
               </div>
             </div>
             <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
+              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] [word-break:break-word] text-[#52525b]"
               data-node-id="411:6871"
             >
               <p className="whitespace-pre-wrap">{`Content gap analysis across AI + communities  `}</p>
@@ -275,7 +280,7 @@ function IdentityPanel({ className }: { className?: string }) {
               />
             </div>
             <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
+              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] [word-break:break-word] text-[#52525b]"
               data-node-id="411:6875"
             >
               <p className="whitespace-pre-wrap">{`Real creators (not AI-generated content)  `}</p>
@@ -299,7 +304,7 @@ function IdentityPanel({ className }: { className?: string }) {
               />
             </div>
             <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
+              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] [word-break:break-word] text-[#52525b]"
               data-node-id="411:6879"
             >
               <p className="whitespace-pre-wrap">{`Tier-1 crypto media placements  `}</p>
@@ -323,7 +328,7 @@ function IdentityPanel({ className }: { className?: string }) {
               />
             </div>
             <div
-              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] text-[#52525b] [word-break:break-word]"
+              className="relative flex min-w-px flex-[1_0_0] flex-col justify-center text-[13.44px] leading-[1.5] [word-break:break-word] text-[#52525b]"
               data-node-id="411:6883"
             >
               <p className="whitespace-pre-wrap">{`Measurable growth in AI mentions  `}</p>
@@ -339,7 +344,10 @@ function IdentityPanel({ className }: { className?: string }) {
 function Sep({ className, src }: { className?: string; src: string }) {
   return (
     <div
-      className={cn("absolute flex h-[82px] w-0 items-center justify-center", className)}
+      className={cn(
+        "absolute flex h-[82px] w-0 items-center justify-center",
+        className,
+      )}
     >
       <div className="flex-none rotate-90">
         <div className="relative h-0 w-[82px]" data-name="Separator Line">
@@ -355,7 +363,10 @@ function Sep({ className, src }: { className?: string; src: string }) {
 /** Horizontal separator line ornament */
 function SepH({ className, src }: { className?: string; src: string }) {
   return (
-    <div className={cn("absolute h-0 w-[82px]", className)} data-name="Separator Line">
+    <div
+      className={cn("absolute h-0 w-[82px]", className)}
+      data-name="Separator Line"
+    >
       <div className="absolute inset-[-1px_0_0_0]">
         <img alt="" className="block size-full max-w-none" src={src} />
       </div>
@@ -372,13 +383,13 @@ function SepH({ className, src }: { className?: string; src: string }) {
 function BgLayers({ patternsLeft }: { patternsLeft: string }) {
   return (
     <div
-      className="pointer-events-none absolute left-0 top-0 h-[500px] w-full"
+      className="pointer-events-none absolute top-0 left-0 h-[500px] w-full"
       data-node-id="411:6769"
       data-name="BG"
     >
       {/* Light radial glow - 411:6770 */}
       <div
-        className="absolute left-[-290.87px] top-[-170px] h-[1106.331px] w-[2281.047px]"
+        className="absolute top-[-170px] left-[-290.87px] h-[1106.331px] w-[2281.047px]"
         data-node-id="411:6770"
         data-name="Light"
       >
@@ -394,19 +405,19 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
       {/* Patterns (masked grid) - 411:6774 */}
       <div
         className={cn(
-          "-translate-x-1/2 absolute top-0 h-[900px] w-[1440px]",
+          "absolute top-0 h-[900px] w-[1440px] -translate-x-1/2",
           patternsLeft,
         )}
         data-node-id="411:6774"
         data-name="Patterns"
       >
         <div
-          className="absolute left-0 top-0 h-[900px] w-[1440px]"
+          className="absolute top-0 left-0 h-[900px] w-[1440px]"
           data-node-id="411:6775"
           data-name="Inner Frame"
         >
           <div
-            className="absolute left-0 top-0 h-[900px] w-[1440px]"
+            className="absolute top-0 left-0 h-[900px] w-[1440px]"
             data-node-id="411:6777"
             data-name="Inner Frame"
             style={{
@@ -423,7 +434,7 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
             }}
           >
             <div
-              className="absolute left-0 top-0 h-[900px] w-[1440px]"
+              className="absolute top-0 left-0 h-[900px] w-[1440px]"
               data-node-id="411:6778"
               data-name="Inner Frame"
             >
@@ -434,11 +445,14 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
               />
             </div>
             <div
-              className="absolute left-0 top-0 flex h-[900px] w-[1440px] items-center justify-center"
+              className="absolute top-0 left-0 flex h-[900px] w-[1440px] items-center justify-center"
               data-node-id="411:6788"
             >
-              <div className="-rotate-90 flex-none">
-                <div className="relative h-[1440px] w-[900px]" data-name="Inner Frame">
+              <div className="flex-none -rotate-90">
+                <div
+                  className="relative h-[1440px] w-[900px]"
+                  data-name="Inner Frame"
+                >
                   <div className="absolute inset-[0_-60%_0_0]">
                     <img
                       alt=""
@@ -451,22 +465,22 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
             </div>
             {/* Decorative rectangles - 411:6803..411:6806 */}
             <div
-              className="absolute left-[554px] top-[112px] h-[113px] w-[110px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
+              className="absolute top-[112px] left-[554px] h-[113px] w-[110px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
               data-node-id="411:6803"
               data-name="Decorative Rectangle"
             />
             <div
-              className="absolute left-[996px] top-[562px] h-[113px] w-[112px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
+              className="absolute top-[562px] left-[996px] h-[113px] w-[112px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
               data-node-id="411:6804"
               data-name="Decorative Rectangle"
             />
             <div
-              className="absolute left-[886px] top-px size-[111px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
+              className="absolute top-px left-[886px] size-[111px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
               data-node-id="411:6805"
               data-name="Decorative Rectangle"
             />
             <div
-              className="absolute left-[1218px] top-[225px] h-[112px] w-[111px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
+              className="absolute top-[225px] left-[1218px] h-[112px] w-[111px] border border-solid border-white/5 bg-[rgba(255,255,255,0.07)] opacity-[0.47]"
               data-node-id="411:6806"
               data-name="Decorative Rectangle"
             />
@@ -474,7 +488,7 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
         </div>
         {/* Empty Inner Frame decor - 411:6807 */}
         <div
-          className="absolute left-[1316px] top-[765px] size-[24px] opacity-75"
+          className="absolute top-[765px] left-[1316px] size-[24px] opacity-75"
           data-node-id="411:6807"
           data-name="Inner Frame"
         />
@@ -482,7 +496,7 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
 
       {/* Glow blot - 411:6808 */}
       <div
-        className="absolute left-px top-[-198.77px] h-[428.708px] w-[436.883px]"
+        className="absolute top-[-198.77px] left-px h-[428.708px] w-[436.883px]"
         data-node-id="411:6808"
         data-name="Inner Frame"
       >
@@ -497,7 +511,7 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
 
       {/* Sparkle - 411:6813 */}
       <div
-        className="absolute left-[357px] top-[365.71px] h-[365.115px] w-[437.134px]"
+        className="absolute top-[365.71px] left-[357px] h-[365.115px] w-[437.134px]"
         data-node-id="411:6813"
         data-name="Inner Frame"
       >
@@ -512,11 +526,14 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
 
       {/* Decorative Ellipse - 411:6818 */}
       <div
-        className="absolute left-[847.85px] top-[-56px] flex h-[699.02px] w-[718.768px] items-center justify-center mix-blend-plus-lighter"
+        className="absolute top-[-56px] left-[847.85px] flex h-[699.02px] w-[718.768px] items-center justify-center mix-blend-plus-lighter"
         data-node-id="411:6818"
       >
-        <div className="flex-none rotate-[36.42deg] skew-x-[-8.23deg] scale-y-[0.99]">
-          <div className="relative h-[874px] w-[130px]" data-name="Decorative Ellipse">
+        <div className="flex-none scale-y-[0.99] rotate-[36.42deg] skew-x-[-8.23deg]">
+          <div
+            className="relative h-[874px] w-[130px]"
+            data-name="Decorative Ellipse"
+          >
             <div className="absolute inset-[-25.63%_-172.31%]">
               <img
                 alt=""
@@ -529,16 +546,16 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
       </div>
 
       {/* Separator lines - 411:6819..411:6826 */}
-      <Sep className="left-[537px] top-[335px]" src="/figma/cta-sep-1.svg" />
-      <Sep className="left-[94px] top-[404px]" src="/figma/cta-sep-2.svg" />
-      <Sep className="left-[426px] top-[-35px]" src="/figma/cta-sep-1.svg" />
-      <SepH className="left-[417px] top-[450px]" src="/figma/cta-sep-3.svg" />
-      <SepH className="left-[537px] top-[225px]" src="/figma/cta-sep-3.svg" />
-      <SepH className="left-[-47px] top-[112px]" src="/figma/cta-sep-3.svg" />
-      <Sep className="left-[94px] top-[30px]" src="/figma/cta-sep-4.svg" />
-      <SepH className="left-[1202px] top-[338px]" src="/figma/cta-sep-3.svg" />
+      <Sep className="top-[335px] left-[537px]" src="/figma/cta-sep-1.svg" />
+      <Sep className="top-[404px] left-[94px]" src="/figma/cta-sep-2.svg" />
+      <Sep className="top-[-35px] left-[426px]" src="/figma/cta-sep-1.svg" />
+      <SepH className="top-[450px] left-[417px]" src="/figma/cta-sep-3.svg" />
+      <SepH className="top-[225px] left-[537px]" src="/figma/cta-sep-3.svg" />
+      <SepH className="top-[112px] left-[-47px]" src="/figma/cta-sep-3.svg" />
+      <Sep className="top-[30px] left-[94px]" src="/figma/cta-sep-4.svg" />
+      <SepH className="top-[338px] left-[1202px]" src="/figma/cta-sep-3.svg" />
       {/* Center divider - 411:6885 (also present in tablet 411:7017) */}
-      <Sep className="left-[648px] top-[83px]" src="/figma/cta-sep-1.svg" />
+      <Sep className="top-[83px] left-[648px]" src="/figma/cta-sep-1.svg" />
     </div>
   );
 }
@@ -554,7 +571,7 @@ function LeftColumn({
   return (
     <div
       className={cn(
-        "-translate-y-1/2 absolute flex w-[594px] flex-col items-start gap-[48px]",
+        "absolute flex w-[594px] -translate-y-1/2 flex-col items-start gap-[48px]",
         className,
       )}
       data-node-id="411:6886"
@@ -570,7 +587,7 @@ function LeftColumn({
           data-name="Ready to be the answer, not the search r"
         >
           <div
-            className="relative flex w-full shrink-0 flex-col justify-center text-[40px] font-bold leading-[0] tracking-[-1.5px] text-white [word-break:break-word]"
+            className="relative flex w-full shrink-0 flex-col justify-center text-[40px] leading-[0] font-bold tracking-[-1.5px] [word-break:break-word] text-white"
             data-node-id="411:6889"
           >
             <p className="mb-0">
@@ -579,13 +596,13 @@ function LeftColumn({
                 to be the answer,
               </span>
             </p>
-            <p className="bg-gradient-to-b from-white to-[rgba(255,255,255,0.5)] bg-clip-text font-medium leading-[1.2] text-[transparent]">
+            <p className="bg-gradient-to-b from-white to-[rgba(255,255,255,0.5)] bg-clip-text leading-[1.2] font-medium text-[transparent]">
               not the search result?
             </p>
           </div>
         </div>
         <div
-          className="relative w-[538px] shrink-0 text-[16px] leading-[1.5] tracking-[-0.32px] text-[#52525b] [word-break:break-word]"
+          className="relative w-[538px] shrink-0 text-[16px] leading-[1.5] tracking-[-0.32px] [word-break:break-word] text-[#52525b]"
           data-node-id="411:6890"
         >
           <p>
@@ -594,10 +611,7 @@ function LeftColumn({
           </p>
         </div>
       </div>
-      <ButtonIcon
-        auditUrl={auditUrl}
-        className="shrink-0"
-      />
+      <ButtonIcon auditUrl={auditUrl} className="shrink-0" />
     </div>
   );
 }
@@ -608,7 +622,7 @@ export function AuditCtaSection({
   return (
     <DsSection className="ds-section-base">
       <SectionLabel name="AuditCtaSection" />
-      <DsSectionContainer className="py-20 tablet:py-24">
+      <DsSectionContainer className="tablet:py-24 py-20">
         {/* Figma CTA Banner card - 411:6768 / 411:6900 */}
         <div
           className="relative w-full overflow-clip rounded-[32px] bg-[rgba(19,22,25,0.25)]"
@@ -616,7 +630,7 @@ export function AuditCtaSection({
           data-name="CTA Banner"
         >
           {/* Desktop >= 1024px: exact 1248-wide Figma layout (411:6768) */}
-          <div className="hidden desktop:block">
+          <div className="desktop:block hidden">
             <div className="relative h-[500px] w-full">
               <BgLayers patternsLeft="left-[calc(50%+80px)]" />
 
@@ -626,18 +640,21 @@ export function AuditCtaSection({
                 data-node-id="411:6827"
                 data-name="Image"
               >
-                <WindowMockup className="left-[63px] top-[97px]" />
+                <WindowMockup className="top-[97px] left-[63px]" />
                 {/* Empty Inner Frame decor - 411:6851 */}
                 <div
-                  className="absolute left-[460px] top-[24px] size-[100px]"
+                  className="absolute top-[24px] left-[460px] size-[100px]"
                   data-node-id="411:6851"
                   data-name="Inner Frame"
                 />
-                <Sep className="left-[590px] top-[83px]" src="/figma/cta-sep-1.svg" />
-                <IdentityPanel className="left-[145px] top-[253px]" />
+                <Sep
+                  className="top-[83px] left-[590px]"
+                  src="/figma/cta-sep-1.svg"
+                />
+                <IdentityPanel className="top-[253px] left-[145px]" />
                 {/* Decorative Ellipse - 411:6884 */}
                 <div
-                  className="-translate-x-1/2 absolute bottom-0 left-[calc(50%+207px)] size-[120px]"
+                  className="absolute bottom-0 left-[calc(50%+207px)] size-[120px] -translate-x-1/2"
                   data-node-id="411:6884"
                   data-name="Decorative Ellipse"
                 >
@@ -651,12 +668,12 @@ export function AuditCtaSection({
                 </div>
               </div>
 
-              <LeftColumn className="left-[96px] top-1/2" auditUrl={auditUrl} />
+              <LeftColumn className="top-1/2 left-[96px]" auditUrl={auditUrl} />
             </div>
           </div>
 
           {/* Tablet 768-1023px: exact 696-wide Figma layout (411:6900) */}
-          <div className="hidden tablet:block desktop:hidden">
+          <div className="tablet:block desktop:hidden hidden">
             <div className="relative h-[761px] w-full">
               <BgLayers patternsLeft="left-[calc(50%+356px)]" />
 
@@ -666,18 +683,21 @@ export function AuditCtaSection({
                 data-node-id="411:6959"
                 data-name="Image"
               >
-                <WindowMockup className="left-[98px] top-[97px]" />
+                <WindowMockup className="top-[97px] left-[98px]" />
                 {/* Empty Inner Frame decor - 411:6983 */}
                 <div
-                  className="absolute left-[495px] top-[24px] size-[100px]"
+                  className="absolute top-[24px] left-[495px] size-[100px]"
                   data-node-id="411:6983"
                   data-name="Inner Frame"
                 />
-                <Sep className="left-[648px] top-[83px]" src="/figma/cta-sep-1.svg" />
-                <IdentityPanel className="left-[180px] top-[253px]" />
+                <Sep
+                  className="top-[83px] left-[648px]"
+                  src="/figma/cta-sep-1.svg"
+                />
+                <IdentityPanel className="top-[253px] left-[180px]" />
                 {/* Decorative Ellipse - 411:7016 */}
                 <div
-                  className="-translate-x-1/2 absolute bottom-[-16px] left-[calc(50%+194px)] size-[120px]"
+                  className="absolute bottom-[-16px] left-[calc(50%+194px)] size-[120px] -translate-x-1/2"
                   data-node-id="411:7016"
                   data-name="Decorative Ellipse"
                 >
@@ -692,18 +712,19 @@ export function AuditCtaSection({
               </div>
 
               <LeftColumn
-                className="left-[64px] top-[calc(50%-198.5px)]"
+                className="top-[calc(50%-198.5px)] left-[64px]"
                 auditUrl={auditUrl}
               />
             </div>
           </div>
 
           {/* Mobile < 768px: stacked text + CTA, centered */}
-          <div className="flex flex-col items-center gap-8 px-6 py-12 text-center tablet:hidden">
+          <div className="tablet:hidden flex flex-col items-center gap-8 px-6 py-12 text-center">
             <div className="flex flex-col items-center gap-6">
-              <h2 className="text-[26px] font-bold leading-[1.2] tracking-[-1.5px] text-white">
+              <h2 className="text-[26px] leading-[1.2] font-bold tracking-[-1.5px] text-white">
                 <span>
-                  Ready <span className="text-[#b1ffb1]">to be the answer,</span>
+                  Ready{" "}
+                  <span className="text-[#b1ffb1]">to be the answer,</span>
                 </span>
                 <br />
                 <span className="bg-gradient-to-b from-white to-[rgba(255,255,255,0.5)] bg-clip-text font-medium text-[transparent]">

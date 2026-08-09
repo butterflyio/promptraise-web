@@ -23,7 +23,10 @@ export async function POST(request: Request) {
       typeof contactPerson !== "string"
     ) {
       return NextResponse.json(
-        { ok: false, error: "telegramUsername, website and contactPerson are required" },
+        {
+          ok: false,
+          error: "telegramUsername, website and contactPerson are required",
+        },
         { status: 400 },
       );
     }

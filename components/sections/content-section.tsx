@@ -33,15 +33,17 @@ export function ContentSection() {
 
       <DsSectionContainer className="relative">
         <div className="mb-16 flex flex-col gap-3">
-          <h2 className="text-[32px] font-bold leading-[1.2] tracking-[-0.02em] text-white tablet:text-[48px]">
+          <h2 className="tablet:text-[48px] text-[32px] leading-[1.2] font-bold tracking-[-0.02em] text-white">
             We create content that trains AI
           </h2>
-          <p className="max-w-[640px] text-[14px] leading-[1.5] tracking-[-0.01em] text-white/50 tablet:text-[16px]">
-            Real content, curated/ratified feeds, LLM structure. This is exactly the content LLM models read, learn, and redistribute in their answers.
+          <p className="tablet:text-[16px] max-w-[640px] text-[14px] leading-[1.5] tracking-[-0.01em] text-white/50">
+            Real content, curated/ratified feeds, LLM structure. This is exactly
+            the content LLM models read, learn, and redistribute in their
+            answers.
           </p>
         </div>
 
-        <div className="grid gap-8 tablet:grid-cols-2">
+        <div className="tablet:grid-cols-2 grid gap-8">
           {contentFeatures.map((feature, idx) => (
             <div key={feature.id} className="flex flex-col gap-6">
               {/* Feature Header with Number */}
@@ -52,10 +54,10 @@ export function ContentSection() {
                   </span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-[20px] font-bold leading-[1.3] tracking-[-0.01em] text-white tablet:text-[24px]">
+                  <h3 className="tablet:text-[24px] text-[20px] leading-[1.3] font-bold tracking-[-0.01em] text-white">
                     {feature.title}
                   </h3>
-                  <p className="mt-2 text-[12px] leading-[1.4] tracking-[-0.01em] text-white/40 tablet:text-[14px]">
+                  <p className="tablet:text-[14px] mt-2 text-[12px] leading-[1.4] tracking-[-0.01em] text-white/40">
                     {feature.description}
                   </p>
                 </div>
@@ -66,7 +68,7 @@ export function ContentSection() {
                 {feature.features.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckIcon className="mt-1 h-4 w-4 flex-shrink-0 text-[#67FF67]" />
-                    <span className="text-[12px] leading-[1.4] tracking-[-0.01em] text-white/60 tablet:text-[13px]">
+                    <span className="tablet:text-[13px] text-[12px] leading-[1.4] tracking-[-0.01em] text-white/60">
                       {item}
                     </span>
                   </div>

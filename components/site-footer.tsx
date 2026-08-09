@@ -22,8 +22,8 @@ export async function SiteFooter() {
 
   return (
     <footer className="border-t border-[rgba(255,255,255,0.06)] bg-[var(--bg-contrast)]">
-      <div className="mx-auto flex w-full flex-col items-center justify-center gap-3 px-4 pb-7 pt-[29px] tablet:flex-row tablet:justify-between tablet:gap-0 tablet:px-[52px]">
-        <div className="flex items-center justify-center tablet:justify-start">
+      <div className="tablet:flex-row tablet:justify-between tablet:gap-0 tablet:px-[52px] mx-auto flex w-full flex-col items-center justify-center gap-3 px-4 pt-[29px] pb-7">
+        <div className="tablet:justify-start flex items-center justify-center">
           <SiteBrand
             siteName={siteName}
             logoUrl={logoUrl}
@@ -36,14 +36,14 @@ export async function SiteFooter() {
           </span>
         </div>
 
-        <div className="flex flex-col items-center gap-1 tablet:items-end">
-          <p className="order-2 text-[10px] leading-4 tracking-[0] text-[#686B6E] tablet:order-1">
+        <div className="tablet:items-end flex flex-col items-center gap-1">
+          <p className="tablet:order-1 order-2 text-[10px] leading-4 tracking-[0] text-[#686B6E]">
             {copyrightText}
           </p>
 
           <nav
             aria-label="Footer links"
-            className="order-1 flex items-center gap-1 tablet:order-2 tablet:gap-3"
+            className="tablet:order-2 tablet:gap-3 order-1 flex items-center gap-1"
           >
             {footerLinks.map((link) => (
               <a

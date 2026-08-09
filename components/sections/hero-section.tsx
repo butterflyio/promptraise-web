@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  DsBadge,
-  DsButton,
-} from "@/components/design-system";
+import { DsBadge, DsButton } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import type { HomePageHero } from "@/sanity/lib/queries";
 
@@ -94,7 +91,7 @@ export function HeroSection({
             {content?.headlineSuffix ?? defaultHeroContent.headlineSuffix}
           </h1>
 
-          <p className="prompt-hero-body mb-12 max-w-[330px] text-white/80 tablet:max-w-[584px]">
+          <p className="prompt-hero-body tablet:max-w-[584px] mb-12 max-w-[330px] text-white/80">
             {bodyLines.map((line, index) => (
               <span key={line}>
                 {line}
@@ -114,10 +111,7 @@ export function HeroSection({
               {primaryLabel}
             </DsButton>
 
-            <DsButton
-              href={secondaryHref}
-              variant="hero-secondary"
-            >
+            <DsButton href={secondaryHref} variant="hero-secondary">
               {secondaryLabel}
             </DsButton>
           </div>

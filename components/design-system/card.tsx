@@ -19,4 +19,3 @@ export function DsCard({ children, className }: DsCardProps) {
     </div>
   );
 }
-

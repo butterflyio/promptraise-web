@@ -62,7 +62,7 @@ function Field({
         placeholder={placeholder}
         autoComplete={autoComplete}
         onChange={onChange}
-        className="h-12 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-base)] px-4 text-[14px] text-white placeholder:text-white/30 transition-colors focus:border-[rgba(103,255,103,0.55)] focus:outline-none focus:ring-1 focus:ring-[rgba(103,255,103,0.25)]"
+        className="h-12 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-base)] px-4 text-[14px] text-white transition-colors placeholder:text-white/30 focus:border-[rgba(103,255,103,0.55)] focus:ring-1 focus:ring-[rgba(103,255,103,0.25)] focus:outline-none"
       />
       {error ? (
         <span className="text-[12px] leading-[1.4] text-red-400">{error}</span>
@@ -149,16 +149,16 @@ export function PlansSection() {
       <DsSectionContainer className="relative">
         <div className="flex flex-col items-center gap-3 text-center">
           <DsBadge variant="muted">Plans</DsBadge>
-          <h2 className="max-w-[649px] text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px] tablet:leading-[1.15]">
+          <h2 className="tablet:text-[40px] tablet:leading-[1.15] max-w-[649px] text-[24px] leading-[1.3] font-bold tracking-[-0.02em] text-white">
             Plans That Scale With You
           </h2>
-          <p className="max-w-[560px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
+          <p className="tablet:text-[16px] tablet:leading-[1.5] max-w-[560px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40">
             Start with a free audit. Upgrade when you&apos;re ready to dominate
             AI answers.
           </p>
         </div>
 
-        <DsCard className="relative mx-auto mt-10 w-full max-w-[560px] overflow-hidden border-white/8 bg-[linear-gradient(180deg,rgba(19,21,19,0.96),rgba(8,9,8,1))] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] tablet:p-8">
+        <DsCard className="tablet:p-8 relative mx-auto mt-10 w-full max-w-[560px] overflow-hidden border-white/8 bg-[linear-gradient(180deg,rgba(19,21,19,0.96),rgba(8,9,8,1))] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(103,255,103,0.14),transparent_45%)]" />
 
           <form

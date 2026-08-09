@@ -31,4 +31,3 @@ Run both checks:
 
 `design:verify` is a contract check that fails if required design-system files,
 Figma gate markers, or breakpoint tokens drift.
-
