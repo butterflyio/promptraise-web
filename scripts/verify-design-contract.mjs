@@ -59,4 +59,3 @@ if (failures.length > 0) {
 }
 
 console.log("Design contract verification passed.");
-

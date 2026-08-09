@@ -35,6 +35,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # Public NEXT_PUBLIC_* values (exposed client-side anyway; also in .env.example)
+          NEXT_PUBLIC_SANITY_PROJECT_ID: 4pws3pyj
+          NEXT_PUBLIC_SANITY_DATASET: production
 
   secret-scan:
     runs-on: ubuntu-latest

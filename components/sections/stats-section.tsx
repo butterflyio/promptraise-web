@@ -66,7 +66,7 @@ function useIsMobileBreakpoint() {
 /** Figma mobile/tablet "Features Section" - heading, badge, rings, stacked cards */
 function StatsMobileLayout() {
   return (
-    <div className="desktop:hidden relative overflow-hidden py-16 tablet:py-24">
+    <div className="desktop:hidden tablet:py-24 relative overflow-hidden py-16">
       <SectionLabel name="StatsSection" />
       <div className="mx-auto max-w-[1248px] px-6">
         {/* Heading row: tracking label + 48 LLMs badge */}
@@ -75,16 +75,14 @@ function StatsMobileLayout() {
             <span className="text-[16px] tracking-[-0.02em] text-[#d4d4d8]">
               Tracking visibility in
             </span>
-            <span
-              className="rounded-full border border-black/90 bg-black/35 px-3 pb-[2px] pt-0.5 text-[12px] font-medium tracking-[-0.02em] text-white backdrop-blur-[6px]"
-            >
+            <span className="rounded-full border border-black/90 bg-black/35 px-3 pt-0.5 pb-[2px] text-[12px] font-medium tracking-[-0.02em] text-white backdrop-blur-[6px]">
               48 LLMs
             </span>
           </div>
           {/* Slider / divider line */}
           <div className="relative h-8 w-full max-w-[392px]">
             <div
-              className="absolute left-1/2 top-0 h-[43px] w-full max-w-[393px] -translate-x-1/2"
+              className="absolute top-0 left-1/2 h-[43px] w-full max-w-[393px] -translate-x-1/2"
               style={{
                 backgroundImage:
                   "linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 25%, #fff 75%, rgba(255,255,255,0) 100%)",
@@ -105,7 +103,7 @@ function StatsMobileLayout() {
 
         {/* Rings visual behind the cards */}
         <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 opacity-50"
+          className="pointer-events-none absolute top-1/2 left-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 opacity-50"
           aria-hidden="true"
         >
           <div
@@ -130,47 +128,47 @@ function StatsMobileLayout() {
         </div>
 
         {/* Two stacked glass cards */}
-        <div className="relative mt-10 grid gap-4 tablet:gap-6">
+        <div className="tablet:gap-6 relative mt-10 grid gap-4">
           {/* Card 1: Current Visibility Audit */}
-          <div className="overflow-hidden rounded-[16px] border-[0.5px] border-white bg-black/25 p-5 shadow-[0_0_0_2px_rgba(255,255,255,0.07)] backdrop-blur-[3.25px] tablet:p-7">
+          <div className="tablet:p-7 overflow-hidden rounded-[16px] border-[0.5px] border-white bg-black/25 p-5 shadow-[0_0_0_2px_rgba(255,255,255,0.07)] backdrop-blur-[3.25px]">
             {/* Decorative visual strip */}
             <div className="relative mx-auto mb-4 h-[178px] w-full max-w-[340px]">
               <img
                 src="/figma/mobile-audit-vec-1.svg"
                 alt=""
                 aria-hidden="true"
-                className="absolute left-0 top-1/2 h-auto w-[112px] -translate-y-1/2 opacity-60"
+                className="absolute top-1/2 left-0 h-auto w-[112px] -translate-y-1/2 opacity-60"
               />
               <img
                 src="/figma/mobile-audit-vec-2.svg"
                 alt=""
                 aria-hidden="true"
-                className="absolute right-4 top-1/3 h-auto w-[112px] -translate-y-1/2 rotate-180 opacity-60"
+                className="absolute top-1/3 right-4 h-auto w-[112px] -translate-y-1/2 rotate-180 opacity-60"
               />
               <img
                 src="/figma/mobile-audit-ellipse.svg"
                 alt=""
                 aria-hidden="true"
-                className="absolute left-1/2 top-1/2 h-auto w-[270px] -translate-x-1/2 -translate-y-1/2 opacity-40"
+                className="absolute top-1/2 left-1/2 h-auto w-[270px] -translate-x-1/2 -translate-y-1/2 opacity-40"
               />
               <img
                 src="/figma/mobile-audit-card.svg"
                 alt=""
-                className="absolute left-0 top-1/2 h-auto w-[165px] max-w-none -translate-y-1/2"
+                className="absolute top-1/2 left-0 h-auto w-[165px] max-w-none -translate-y-1/2"
               />
               <img
                 src="/figma/mobile-audit-card-2.svg"
                 alt=""
-                className="absolute right-0 top-1/2 h-auto w-[165px] max-w-none -translate-y-1/2 -scale-x-100"
+                className="absolute top-1/2 right-0 h-auto w-[165px] max-w-none -translate-y-1/2 -scale-x-100"
               />
               <img
                 src="/figma/mobile-audit-center.svg"
                 alt=""
                 aria-hidden="true"
-                className="absolute left-1/2 top-1/2 h-[53px] w-[53px] -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 h-[53px] w-[53px] -translate-x-1/2 -translate-y-1/2"
               />
             </div>
-            <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-[18px] font-bold leading-[1.4] tracking-[-0.02em] text-transparent">
+            <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-[18px] leading-[1.4] font-bold tracking-[-0.02em] text-transparent">
               Current Visibility Audit
             </h3>
             <p className="mt-2 text-[12px] leading-[1.5] text-white/40">
@@ -181,7 +179,7 @@ function StatsMobileLayout() {
           </div>
 
           {/* Card 2: Real creators, not AI text */}
-          <div className="overflow-hidden rounded-[24px] border border-white/[0.03] bg-[rgba(19,22,25,0.25)] p-5 backdrop-blur-[6.5px] tablet:p-7">
+          <div className="tablet:p-7 overflow-hidden rounded-[24px] border border-white/[0.03] bg-[rgba(19,22,25,0.25)] p-5 backdrop-blur-[6.5px]">
             {/* Logos grid visual */}
             <div className="relative mx-auto mb-4 grid max-w-[340px] grid-cols-6 gap-2 overflow-hidden opacity-70">
               {Array.from({ length: 18 }).map((_, i) => (
@@ -203,13 +201,13 @@ function StatsMobileLayout() {
                   className="h-5 w-5"
                 />
               </span>
-              <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-[16px] font-bold leading-[1.5] tracking-[-0.02em] text-transparent">
+              <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-[16px] leading-[1.5] font-bold tracking-[-0.02em] text-transparent">
                 Real creators, not AI text
               </h3>
             </div>
             <p className="mt-3 text-[12px] leading-[1.4] text-white/40">
-              LLMs filter AI-generated content. Real person with real audience
-              - an EEAT signal that can&apos;t be faked.
+              LLMs filter AI-generated content. Real person with real audience -
+              an EEAT signal that can&apos;t be faked.
             </p>
           </div>
         </div>
@@ -289,13 +287,13 @@ export function StatsSection({ content }: StatsSectionProps) {
       <StatsMobileLayout />
 
       {/* Desktop animated canvas (>= 1024px) */}
-      <div className="hidden desktop:block">
+      <div className="desktop:block hidden">
         <SectionLabel name="StatsSection" />
-        <div className="prompt-stats-canvas pointer-events-none absolute left-1/2 top-0 z-10 h-[782px] w-[1440px] -translate-x-1/2">
+        <div className="prompt-stats-canvas pointer-events-none absolute top-0 left-1/2 z-10 h-[782px] w-[1440px] -translate-x-1/2">
           {/* Figma ring visual - masked ellipse layers */}
-          <div className="prompt-stats-rings absolute left-1/2 top-[80px] h-[696px] w-[1419px] -translate-x-1/2">
+          <div className="prompt-stats-rings absolute top-[80px] left-1/2 h-[696px] w-[1419px] -translate-x-1/2">
             <div
-              className="absolute left-1/2 top-1/2 size-[1223px] -translate-x-1/2 -translate-y-1/2"
+              className="absolute top-1/2 left-1/2 size-[1223px] -translate-x-1/2 -translate-y-1/2"
               style={{
                 WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
                 maskImage: "url(/figma/stats-ellipse-mask.svg)",
@@ -315,7 +313,7 @@ export function StatsSection({ content }: StatsSectionProps) {
               />
             </div>
             <div
-              className="absolute left-1/2 top-1/2 size-[1053px] -translate-x-1/2 -translate-y-1/2"
+              className="absolute top-1/2 left-1/2 size-[1053px] -translate-x-1/2 -translate-y-1/2"
               style={{
                 WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
                 maskImage: "url(/figma/stats-ellipse-mask.svg)",
@@ -335,7 +333,7 @@ export function StatsSection({ content }: StatsSectionProps) {
               />
             </div>
             <div
-              className="absolute left-1/2 top-1/2 size-[883px] -translate-x-1/2 -translate-y-1/2"
+              className="absolute top-1/2 left-1/2 size-[883px] -translate-x-1/2 -translate-y-1/2"
               style={{
                 WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
                 maskImage: "url(/figma/stats-ellipse-mask.svg)",
@@ -355,7 +353,7 @@ export function StatsSection({ content }: StatsSectionProps) {
               />
             </div>
             <div
-              className="absolute left-1/2 top-1/2 size-[713px] -translate-x-1/2 -translate-y-1/2 rotate-[-60.22deg]"
+              className="absolute top-1/2 left-1/2 size-[713px] -translate-x-1/2 -translate-y-1/2 rotate-[-60.22deg]"
               style={{
                 WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
                 maskImage: "url(/figma/stats-ellipse-mask.svg)",
@@ -375,7 +373,7 @@ export function StatsSection({ content }: StatsSectionProps) {
               />
             </div>
             <div
-              className="absolute left-1/2 top-1/2 size-[544px] -translate-x-1/2 -translate-y-1/2"
+              className="absolute top-1/2 left-1/2 size-[544px] -translate-x-1/2 -translate-y-1/2"
               style={{
                 WebkitMaskImage: "url(/figma/stats-ellipse-mask.svg)",
                 maskImage: "url(/figma/stats-ellipse-mask.svg)",
@@ -396,7 +394,7 @@ export function StatsSection({ content }: StatsSectionProps) {
             </div>
           </div>
 
-          <p className="prompt-stats-headline absolute left-1/2 top-[113px] z-[24] w-[595px] -translate-x-1/2 text-center text-white">
+          <p className="prompt-stats-headline absolute top-[113px] left-1/2 z-[24] w-[595px] -translate-x-1/2 text-center text-white">
             <span className="font-normal">{headlineLineOne}</span>
             <br />
             <span className="font-semibold">{headlineLineTwo}</span>
@@ -423,32 +421,32 @@ export function StatsSection({ content }: StatsSectionProps) {
               alt="PromptRaise mark"
               width={154}
               height={154}
-              className="prompt-stats-core-mark absolute left-1/2 top-1/2 z-10 h-auto w-[154px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
+              className="prompt-stats-core-mark absolute top-1/2 left-1/2 z-10 h-auto w-[154px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
               style={logoStyle}
               aria-hidden="true"
             />
           </motion.div>
 
-          <div className="absolute left-1/2 top-[242px] z-[24] h-[318px] w-[992px] -translate-x-1/2">
+          <div className="absolute top-[242px] left-1/2 z-[24] h-[318px] w-[992px] -translate-x-1/2">
             <FeatureCard
               value={statCards[0]?.value ?? ""}
               label={statCards[0]?.label ?? ""}
-              className="left-0 top-[32px]"
+              className="top-[32px] left-0"
             />
             <FeatureCard
               value={statCards[1]?.value ?? ""}
               label={statCards[1]?.label ?? ""}
-              className="left-[667px] top-0"
+              className="top-0 left-[667px]"
             />
             <FeatureCard
               value={statCards[2]?.value ?? ""}
               label={statCards[2]?.label ?? ""}
-              className="left-[76px] top-[234px]"
+              className="top-[234px] left-[76px]"
             />
             <FeatureCard
               value={statCards[3]?.value ?? ""}
               label={statCards[3]?.label ?? ""}
-              className="left-[777px] top-[234px]"
+              className="top-[234px] left-[777px]"
             />
           </div>
         </div>

@@ -25,7 +25,7 @@ export async function SiteHeader() {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <div className="mx-auto flex w-full flex-col items-start px-4 py-6 tablet:px-9 desktop:px-24">
+      <div className="tablet:px-9 desktop:px-24 mx-auto flex w-full flex-col items-start px-4 py-6">
         <div className="flex w-full items-center justify-between rounded-[9999px] backdrop-blur-[14.012px]">
           <div className="flex items-center gap-6">
             <button

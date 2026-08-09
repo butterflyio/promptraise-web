@@ -68,17 +68,19 @@ export function AskAiSection({
       {/* ── Binary / terminal background visual ───────────────── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 select-none overflow-hidden"
+        className="pointer-events-none absolute inset-0 overflow-hidden select-none"
       >
         {/* Green atmospheric glows */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_72%_35%,rgba(40,114,69,0.4),transparent_70%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_20%_90%,rgba(103,255,103,0.08),transparent_70%)]" />
 
         {/* Binary text wall */}
-        <div className="absolute inset-x-0 top-1/2 hidden -translate-y-1/2 flex-col gap-[10px] whitespace-nowrap font-mono text-[22px] leading-none tracking-[0.03em] text-white opacity-[0.07] desktop:flex">
+        <div className="desktop:flex absolute inset-x-0 top-1/2 hidden -translate-y-1/2 flex-col gap-[10px] font-mono text-[22px] leading-none tracking-[0.03em] whitespace-nowrap text-white opacity-[0.07]">
           {BINARY_ROWS.map((row, index) => (
             <div key={index} className="flex justify-between px-8">
-              <span>{row} {row} {row}</span>
+              <span>
+                {row} {row} {row}
+              </span>
               <span className={index % 2 === 0 ? "opacity-40" : "opacity-20"}>
                 {row}
               </span>
@@ -89,14 +91,16 @@ export function AskAiSection({
               <span className={index % 2 === 0 ? "opacity-20" : "opacity-40"}>
                 {row}
               </span>
-              <span>{row} {row}</span>
+              <span>
+                {row} {row}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
       <DsSectionContainer className="relative">
-        <div className="grid items-center gap-12 desktop:grid-cols-[minmax(0,1fr)_349px] desktop:gap-[160px]">
+        <div className="desktop:grid-cols-[minmax(0,1fr)_349px] desktop:gap-[160px] grid items-center gap-12">
           {/* ── Left: heading + subtext ─────────────────────── */}
           <div className="flex flex-col items-start gap-6">
             <DsBadge variant="muted">{content?.badge ?? "Ask AI"}</DsBadge>
@@ -118,9 +122,9 @@ export function AskAiSection({
                 href={assistant.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-14 w-full items-center justify-between rounded-full border border-black bg-white/10 py-1.5 pl-6 pr-1.5 backdrop-blur-[6px] transition-all hover:bg-white/15"
+                className="flex h-14 w-full items-center justify-between rounded-full border border-black bg-white/10 py-1.5 pr-1.5 pl-6 backdrop-blur-[6px] transition-all hover:bg-white/15"
               >
-                <span className="whitespace-nowrap text-[16px] tracking-[-0.02em] text-white">
+                <span className="text-[16px] tracking-[-0.02em] whitespace-nowrap text-white">
                   {assistant.name}
                 </span>
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#09090b] p-3">

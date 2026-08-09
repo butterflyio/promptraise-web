@@ -49,19 +49,19 @@ function BenefitBullet({ children }: { children: string }) {
 
 export function PricingSection() {
   return (
-    <DsSection id="pricing" className="relative overflow-hidden ds-section-alt">
+    <DsSection id="pricing" className="ds-section-alt relative overflow-hidden">
       <SectionLabel name="PricingSection" />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_58%_20%,rgba(109,255,146,0.42),rgba(109,255,146,0.12)_24%,transparent_60%)]" />
-        <div className="absolute left-1/2 top-14 h-[34rem] w-[52rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(87,255,129,0.18)_0%,rgba(87,255,129,0.06)_38%,transparent_72%)] blur-2xl" />
+        <div className="absolute top-14 left-1/2 h-[34rem] w-[52rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(87,255,129,0.18)_0%,rgba(87,255,129,0.06)_38%,transparent_72%)] blur-2xl" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.18),rgba(0,0,0,0.36))]" />
       </div>
 
       <DsSectionContainer className="tablet:py-24 relative">
         <div className="relative">
-          <div className="grid gap-4 desktop:grid-cols-[minmax(0,1fr)_auto] desktop:items-start">
+          <div className="desktop:grid-cols-[minmax(0,1fr)_auto] desktop:items-start grid gap-4">
             <div className="max-w-[720px]">
-              <h2 className="text-[40px] font-semibold leading-[0.98] tracking-[-0.06em] text-white mobile:text-[52px]">
+              <h2 className="mobile:text-[52px] text-[40px] leading-[0.98] font-semibold tracking-[-0.06em] text-white">
                 We create content
                 <br />
                 that trains AI
@@ -69,19 +69,20 @@ export function PricingSection() {
               <p className="mt-4 max-w-[660px] text-[15px] leading-[1.55] tracking-[-0.02em] text-white/38">
                 Real creators, authoritative media, right structure.
                 <br />
-                This is exactly the content LLM models read, index, and reproduce in their answers.
+                This is exactly the content LLM models read, index, and
+                reproduce in their answers.
               </p>
             </div>
 
             <DsBadge
               variant="muted"
-              className="justify-self-start px-5 py-2 text-[15px] leading-none desktop:justify-self-end"
+              className="desktop:justify-self-end justify-self-start px-5 py-2 text-[15px] leading-none"
             >
               How we solve it
             </DsBadge>
           </div>
 
-          <div className="mt-10 hidden grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1fr)] border-b border-white/8 pb-4 text-[13px] tracking-[-0.02em] text-white/28 desktop:grid">
+          <div className="desktop:grid mt-10 hidden grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1fr)] border-b border-white/8 pb-4 text-[13px] tracking-[-0.02em] text-white/28">
             <div>Layer</div>
             <div>Layer Name</div>
             <div>Benefits</div>
@@ -91,16 +92,16 @@ export function PricingSection() {
             {layers.map((layer, index) => (
               <article
                 key={layer.name}
-                className={`grid gap-6 px-6 py-8 desktop:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1fr)] desktop:gap-8 desktop:px-8 desktop:py-10 ${
+                className={`desktop:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1fr)] desktop:gap-8 desktop:px-8 desktop:py-10 grid gap-6 px-6 py-8 ${
                   index > 0 ? "border-t border-white/6" : ""
                 } ${layer.highlighted ? "bg-[linear-gradient(90deg,rgba(82,255,130,0.06),transparent_70%)]" : ""}`}
               >
-                <div className="pt-1 text-[13px] tracking-[0.08em] text-white/38 desktop:pt-2">
+                <div className="desktop:pt-2 pt-1 text-[13px] tracking-[0.08em] text-white/38">
                   {layer.index}
                 </div>
 
                 <div className="max-w-[520px]">
-                  <h3 className="text-[26px] font-semibold leading-[1.1] tracking-[-0.04em] text-white mobile:text-[30px]">
+                  <h3 className="mobile:text-[30px] text-[26px] leading-[1.1] font-semibold tracking-[-0.04em] text-white">
                     {layer.name}
                   </h3>
                   <p className="mt-4 max-w-[430px] text-[15px] leading-[1.55] tracking-[-0.02em] text-white/34">
@@ -108,7 +109,7 @@ export function PricingSection() {
                   </p>
                 </div>
 
-                <ul className="flex flex-col gap-4 pt-1 desktop:pt-2">
+                <ul className="desktop:pt-2 flex flex-col gap-4 pt-1">
                   {layer.benefits.map((benefit) => (
                     <BenefitBullet key={benefit}>{benefit}</BenefitBullet>
                   ))}

@@ -342,9 +342,18 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 75% 20%, rgba(165, 255, 170, 0.22), transparent 48%),
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(165, 255, 170, 0.22),
+      transparent 48%
+    ),
     radial-gradient(circle at 25% 80%, rgba(0, 0, 0, 0.52), transparent 58%),
-    linear-gradient(160deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.02) 42%, rgba(0, 0, 0, 0.42) 100%);
+    linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 0.24),
+      rgba(0, 0, 0, 0.02) 42%,
+      rgba(0, 0, 0, 0.42) 100%
+    );
 }
 
 .prompt-stats-core-mark {
@@ -464,8 +473,16 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 88%, rgba(103, 255, 103, 0.1) 0%, transparent 42%),
-    radial-gradient(circle at 82% 12%, rgba(103, 255, 103, 0.07) 0%, transparent 40%),
+    radial-gradient(
+      circle at 18% 88%,
+      rgba(103, 255, 103, 0.1) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 82% 12%,
+      rgba(103, 255, 103, 0.07) 0%,
+      transparent 40%
+    ),
     linear-gradient(180deg, #070807 0%, #090b0a 52%, #050605 100%);
 }
 
@@ -479,8 +496,16 @@ body {
     linear-gradient(rgba(214, 223, 222, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(214, 223, 222, 0.05) 1px, transparent 1px);
   background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 78%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 0%,
+    transparent 78%
+  );
 }
 
 /* Top / bottom edge blur + fade so cards dissolve at the boundaries */
@@ -514,7 +539,11 @@ body {
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background:
-    radial-gradient(circle at 50% -10%, rgba(103, 255, 103, 0.12), transparent 46%),
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(103, 255, 103, 0.12),
+      transparent 46%
+    ),
     linear-gradient(180deg, rgba(20, 23, 21, 0.92), rgba(9, 11, 10, 0.96));
   box-shadow:
     0 40px 80px rgba(0, 0, 0, 0.55),

@@ -4,11 +4,7 @@ import { cn } from "@/lib/cn";
 
 import { ArrowUpRightIcon } from "./icons";
 
-type ButtonVariant =
-  | "light"
-  | "primary"
-  | "secondary"
-  | "hero-secondary";
+type ButtonVariant = "light" | "primary" | "secondary" | "hero-secondary";
 
 type ButtonSize = "md" | "lg";
 
@@ -52,7 +48,7 @@ export function DsButton({
     <a
       href={href}
       className={cn(
-        "inline-flex items-center rounded-full leading-none tracking-[0] font-normal transition-all hover:opacity-90",
+        "inline-flex items-center rounded-full leading-none font-normal tracking-[0] transition-all hover:opacity-90",
         variantClasses[variant],
         sizeClasses[size],
         className,

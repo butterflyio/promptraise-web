@@ -58,7 +58,7 @@ function Field({
         placeholder={placeholder}
         autoComplete={autoComplete}
         onChange={onChange}
-        className="h-12 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-base)] px-4 text-[14px] text-white placeholder:text-white/30 transition-colors focus:border-[rgba(103,255,103,0.55)] focus:outline-none focus:ring-1 focus:ring-[rgba(103,255,103,0.25)]"
+        className="h-12 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-base)] px-4 text-[14px] text-white transition-colors placeholder:text-white/30 focus:border-[rgba(103,255,103,0.55)] focus:ring-1 focus:ring-[rgba(103,255,103,0.25)] focus:outline-none"
       />
       {error ? (
         <span className="text-[12px] leading-[1.4] text-red-400">{error}</span>
@@ -154,7 +154,7 @@ export function PlansSection({ content }: { content?: HomePage["plans"] }) {
           </p>
         </div>
 
-        <DsCard className="relative mx-auto mt-10 w-full max-w-[560px] overflow-hidden border-white/8 bg-[linear-gradient(180deg,rgba(19,21,19,0.96),rgba(8,9,8,1))] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] tablet:p-8">
+        <DsCard className="tablet:p-8 relative mx-auto mt-10 w-full max-w-[560px] overflow-hidden border-white/8 bg-[linear-gradient(180deg,rgba(19,21,19,0.96),rgba(8,9,8,1))] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(103,255,103,0.14),transparent_45%)]" />
 
           <form

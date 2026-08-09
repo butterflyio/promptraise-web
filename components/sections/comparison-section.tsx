@@ -56,7 +56,7 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
       ? (content.features as readonly string[])
       : rows;
   return (
-    <DsSection className="relative overflow-hidden ds-section-alt">
+    <DsSection className="ds-section-alt relative overflow-hidden">
       <SectionLabel name="ComparisonSection" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,rgba(67,255,119,0.22),transparent_18%),radial-gradient(circle_at_100%_32%,rgba(67,255,119,0.26),transparent_18%)]" />
 
@@ -72,14 +72,16 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
           </p>
         </div>
 
-        <DsCard className="mt-12 overflow-hidden border-white/6 bg-[linear-gradient(180deg,rgba(9,11,10,0.98),rgba(8,9,8,1))] px-5 py-6 tablet:px-8">
+        <DsCard className="tablet:px-8 mt-12 overflow-hidden border-white/6 bg-[linear-gradient(180deg,rgba(9,11,10,0.98),rgba(8,9,8,1))] px-5 py-6">
           <div className="grid grid-cols-[1.5fr_repeat(4,minmax(0,1fr))] gap-4 pb-4 text-[12px] tracking-[-0.02em] text-white/42">
             <div />
             {competitors.map((competitor) => (
               <div
                 key={competitor.name}
                 className={`flex items-center justify-center gap-2 rounded-[20px] px-3 py-2 ${
-                  competitor.name === "PromptRaise" ? "bg-[rgba(67,255,119,0.08)] text-white" : "text-white/72"
+                  competitor.name === "PromptRaise"
+                    ? "bg-[rgba(67,255,119,0.08)] text-white"
+                    : "text-white/72"
                 }`}
               >
                 <span className="text-[12px] font-semibold tracking-[-0.02em]">
@@ -100,20 +102,28 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
                 </div>
 
                 {competitors.map((competitor) => (
-                <div
-                  key={`${competitor.name}-${row}`}
-                  className={`flex min-h-[56px] items-center justify-center rounded-[20px] px-3 text-center ${
+                  <div
+                    key={`${competitor.name}-${row}`}
+                    className={`flex min-h-[56px] items-center justify-center rounded-[20px] px-3 text-center ${
                       competitor.name === "PromptRaise"
                         ? "bg-[linear-gradient(180deg,rgba(103,255,103,0.18),rgba(103,255,103,0.05))] shadow-[0_0_0_1px_rgba(103,255,103,0.28)]"
                         : "bg-transparent"
                     }`}
-                >
-                  {rowIndex === rows.length - 1 ? (
-                      <span className={`text-[16px] tracking-[-0.02em] ${competitor.name === "PromptRaise" ? "text-[var(--accent-primary)]" : "text-white/72"}`}>
+                  >
+                    {rowIndex === rows.length - 1 ? (
+                      <span
+                        className={`text-[16px] tracking-[-0.02em] ${competitor.name === "PromptRaise" ? "text-[var(--accent-primary)]" : "text-white/72"}`}
+                      >
                         {competitor.price}
                       </span>
                     ) : (
-                      <CheckMark active={rowMatrix[rowIndex]?.[competitors.indexOf(competitor)] ?? false} />
+                      <CheckMark
+                        active={
+                          rowMatrix[rowIndex]?.[
+                            competitors.indexOf(competitor)
+                          ] ?? false
+                        }
+                      />
                     )}
                   </div>
                 ))}
