@@ -1,6 +1,6 @@
-import { ProblemSectionClient } from './problem-section-client';
-import { SectionLabel } from '@/components/section-label';
-import type { HomePage } from '@/sanity/lib/queries';
+import { ProblemSectionClient } from "./problem-section-client";
+import { SectionLabel } from "@/components/section-label";
+import type { HomePage } from "@/sanity/lib/queries";
 
 const PROBLEMS = [
   {
@@ -30,7 +30,7 @@ const PROBLEMS = [
 ];
 
 interface ProblemSectionProps {
-  content?: HomePage['problem'];
+  content?: HomePage["problem"];
 }
 
 export function ProblemSection({ content }: ProblemSectionProps) {

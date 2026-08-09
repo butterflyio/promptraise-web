@@ -12,19 +12,19 @@ guardrail: unknown `_type` values are ignored, never silently invented.
 Screenshots live next to the Figma design (Breakpoints frames); the
 Component column points at the source that implements the visuals.
 
-| `_type` | Component | Section in design | Editable fields (CMS) | Visual fixed in code |
-|---------|-----------|-------------------|----------------------|----------------------|
-| `hero` | `hero-section.tsx` | Header + Hero | eyebrow, headline prefix/highlight/suffix, body[], primary CTA, secondary CTA, trust bar (label, badge, logos[]) | layout, background video, badge |
-| `visibility` | `stats-section.tsx` | Visibility / Stats | headline (2 lines), stat cards (value + label x4) | medallion orbit, ellipses, animation |
-| `problem` | `problem-section.tsx` | theProblem.exe | window title, heading, subtext, CTA label, floating problem cards[] | window art, glows, diagonal grid |
-| `aiTraining` | `ai-training-section.tsx` | We create content that trains AI | badge, heading, subtext, layers[] (number, title, description, benefits[]) | background panels, pill styling |
-| `process` | `process-section.tsx` | Process / Audit | badge, heading, subtext, steps[] (title + desc) | slider mechanic, waveform, step icons |
-| `comparison` | `comparison-section.tsx` | PromptRaise vs Competitors | heading, subtext, features[] | checkmark matrix, highlighted column |
-| `whyChoose` | `why-choose-section.tsx` | Why Choose PromptRaise | badge, heading, subtext, cards[] (title + desc) | card illustrations, 3+3 grid |
-| `plans` | `plans-section.tsx` | Plans That Scale With You | badge, heading, subtext, CTA label | form styling (fields are code-fixed) |
-| `auditCta` | `audit-cta-section.tsx` | Final CTA | heading, subtext, CTA label, checklist heading, checklist[] | banner art stack, glass panels |
-| `team` | `team-section.tsx` | Team + Backed by | badge, heading, subtext, members[] (name, role, bio) | portraits, social icons, logos |
-| `askAi` | `ask-ai-section.tsx` | Ask AI | badge, heading, subtext, prompt | button art, background visual |
+| `_type`      | Component                 | Section in design                | Editable fields (CMS)                                                                                            | Visual fixed in code                  |
+| ------------ | ------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `hero`       | `hero-section.tsx`        | Header + Hero                    | eyebrow, headline prefix/highlight/suffix, body[], primary CTA, secondary CTA, trust bar (label, badge, logos[]) | layout, background video, badge       |
+| `visibility` | `stats-section.tsx`       | Visibility / Stats               | headline (2 lines), stat cards (value + label x4)                                                                | medallion orbit, ellipses, animation  |
+| `problem`    | `problem-section.tsx`     | theProblem.exe                   | window title, heading, subtext, CTA label, floating problem cards[]                                              | window art, glows, diagonal grid      |
+| `aiTraining` | `ai-training-section.tsx` | We create content that trains AI | badge, heading, subtext, layers[] (number, title, description, benefits[])                                       | background panels, pill styling       |
+| `process`    | `process-section.tsx`     | Process / Audit                  | badge, heading, subtext, steps[] (title + desc)                                                                  | slider mechanic, waveform, step icons |
+| `comparison` | `comparison-section.tsx`  | PromptRaise vs Competitors       | heading, subtext, features[]                                                                                     | checkmark matrix, highlighted column  |
+| `whyChoose`  | `why-choose-section.tsx`  | Why Choose PromptRaise           | badge, heading, subtext, cards[] (title + desc)                                                                  | card illustrations, 3+3 grid          |
+| `plans`      | `plans-section.tsx`       | Plans That Scale With You        | badge, heading, subtext, CTA label                                                                               | form styling (fields are code-fixed)  |
+| `auditCta`   | `audit-cta-section.tsx`   | Final CTA                        | heading, subtext, CTA label, checklist heading, checklist[]                                                      | banner art stack, glass panels        |
+| `team`       | `team-section.tsx`        | Team + Backed by                 | badge, heading, subtext, members[] (name, role, bio)                                                             | portraits, social icons, logos        |
+| `askAi`      | `ask-ai-section.tsx`      | Ask AI                           | badge, heading, subtext, prompt                                                                                  | button art, background visual         |
 
 ## Settings-dependent props
 

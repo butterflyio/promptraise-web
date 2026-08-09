@@ -582,7 +582,11 @@ function NarrativeCard() {
 /* ─────────────────────────────────────────────────────────────────────────────
    Main export
 ───────────────────────────────────────────────────────────────────────────── */
-export function WhyChooseSection({ content }: { content?: HomePage["whyChoose"] }) {
+export function WhyChooseSection({
+  content,
+}: {
+  content?: HomePage["whyChoose"];
+}) {
   const cmsCards = content?.cards?.length ? content.cards : null;
   return (
     <DsSection>
@@ -591,7 +595,7 @@ export function WhyChooseSection({ content }: { content?: HomePage["whyChoose"] 
         {/* Header row: title left, badge right */}
         <div className="mb-12 flex items-start justify-between">
           <div>
-            <h2 className="text-[40px] tablet:text-[52px] font-bold text-white leading-tight mb-3">
+            <h2 className="tablet:text-[52px] mb-3 text-[40px] leading-tight font-bold text-white">
               {content?.heading ?? "Why Choose PromptRaise"}
             </h2>
             <p className="text-[14px] text-white/40">
@@ -647,17 +651,17 @@ export function WhyChooseSection({ content }: { content?: HomePage["whyChoose"] 
 
         {cmsCards ? (
           /* CMS-driven simple cards when content is provided */
-          <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
+          <div className="tablet:grid-cols-2 desktop:grid-cols-3 grid grid-cols-1 gap-4">
             {cmsCards.map((card, i) => (
               <div
                 key={i}
-                className="relative overflow-hidden rounded-2xl flex flex-col p-8"
+                className="relative flex flex-col overflow-hidden rounded-2xl p-8"
                 style={{
                   background: "#0e0f10",
                   border: "1px solid rgba(255,255,255,0.07)",
                 }}
               >
-                <h3 className="text-[15px] font-bold text-white leading-snug mb-3">
+                <h3 className="mb-3 text-[15px] leading-snug font-bold text-white">
                   {card.title}
                 </h3>
                 <p className="text-[12px] leading-[1.6] text-white/40">
@@ -667,25 +671,25 @@ export function WhyChooseSection({ content }: { content?: HomePage["whyChoose"] 
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 tablet:grid-cols-3 gap-4">
-          {/* Column 1 */}
-          <div className="flex flex-col gap-4">
-            <FullCycleCard />
-            <NumbersCard />
-          </div>
+          <div className="tablet:grid-cols-3 grid grid-cols-1 gap-4">
+            {/* Column 1 */}
+            <div className="flex flex-col gap-4">
+              <FullCycleCard />
+              <NumbersCard />
+            </div>
 
-          {/* Column 2 */}
-          <div className="flex flex-col gap-4">
-            <RealCreatorsCard />
-            <Web3InsideCard />
-          </div>
+            {/* Column 2 */}
+            <div className="flex flex-col gap-4">
+              <RealCreatorsCard />
+              <Web3InsideCard />
+            </div>
 
-          {/* Column 3 */}
-          <div className="flex flex-col gap-4">
-            <TransparencyCard />
-            <NarrativeCard />
+            {/* Column 3 */}
+            <div className="flex flex-col gap-4">
+              <TransparencyCard />
+              <NarrativeCard />
+            </div>
           </div>
-        </div>
         )}
       </DsSectionContainer>
     </DsSection>

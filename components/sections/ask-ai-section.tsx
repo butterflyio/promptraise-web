@@ -52,11 +52,7 @@ const BINARY_ROWS = [
   "01000 01000010 0100010",
 ] as const;
 
-export function AskAiSection({
-  content,
-}: {
-  content?: HomePage["askAi"];
-}) {
+export function AskAiSection({ content }: { content?: HomePage["askAi"] }) {
   const aiAssistants = DEFAULT_AI_ASSISTANTS.map((assistant) => ({
     ...assistant,
     href: buildAskUrl(assistant.baseHref, content?.prompt),
@@ -104,11 +100,10 @@ export function AskAiSection({
           {/* ── Left: heading + subtext ─────────────────────── */}
           <div className="flex flex-col items-start gap-6">
             <DsBadge variant="muted">{content?.badge ?? "Ask AI"}</DsBadge>
-            <h2 className="max-w-[649px] text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px] tablet:leading-[1.15]">
-              {content?.heading ??
-                "Still deciding? Let the AI decide for you."}
+            <h2 className="tablet:text-[40px] tablet:leading-[1.15] max-w-[649px] text-[24px] leading-[1.3] font-bold tracking-[-0.02em] text-white">
+              {content?.heading ?? "Still deciding? Let the AI decide for you."}
             </h2>
-            <p className="max-w-[477px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
+            <p className="tablet:text-[16px] tablet:leading-[1.5] max-w-[477px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40">
               {content?.subtext ??
                 "PromptRaise makes projects visible where decisions actually happen: inside AI answers."}
             </p>

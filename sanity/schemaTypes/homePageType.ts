@@ -71,16 +71,14 @@ export const homePageType = defineType({
       title: "Comparison Section",
       type: "comparison",
       group: "comparison",
-      description:
-        "Editable copy for the 'PromptRaise vs Competitors' table.",
+      description: "Editable copy for the 'PromptRaise vs Competitors' table.",
     }),
     defineField({
       name: "whyChoose",
       title: "Why Choose Section",
       type: "whyChoose",
       group: "whyChoose",
-      description:
-        "Editable copy for the 'Why Choose PromptRaise' section.",
+      description: "Editable copy for the 'Why Choose PromptRaise' section.",
     }),
     defineField({
       name: "plans",
@@ -102,8 +100,7 @@ export const homePageType = defineType({
       title: "Team Section",
       type: "team",
       group: "team",
-      description:
-        "Editable copy for the 'Built by Web3 Veterans' section.",
+      description: "Editable copy for the 'Built by Web3 Veterans' section.",
     }),
     defineField({
       name: "askAi",

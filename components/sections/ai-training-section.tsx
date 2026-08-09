@@ -1,8 +1,8 @@
 "use client";
 
-import { DsSection, DsSectionContainer } from '@/components/design-system';
-import { SectionLabel } from '@/components/section-label';
-import type { HomePage } from '@/sanity/lib/queries';
+import { DsSection, DsSectionContainer } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
+import type { HomePage } from "@/sanity/lib/queries";
 
 const DEFAULT_LAYERS = [
   {
@@ -36,7 +36,7 @@ const DEFAULT_LAYERS = [
 ];
 
 interface AiTrainingSectionProps {
-  content?: HomePage['aiTraining'];
+  content?: HomePage["aiTraining"];
 }
 
 export function AiTrainingSection({ content }: AiTrainingSectionProps) {
@@ -44,9 +44,13 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
     content?.layers && content.layers.length > 0
       ? content.layers.map((layer, i) => ({
           id: i + 1,
-          number: layer.number ?? DEFAULT_LAYERS[i]?.number ?? String(i + 1).padStart(2, '0'),
-          title: layer.title ?? DEFAULT_LAYERS[i]?.title ?? '',
-          description: layer.description ?? DEFAULT_LAYERS[i]?.description ?? '',
+          number:
+            layer.number ??
+            DEFAULT_LAYERS[i]?.number ??
+            String(i + 1).padStart(2, "0"),
+          title: layer.title ?? DEFAULT_LAYERS[i]?.title ?? "",
+          description:
+            layer.description ?? DEFAULT_LAYERS[i]?.description ?? "",
           benefits: layer.benefits ?? DEFAULT_LAYERS[i]?.benefits ?? [],
         }))
       : DEFAULT_LAYERS;
@@ -61,7 +65,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
         {/* Header */}
         <div className="mb-12 flex items-start justify-between gap-8">
           <div>
-                        <h2 className="font-sans text-4xl font-bold leading-tight text-white max-w-2xl">
+            <h2 className="max-w-2xl font-sans text-4xl leading-tight font-bold text-white">
               {content?.heading ?? "We create content that trains AI"}
             </h2>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/60">

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { SectionRenderer, type SectionBlock } from "@/components/sections/registry";
+import {
+  SectionRenderer,
+  type SectionBlock,
+} from "@/components/sections/registry";
 import {
   getAllPages,
   getHomePage,
@@ -28,17 +31,24 @@ function parseSlug(params: Awaited<PageProps["params"]>): string {
 }
 
 /** The legacy home page as an ordered list of registry blocks. */
-function homePageSections(homePage: NonNullable<Awaited<ReturnType<typeof getHomePage>>>): SectionBlock[] {
+function homePageSections(
+  homePage: NonNullable<Awaited<ReturnType<typeof getHomePage>>>,
+): SectionBlock[] {
   const blocks: SectionBlock[] = [];
   if (homePage.hero) blocks.push({ _type: "hero", ...homePage.hero });
-  if (homePage.visibilitySection) blocks.push({ _type: "visibility", ...homePage.visibilitySection });
+  if (homePage.visibilitySection)
+    blocks.push({ _type: "visibility", ...homePage.visibilitySection });
   if (homePage.problem) blocks.push({ _type: "problem", ...homePage.problem });
-  if (homePage.aiTraining) blocks.push({ _type: "aiTraining", ...homePage.aiTraining });
+  if (homePage.aiTraining)
+    blocks.push({ _type: "aiTraining", ...homePage.aiTraining });
   if (homePage.process) blocks.push({ _type: "process", ...homePage.process });
-  if (homePage.comparison) blocks.push({ _type: "comparison", ...homePage.comparison });
-  if (homePage.whyChoose) blocks.push({ _type: "whyChoose", ...homePage.whyChoose });
+  if (homePage.comparison)
+    blocks.push({ _type: "comparison", ...homePage.comparison });
+  if (homePage.whyChoose)
+    blocks.push({ _type: "whyChoose", ...homePage.whyChoose });
   if (homePage.plans) blocks.push({ _type: "plans", ...homePage.plans });
-  if (homePage.auditCta) blocks.push({ _type: "auditCta", ...homePage.auditCta });
+  if (homePage.auditCta)
+    blocks.push({ _type: "auditCta", ...homePage.auditCta });
   if (homePage.team) blocks.push({ _type: "team", ...homePage.team });
   if (homePage.askAi) blocks.push({ _type: "askAi", ...homePage.askAi });
   return blocks;
@@ -79,12 +89,16 @@ export async function generateMetadata({
 
   const title = doc.metaTitle || doc.title || "PromptRaise";
   const description = doc.metaDescription || undefined;
-  const ogImage = doc.ogImage?.asset?.url ? { url: doc.ogImage.asset.url } : undefined;
+  const ogImage = doc.ogImage?.asset?.url
+    ? { url: doc.ogImage.asset.url }
+    : undefined;
 
   return {
     title,
     description,
-    ...(ogImage ? { openGraph: { title, description, images: [ogImage] } } : {}),
+    ...(ogImage
+      ? { openGraph: { title, description, images: [ogImage] } }
+      : {}),
     robots: doc.noindex
       ? { index: false, follow: false }
       : { index: true, follow: true },
@@ -119,7 +133,11 @@ export default async function Page({ params }: PageProps) {
   return (
     <main>
       {blocks.map((block, index) => (
-        <SectionRenderer key={`${slug}-${block._type}-${index}`} block={block} settings={settings} />
+        <SectionRenderer
+          key={`${slug}-${block._type}-${index}`}
+          block={block}
+          settings={settings}
+        />
       ))}
     </main>
   );

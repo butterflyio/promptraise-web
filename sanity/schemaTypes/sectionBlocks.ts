@@ -261,7 +261,8 @@ export const problemBlock = defineType({
       name: "subtext",
       title: "Subtext",
       type: "string",
-      initialValue: "Founders, investors, and users discover you through AI. Or they don't.",
+      initialValue:
+        "Founders, investors, and users discover you through AI. Or they don't.",
     }),
     defineField({
       name: "ctaLabel",
@@ -292,7 +293,8 @@ export const aiTrainingBlock = defineType({
   name: "aiTraining",
   title: "AI Training",
   type: "object",
-  description: "Editable copy for the 'We create content that trains AI' section.",
+  description:
+    "Editable copy for the 'We create content that trains AI' section.",
   fields: [
     defineField({
       name: "badge",
@@ -325,7 +327,11 @@ export const aiTrainingBlock = defineType({
           fields: [
             defineField({ name: "number", title: "Number", type: "string" }),
             defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text" }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+            }),
             defineField({
               name: "benefits",
               title: "Benefits",
@@ -387,8 +393,7 @@ export const comparisonBlock = defineType({
   name: "comparison",
   title: "Comparison",
   type: "object",
-  description:
-    "Editable copy for the 'PromptRaise vs Competitors' table.",
+  description: "Editable copy for the 'PromptRaise vs Competitors' table.",
   fields: [
     defineField({
       name: "heading",
@@ -415,8 +420,7 @@ export const whyChooseBlock = defineType({
   name: "whyChoose",
   title: "Why Choose",
   type: "object",
-  description:
-    "Editable copy for the 'Why Choose PromptRaise' section.",
+  description: "Editable copy for the 'Why Choose PromptRaise' section.",
   fields: [
     defineField({
       name: "badge",
@@ -533,8 +537,7 @@ export const teamBlock = defineType({
   name: "team",
   title: "Team",
   type: "object",
-  description:
-    "Editable copy for the 'Built by Web3 Veterans' section.",
+  description: "Editable copy for the 'Built by Web3 Veterans' section.",
   fields: [
     defineField({
       name: "badge",
@@ -596,7 +599,8 @@ export const askAiBlock = defineType({
       name: "subtext",
       title: "Subtext",
       type: "string",
-      initialValue: "Ask a model directly about PromptRaise and how it can help.",
+      initialValue:
+        "Ask a model directly about PromptRaise and how it can help.",
     }),
     defineField({
       name: "prompt",

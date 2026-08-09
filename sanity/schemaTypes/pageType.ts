@@ -18,7 +18,8 @@ export const pageType = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      description: "Internal name shown in the CMS (e.g. 'Campaign X - Landing').",
+      description:
+        "Internal name shown in the CMS (e.g. 'Campaign X - Landing').",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -36,7 +37,8 @@ export const pageType = defineType({
       name: "metaTitle",
       title: "Meta Title (SEO)",
       type: "string",
-      description: "Overrides the browser/tab title. Falls back to the page title.",
+      description:
+        "Overrides the browser/tab title. Falls back to the page title.",
     }),
     defineField({
       name: "metaDescription",
@@ -71,7 +73,9 @@ export const pageType = defineType({
           name: blockName,
         }),
       ),
-      initialValue: sectionBlockNames.map((blockName) => ({ _type: blockName })),
+      initialValue: sectionBlockNames.map((blockName) => ({
+        _type: blockName,
+      })),
     }),
   ],
   preview: {

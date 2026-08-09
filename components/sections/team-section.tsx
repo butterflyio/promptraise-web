@@ -171,11 +171,7 @@ function BackedByChip({
   );
 }
 
-export function TeamSection({
-  content,
-}: {
-  content?: HomePage["team"];
-}) {
+export function TeamSection({ content }: { content?: HomePage["team"] }) {
   // Override name/role/bio from CMS while keeping the fixed portrait/overlay art
   const cards: {
     name: string;
@@ -199,7 +195,7 @@ export function TeamSection({
           >
             {content?.badge ?? "Team"}
           </DsBadge>
-          <h2 className="text-center text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white">
+          <h2 className="text-center text-[24px] leading-[1.3] font-bold tracking-[-0.02em] text-white">
             {content?.heading ?? "Built by Web3 Veterans"}
           </h2>
         </div>

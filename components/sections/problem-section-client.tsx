@@ -42,7 +42,13 @@ function useMediaQuery(query: string) {
   );
 }
 
-export function ProblemSectionClient({ problems, windowTitle, heading, subtext, ctaLabel }: ProblemSectionClientProps) {
+export function ProblemSectionClient({
+  problems,
+  windowTitle,
+  heading,
+  subtext,
+  ctaLabel,
+}: ProblemSectionClientProps) {
   const isClient = useIsClient();
   const isMobile = useMediaQuery("(max-width: 767px)");
   const prefersReducedMotion = useMediaQuery(
@@ -274,10 +280,10 @@ function ProblemSectionAnimated({
               </div>
             </div>
 
-            <h3 className="text-xl font-bold leading-snug text-white mb-2">
+            <h3 className="mb-2 text-xl leading-snug font-bold text-white">
               {heading ?? "You&apos;re invisible where decisions are made"}
             </h3>
-            <p className="text-sm text-white/60 leading-relaxed">
+            <p className="text-sm leading-relaxed text-white/60">
               {subtext ??
                 "Founders, investors, and users discover you through AI. Or they don&apos;t."}
             </p>

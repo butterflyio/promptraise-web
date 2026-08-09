@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 
-import { DsBadge, DsCard, DsSection, DsSectionContainer } from "@/components/design-system";
+import {
+  DsBadge,
+  DsCard,
+  DsSection,
+  DsSectionContainer,
+} from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import type { HomePage } from "@/sanity/lib/queries";
 
@@ -145,10 +150,10 @@ export function PlansSection({ content }: { content?: HomePage["plans"] }) {
       <DsSectionContainer className="relative">
         <div className="flex flex-col items-center gap-3 text-center">
           <DsBadge variant="muted">{content?.badge ?? "Plans"}</DsBadge>
-          <h2 className="max-w-[649px] text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px] tablet:leading-[1.15]">
+          <h2 className="tablet:text-[40px] tablet:leading-[1.15] max-w-[649px] text-[24px] leading-[1.3] font-bold tracking-[-0.02em] text-white">
             {content?.heading ?? "Plans That Scale With You"}
           </h2>
-          <p className="max-w-[560px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
+          <p className="tablet:text-[16px] tablet:leading-[1.5] max-w-[560px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40">
             {content?.subtext ??
               "Start with a free audit. Upgrade when you&apos;re ready to dominate AI answers."}
           </p>
@@ -226,7 +231,9 @@ export function PlansSection({ content }: { content?: HomePage["plans"] }) {
               disabled={isSubmitting}
               className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-[var(--accent-primary)] px-8 text-[16px] leading-none tracking-[0] text-[var(--accent-foreground)] shadow-[var(--shadow-cta)] transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSubmitting ? "Sending..." : (content?.ctaLabel ?? "Get Pricing")}
+              {isSubmitting
+                ? "Sending..."
+                : (content?.ctaLabel ?? "Get Pricing")}
             </button>
 
             <p className="text-center text-[11px] leading-[1.5] text-white/30">

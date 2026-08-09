@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { SectionLabel } from '@/components/section-label';
-import type { HomePage } from '@/sanity/lib/queries';
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { SectionLabel } from "@/components/section-label";
+import type { HomePage } from "@/sanity/lib/queries";
 
 /* ── Step data ───────────────────────────────────────────────────── */
 const STEPS = [
@@ -219,7 +219,7 @@ const STEP_BAR_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0];
 
 /* ── Component ───────────────────────────────────────────────────── */
 interface ProcessSectionProps {
-  content?: HomePage['process'];
+  content?: HomePage["process"];
 }
 
 export function ProcessSection({ content }: ProcessSectionProps) {
@@ -260,7 +260,9 @@ export function ProcessSection({ content }: ProcessSectionProps) {
   }, []);
 
   const step = steps[activeStep]!;
-  const activeBarsCount = Math.round(STEP_BAR_FRACTIONS[activeStep]! * TOTAL_BARS);
+  const activeBarsCount = Math.round(
+    STEP_BAR_FRACTIONS[activeStep]! * TOTAL_BARS,
+  );
 
   return (
     /*
@@ -343,10 +345,10 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             />
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight text-balance mb-3">
+          <h2 className="mb-3 text-4xl font-bold tracking-tight text-balance text-white md:text-5xl">
             {content?.heading ?? "From analysis to ChatGPT answer"}
           </h2>
-          <p className="text-sm md:text-base text-white/45 max-w-xl mx-auto">
+          <p className="mx-auto max-w-xl text-sm text-white/45 md:text-base">
             {content?.subtext ??
               "Five steps — from a visibility audit to measurable growth in AI mentions."}
           </p>

@@ -45,7 +45,7 @@ function CheckMark({ active }: { active?: boolean }) {
 }
 
 interface ComparisonSectionProps {
-  content?: HomePage['comparison'];
+  content?: HomePage["comparison"];
 }
 
 export function ComparisonSection({ content }: ComparisonSectionProps) {
@@ -63,10 +63,10 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
       <DsSectionContainer className="relative">
         <div className="flex flex-col items-center gap-3 text-center">
           <DsBadge variant="muted">{content?.badge ?? "Comparison"}</DsBadge>
-          <h2 className="text-[24px] font-bold leading-[1.3] tracking-[-0.02em] text-white tablet:text-[40px]">
+          <h2 className="tablet:text-[40px] text-[24px] leading-[1.3] font-bold tracking-[-0.02em] text-white">
             {content?.heading ?? "PromptRaise vs Competitors"}
           </h2>
-          <p className="max-w-[540px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40 tablet:text-[16px] tablet:leading-[1.5]">
+          <p className="tablet:text-[16px] tablet:leading-[1.5] max-w-[540px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40">
             {content?.subtext ??
               "Competitors can track. We close the full loop - from analysis to publication and measurable result."}
           </p>

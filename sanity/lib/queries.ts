@@ -210,9 +210,7 @@ export function normalizePageSlug(slug: string | undefined): string {
   return slug.startsWith("/") ? slug : `/${slug}`;
 }
 
-export async function getPageBySlug(
-  rawSlug: string,
-): Promise<PageDoc | null> {
+export async function getPageBySlug(rawSlug: string): Promise<PageDoc | null> {
   const path = normalizePageSlug(rawSlug);
   // Sanity slugs are stored without a leading slash ("campaign-x"); the
   // home page is the exception and stores "/" as its slug value.
