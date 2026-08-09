@@ -161,10 +161,8 @@ function BackedByChip({
   widthClassName: string;
 }) {
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div
-        className={`flex items-center justify-center rounded-[38px] border border-black bg-[rgba(0,0,0,0.35)] px-6 py-4 backdrop-blur-[6px] ${widthClassName}`}
-      >
+    <div className={`flex min-w-0 flex-col items-center gap-2 ${widthClassName}`}>
+      <div className="flex w-full items-center justify-center rounded-[38px] border border-black bg-[rgba(0,0,0,0.35)] px-6 py-4 backdrop-blur-[6px]">
         <img
           alt=""
           aria-hidden="true"
@@ -228,12 +226,12 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
             <BackedByChip
               src={figmaAssets.cicadaLogo}
               label="Market Making"
-              widthClassName="w-[194px]"
+              widthClassName="min-w-0 flex-1"
             />
             <BackedByChip
               src={figmaAssets.strategyLogo}
               label="AI Marketing Strategy"
-              widthClassName="w-[165px]"
+              widthClassName="min-w-0 flex-1"
             />
           </div>
         </div>

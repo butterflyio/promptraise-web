@@ -593,7 +593,7 @@ export function WhyChooseSection({
       <SectionLabel name="WhyChooseSection" />
       <DsSectionContainer>
         {/* Header row: title left, badge right */}
-        <div className="mb-12 flex items-start justify-between">
+        <div className="mb-12 flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
           <div>
             <h2 className="tablet:text-[52px] mb-3 text-[40px] leading-tight font-bold text-white">
               {content?.heading ?? "Why Choose PromptRaise"}

@@ -32,3 +32,9 @@ pnpm-debug.log*
 *.pfx
 .vercel
 .env*
+
+# playwright test artifacts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

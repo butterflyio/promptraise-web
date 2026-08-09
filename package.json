@@ -16,7 +16,11 @@
     "figma:connect:publish": "figma connect publish -c figma.config.json",
     "sanity:dev": "sanity dev",
     "sanity:dataset:production": "sanity dataset create production --visibility private --if-not-exists",
-    "sanity:dataset:staging": "sanity dataset create staging --visibility private --if-not-exists"
+    "sanity:dataset:staging": "sanity dataset create staging --visibility private --if-not-exists",
+    "test:smoke": "playwright test tests/smoke.spec.ts",
+    "test:cms": "playwright test tests/cms-wiring.spec.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:local": "BASE_URL=http://localhost:3101 playwright test"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
@@ -33,6 +37,7 @@
   },
   "devDependencies": {
     "@figma/code-connect": "^1.4.8",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
