@@ -3,6 +3,8 @@ import { deskTool } from "sanity/desk";
 import { visionTool } from "@sanity/vision";
 
 import { sanityEnv } from "./sanity/lib/env";
+import { previewAction } from "./sanity/plugins/preview-action";
+import { syncToProductionAction } from "./sanity/plugins/sync-to-production-action";
 import { schemaTypes } from "./sanity/schemaTypes";
 
 export default defineConfig({
@@ -30,6 +32,10 @@ export default defineConfig({
               .schemaType("page")
               .child(S.documentTypeList("page").title("Pages")),
             S.listItem()
+              .title("Blog")
+              .schemaType("post")
+              .child(S.documentTypeList("post").title("Blog Posts")),
+            S.listItem()
               .title("Site Settings")
               .schemaType("siteSettings")
               .child(
@@ -43,5 +49,8 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
+  },
+  document: {
+    actions: (prev) => [previewAction, syncToProductionAction, ...prev],
   },
 });

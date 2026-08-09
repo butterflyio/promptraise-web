@@ -62,6 +62,40 @@ export const pageType = defineType({
         "When enabled, this page is kept out of search engines (robots noindex).",
     }),
     defineField({
+      name: "faq",
+      title: "FAQ (structured data)",
+      type: "array",
+      description:
+        "Question/answer pairs rendered as FAQPage JSON-LD - eligible for rich results and LLM citations.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "faqItem",
+          title: "FAQ Item",
+          fields: [
+            defineField({
+              name: "question",
+              title: "Question",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 3,
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "question",
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
       name: "sections",
       title: "Sections",
       type: "array",

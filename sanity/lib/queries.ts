@@ -1,4 +1,4 @@
-import { sanityClient } from "./client";
+import { sanityClient, getPreviewClient } from "./client";
 
 export interface SiteSettings {
   siteName: string;
@@ -27,6 +27,12 @@ export interface SiteSettings {
     asset?: {
       url?: string;
     };
+  };
+  announcement?: {
+    enabled?: boolean;
+    text?: string;
+    linkLabel?: string;
+    linkUrl?: string;
   };
   headerNavItems?: Array<{
     label: string;
@@ -60,6 +66,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     footerCopyrightText,
     footerLegalLinks,
     socialLinks,
+    announcement,
     logo{
       asset->{url, metadata{dimensions}}
     },
@@ -199,6 +206,7 @@ export interface PageDoc {
   metaTitle?: string;
   metaDescription?: string;
   noindex?: boolean;
+  faq?: Array<{ question?: string; answer?: string }>;
   ogImage?: {
     asset?: {
       url?: string;
@@ -230,6 +238,7 @@ export async function getPageBySlug(rawSlug: string): Promise<PageDoc | null> {
     metaTitle,
     metaDescription,
     noindex,
+    faq,
     ogImage{asset->{url}},
     sections[]{
       ...,
@@ -243,6 +252,75 @@ export async function getPageBySlug(rawSlug: string): Promise<PageDoc | null> {
     },
   }`;
   return sanityClient.fetch(query, { slug: storedSlug });
+}
+
+/**
+ * Draft-aware variant used by Draft Mode: resolves drafts.* documents so
+ * Studio edits appear before publishing. Falls back to the published fetch
+ * when no read token / preview client is configured.
+ */
+export async function getPageBySlugPreview(
+  rawSlug: string,
+): Promise<PageDoc | null> {
+  const path = normalizePageSlug(rawSlug);
+  const storedSlug = path === HOME_SLUG ? HOME_SLUG : path.replace(/^\/+/, "");
+  const query = `*[_type == "page" && slug.current == $slug][0]{
+    _id,
+    _updatedAt,
+    title,
+    slug,
+    metaTitle,
+    metaDescription,
+    noindex,
+    faq,
+    ogImage{asset->{url}},
+    sections[]{
+      ...,
+      _type == "team" => {
+        ...,
+        members[]{
+          ...,
+          image{asset->{url}}
+        }
+      }
+    },
+  }`;
+  try {
+    return await getPreviewClient().fetch(query, { slug: storedSlug });
+  } catch {
+    return getPageBySlug(rawSlug);
+  }
+}
+
+export async function getSiteSettingsPreview() {
+  const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
+    siteName,
+    organizationLegalName,
+    primaryTelegramCtaUrl,
+    freeAuditCtaUrl,
+    headerCtaLabel,
+    headerCtaUrl,
+    headerNavItems,
+    footerPoweredByText,
+    footerCopyrightText,
+    footerLegalLinks,
+    socialLinks,
+    announcement,
+    logo{
+      asset->{url, metadata{dimensions}}
+    },
+    favicon{
+      asset->{url, metadata{dimensions}}
+    },
+    openGraphImage{
+      asset->{url, metadata{dimensions}}
+    }
+  }`;
+  try {
+    return await getPreviewClient().fetch(query);
+  } catch {
+    return getSiteSettings();
+  }
 }
 
 export async function getAllPages(): Promise<PageDoc[]> {

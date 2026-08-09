@@ -8,6 +8,39 @@ import { NextResponse } from "next/server";
  * deleted. Guarded by TRIGGER_SECRET_KEY (already configured in Vercel
  * env vars). Publishes content to the live site without a redeploy.
  */
+
+/**
+ * Notify IndexNow (Bing, ChatGPT search, Yandex) that a page changed so it
+ * is crawled within minutes instead of days. Only runs on the production
+ * domain (the key file lives in /public/<key>.txt).
+ */
+async function pingIndexNow(slug?: string) {
+  try {
+    const key = process.env.INDEXNOW_KEY;
+    if (!key) return;
+    const prodUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    if (!prodUrl?.includes("promptraise.com") || prodUrl.includes("staging")) {
+      return;
+    }
+    const root = new URL(prodUrl).origin;
+    const target = slug && slug !== "/" ? `${root}/${slug.replace(/^\/+/, "")}` : root;
+    await fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        host: new URL(prodUrl).host,
+        key,
+        keyLocation: `${root}/${key}.txt`,
+        urlList: [target],
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch (error) {
+    // IndexNow is best-effort; never fail the webhook for it.
+    console.error("IndexNow ping failed:", error);
+  }
+}
+
 export async function POST(request: Request) {
   const secret = process.env.TRIGGER_SECRET_KEY;
   const headerSecret =
@@ -51,6 +84,18 @@ export async function POST(request: Request) {
     if (slug && slug !== "/") {
       revalidatePath(`/${slug.replace(/^\/+|\/+$/g, "")}`);
     }
+    // Sitemap + robots/llms.txt are dynamic; revalidate them too so new
+    // pages and posts are crawled quickly. Blog routes get revalidated on
+    // any publish (cheap, matches revalidate=30 ISR behavior).
+    revalidatePath("/sitemap.xml");
+    revalidatePath("/robots.txt");
+    revalidatePath("/llms.txt");
+    revalidatePath("/blog");
+
+    // Fire-and-forget IndexNow ping for fast indexing (Bing + ChatGPT).
+    // Only when INDEXNOW_KEY is configured AND we're on the production URL
+    // (staging must not submit URLs to the index).
+    void pingIndexNow(slug);
 
     return NextResponse.json({ revalidated: true });
   } catch (error) {

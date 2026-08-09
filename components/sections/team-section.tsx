@@ -7,6 +7,7 @@ import {
   TwitterXIcon,
   designSystemAssets,
 } from "@/components/design-system";
+import { imageSrcSet, imageUrl } from "@/lib/sanity-image";
 import type { HomePage } from "@/sanity/lib/queries";
 
 const figmaAssets = designSystemAssets.figma.team;
@@ -87,7 +88,10 @@ function TeamCard({
           <img
             alt=""
             aria-hidden="true"
-            src={image}
+            src={imageUrl(image, { width: 640, height: 520, fit: "crop" }) ?? image}
+            srcSet={imageSrcSet(image, [320, 480, 640]) ?? undefined}
+            sizes="(max-width: 768px) 100vw, 320px"
+            loading="lazy"
             className="absolute inset-0 block h-full w-full max-w-none object-cover"
           />
           <div className="absolute inset-0 mix-blend-lighten">

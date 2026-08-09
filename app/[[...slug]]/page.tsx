@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import {
@@ -9,7 +10,9 @@ import {
   getAllPages,
   getHomePage,
   getPageBySlug,
+  getPageBySlugPreview,
   getSiteSettings,
+  getSiteSettingsPreview,
   HOME_SLUG,
   normalizePageSlug,
   type PageDoc,
@@ -77,8 +80,11 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const resolved = await params;
   const slug = parseSlug(resolved);
+  const isDraft = (await draftMode()).isEnabled;
   // Fetch the page doc for the home slug too - it carries real metadata.
-  const doc = await getPageBySlug(slug);
+  const doc = isDraft
+    ? await getPageBySlugPreview(slug)
+    : await getPageBySlug(slug);
 
   if (!doc) {
     return {
@@ -110,28 +116,61 @@ export default async function Page({ params }: PageProps) {
   const resolved = await params;
   const slug = parseSlug(resolved);
 
-  const settings = await getSiteSettings();
+  const isDraft = (await draftMode()).isEnabled;
+  const settings = isDraft
+    ? await getSiteSettingsPreview()
+    : await getSiteSettings();
 
   let blocks: SectionBlock[] = [];
+  let faq: PageDoc["faq"] = [];
 
   if (slug === HOME_SLUG) {
     // Home: prefer the `page` doc with slug "/", fall back to the legacy
     // homePage doc during the transition.
-    const pageDoc = await getPageBySlug(HOME_SLUG);
+    const pageDoc = isDraft
+      ? await getPageBySlugPreview(HOME_SLUG)
+      : await getPageBySlug(HOME_SLUG);
     if (pageDoc) {
       blocks = pageDocSections(pageDoc);
+      faq = pageDoc.faq;
     } else {
       const homePage = await getHomePage();
       blocks = homePage ? homePageSections(homePage) : [];
     }
   } else {
-    const doc = await getPageBySlug(slug);
+    const doc = isDraft
+      ? await getPageBySlugPreview(slug)
+      : await getPageBySlug(slug);
     if (!doc) notFound();
     blocks = pageDocSections(doc);
+    faq = doc.faq;
   }
+
+  const faqItems = (faq ?? []).filter(
+    (item) => item.question && item.answer,
+  );
 
   return (
     <main>
+      {faqItems.length > 0 ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqItems.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: item.answer,
+                },
+              })),
+            }),
+          }}
+        />
+      ) : null}
       {blocks.map((block, index) => (
         <SectionRenderer
           key={`${slug}-${block._type}-${index}`}
