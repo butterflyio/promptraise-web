@@ -47,7 +47,22 @@ export function ProblemSectionClient({ problems }: ProblemSectionClientProps) {
   if (!isClient || isMobile || prefersReducedMotion) {
     return (
       <section className="prompt-problem-section py-20 md:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        {/* Red decorative glows per Figma (Decorative Vector + Decorative Ellipse) */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip opacity-60">
+          <img
+            src="/figma/problem-decorative-ellipse.svg"
+            alt=""
+            className="absolute left-1/2 top-[46%] -translate-x-1/2 mix-blend-plus-lighter"
+            style={{ width: "min(1300px, 130%)" }}
+          />
+          <img
+            src="/figma/problem-decorative-vector.svg"
+            alt=""
+            className="absolute left-1/2 top-[50%] -translate-x-1/2 mix-blend-plus-lighter"
+            style={{ width: "min(1340px, 134%)" }}
+          />
+        </div>
+        <div className="mx-auto max-w-6xl px-6 relative">
           <div className="prompt-problem-window p-6 md:p-8">
             <div className="prompt-problem-window-bar pb-4 mb-6">
               <div className="flex items-center justify-between">
@@ -105,6 +120,22 @@ function ProblemSectionAnimated({ problems }: ProblemSectionClientProps) {
       {/* Background backdrop */}
       <div className="prompt-problem-bg" />
       <div className="prompt-problem-grid" />
+
+      {/* Red decorative glows (per Figma: Decorative Vector 102:184 + Decorative Ellipse 102:387) */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
+        <img
+          src="/figma/problem-decorative-ellipse.svg"
+          alt=""
+          className="absolute left-1/2 top-[46%] -translate-x-1/2 mix-blend-plus-lighter"
+          style={{ width: "min(1300px, 130%)", opacity: 0.9 }}
+        />
+        <img
+          src="/figma/problem-decorative-vector.svg"
+          alt=""
+          className="absolute left-1/2 top-[50%] -translate-x-1/2 mix-blend-plus-lighter"
+          style={{ width: "min(1340px, 134%)", opacity: 0.9 }}
+        />
+      </div>
 
       {/* Edge fades */}
       <div className="prompt-problem-edge prompt-problem-edge-top" />
