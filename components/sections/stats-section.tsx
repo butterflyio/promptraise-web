@@ -67,6 +67,20 @@ export function StatsSection({ content }: StatsSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const isMobile = useIsMobileBreakpoint();
   const prefersReducedMotion = useReducedMotion();
+  const [canvasScale, setCanvasScale] = useState(1);
+
+  useEffect(() => {
+    const computeScale = () => {
+      const width = document.documentElement.clientWidth;
+      // Canvas is a fixed 1440px design; scale it down so it always
+      // fits the viewport width (never upscale beyond 1).
+      setCanvasScale(Math.min(1, width / 1440));
+    };
+
+    computeScale();
+    window.addEventListener("resize", computeScale);
+    return () => window.removeEventListener("resize", computeScale);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -129,9 +143,13 @@ export function StatsSection({ content }: StatsSectionProps) {
       ref={sectionRef}
       id="features"
       className="prompt-stats-section relative isolate overflow-hidden bg-[var(--bg-base)]"
+      style={{ minHeight: `${Math.round(782 * canvasScale)}px` }}
     >
       <SectionLabel name="StatsSection" />
-      <div className="prompt-stats-canvas pointer-events-none absolute left-1/2 top-0 z-10 h-[782px] w-[1440px] -translate-x-1/2">
+      <div
+        className="prompt-stats-canvas pointer-events-none absolute left-1/2 top-0 z-10 h-[782px] w-[1440px]"
+        style={{ transform: `translateX(-50%) scale(${canvasScale})` }}
+      >
         <div className="prompt-stats-rings absolute left-1/2 top-[80px] h-[696px] w-[1419px] -translate-x-1/2">
           <img
             src="/images/ellipse-1.png"

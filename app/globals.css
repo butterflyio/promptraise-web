@@ -356,24 +356,6 @@ body {
   color: #ffffff;
 }
 
-@media (max-width: 1439px) {
-  .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.92);
-  }
-}
-
-@media (max-width: 1023px) {
-  .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.72);
-  }
-}
-
-@media (max-width: 767px) {
-  .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.46);
-  }
-}
-
 .prompt-hero-bg {
   isolation: isolate;
 }
@@ -391,18 +373,6 @@ body {
 .prompt-stats-section {
   min-height: 782px;
   isolation: isolate;
-}
-
-@media (max-width: 1023px) {
-  .prompt-stats-section {
-    min-height: 620px;
-  }
-}
-
-@media (max-width: 767px) {
-  .prompt-stats-section {
-    min-height: 424px;
-  }
 }
 
 .prompt-stats-section::before,
