@@ -214,6 +214,18 @@ Update this file after every meaningful implementation change.
   - Rebuilt section background layering in code (dark base + glow field + concentric ellipses + decorative vector arcs) to remove dependency on runtime localhost asset rendering for this slice.
   - Added direct dependency: `framer-motion` in `package.json`.
   - Current command snapshot after slice 1 pass: `npm run lint` passes with warnings only (0 errors), `npm run design:verify` passes, `npm run build` passes.
+- **Composition layer completed (latest):**
+  - Added shared section block types (`sanity/schemaTypes/sectionBlocks.ts`) for all 11 sections and refactored `homePageType` to reference them (single source of copy truth).
+  - Added `page` document type (`sanity/schemaTypes/pageType.ts`): title, slug, meta fields, `noindex`, social image, drag-and-drop `sections[]` array. Registered in Studio; "Pages" list added to desk structure.
+  - Added section registry + renderer (`components/sections/registry.tsx`): `_type` maps 1:1 to component; unknown types render nothing; hero/auditCta receive CTA URLs from site settings.
+  - Added queries (`sanity/lib/queries.ts`): `getPageBySlug`, `getAllPages`, `normalizePageSlug`, `PageDoc` type; slug storage is without leading slash (home = "/").
+  - Replaced `app/page.tsx` with catch-all `app/[[...slug]]/page.tsx`: SSG for home + every page doc, `generateStaticParams`, per-page metadata, ISR 5m, `notFound()` for missing slugs, legacy `homePage` fallback while `/` page doc bootstraps.
+  - Added `app/api/revalidate/route.ts` (POST) guarded by `TRIGGER_SECRET_KEY`; Sanity webhook posts here on page doc changes (webhook itself still needs dashboard grant - see Open Questions).
+  - Made `app/sitemap.ts` dynamic from `getAllPages()`.
+  - Added CI guard `scripts/check-no-localhost.sh` to `.github/workflows/ci.yml` to prevent localhost asset regressions.
+  - Added `context/docs/block-catalogue.md` (block registry + reserved slugs).
+  - Deployed to staging: home page renders from `page` doc (11 sections, correct metadata), new page `/campaign-x` created purely via Sanity document is live, unknown URLs 404, `/api/revalidate` returns 401 without secret and 200 with it, `/privacy` `/terms` `/studio` unaffected.
+  - Current command snapshot after composition layer: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npx tsc --noEmit` passes.
 
 ## In Progress
 

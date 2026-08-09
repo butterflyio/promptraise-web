@@ -33,6 +33,9 @@ jobs:
       - name: Format check
         run: npm run format:check
 
+      - name: No localhost references
+        run: bash scripts/check-no-localhost.sh
+
       - name: Build
         run: npm run build
         env:
