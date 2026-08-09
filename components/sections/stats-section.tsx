@@ -242,7 +242,7 @@ export function StatsSection({ content }: StatsSectionProps) {
 
   const animatedWidth = useTransform(smoothProgress, [0, 1], [1320, 300]);
   const animatedHeight = useTransform(smoothProgress, [0, 1], [740, 300]);
-  const animatedTop = useTransform(smoothProgress, [0, 1], [90, 265]);
+  const animatedTop = useTransform(smoothProgress, [0, 1], [90, 278]);
   const animatedOpacity = useTransform(smoothProgress, [0, 1], [0.88, 1]);
   const logoOpacity = useTransform(smoothProgress, [0.6, 0.82, 1], [0, 0.7, 1]);
   const logoScale = useTransform(smoothProgress, [0.6, 1], [0.9, 1]);
@@ -260,7 +260,7 @@ export function StatsSection({ content }: StatsSectionProps) {
     : {
         width: 300,
         height: 300,
-        top: 265,
+        top: 278,
         borderRadius: 9999,
         opacity: 1,
       };
@@ -394,12 +394,6 @@ export function StatsSection({ content }: StatsSectionProps) {
                 aria-hidden="true"
               />
             </div>
-          </div>
-
-          <div className="prompt-stats-vectors absolute inset-0">
-            <div className="prompt-stats-vector prompt-stats-vector-top" />
-            <div className="prompt-stats-vector prompt-stats-vector-bottom" />
-            <div className="prompt-stats-vector prompt-stats-vector-bottom-secondary" />
           </div>
 
           <p className="prompt-stats-headline absolute left-1/2 top-[113px] z-[24] w-[595px] -translate-x-1/2 text-center text-white">
