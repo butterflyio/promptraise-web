@@ -570,6 +570,26 @@ export const teamBlock = defineType({
             defineField({ name: "name", title: "Name", type: "string" }),
             defineField({ name: "role", title: "Role", type: "string" }),
             defineField({ name: "bio", title: "Bio", type: "text" }),
+            defineField({
+              name: "image",
+              title: "Portrait Image",
+              type: "image",
+              options: { hotspot: true },
+              description:
+                "Member portrait. Recommended ~square (e.g. 600x600). Falls back to the design's stock portrait when empty.",
+            }),
+            defineField({
+              name: "linkedin",
+              title: "LinkedIn URL",
+              type: "url",
+              description: "e.g. https://www.linkedin.com/in/username",
+            }),
+            defineField({
+              name: "x",
+              title: "X (Twitter) URL",
+              type: "url",
+              description: "e.g. https://x.com/username",
+            }),
           ],
         }),
       ],

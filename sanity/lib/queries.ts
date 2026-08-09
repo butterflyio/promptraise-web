@@ -169,7 +169,14 @@ export interface HomePage {
     badge?: string;
     heading?: string;
     subtext?: string;
-    members?: Array<{ name?: string; role?: string; bio?: string }>;
+    members?: Array<{
+      name?: string;
+      role?: string;
+      bio?: string;
+      image?: { asset?: { url?: string } };
+      linkedin?: string;
+      x?: string;
+    }>;
   };
   askAi?: {
     badge?: string;
@@ -224,7 +231,16 @@ export async function getPageBySlug(rawSlug: string): Promise<PageDoc | null> {
     metaDescription,
     noindex,
     ogImage{asset->{url}},
-    sections,
+    sections[]{
+      ...,
+      _type == "team" => {
+        ...,
+        members[]{
+          ...,
+          image{asset->{url}}
+        }
+      }
+    },
   }`;
   return sanityClient.fetch(query, { slug: storedSlug });
 }

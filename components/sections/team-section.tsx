@@ -60,12 +60,16 @@ function TeamCard({
   label,
   image,
   overlay,
+  linkedin,
+  x,
 }: {
   name: string;
   description: string;
   label: string;
   image: string;
   overlay: readonly string[];
+  linkedin?: string;
+  x?: string;
 }) {
   return (
     <DsCard className="relative overflow-hidden rounded-[var(--radius-card-lg)] border-[rgba(255,255,255,0.1)] bg-[var(--bg-surface-panel)] shadow-[0_0_0_4px_rgba(255,255,255,0.07)]">
@@ -127,16 +131,20 @@ function TeamCard({
         </div>
 
         <div className="flex gap-2">
-          <SocialIcon
-            href="https://twitter.com"
-            kind="twitter"
-            alt={`${name} on Twitter`}
-          />
-          <SocialIcon
-            href="https://linkedin.com"
-            kind="linkedin"
-            alt={`${name} on LinkedIn`}
-          />
+          {x ? (
+            <SocialIcon
+              href={x}
+              kind="twitter"
+              alt={`${name} on X (Twitter)`}
+            />
+          ) : null}
+          {linkedin ? (
+            <SocialIcon
+              href={linkedin}
+              kind="linkedin"
+              alt={`${name} on LinkedIn`}
+            />
+          ) : null}
         </div>
       </div>
     </DsCard>
@@ -172,18 +180,24 @@ function BackedByChip({
 }
 
 export function TeamSection({ content }: { content?: HomePage["team"] }) {
-  // Override name/role/bio from CMS while keeping the fixed portrait/overlay art
+  // Override name/role/bio/image/socials from CMS while keeping the fixed
+  // overlay art. Falls back to the design's stock portrait/labels.
   const cards: {
     name: string;
     label: string;
     description: string;
     image: string;
     overlay: readonly string[];
+    linkedin?: string;
+    x?: string;
   }[] = teamCards.map((card, i) => ({
     ...card,
     name: content?.members?.[i]?.name ?? card.name,
     label: content?.members?.[i]?.role ?? card.label,
     description: content?.members?.[i]?.bio ?? card.description,
+    image: content?.members?.[i]?.image?.asset?.url ?? card.image,
+    linkedin: content?.members?.[i]?.linkedin ?? undefined,
+    x: content?.members?.[i]?.x ?? undefined,
   }));
   return (
     <DsSection id="company" className="ds-section-contrast">
