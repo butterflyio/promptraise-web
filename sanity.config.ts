@@ -17,6 +17,19 @@ export default defineConfig({
           .title("Content")
           .items([
             S.listItem()
+              .title("Home Page")
+              .schemaType("page")
+              .child(
+                S.editor()
+                  .schemaType("page")
+                  .documentId("page-home")
+                  .title("Home Page"),
+              ),
+            S.listItem()
+              .title("Pages")
+              .schemaType("page")
+              .child(S.documentTypeList("page").title("Pages")),
+            S.listItem()
               .title("Site Settings")
               .schemaType("siteSettings")
               .child(
@@ -24,16 +37,6 @@ export default defineConfig({
                   .schemaType("siteSettings")
                   .documentId("site-settings"),
               ),
-            S.listItem()
-              .title("Home Page")
-              .schemaType("homePage")
-              .child(
-                S.document().schemaType("homePage").documentId("home-page"),
-              ),
-            S.listItem()
-              .title("Pages")
-              .schemaType("page")
-              .child(S.documentTypeList("page").title("Pages")),
           ]),
     }),
     visionTool(),
