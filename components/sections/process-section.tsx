@@ -141,8 +141,8 @@ export function ProcessSection() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const step = STEPS[activeStep];
-  const activeBarsCount = Math.round(STEP_BAR_FRACTIONS[activeStep] * TOTAL_BARS);
+  const step = STEPS[activeStep]!;
+  const activeBarsCount = Math.round(STEP_BAR_FRACTIONS[activeStep]! * TOTAL_BARS);
 
   return (
     /*
