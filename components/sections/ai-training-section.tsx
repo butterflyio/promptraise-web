@@ -77,6 +77,30 @@ const ICON_INSET: Record<string, { outer: string; inner: string }> = {
   "file-chart-line": { outer: "8.33% 16.67%", inner: "-4.5% -5.63%" },
 };
 
+/**
+ * Decorative background capsules from the section BG frame (411:5377, desktop
+ * 1440 only - the tablet frame has no BG, the mobile BG is positioned
+ * off-canvas in Figma). [x, y] relative to the section content box, in px.
+ * Style: 17x10px rounded pill, fill #2e2e2e, 0.8px border #3c3e3f.
+ */
+const BG_CAPSULES: Array<[number, number]> = [
+  [1089, 112],
+  [819, 82],
+  [802, 72],
+  [612, 82],
+  [532, 2],
+  [752, 2],
+  [752, 152],
+  [972, 152],
+  [972, 141],
+  [882, 41],
+  [662, 41],
+  [1053, 0],
+  [383, 182],
+  [403, 82],
+  [453, 12],
+];
+
 function BenefitIcon({ iconKey }: { iconKey: string }) {
   const inset = ICON_INSET[iconKey] ?? ICON_INSET["chart-network"]!;
   return (
@@ -136,21 +160,38 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
     <DsSection className="ds-section-alt">
       <SectionLabel name="AiTrainingSection" />
 
-      <DsSectionContainer className="relative flex flex-col">
-        {/* Eyebrow badge (Figma node 102:149) - tablet+ only */}
-        <div className="mb-10 hidden w-full items-center justify-center tablet:flex">
-          <div className="relative flex w-full max-w-[680px] items-center justify-center">
+      {/* Decorative background capsules (Figma BG 411:5377, desktop only) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 hidden overflow-hidden desktop:block"
+      >
+        {BG_CAPSULES.map(([x, y], i) => (
+          <div
+            key={i}
+            className="absolute h-[10px] w-[17px] rounded-[100px] border-[0.8px] border-[#3c3e3f] bg-[#2e2e2e]"
+            style={{ left: x, top: y }}
+          />
+        ))}
+      </div>
+
+      <DsSectionContainer className="relative z-10 flex flex-col">
+        {/* Eyebrow badge (Figma 102:149 desktop / 411:5359 tablet).
+            Tablet: label left, rule extends right. Desktop: label right,
+            long rule from the left edge. Hidden on mobile (Figma mobile
+            badge is positioned off-canvas). */}
+        <div className="mb-10 hidden h-[39px] w-full items-center tablet:flex">
+          <div className="relative flex h-full w-full items-center justify-start desktop:justify-end">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/figma/ai-badge-line.svg"
               alt=""
-              className="absolute top-1/2 left-0 w-full -translate-y-1/2"
+              className="absolute top-1/2 left-0 h-[6px] w-full max-w-none -translate-y-1/2"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/ai-badge-mark-1.svg"
+              src="/figma/ai-badge-mark-2.svg"
               alt=""
-              className="relative mr-3 h-[25px] w-[41px]"
+              className="relative mr-3 h-[25px] w-[39px]"
             />
             <div className="relative flex h-[39px] items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]">
               <span className="text-[15px] leading-[1.5] whitespace-nowrap text-[#a1a1aa]">
@@ -159,9 +200,9 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/ai-badge-mark-2.svg"
+              src="/figma/ai-badge-mark-1.svg"
               alt=""
-              className="relative ml-3 h-[25px] w-[39px]"
+              className="relative ml-3 h-[25px] w-[41px]"
             />
           </div>
         </div>
