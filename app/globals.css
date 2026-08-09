@@ -358,19 +358,19 @@ body {
 
 @media (max-width: 1439px) {
   .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.92);
+    transform: scale(0.92);
   }
 }
 
 @media (max-width: 1023px) {
   .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.72);
+    transform: scale(0.72);
   }
 }
 
 @media (max-width: 767px) {
   .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.46);
+    transform: scale(0.46);
   }
 }
 
