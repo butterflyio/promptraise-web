@@ -79,17 +79,16 @@ export function ProblemSectionClient({
         </div>
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="prompt-problem-window p-6 md:p-8">
-            <div className="prompt-problem-window-bar mb-6 pb-4">
-              <div className="flex items-center justify-between">
-                <h2 className="prompt-problem-window-title font-mono text-sm">
-                  {windowTitle ?? "&gt; theProblem.exe"}
-                </h2>
-                <div className="prompt-problem-dots">
-                  <i />
-                  <i />
-                  <i />
-                </div>
-              </div>
+            <div className="prompt-problem-window-bar relative mb-6 flex items-center pb-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/figma/problem-window-dots.svg"
+                alt=""
+                className="absolute top-[1px] left-[2px] h-[17px] w-[65px]"
+              />
+              <h2 className="prompt-problem-window-title absolute inset-x-0 text-center">
+                {windowTitle ?? "theProblem.exe"}
+              </h2>
             </div>
             <div className="space-y-4">
               {problems.map((problem) => (
@@ -101,10 +100,10 @@ export function ProblemSectionClient({
             </div>
           </div>
 
-          <div className="mt-8 flex justify-end">
+          <div className="mt-8 flex justify-center">
             <a
               href="#solutions"
-              className="rounded-full bg-[#67FF67] px-6 py-2 text-sm font-semibold text-[#0F0F0F] transition-opacity hover:opacity-90"
+              className="inline-flex items-center rounded-full bg-[#67FF67] px-6 py-2.5 text-sm font-semibold text-[#0F0F0F] transition-opacity hover:opacity-90"
             >
               {ctaLabel ?? "Go to Solution"}
             </a>
@@ -266,32 +265,31 @@ function ProblemSectionAnimated({
       <div className="relative z-10 mx-auto max-w-6xl px-6">
         <div className="prompt-problem-stage">
           {/* Central window */}
-          <div className="prompt-problem-window absolute inset-x-0 top-1/2 mx-auto w-full max-w-xl -translate-y-1/2 p-8">
-            <div className="prompt-problem-window-bar mb-6 pb-4">
-              <div className="flex items-center justify-between">
-                <h2 className="prompt-problem-window-title font-mono text-sm">
-                  {windowTitle ?? "&gt; theProblem.exe"}
-                </h2>
-                <div className="prompt-problem-dots">
-                  <i />
-                  <i />
-                  <i />
-                </div>
-              </div>
+          <div className="prompt-problem-window absolute inset-x-0 top-1/2 mx-auto w-full max-w-2xl -translate-y-1/2 p-8">
+            <div className="prompt-problem-window-bar relative mb-6 flex items-center pb-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/figma/problem-window-dots.svg"
+                alt=""
+                className="absolute top-[1px] left-0 h-[17px] w-[65px]"
+              />
+              <h2 className="prompt-problem-window-title absolute inset-x-0 text-center">
+                {windowTitle ?? "theProblem.exe"}
+              </h2>
             </div>
 
-            <h3 className="mb-2 text-xl leading-snug font-bold text-white">
-              {heading ?? "You&apos;re invisible where decisions are made"}
+            <h3 className="mb-4 text-3xl leading-[1.15] font-bold whitespace-pre-line text-white desktop:text-4xl">
+              {heading ?? "You're invisible where decisions are made"}
             </h3>
-            <p className="text-sm leading-relaxed text-white/60">
+            <p className="text-sm leading-[1.5] text-[#aaa] desktop:text-base">
               {subtext ??
-                "Founders, investors, and users discover you through AI. Or they don&apos;t."}
+                "Founders, investors, and users discover you through AI. Or they don't."}
             </p>
 
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center">
               <a
                 href="#solutions"
-                className="inline-block rounded-lg bg-[#67FF67] px-5 py-2.5 text-xs font-bold text-[#0F0F0F] transition-opacity hover:opacity-90"
+                className="inline-flex items-center rounded-full bg-[#67FF67] px-6 py-2.5 text-sm font-semibold text-[#0F0F0F] transition-opacity hover:opacity-90"
               >
                 {ctaLabel ?? "Go to Solution"}
               </a>

@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
 import { visionTool } from "@sanity/vision";
+import { codeInput } from "@sanity/code-input";
 
 import { sanityEnv } from "./sanity/lib/env";
 import { previewAction } from "./sanity/plugins/preview-action";
@@ -46,6 +47,7 @@ export default defineConfig({
           ]),
     }),
     visionTool(),
+    codeInput(),
   ],
   schema: {
     types: schemaTypes,

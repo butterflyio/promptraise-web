@@ -5,27 +5,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { SectionLabel } from "@/components/section-label";
 import type { HomePage } from "@/sanity/lib/queries";
 
-/* ── Step data ───────────────────────────────────────────────────── */
+/* ── Step data (Figma design copy; all text overridable via CMS) ── */
 const STEPS = [
   {
     number: "01",
     label: "Audit",
     title: "Current Visibility Audit",
     description:
-      "We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you now. We fix the baseline — how often you're mentioned in target queries and alongside which competitors.",
+      "We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you now. We fix the baseline - how often you're mentioned in target queries and alongside which competitors.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden>
-        <circle cx="17" cy="17" r="9" stroke="white" strokeWidth="1.6" />
-        <line
-          x1="23.5"
-          y1="23.5"
-          x2="30"
-          y2="30"
-          stroke="white"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      </svg>
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src="/figma/process-card-icon-1.svg"
+        alt=""
+        className="size-full"
+      />
     ),
   },
   {
@@ -35,9 +29,7 @@ const STEPS = [
     description:
       "PromptRaise scans communities and competitors. We identify: what your audience asks, what nobody covers, which words and topics have high AI-intent.",
     icon: (
-      /* Globe with scan-bracket icon — matches 10871.png */
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden>
-        {/* Scan brackets */}
         <path
           d="M6 14V8h6"
           stroke="white"
@@ -66,7 +58,6 @@ const STEPS = [
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        {/* Globe */}
         <circle cx="22" cy="22" r="8" stroke="white" strokeWidth="1.5" />
         <ellipse
           cx="22"
@@ -93,7 +84,7 @@ const STEPS = [
     label: "Creators",
     title: "Content from Real Creators",
     description:
-      "We assign unique tasks to real creators. Each has their own angle, audience, platform. Not 20 identical articles — 20 different voices about one project.",
+      "We assign unique tasks to real creators. Each has their own angle, audience, platform. Not 20 identical articles - 20 different voices about one project.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden>
         <rect
@@ -139,7 +130,7 @@ const STEPS = [
     label: "PR",
     title: "Tier-1-2 Media PR",
     description:
-      "In parallel — publications in Cointelegraph, Coindesk, Decrypt, BeInCrypto, The Block. LLMs trained on these sources. This builds entity authority.",
+      "In parallel - publications in Cointelegraph, Coindesk, Decrypt, BeInCrypto, The Block. LLMs trained on these sources. This builds entity authority.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden>
         <circle cx="18" cy="18" r="10" stroke="white" strokeWidth="1.6" />
@@ -168,7 +159,7 @@ const STEPS = [
     label: "Analytics",
     title: "Tracking & Monthly Report",
     description:
-      "Every 2 weeks: target queries in ChatGPT, Perplexity, Google, DeepSeek, Gemini, Claude — track growth. Monthly report with before/after numbers, top queries, and next priorities.",
+      "Every 2 weeks: target queries in ChatGPT, Perplexity, Google, DeepSeek, Gemini, Claude - track growth. Monthly report with before/after numbers, top queries, and next priorities.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden>
         <polyline
@@ -192,30 +183,27 @@ const STEPS = [
   },
 ];
 
-/* ── Waveform bar heights ─────────────────────────────────────────── */
-// 120 bars generating a multi-peak sine envelope (matches 34566.png).
-// Heights range 4–32px. Each bar is flex:1 with no max-width so they
-// collectively fill 100% of the section width with no padding.
-const TOTAL_BARS = 120;
-const BAR_HEIGHTS: number[] = Array.from({ length: TOTAL_BARS }, (_, i) => {
-  const t = i / (TOTAL_BARS - 1); // 0 → 1
-  // Envelope: two overlapping sine humps — matches the screenshot's
-  // mountain-curve shape (low at edges, two peaks in left-center and right-center)
-  const hump1 = Math.sin(Math.PI * t * 1.1) * 28;
-  const hump2 = Math.sin(Math.PI * t * 2.2 + 0.3) * 12;
-  const noise = Math.sin(i * 1.7) * 3 + Math.sin(i * 3.1) * 2;
-  return Math.max(4, Math.round(Math.abs(hump1 + hump2 + noise)));
-});
-
-/* ── Card X offsets per step (% of container width) ─────────────── */
-// These are the left-edge positions of the card (310px wide).
-// The card's center is at offset + CARD_WIDTH/2, which we use for the connector line.
-const CARD_OFFSETS = ["2%", "18%", "36%", "52%", "66%"];
-const CARD_WIDTH_PX = 310;
-
-/* ── Waveform bar fill per step (as fraction of TOTAL_BARS) ──────── */
-// Step 0 → first ~20% green, step 4 → ~100% green
+/* ── Segmented slider (Figma 341:1753: ~230 segments, 6px gaps) ─── */
+const TOTAL_SEGMENTS = 96;
 const STEP_BAR_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0];
+
+/* Card travel positions - % of the stage width (Figma card width 389px) */
+const CARD_OFFSETS = ["2%", "18%", "34%", "50%", "66%"];
+const CARD_WIDTH = 389;
+
+/* Decorative capsules flanking the badge (same style as AI section) */
+const BADGE_CAPS_LEFT = [
+  { x: 41.5, y: 0, o: 0.4 },
+  { x: 63.5, y: 19, o: 0.2 },
+  { x: 99.5, y: 19, o: 1 },
+  { x: 86.5, y: 38, o: 0.5 },
+];
+const BADGE_CAPS_RIGHT = [
+  { x: 289.5, y: 0, o: 0.4 },
+  { x: 326.5, y: 19, o: 1 },
+  { x: 265.5, y: 19, o: 0.2 },
+  { x: 304.5, y: 38, o: 0.5 },
+];
 
 /* ── Component ───────────────────────────────────────────────────── */
 interface ProcessSectionProps {
@@ -226,12 +214,17 @@ export function ProcessSection({ content }: ProcessSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
 
-  // Override step copy from CMS while keeping the fixed 5-step structure/icons
-  const steps = STEPS.map((step, i) => ({
-    ...step,
-    title: content?.steps?.[i]?.title ?? step.title,
-    description: content?.steps?.[i]?.desc ?? step.description,
-  }));
+  // Override step copy/label/number from CMS while keeping the 5-step structure
+  const steps = STEPS.map((step, i) => {
+    const cms = content?.steps?.[i];
+    return {
+      ...step,
+      number: cms?.number ?? step.number,
+      label: cms?.label ?? step.label,
+      title: cms?.title ?? step.title,
+      description: cms?.desc ?? step.description,
+    };
+  });
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -241,34 +234,24 @@ export function ProcessSection({ content }: ProcessSectionProps) {
       const rect = section.getBoundingClientRect();
       const sectionTop = rect.top;
       const sectionHeight = rect.height;
-      // scrollable height is totalHeight minus one viewport
       const scrollableHeight = sectionHeight - window.innerHeight;
       if (scrollableHeight <= 0) return;
-
-      // How far we've scrolled into the section (0 → 1)
       const progress = Math.max(0, Math.min(1, -sectionTop / scrollableHeight));
-
-      // Map 0→1 to 0→4 steps
       const raw = progress * (STEPS.length - 1);
-      const step = Math.round(raw);
-      setActiveStep(Math.min(step, STEPS.length - 1));
+      setActiveStep(Math.min(Math.round(raw), STEPS.length - 1));
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll(); // initialise on mount
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const step = steps[activeStep]!;
-  const activeBarsCount = Math.round(
-    STEP_BAR_FRACTIONS[activeStep]! * TOTAL_BARS,
+  const activeSegments = Math.round(
+    STEP_BAR_FRACTIONS[activeStep]! * TOTAL_SEGMENTS,
   );
 
   return (
-    /*
-     * Outer wrapper is tall — 500vh gives ~4 scroll "pages" of travel so the
-     * sticky inner panel advances through all 5 steps.
-     */
     <div
       ref={sectionRef}
       id="how-it-works"
@@ -276,156 +259,208 @@ export function ProcessSection({ content }: ProcessSectionProps) {
       className="relative"
     >
       <SectionLabel name="ProcessSection" />
-      {/* ── Sticky viewport ─────────────────────────────────────── */}
       <div
         className="sticky top-0 overflow-hidden bg-[#090b0a]"
         style={{ height: "100vh" }}
       >
-        {/* Green atmospheric glow */}
-        <div
+        {/* ── Background layers (Figma 133:41034) ─────────────── */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+          {/* Wide green soft-light wash (106:2195 Decorative Rectangle) */}
+          <div
+            className="absolute top-1/2 left-1/2 h-[1154px] w-[1439px] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[36px] bg-[#1e885c] opacity-20 mix-blend-soft-light"
+          />
+          {/* Big overlay vectors (106:1881 / 106:1882) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/process-bg-vector-1.svg"
+            alt=""
+            className="absolute top-[14%] left-[31%] h-[1339px] w-[950px] max-w-none opacity-70 mix-blend-overlay"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/process-bg-vector-2.svg"
+            alt=""
+            className="absolute top-[16%] left-[52%] h-[1339px] w-[428px] max-w-none opacity-70 mix-blend-overlay"
+          />
+          {/* Vertical green glow bar (106:1883, blur 80.96) */}
+          <div
+            className="absolute top-[14%] right-[8%] h-[1329px] w-[124px] border-[0.756px] border-[#163f16] opacity-70 mix-blend-overlay"
+            style={{
+              background:
+                "linear-gradient(179.54deg, #67FF67 2.8%, rgba(103,255,103,0) 100%)",
+              filter: "blur(80.96px)",
+            }}
+          />
+          {/* Grid pattern (106:1295 Pattern) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/process-pattern.svg"
+            alt=""
+            className="absolute inset-x-0 top-[30%] mx-auto w-full max-w-[1566px] mix-blend-overlay"
+          />
+        </div>
+
+        {/* ── Decorative vector on top (119:2733, color-dodge) ─ */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/figma/process-vector-top.svg"
+          alt=""
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 55% at 28% 42%, rgba(55,120,60,0.38) 0%, transparent 70%)",
-          }}
+          className="pointer-events-none absolute top-[52px] left-1/2 z-0 h-[228px] w-[585px] max-w-none -translate-x-1/2 mix-blend-color-dodge"
         />
 
-        {/* ── Section header ──────────────────────────────────── */}
-        <div className="relative z-10 px-6 pt-16 pb-10 text-center">
-          {/* "Process" badge with Figma SVG connectors */}
-          <div className="mb-5 inline-flex items-center gap-0">
+        {/* ── Section header (Figma 133:41030, 649px) ───────── */}
+        <div className="relative z-10 px-6 pt-16 pb-6 text-center">
+          {/* "Process" badge: line + marks + pill + capsules */}
+          <div className="relative mx-auto mb-5 inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/inner-frame.svg"
+              src="/figma/process-badge-line.svg"
               alt=""
               aria-hidden
-              width={80}
-              height={50}
-              className="shrink-0"
+              className="absolute top-1/2 left-1/2 h-[6px] w-[384px] max-w-none -translate-x-1/2 -translate-y-1/2"
             />
+            {BADGE_CAPS_LEFT.map((c, i) => (
+              <div
+                key={`l${i}`}
+                aria-hidden
+                className="absolute h-[10px] w-[17px] rounded-[100px] border-[0.8px] border-[#3c3e3f] bg-[#2e2e2e]"
+                style={{ left: c.x, top: 4, opacity: c.o }}
+              />
+            ))}
+            {BADGE_CAPS_RIGHT.map((c, i) => (
+              <div
+                key={`r${i}`}
+                aria-hidden
+                className="absolute h-[10px] w-[17px] rounded-[100px] border-[0.8px] border-[#3c3e3f] bg-[#2e2e2e]"
+                style={{ left: c.x, top: 4, opacity: c.o }}
+              />
+            ))}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/decorative-vector-9.svg"
+              src="/figma/process-badge-mark-2.svg"
               alt=""
               aria-hidden
-              width={120}
-              height={12}
-              className="shrink-0"
-              style={{ transform: "scaleX(-1)" }}
+              className="absolute top-1/2 left-[105px] h-[25px] w-[40px] -translate-y-1/2"
             />
             <div
-              className="shrink-0 rounded-full px-5 py-2 text-xs font-medium tracking-wide text-white/80 select-none"
-              style={{
-                background: "rgba(20,22,20,0.85)",
-                border: "1px solid rgba(255,255,255,0.14)",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.4)",
-                backdropFilter: "blur(8px)",
-              }}
+              className="absolute top-1/2 left-[139px] flex h-[39px] -translate-y-1/2 items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]"
             >
-              {content?.badge ?? "Process"}
+              <span className="text-[15px] leading-[1.5] whitespace-nowrap text-[#a1a1aa]">
+                {content?.badge ?? "Process"}
+              </span>
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/decorative-vector-9.svg"
+              src="/figma/process-badge-mark-1.svg"
               alt=""
               aria-hidden
-              width={120}
-              height={12}
-              className="shrink-0"
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/figma/inner-frame-1.svg"
-              alt=""
-              aria-hidden
-              width={80}
-              height={50}
-              className="shrink-0"
+              className="absolute top-1/2 left-[238px] h-[25px] w-[40px] -translate-y-1/2"
             />
           </div>
 
-          <h2 className="mb-3 text-4xl font-bold tracking-tight text-balance text-white md:text-5xl">
+          <h2 className="mx-auto max-w-[649px] text-[36px] leading-[1.15] font-bold tracking-[-0.02em] text-balance text-white desktop:text-[40px]">
             {content?.heading ?? "From analysis to ChatGPT answer"}
           </h2>
-          <p className="mx-auto max-w-xl text-sm text-white/45 md:text-base">
+          <p className="mx-auto mt-4 max-w-[649px] text-sm leading-[1.5] text-[#52525b] desktop:text-base">
             {content?.subtext ??
-              "Five steps — from a visibility audit to measurable growth in AI mentions."}
+              "Five steps - from a visibility audit to measurable growth in AI mentions."}
           </p>
         </div>
 
-        {/* ── Stage: card + connector + waveform ──────────────── */}
-        {/*
-         * Everything from the card down to the waveform lives in one
-         * relative container so we can use a SINGLE absolute connector
-         * line whose left position tracks the card center exactly.
-         *
-         * Card center (px) = CARD_OFFSETS[step] expressed as vw + CARD_WIDTH/2.
-         * We pass this as a CSS left value on the connector so it always
-         * touches both the card bottom and the waveform top.
-         *
-         * The waveform is full-width (no centering padding) so its
-         * coordinate space matches the viewport — the pill position
-         * (% of bars) maps directly to % of full screen width.
-         */}
-        <div className="relative z-10 w-full" style={{ height: 420 }}>
-          {/* Card */}
+        {/* ── Stage: card + connector + segmented slider ────── */}
+        <div
+          className="relative z-10 mx-auto w-full max-w-[1248px] px-6"
+          style={{ height: 490 }}
+        >
+          {/* Card (Figma 338:707; w-389, rounded-32, glass) */}
           <motion.div
             className="absolute top-0"
             animate={{ left: CARD_OFFSETS[activeStep] }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-            style={{ width: CARD_WIDTH_PX }}
+            style={{ width: "min(389px, 86vw)" }}
           >
             <div
-              className="relative overflow-hidden rounded-2xl"
+              className="relative w-full overflow-hidden rounded-[32px] border border-white/90 shadow-[0_0_0_4px_rgba(255,255,255,0.07)]"
               style={{
-                background:
-                  "linear-gradient(170deg, rgba(40,100,50,0.9) 0%, rgba(15,25,18,0.95) 55%)",
-                border: "1px solid rgba(103,255,103,0.18)",
-                boxShadow:
-                  "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)",
+                background: "rgba(0,0,0,0.25)",
+                backdropFilter: "blur(6.5px)",
+                WebkitBackdropFilter: "blur(6.5px)",
               }}
             >
-              {/* Inner grid overlay */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-25"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(103,255,103,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(103,255,103,0.15) 1px, transparent 1px)",
-                  backgroundSize: "28px 28px",
-                }}
-              />
+              {/* Icon art area (338:709, h 216) */}
+              <div className="relative h-[216px] w-full">
+                {/* Glow panels */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figma/process-card-glow-1.svg"
+                  alt=""
+                  aria-hidden
+                  className="absolute top-0 left-0 h-[256px] w-[400px] max-w-none"
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figma/process-card-glow-2.svg"
+                  alt=""
+                  aria-hidden
+                  className="absolute top-0 right-0 h-[256px] w-[400px] max-w-none"
+                />
+                {/* Arcs */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figma/process-card-arc-1.svg"
+                  alt=""
+                  aria-hidden
+                  className="absolute bottom-0 left-1/2 h-[207px] w-[392px] max-w-none -translate-x-1/2"
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figma/process-card-arc-2.svg"
+                  alt=""
+                  aria-hidden
+                  className="absolute bottom-[74px] left-1/2 h-[142px] w-[393px] max-w-none -translate-x-1/2"
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figma/process-card-arc-3.svg"
+                  alt=""
+                  aria-hidden
+                  className="absolute bottom-[131px] left-1/2 h-[85px] w-[393px] max-w-none -translate-x-1/2"
+                />
+                {/* Decorative ellipse (338:714) */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figma/process-card-ellipse.svg"
+                  alt=""
+                  aria-hidden
+                  className="absolute bottom-[-204px] left-1/2 h-[341px] w-[327px] max-w-none -translate-x-1/2"
+                />
 
-              {/* Icon area */}
-              <div
-                className="relative flex items-center justify-center pt-10 pb-14"
-                style={{ minHeight: 130 }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeStep}
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.85 }}
-                    transition={{ duration: 0.25 }}
-                    className="flex items-center justify-center rounded-full"
-                    style={{
-                      width: 56,
-                      height: 56,
-                      background: "rgba(0,0,0,0.45)",
-                      border: "1px solid rgba(255,255,255,0.18)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)",
-                      backdropFilter: "blur(4px)",
-                    }}
-                  >
-                    {step.icon}
-                  </motion.div>
-                </AnimatePresence>
+                {/* Icon wrapper (338:722, 64px chip) */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeStep}
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.85 }}
+                      transition={{ duration: 0.25 }}
+                      className="flex size-[64px] items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-[6px]"
+                    >
+                      {activeStep === 0 ? (
+                        step.icon
+                      ) : (
+                        <span className="flex items-center justify-center opacity-90 [&_svg]:h-[30px] [&_svg]:w-[30px]">
+                          {step.icon}
+                        </span>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
 
-              {/* Text area */}
-              <div className="relative px-5 pb-6">
+              {/* Text area (338:727, px-8 pb-10) */}
+              <div className="relative px-8 pb-10">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeStep}
@@ -434,10 +469,10 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <h3 className="mb-2 text-[15px] leading-snug font-bold text-white">
+                    <h3 className="mb-2 bg-gradient-to-b from-white to-white/90 bg-clip-text text-[18px] leading-[1.4] font-bold tracking-[-0.36px] text-transparent">
                       {step.title}
                     </h3>
-                    <p className="text-[11px] leading-[1.55] text-white/50">
+                    <p className="text-[12px] leading-[1.4] text-[#52525b]">
                       {step.description}
                     </p>
                   </motion.div>
@@ -446,82 +481,51 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             </div>
           </motion.div>
 
-          {/*
-           * Connector line — absolutely positioned so its left edge matches
-           * the horizontal center of the card at each step.
-           * `calc(CARD_OFFSET + CARD_WIDTH/2)` keeps it perfectly centred
-           * under the card no matter where it travels.
-           */}
+          {/* Connector (338:730, 96px) */}
           <motion.div
             aria-hidden
             className="absolute"
             animate={{
-              left: `calc(${CARD_OFFSETS[activeStep]} + ${CARD_WIDTH_PX / 2}px)`,
+              left: `calc(min(${CARD_OFFSETS[activeStep]}, 66%) + ${
+                Math.min(CARD_WIDTH, 389) / 2
+              }px)`,
             }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-            style={{
-              top: 340, // bottom of card (approx)
-              width: 1,
-              height: 56,
-              transform: "translateX(-50%)",
-              background:
-                "linear-gradient(180deg, rgba(103,255,103,0.75) 0%, rgba(103,255,103,0.08) 100%)",
-            }}
-          />
+            style={{ top: 388, width: 1, transform: "translateX(-50%)" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/figma/process-connector.svg"
+              alt=""
+              className="block h-[68px] w-full max-w-none"
+            />
+          </motion.div>
 
-          {/* ── Waveform progress bar — full viewport width ─── */}
-          {/*
-           * No padding, no justify-center. Bars span the full width so
-           * that percentage-based pill positioning maps 1-to-1 with
-           * screen coordinates. Bar width + gap auto-fill via flex.
-           */}
-          <div className="absolute inset-x-0" style={{ top: 396 }}>
-            <div className="relative flex h-8 w-full items-end gap-[2px]">
-              {BAR_HEIGHTS.map((h, i) => {
-                const isActive = i < activeBarsCount;
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      flex: "1 1 0",
-                      height: h,
-                      borderRadius: 2,
-                      background: isActive
+          {/* Segmented slider (341:1753, 1248px, 24px, gap 6) */}
+          <div className="absolute inset-x-0" style={{ top: 456 }}>
+            <div className="relative mx-auto flex h-6 w-full max-w-[1248px] items-center gap-[6px]">
+              {Array.from({ length: TOTAL_SEGMENTS }, (_, i) => (
+                <div
+                  key={i}
+                  className="h-full min-w-0 flex-1 rounded-[3px]"
+                  style={{
+                    background:
+                      i < activeSegments
                         ? "#67FF67"
-                        : "rgba(255,255,255,0.14)",
-                      transition: "background 0.35s",
-                    }}
-                  />
-                );
-              })}
-
-              {/* Floating step pill — left% maps to bar fraction of full width */}
+                        : "rgba(85,85,85,0.25)",
+                    transition: "background 0.35s",
+                  }}
+                />
+              ))}
+              {/* Floating step pill above the slider */}
               <StepPill
                 label={step.label}
                 number={step.number}
-                totalBars={TOTAL_BARS}
-                activeBars={activeBarsCount}
+                totalSegments={TOTAL_SEGMENTS}
+                activeSegments={activeSegments}
               />
             </div>
           </div>
-        </div>
-
-        {/* ── Dot navigation ───────────────────────────��──────── */}
-        <div className="relative z-10 mt-5 flex justify-center gap-3">
-          {STEPS.map((s, i) => (
-            <div
-              key={s.number}
-              aria-hidden
-              className="transition-all duration-300"
-              style={{
-                width: i === activeStep ? 24 : 8,
-                height: 4,
-                borderRadius: 9999,
-                background:
-                  i === activeStep ? "#67FF67" : "rgba(255,255,255,0.18)",
-              }}
-            />
-          ))}
         </div>
       </div>
     </div>
@@ -533,18 +537,18 @@ export function ProcessSection({ content }: ProcessSectionProps) {
 function StepPill({
   label,
   number,
-  totalBars,
-  activeBars,
+  totalSegments,
+  activeSegments,
 }: {
   label: string;
   number: string;
-  totalBars: number;
-  activeBars: number;
+  totalSegments: number;
+  activeSegments: number;
 }) {
-  const pct = (activeBars / totalBars) * 100;
+  const pct = (activeSegments / totalSegments) * 100;
   return (
     <motion.div
-      className="absolute bottom-0 flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+      className="absolute -top-[34px] flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
       animate={{ left: `${pct}%` }}
       transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
       style={{
