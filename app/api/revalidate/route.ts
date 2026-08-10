@@ -23,7 +23,8 @@ async function pingIndexNow(slug?: string) {
       return;
     }
     const root = new URL(prodUrl).origin;
-    const target = slug && slug !== "/" ? `${root}/${slug.replace(/^\/+/, "")}` : root;
+    const target =
+      slug && slug !== "/" ? `${root}/${slug.replace(/^\/+/, "")}` : root;
     await fetch("https://api.indexnow.org/indexnow", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -60,10 +61,7 @@ export async function POST(request: Request) {
       const body = (await request.json()) as Record<string, unknown>;
 
       const doc = (body.document ?? body) as Record<string, unknown>;
-      const rawSlug = doc.slug as
-        | string
-        | { current?: string }
-        | undefined;
+      const rawSlug = doc.slug as string | { current?: string } | undefined;
 
       if (typeof rawSlug === "string") {
         slug = rawSlug;

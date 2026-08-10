@@ -146,9 +146,7 @@ export default async function Page({ params }: PageProps) {
     faq = doc.faq;
   }
 
-  const faqItems = (faq ?? []).filter(
-    (item) => item.question && item.answer,
-  );
+  const faqItems = (faq ?? []).filter((item) => item.question && item.answer);
 
   return (
     <main>

@@ -74,19 +74,28 @@ function collectAssetRefs(value: unknown, found = new Set<string>()): string[] {
 export async function POST(request: Request) {
   const secret = request.headers.get("x-sync-secret") ?? "";
   if (sanityEnv.studioSyncSecret && secret !== sanityEnv.studioSyncSecret) {
-    return NextResponse.json({ ok: false, error: "Invalid sync secret" }, { status: 401 });
+    return NextResponse.json(
+      { ok: false, error: "Invalid sync secret" },
+      { status: 401 },
+    );
   }
 
   let body: { _id?: string; _type?: string };
   try {
     body = (await request.json()) as { _id?: string; _type?: string };
   } catch {
-    return NextResponse.json({ ok: false, error: "Invalid body" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: "Invalid body" },
+      { status: 400 },
+    );
   }
 
   const { _id, _type } = body ?? {};
   if (!_id || !_type) {
-    return NextResponse.json({ ok: false, error: "_id and _type required" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: "_id and _type required" },
+      { status: 400 },
+    );
   }
 
   const writeToken = sanityEnv.writeToken;
@@ -119,7 +128,10 @@ export async function POST(request: Request) {
     const doc = await source.getDocument(_id);
     if (!doc) {
       return NextResponse.json(
-        { ok: false, error: `Document ${_id} not found in ${sanityEnv.dataset}` },
+        {
+          ok: false,
+          error: `Document ${_id} not found in ${sanityEnv.dataset}`,
+        },
         { status: 404 },
       );
     }
@@ -156,7 +168,8 @@ export async function POST(request: Request) {
     await target.createOrReplace(publishable as never);
 
     // Trigger production revalidation (harmless if prod URL is not deployed yet).
-    const prodRevalidate = process.env.NEXT_PUBLIC_PROD_URL ?? "https://www.promptraise.com";
+    const prodRevalidate =
+      process.env.NEXT_PUBLIC_PROD_URL ?? "https://www.promptraise.com";
     try {
       await fetch(`${prodRevalidate}/api/revalidate`, {
         method: "POST",
@@ -179,7 +192,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Sync to production failed:", error);
     return NextResponse.json(
-      { ok: false, error: error instanceof Error ? error.message : "Sync failed" },
+      {
+        ok: false,
+        error: error instanceof Error ? error.message : "Sync failed",
+      },
       { status: 500 },
     );
   }

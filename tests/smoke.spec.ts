@@ -84,16 +84,22 @@ test("hero primary CTA points to the audit URL", async ({ page }) => {
   expect(href).toMatch(/audit\.promptraise\.com|#/);
 });
 
-test("team social links are real (not placeholder domains)", async ({ page }) => {
+test("team social links are real (not placeholder domains)", async ({
+  page,
+}) => {
   await page.goto("/");
   await page.locator("#company").scrollIntoViewIfNeeded();
-  const socialLinks = page.locator("#company a[href*='linkedin.com'], #company a[href*='x.com'], #company a[href*='twitter.com']");
+  const socialLinks = page.locator(
+    "#company a[href*='linkedin.com'], #company a[href*='x.com'], #company a[href*='twitter.com']",
+  );
   const count = await socialLinks.count();
   // At least one team member should have a real social URL when CMS data is present.
   if (count > 0) {
     for (let i = 0; i < count; i++) {
       const href = (await socialLinks.nth(i).getAttribute("href")) ?? "";
-      expect(href).not.toMatch(/^(https:\/\/)?(twitter\.com|linkedin\.com)\/?$/);
+      expect(href).not.toMatch(
+        /^(https:\/\/)?(twitter\.com|linkedin\.com)\/?$/,
+      );
     }
   }
 });
@@ -119,10 +125,15 @@ test("no console errors on page load", async ({ page }) => {
   expect(realErrors).toEqual([]);
 });
 
-test("page has no horizontal overflow (layout not broken)", async ({ page }) => {
+test("page has no horizontal overflow (layout not broken)", async ({
+  page,
+}) => {
   await page.goto("/");
   const overflow = await page.evaluate(() => {
-    return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+    return (
+      document.documentElement.scrollWidth >
+      document.documentElement.clientWidth
+    );
   });
   expect(overflow).toBe(false);
 });

@@ -55,7 +55,7 @@ const COMPANIES: CompanyMeta[] = [
           aria-hidden
           className="h-[12px] w-[24px] mix-blend-luminosity"
         />
-        <span className="text-[13.316px] leading-[1.5] tracking-[-0.293px] text-white whitespace-nowrap">
+        <span className="text-[13.316px] leading-[1.5] tracking-[-0.293px] whitespace-nowrap text-white">
           PromptRaise
         </span>
       </span>
@@ -140,10 +140,8 @@ function CompanyColumn({
   const highlight = company.key === "promptraise";
   return (
     <div
-      className={`content-stretch relative flex flex-col items-center justify-center gap-4 overflow-clip rounded-[20px] ${
-        highlight
-          ? "border border-[#2dc866] p-[25px]"
-          : "p-6"
+      className={`relative flex flex-col content-stretch items-center justify-center gap-4 overflow-clip rounded-[20px] ${
+        highlight ? "border border-[#2dc866] p-[25px]" : "p-6"
       } ${className}`}
     >
       {highlight ? (
@@ -173,7 +171,7 @@ function CompanyColumn({
 function LabelColumn({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`content-stretch flex h-[458px] shrink-0 flex-col items-start gap-4 rounded-[20px] px-6 pb-6 pt-[60px] ${className}`}
+      className={`flex h-[458px] shrink-0 flex-col content-stretch items-start gap-4 rounded-[20px] px-6 pt-[60px] pb-6 ${className}`}
     >
       {FEATURES.map((feature) => (
         <div
@@ -251,7 +249,7 @@ function MobileComparison() {
   const company = COMPANIES[active]!;
   return (
     <div className="flex flex-col items-start gap-12">
-      <div className="flex w-full items-center gap-0 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-full [scrollbar-width:none] items-center gap-0 overflow-x-auto px-4 [&::-webkit-scrollbar]:hidden">
         {COMPANIES.map((c, i) => {
           const isActive = i === active;
           const isPromptRaise = c.key === "promptraise";
@@ -266,9 +264,7 @@ function MobileComparison() {
                   ? "border border-[#3c3e3f]"
                   : "border border-transparent"
               } ${isActive ? "bg-[rgba(20,20,20,0.8)]" : ""} ${
-                isPromptRaise
-                  ? "gap-[6px]"
-                  : ""
+                isPromptRaise ? "gap-[6px]" : ""
               }`}
             >
               {c.logo}
@@ -277,7 +273,7 @@ function MobileComparison() {
         })}
       </div>
 
-      <div className="content-stretch flex w-full items-center gap-[9px] pr-6">
+      <div className="flex w-full content-stretch items-center gap-[9px] pr-6">
         <LabelColumn className="w-[256px]" />
         <CompanyColumn
           company={company}
@@ -304,7 +300,7 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
       {/* Decorative ellipse masks (Figma 370:3531 / 370:3530) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-0 left-[-40px] hidden h-[393px] w-[361px] tablet:block"
+        className="tablet:block pointer-events-none absolute bottom-0 left-[-40px] hidden h-[393px] w-[361px]"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -315,7 +311,7 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
       </div>
       <div
         aria-hidden
-        className="pointer-events-none absolute top-[186px] right-[-100px] hidden h-[393px] w-[347px] tablet:block"
+        className="tablet:block pointer-events-none absolute top-[186px] right-[-100px] hidden h-[393px] w-[347px]"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -329,42 +325,42 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
         {/* Header */}
         <div className="flex flex-col items-center gap-5 text-center">
           <ComparisonBadgeRow badge={content?.badge} />
-          <h2 className="text-[24px] leading-[1.3] font-bold tracking-[-0.48px] text-white tablet:text-[40px] tablet:leading-[1.15] tablet:tracking-[-0.8px]">
+          <h2 className="tablet:text-[40px] tablet:leading-[1.15] tablet:tracking-[-0.8px] text-[24px] leading-[1.3] font-bold tracking-[-0.48px] text-white">
             {content?.heading ?? "PromptRaise vs Competitors"}
           </h2>
-          <p className="max-w-[540px] text-[12px] leading-[1.4] tracking-[-0.24px] text-[var(--fg-muted,#52525b)] tablet:text-[16px] tablet:leading-[1.5]">
+          <p className="tablet:text-[16px] tablet:leading-[1.5] max-w-[540px] text-[12px] leading-[1.4] tracking-[-0.24px] text-[var(--fg-muted,#52525b)]">
             {content?.subtext ??
               "Competitors can track. We close the full loop - from analysis to publication and measurable result."}
           </p>
         </div>
 
         {/* Desktop + tablet: 5-column table (label + 4 companies) */}
-        <div className="mt-12 hidden w-full items-end gap-[9px] tablet:flex">
-          <LabelColumn className="w-[208px] desktop:w-[328px]" />
+        <div className="tablet:flex mt-12 hidden w-full items-end gap-[9px]">
+          <LabelColumn className="desktop:w-[328px] w-[208px]" />
           <CompanyColumn
             company={COMPANIES[0]!}
             columns={ROW_MATRIX}
-            className="w-[122px] desktop:w-[156px]"
+            className="desktop:w-[156px] w-[122px]"
           />
           <CompanyColumn
             company={COMPANIES[1]!}
             columns={ROW_MATRIX}
-            className="w-[122px] desktop:w-[156px]"
+            className="desktop:w-[156px] w-[122px]"
           />
           <CompanyColumn
             company={COMPANIES[2]!}
             columns={ROW_MATRIX}
-            className="w-[122px] desktop:w-[156px]"
+            className="desktop:w-[156px] w-[122px]"
           />
           <CompanyColumn
             company={COMPANIES[3]!}
             columns={ROW_MATRIX}
-            className="w-[122px] desktop:w-[156px]"
+            className="desktop:w-[156px] w-[122px]"
           />
         </div>
 
         {/* Mobile: TabBar + label + active company column */}
-        <div className="mt-12 tablet:hidden">
+        <div className="tablet:hidden mt-12">
           <MobileComparison />
         </div>
       </DsSectionContainer>

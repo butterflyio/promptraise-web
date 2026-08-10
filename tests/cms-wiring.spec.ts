@@ -42,9 +42,14 @@ function sanityPatch(value: string) {
   );
 }
 
-test("CMS publish reaches the rendered page (ghost-doc regression guard)", async ({ page }) => {
+test("CMS publish reaches the rendered page (ghost-doc regression guard)", async ({
+  page,
+}) => {
   const token = env("SANITY_API_WRITE_TOKEN");
-  test.skip(!token, "SANITY_API_WRITE_TOKEN not set - skipping CMS wiring test");
+  test.skip(
+    !token,
+    "SANITY_API_WRITE_TOKEN not set - skipping CMS wiring test",
+  );
 
   const marker = `PW-CMS-TEST-${Date.now()}`;
 
@@ -57,7 +62,8 @@ test("CMS publish reaches the rendered page (ghost-doc regression guard)", async
       `--data-urlencode "query=${q}" -H "Authorization: Bearer ${env("SANITY_API_READ_TOKEN")}"`,
     { stdio: "pipe" },
   ).toString();
-  const original = (JSON.parse(read).result ?? "GEO · LLM Visibility · Web3") as string;
+  const original = (JSON.parse(read).result ??
+    "GEO · LLM Visibility · Web3") as string;
 
   // 2. Publish the marker
   sanityPatch(marker);
@@ -83,7 +89,10 @@ test("CMS publish reaches the rendered page (ghost-doc regression guard)", async
     console.error("Failed to restore original eyebrow:", e);
   }
 
-  expect(found, "Published CMS marker should appear on the page within the ISR window").toBe(true);
+  expect(
+    found,
+    "Published CMS marker should appear on the page within the ISR window",
+  ).toBe(true);
 });
 
 test("revalidate endpoint rejects missing secret", async ({ request }) => {

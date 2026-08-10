@@ -15,11 +15,7 @@ const STEPS = [
       "We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you now. We fix the baseline - how often you're mentioned in target queries and alongside which competitors.",
     icon: (
       // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src="/figma/process-card-icon-1.svg"
-        alt=""
-        className="size-full"
-      />
+      <img src="/figma/process-card-icon-1.svg" alt="" className="size-full" />
     ),
   },
   {
@@ -266,9 +262,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
         {/* ── Background layers (Figma 133:41034) ─────────────── */}
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
           {/* Wide green soft-light wash (106:2195 Decorative Rectangle) */}
-          <div
-            className="absolute top-1/2 left-1/2 h-[1154px] w-[1439px] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[36px] bg-[#1e885c] opacity-20 mix-blend-soft-light"
-          />
+          <div className="absolute top-1/2 left-1/2 h-[1154px] w-[1439px] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[36px] bg-[#1e885c] opacity-20 mix-blend-soft-light" />
           {/* Big overlay vectors (106:1881 / 106:1882) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -343,9 +337,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               aria-hidden
               className="absolute top-1/2 left-[105px] h-[25px] w-[40px] -translate-y-1/2"
             />
-            <div
-              className="absolute top-1/2 left-[139px] flex h-[39px] -translate-y-1/2 items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]"
-            >
+            <div className="absolute top-1/2 left-[139px] flex h-[39px] -translate-y-1/2 items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]">
               <span className="text-[15px] leading-[1.5] whitespace-nowrap text-[#a1a1aa]">
                 {content?.badge ?? "Process"}
               </span>
@@ -359,10 +351,10 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             />
           </div>
 
-          <h2 className="mx-auto max-w-[649px] text-[36px] leading-[1.15] font-bold tracking-[-0.02em] text-balance text-white desktop:text-[40px]">
+          <h2 className="desktop:text-[40px] mx-auto max-w-[649px] text-[36px] leading-[1.15] font-bold tracking-[-0.02em] text-balance text-white">
             {content?.heading ?? "From analysis to ChatGPT answer"}
           </h2>
-          <p className="mx-auto mt-4 max-w-[649px] text-sm leading-[1.5] text-[#52525b] desktop:text-base">
+          <p className="desktop:text-base mx-auto mt-4 max-w-[649px] text-sm leading-[1.5] text-[#52525b]">
             {content?.subtext ??
               "Five steps - from a visibility audit to measurable growth in AI mentions."}
           </p>
@@ -510,9 +502,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   className="h-full min-w-0 flex-1 rounded-[3px]"
                   style={{
                     background:
-                      i < activeSegments
-                        ? "#67FF67"
-                        : "rgba(85,85,85,0.25)",
+                      i < activeSegments ? "#67FF67" : "rgba(85,85,85,0.25)",
                     transition: "background 0.35s",
                   }}
                 />

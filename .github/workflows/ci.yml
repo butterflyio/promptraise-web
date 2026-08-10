@@ -49,6 +49,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history so gitleaks can resolve its push-event diff range
+          # (<before>^..<head>). Default fetch-depth:1 breaks it with
+          # "ambiguous argument ... unknown revision".
+          fetch-depth: 0
 
       - name: Gitleaks scan
         uses: gitleaks/gitleaks-action@v2
