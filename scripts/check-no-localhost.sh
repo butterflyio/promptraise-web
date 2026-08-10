@@ -7,10 +7,13 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-# Ignore: node_modules, .next, .git, lockfiles, and generated types.
+# Ignore: node_modules, .next, .git, lockfiles, generated types, and
+# package.json (script values like the deliberately-local "test:e2e:local"
+# Playwright runner are dev conveniences, not source shipped to visitors).
 MATCHES="$(grep -rn --include='*.ts' --include='*.tsx' --include='*.js' --include='*.jsx' --include='*.json' --include='*.css' --include='*.html' \
   -E 'https?://(localhost|127\.0\.0\.1)(:[0-9]+)?' \
   . \
+  --exclude='package.json' \
   --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=.git \
   2>/dev/null || true)"
 
