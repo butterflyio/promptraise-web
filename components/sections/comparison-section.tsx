@@ -16,7 +16,6 @@ const FEATURES = [
   "Content from real creators",
   "On-chain verification",
   "Tier-1–2 Web3 media PR",
-  "Web3 specialization",
 ] as const;
 
 /* [row][column] where columns = PromptRaise, Profound, AthenaHQ, coinbound */
@@ -25,7 +24,6 @@ const ROW_MATRIX = [
   [true, true, true, false],
   [true, false, false, true],
   [true, false, false, false],
-  [true, false, false, true],
   [true, false, false, true],
 ] as const;
 
