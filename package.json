@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "prepare": "husky",
     "figma:connect:help": "figma connect --help",
     "figma:connect:parse": "figma connect parse -c figma.config.json",
     "figma:connect:publish": "figma connect publish -c figma.config.json",
@@ -45,9 +46,14 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}": "prettier --write"
   }
 }
