@@ -93,6 +93,12 @@ export function ProblemSectionClient({
             <div className="space-y-4">
               {problems.map((problem) => (
                 <div key={problem.id} className="prompt-problem-card">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/figma/problem-card-icon.svg"
+                    alt=""
+                    className="prompt-problem-card-icon"
+                  />
                   <h3 className="prompt-problem-card-title">{problem.title}</h3>
                   <p className="prompt-problem-card-body">{problem.desc}</p>
                 </div>
@@ -339,6 +345,12 @@ function FloatingProblemCard({
         scale,
       }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/figma/problem-card-icon.svg"
+        alt=""
+        className="prompt-problem-card-icon"
+      />
       <h4 className="prompt-problem-card-title">{problem.title}</h4>
       <p className="prompt-problem-card-body">{problem.desc}</p>
     </motion.div>

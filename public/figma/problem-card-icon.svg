@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="30.7339" height="8.00003" viewBox="0 0 30.7339 8.00003" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Button Icon Frame">
+<g id="Close" opacity="0.5">
+<circle cx="4" cy="4" r="4" fill="white"/>
+<circle cx="4" cy="4" r="3.66667" stroke="black" stroke-opacity="0.1" stroke-width="0.666667"/>
+</g>
+<g id="Minimize" opacity="0.2">
+<circle cx="15.3669" cy="4.00003" r="4" fill="white"/>
+<circle cx="15.3669" cy="4.00003" r="3.66667" stroke="black" stroke-opacity="0.1" stroke-width="0.666667"/>
+</g>
+<g id="Zoom" opacity="0.4">
+<circle cx="26.7339" cy="4.00003" r="4" fill="white"/>
+<circle cx="26.7339" cy="4.00003" r="3.66667" stroke="black" stroke-opacity="0.1" stroke-width="0.666667"/>
+</g>
+</g>
+</svg>

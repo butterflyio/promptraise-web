@@ -580,36 +580,62 @@ body {
   background: rgba(214, 223, 222, 0.28);
 }
 
-/* Floating problem cards */
+/* Floating problem cards - per Figma 344:7724 (Card)
+   bg #131315, border rgba(255,255,255,0.91), radius 20, ring shadow,
+   pad 24, width 225, gap 16, icon chip + gradient title + #aaa body */
 .prompt-problem-card {
-  width: 224px;
-  border-radius: 16px;
-  border: 1px solid rgba(95, 108, 112, 0.5);
-  background: rgba(20, 24, 22, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  width: 225px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.91);
+  background: #131315;
   box-shadow:
-    0 18px 38px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  padding: 16px;
+    0 9px 16.9px 0 rgba(0, 0, 0, 0.25),
+    0 0 0 3px #131619;
+  overflow: clip;
+}
+
+.prompt-problem-card-icon {
+  flex-shrink: 0;
+  height: 8px;
+  width: 30.7px;
 }
 
 .prompt-problem-card-title {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  /* 16px bold, white -> 90% gradient, Neutral Sans Bold */
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   font-weight: 700;
-  color: var(--text-primary);
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  white-space: pre-wrap;
 }
 
 .prompt-problem-card-body {
-  margin: 6px 0 0;
-  font-size: 11px;
-  line-height: 1.45;
-  letter-spacing: 0;
-  font-weight: 500;
-  color: rgba(212, 221, 217, 0.42);
+  margin: 0;
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  color: #aaa;
+  white-space: pre-wrap;
 }
 
 /* Stage that holds the absolutely-positioned float layout */
