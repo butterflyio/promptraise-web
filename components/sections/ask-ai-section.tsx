@@ -1,4 +1,4 @@
-import { DsSection, DsSectionContainer } from "@/components/design-system";
+import { DsSection } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import type { HomePage } from "@/sanity/lib/queries";
 
@@ -124,15 +124,16 @@ export function AskAiSection({ content }: { content?: HomePage["askAi"] }) {
         </div>
       </div>
 
-      {/* ── Desktop / tablet: side-by-side row (Figma 2046:8994) ─────── */}
-      <DsSectionContainer className="relative">
-        <div className="mobile:min-h-[869px] tablet:min-h-[1017px] desktop:min-h-[1126px] mobile:pt-[100px] mobile:pb-[60px] tablet:pt-[120px] tablet:pb-[60px] desktop:pt-[337px] desktop:pb-[60px] relative mx-auto flex w-full max-w-[1248px] items-center">
+      {/* ── Content – Figma container 2029:4425: absolute at top 337, h 508,
+               horizontally centered in max-w-[1248px] (96px margins) ─────────── */}
+      <div className="relative mx-auto w-full max-w-[1248px]">
+        <div className="mobile:min-h-[869px] tablet:min-h-[1017px] desktop:min-h-[1126px] mobile:px-6 mobile:pt-[100px] mobile:pb-[60px] tablet:px-12 tablet:pt-[120px] tablet:pb-[60px] desktop:px-0 desktop:pt-[337px] desktop:pb-[60px] relative flex w-full flex-col items-start">
           <div className="tablet:gap-[32px] desktop:gap-[160px] desktop:flex-row desktop:items-center flex w-full flex-col items-start">
             {/* left: heading + subtext */}
-            <div className="tablet:min-w-px desktop:flex-1 relative flex min-w-px flex-col items-start gap-6">
-              {/* badge row sits above the heading (Pricing Container 2029:4391) */}
-              <AskAiBadgeRow label={badge} />
-              <div className="mobile:pt-[39px] tablet:pt-[39px] desktop:pt-0">
+            <div className="tablet:min-w-px desktop:flex-1 flex min-w-px flex-col items-start gap-6">
+              <div className="mobile:pt-[39px] tablet:pt-[39px] desktop:pt-0 relative flex flex-col items-start gap-6">
+                {/* badge row sits above the heading (Pricing Container 2029:4391) */}
+                <AskAiBadgeRow label={badge} />
                 <h2 className="mobile:text-[32px] mobile:leading-[1.3] mobile:tracking-[-0.64px] tablet:text-[40px] tablet:leading-[1.15] tablet:tracking-[-0.8px] max-w-[649px] text-[32px] leading-[1.3] font-bold tracking-[-0.64px] text-white">
                   {heading}
                 </h2>
@@ -143,7 +144,7 @@ export function AskAiSection({ content }: { content?: HomePage["askAi"] }) {
             </div>
 
             {/* right: deep-link buttons */}
-            <div className="tablet:w-full desktop:w-[349px] flex shrink-0 flex-col gap-1 overflow-clip rounded-[32px]">
+            <div className="tablet:w-full desktop:w-[349px] flex w-full shrink-0 flex-col gap-1 overflow-clip rounded-[32px]">
               {aiAssistants.map((assistant) => (
                 <AskButton
                   key={assistant.name}
@@ -157,7 +158,7 @@ export function AskAiSection({ content }: { content?: HomePage["askAi"] }) {
             </div>
           </div>
         </div>
-      </DsSectionContainer>
+      </div>
     </DsSection>
   );
 }
