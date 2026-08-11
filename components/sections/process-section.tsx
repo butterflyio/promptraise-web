@@ -259,38 +259,73 @@ export function ProcessSection({ content }: ProcessSectionProps) {
         className="sticky top-0 overflow-hidden bg-[#090b0a]"
         style={{ height: "100vh" }}
       >
-        {/* ── Background layers (Figma 133:41034) ─────────────── */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-          {/* Wide green soft-light wash (106:2195 Decorative Rectangle) */}
-          <div className="absolute top-1/2 left-1/2 h-[1154px] w-[1439px] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[36px] bg-[#1e885c] opacity-20 mix-blend-soft-light" />
-          {/* Big overlay vectors (106:1881 / 106:1882) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/figma/process-bg-vector-1.svg"
-            alt=""
-            className="absolute top-[14%] left-[31%] h-[1339px] w-[950px] max-w-none opacity-70 mix-blend-overlay"
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/figma/process-bg-vector-2.svg"
-            alt=""
-            className="absolute top-[16%] left-[52%] h-[1339px] w-[428px] max-w-none opacity-70 mix-blend-overlay"
-          />
-          {/* Vertical green glow bar (106:1883, blur 80.96) */}
-          <div
-            className="absolute top-[14%] right-[8%] h-[1329px] w-[124px] border-[0.756px] border-[#163f16] opacity-70 mix-blend-overlay"
-            style={{
-              background:
-                "linear-gradient(179.54deg, #67FF67 2.8%, rgba(103,255,103,0) 100%)",
-              filter: "blur(80.96px)",
-            }}
-          />
-          {/* Grid pattern (106:1295 Pattern) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* ── Background layers (Figma 133:41034 Audit Container) ─────── */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          {/* Off-canvas framework (106:1873 Inner Frame: the full 1891px bg canvas) */}
+          <div className="absolute" style={{ left: -257, top: -331 }}>
+            {/* Bright band 1 (106:1874, mix-blend-plus-lighter) */}
+            <div className="absolute mix-blend-plus-lighter" style={{ left: 0, top: 885, width: 1891, height: 217 }}>
+              <img src="/figma/process-bg-bright-1.svg" alt="" className="block size-full max-w-none" />
+            </div>
+            {/* Bright band 2 (106:1877) */}
+            <div className="absolute" style={{ left: 316, top: 789, width: 1224, height: 710 }}>
+              <img src="/figma/process-bg-bright-2.svg" alt="" className="block size-full max-w-none" />
+            </div>
+            {/* Decorative vector 1 (106:1881, mix-blend-overlay, rotate-180, opacity-70) */}
+            <div className="absolute flex items-center justify-center mix-blend-overlay" style={{ left: 453, top: 219, width: 950, height: 1339 }}>
+              <div className="rotate-180">
+                <div className="relative opacity-70" style={{ width: 950, height: 1339 }}>
+                  <img src="/figma/process-vector-1.svg" alt="" className="block size-full max-w-none" />
+                </div>
+              </div>
+            </div>
+            {/* Decorative vector 2 (106:1882, mix-blend-overlay, rotate-180, opacity-70) */}
+            <div className="absolute flex items-center justify-center mix-blend-overlay" style={{ left: 744, top: 253, width: 428, height: 1339 }}>
+              <div className="rotate-180">
+                <div className="relative opacity-70" style={{ width: 428, height: 1339 }}>
+                  <img src="/figma/process-vector-2.svg" alt="" className="block size-full max-w-none" />
+                </div>
+              </div>
+            </div>
+            {/* Vertical green glow bar (106:1883, blur 80.96, border #163f16) */}
+            <div
+              className="absolute mix-blend-overlay"
+              style={{
+                left: 866, top: 224, width: 124, height: 1329,
+                border: "0.756px solid #163f16",
+                backgroundImage:
+                  "linear-gradient(179.54deg, rgb(103, 255, 103) 2.81%, rgba(255, 255, 255, 0) 99.96%)",
+                filter: "blur(80.96px)",
+              }}
+            >
+              <div className="rotate-180" />
+            </div>
+            {/* Bar glow (106:1884, opacity-70) */}
+            <div className="absolute opacity-70" style={{ left: 878, top: 370, width: 112, height: 1016 }}>
+              <img src="/figma/process-bg-bar-glow.svg" alt="" className="block size-full max-w-none" />
+            </div>
+            {/* Noise & texture (106:1887 mask -> 106:1889, mix-blend-screen, rotate-90, blur 150.24, opacity-5) */}
+            <div className="absolute mix-blend-screen" style={{ left: 238, top: 0 }}>
+              <div className="flex items-center justify-center" style={{ left: 238, top: 0, width: 1074, height: 1499 }}>
+                <div className="rotate-90">
+                  <div className="relative opacity-5" style={{ width: 1499, height: 1074, filter: "blur(150.241px)" }}>
+                    <img src="/figma/process-noise.png" alt="" className="block size-full max-w-none" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Sparkles (106:1890 mask group) */}
+            <div className="absolute" style={{ left: 109, top: 152 }}>
+              <img src="/figma/process-bg-sparkles.svg" alt="" className="block max-w-none" />
+            </div>
+          </div>
+
+          {/* Pattern (106:1295, mix-blend-overlay, centered at top 34.35%) */}
           <img
             src="/figma/process-pattern.svg"
             alt=""
-            className="absolute inset-x-0 top-[30%] mx-auto w-full max-w-[1566px] mix-blend-overlay"
+            className="absolute left-1/2 -translate-x-1/2 mix-blend-overlay"
+            style={{ top: "34.35%", width: 1566, maxWidth: "none" }}
           />
         </div>
 

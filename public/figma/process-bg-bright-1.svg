@@ -1,0 +1,21 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="2096.01" height="422.008" viewBox="0 0 2096.01 422.008" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Inner Frame" style="mix-blend-mode:plus-lighter" opacity="0.3" filter="url(#filter0_f_0_616)">
+<path id="Decorative Vector" d="M1949.5 207.602V145.98H1147.85L1134.25 127.833L1072.64 102.504H956.227L896.887 145.98H145.504V207.602L896.887 244.272L956.227 319.504H1072.64L1134.25 244.272L1949.5 207.602Z" fill="url(#paint0_radial_0_616)"/>
+<path id="Decorative Vector_2" d="M1993.5 203.589V162.504H1011.71L102.504 176.073V203.589L1011.71 260.504L1993.5 203.589Z" fill="url(#paint1_radial_0_616)"/>
+</g>
+<defs>
+<filter id="filter0_f_0_616" x="0" y="0" width="2096.01" height="422.008" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="51.252" result="effect1_foregroundBlur_0_616"/>
+</filter>
+<radialGradient id="paint0_radial_0_616" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1017.83 211.004) scale(931.67 112.069)">
+<stop stop-color="#10B981"/>
+<stop offset="1" stop-color="#42AA69" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint1_radial_0_616" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1048 211.504) scale(945.5 49)">
+<stop stop-color="#67FF67"/>
+<stop offset="1" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
