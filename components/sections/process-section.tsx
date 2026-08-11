@@ -187,18 +187,44 @@ const STEP_BAR_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0];
 const CARD_OFFSETS = ["2%", "18%", "34%", "50%", "66%"];
 const CARD_WIDTH = 389;
 
-/* Decorative capsules flanking the badge (same style as AI section) */
-const BADGE_CAPS_LEFT = [
-  { x: 41.5, y: 0, o: 0.4 },
-  { x: 63.5, y: 19, o: 0.2 },
-  { x: 99.5, y: 19, o: 1 },
-  { x: 86.5, y: 38, o: 0.5 },
-];
-const BADGE_CAPS_RIGHT = [
-  { x: 289.5, y: 0, o: 0.4 },
-  { x: 326.5, y: 19, o: 1 },
-  { x: 265.5, y: 19, o: 0.2 },
-  { x: 304.5, y: 38, o: 0.5 },
+/* Sparkle dots (106:1890 mask group): ~36 near-black 1-4px dots (positions from Figma) */
+const SPARKLE_DOTS = [
+  { x: 41.0, y: 97.25, size: 3.946, blend: true },
+  { x: 68.0, y: 88.08, size: 1.315, blend: false },
+  { x: 29.0, y: 49.08, size: 1.315, blend: true },
+  { x: 144.0, y: 50.08, size: 1.315, blend: false },
+  { x: 112.0, y: 63.08, size: 1.315, blend: true },
+  { x: 80.0, y: 58.25, size: 3.946, blend: true },
+  { x: 53.0, y: 49.25, size: 3.946, blend: false },
+  { x: 119.0, y: 29.25, size: 3.946, blend: true },
+  { x: 96.0, y: 100.08, size: 1.315, blend: true },
+  { x: 104.0, y: 70.08, size: 1.315, blend: false },
+  { x: 86.0, y: 41.08, size: 1.315, blend: false },
+  { x: 53.0, y: 59.08, size: 1.315, blend: true },
+  { x: 252.0, y: 228.36, size: 4.066, blend: false },
+  { x: 278.0, y: 228.12, size: 1.355, blend: true },
+  { x: 239.0, y: 182.12, size: 1.355, blend: false },
+  { x: 305.0, y: 154.12, size: 1.355, blend: true },
+  { x: 329.0, y: 205.12, size: 1.355, blend: true },
+  { x: 294.0, y: 197.36, size: 4.066, blend: true },
+  { x: 270.0, y: 136.36, size: 4.066, blend: false },
+  { x: 339.0, y: 169.36, size: 4.066, blend: true },
+  { x: 307.0, y: 245.12, size: 1.355, blend: true },
+  { x: 319.0, y: 212.12, size: 1.355, blend: true },
+  { x: 265.0, y: 157.12, size: 1.355, blend: false },
+  { x: 264.0, y: 195.12, size: 1.355, blend: false },
+  { x: 90.48, y: 253.89, size: 4.107, blend: true },
+  { x: 99.99, y: 221.26, size: 2.738, blend: true },
+  { x: 32.99, y: 231.26, size: 2.738, blend: true },
+  { x: 43.99, y: 152.26, size: 2.738, blend: true },
+  { x: 106.99, y: 159.26, size: 2.738, blend: true },
+  { x: 80.48, y: 187.89, size: 4.107, blend: true },
+  { x: 17.48, y: 158.89, size: 4.107, blend: false },
+  { x: 79.48, y: 150.89, size: 4.107, blend: true },
+  { x: 131.99, y: 202.26, size: 2.738, blend: true },
+  { x: 107.99, y: 173.26, size: 2.738, blend: true },
+  { x: 48.99, y: 186.26, size: 2.738, blend: false },
+  { x: 59.99, y: 215.26, size: 2.738, blend: true },
 ];
 
 /* ── Component ───────────────────────────────────────────────────── */
@@ -256,7 +282,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
     >
       <SectionLabel name="ProcessSection" />
       <div
-        className="sticky top-0 overflow-hidden bg-[#090b0a]"
+        className="sticky top-0 overflow-hidden bg-[#0f0f0f]"
         style={{ height: "100vh" }}
       >
         {/* ── Background layers (Figma 133:41034 Audit Container) ─────── */}
@@ -314,10 +340,22 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 </div>
               </div>
             </div>
-            {/* Sparkles (106:1890 mask group) */}
-            <div className="absolute" style={{ left: 109, top: 152 }}>
-              <img src="/figma/process-bg-sparkles.svg" alt="" className="block max-w-none" />
-            </div>
+            {/* Sparkle dots (106:1890 mask group) - ~36 near-black 1-4px dots, imask: invisible on dark */}
+            {SPARKLE_DOTS.map((d, i) => (
+              <div
+                key={i}
+                aria-hidden
+                className="absolute rounded-full"
+                style={{
+                  left: -148 + 246.01 + d.x,
+                  top: -179 + 245.83 + d.y,
+                  width: d.size,
+                  height: d.size,
+                  background: "#09090B",
+                  mixBlendMode: d.blend ? "overlay" : "normal",
+                }}
+              />
+            ))}
           </div>
 
           {/* Pattern (106:1295, mix-blend-overlay, centered at top 34.35%) */}
@@ -349,37 +387,23 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               aria-hidden
               className="absolute top-1/2 left-1/2 h-[6px] w-[384px] max-w-none -translate-x-1/2 -translate-y-1/2"
             />
-            {BADGE_CAPS_LEFT.map((c, i) => (
-              <div
-                key={`l${i}`}
-                aria-hidden
-                className="absolute h-[10px] w-[17px] rounded-[100px] border-[0.8px] border-[#3c3e3f] bg-[#2e2e2e]"
-                style={{ left: c.x, top: 4, opacity: c.o }}
-              />
-            ))}
-            {BADGE_CAPS_RIGHT.map((c, i) => (
-              <div
-                key={`r${i}`}
-                aria-hidden
-                className="absolute h-[10px] w-[17px] rounded-[100px] border-[0.8px] border-[#3c3e3f] bg-[#2e2e2e]"
-                style={{ left: c.x, top: 4, opacity: c.o }}
-              />
-            ))}
+            {/* Mark 1 (Figma 123:40522, at x=105.5, flipped) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/process-badge-mark-2.svg"
+              src="/figma/process-badge-mark-1.svg"
               alt=""
               aria-hidden
-              className="absolute top-1/2 left-[105px] h-[25px] w-[40px] -translate-y-1/2"
+              className="absolute top-1/2 left-[105px] h-[25px] w-[40px] -translate-y-1/2 -scale-y-100 rotate-180"
             />
             <div className="absolute top-1/2 left-[139px] flex h-[39px] -translate-y-1/2 items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]">
               <span className="text-[15px] leading-[1.5] whitespace-nowrap text-[#a1a1aa]">
                 {content?.badge ?? "Process"}
               </span>
             </div>
+            {/* Mark 2 (Figma 123:40521, at x=238.5) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/process-badge-mark-1.svg"
+              src="/figma/process-badge-mark-2.svg"
               alt=""
               aria-hidden
               className="absolute top-1/2 left-[238px] h-[25px] w-[40px] -translate-y-1/2"
