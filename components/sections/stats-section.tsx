@@ -103,7 +103,8 @@ function StatsMobileLayout({
     },
     {
       img: "/figma/mobile-ring-4.svg",
-      wrapperClass: "left-[calc(50%+6.58px)] top-[calc(50%-0.29px)] size-[487.158px]",
+      wrapperClass:
+        "left-[calc(50%+6.58px)] top-[calc(50%-0.29px)] size-[487.158px]",
       inset: "inset-[-46.86%_-72.61%_-98.35%_-72.61%]",
       maskPosition: "-259px 26.865px",
       rotate: true,
@@ -146,7 +147,7 @@ function StatsMobileLayout({
         <div className="relative mx-auto mt-2 h-[420px] w-full max-w-[393px]">
           {/* Rings visual - 5 masked ellipse layers (415:7304..415:7308) */}
           <div
-            className="pointer-events-none absolute bottom-[3px] top-[40px] left-1/2 w-[710px] -translate-x-1/2"
+            className="pointer-events-none absolute top-[40px] bottom-[3px] left-1/2 w-[710px] -translate-x-1/2"
             aria-hidden="true"
           >
             <div className="absolute top-[57px] left-[-41px]">
@@ -158,7 +159,7 @@ function StatsMobileLayout({
                     style={ringMaskStyle(layer.maskPosition)}
                   >
                     {layer.rotate ? (
-                      <div className="flex items-center justify-center rotate-[-60.22deg]">
+                      <div className="flex rotate-[-60.22deg] items-center justify-center">
                         <div className="relative size-[357px]">
                           <div className={`absolute ${layer.inset}`}>
                             <img
@@ -195,22 +196,22 @@ function StatsMobileLayout({
           <StatCardMobile
             value={statCards[0]?.value ?? ""}
             label={statCards[0]?.label ?? ""}
-            className="left-[16px] top-[25px] h-[86px] w-[173px]"
+            className="top-[25px] left-[16px] h-[86px] w-[173px]"
           />
           <StatCardMobile
             value={statCards[1]?.value ?? ""}
             label={statCards[1]?.label ?? ""}
-            className="left-[205px] top-[90px] h-[69px] w-[172px]"
+            className="top-[90px] left-[205px] h-[69px] w-[172px]"
           />
           <StatCardMobile
             value={statCards[2]?.value ?? ""}
             label={statCards[2]?.label ?? ""}
-            className="left-[16px] top-[241px] h-[69px] w-[173px]"
+            className="top-[241px] left-[16px] h-[69px] w-[173px]"
           />
           <StatCardMobile
             value={statCards[3]?.value ?? ""}
             label={statCards[3]?.label ?? ""}
-            className="left-[205px] top-[310px] h-[69px] w-[172px]"
+            className="top-[310px] left-[205px] h-[69px] w-[172px]"
           />
         </div>
       </div>

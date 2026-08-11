@@ -36,10 +36,12 @@ export const previewAction: DocumentActionComponent = (props) => {
     label: "Preview",
     icon: () => <span aria-hidden>👁</span>,
     onHandle: async () => {
-      const url = previewUrlFor(props.draft ?? {
-        _type: props.type,
-        slug: { current: "" },
-      });
+      const url = previewUrlFor(
+        props.draft ?? {
+          _type: props.type,
+          slug: { current: "" },
+        },
+      );
       // Open in a new tab so the editor stays in the Studio.
       window.open(url, "_blank", "noopener,noreferrer");
     },

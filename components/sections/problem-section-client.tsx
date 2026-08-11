@@ -284,10 +284,10 @@ function ProblemSectionAnimated({
               </h2>
             </div>
 
-            <h3 className="mb-4 text-3xl leading-[1.15] font-bold whitespace-pre-line text-white desktop:text-4xl">
+            <h3 className="desktop:text-4xl mb-4 text-3xl leading-[1.15] font-bold whitespace-pre-line text-white">
               {heading ?? "You're invisible where decisions are made"}
             </h3>
-            <p className="text-sm leading-[1.5] text-[#aaa] desktop:text-base">
+            <p className="desktop:text-base text-sm leading-[1.5] text-[#aaa]">
               {subtext ??
                 "Founders, investors, and users discover you through AI. Or they don't."}
             </p>

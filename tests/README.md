@@ -32,10 +32,10 @@ npm run test:e2e:local
 
 ## Configuration
 
-| Env var | Default | Purpose |
-|---------|---------|---------|
-| `BASE_URL` | `https://staging.promptraise.com` | Site under test |
-| `SANITY_API_READ_TOKEN` / `SANITY_API_WRITE_TOKEN` | from `.env.local` | CMS wiring test |
+| Env var                                            | Default                           | Purpose         |
+| -------------------------------------------------- | --------------------------------- | --------------- |
+| `BASE_URL`                                         | `https://staging.promptraise.com` | Site under test |
+| `SANITY_API_READ_TOKEN` / `SANITY_API_WRITE_TOKEN` | from `.env.local`                 | CMS wiring test |
 
 ## Notes / known quirks
 
@@ -45,6 +45,6 @@ npm run test:e2e:local
   against a local build, avoids it. Playwright uses the full Chromium
   (`channel: "chromium"`) instead of headless-shell to minimize fingerprinting.
 - Sections may render both a mobile and desktop variant in the DOM (e.g. the
-  stats section); tests filter to the *visible* instance.
+  stats section); tests filter to the _visible_ instance.
 - `tests/cms-wiring.spec.ts` writes a marker to the **staging** dataset during
   the run and restores it afterwards. Needs a write token.

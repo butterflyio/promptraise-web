@@ -69,7 +69,8 @@ export const siteSettingsType = defineType({
           title: "Link URL",
           type: "url",
           description: "Destination for the link label.",
-          validation: (rule) => rule.uri({ scheme: ["https", "http", "mailto"] }),
+          validation: (rule) =>
+            rule.uri({ scheme: ["https", "http", "mailto"] }),
         }),
       ],
     }),

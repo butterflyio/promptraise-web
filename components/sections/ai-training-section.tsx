@@ -55,13 +55,7 @@ const LAYER_ICON_KEYS = [
     "file-spreadsheet",
     "layout-dashboard",
   ],
-  [
-    "speech",
-    "users-round",
-    "share-2",
-    "badge-check",
-    "file-chart-line",
-  ],
+  ["speech", "users-round", "share-2", "badge-check", "file-chart-line"],
 ];
 
 const ICON_INSET: Record<string, { outer: string; inner: string }> = {
@@ -163,7 +157,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
       {/* Decorative background capsules (Figma BG 411:5377, desktop only) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 hidden overflow-hidden desktop:block"
+        className="desktop:block pointer-events-none absolute inset-0 z-0 hidden overflow-hidden"
       >
         {BG_CAPSULES.map(([x, y], i) => (
           <div
@@ -179,8 +173,8 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             Tablet: label left, rule extends right. Desktop: label right,
             long rule from the left edge. Hidden on mobile (Figma mobile
             badge is positioned off-canvas). */}
-        <div className="mb-10 hidden h-[39px] w-full items-center tablet:flex">
-          <div className="relative flex h-full w-full items-center justify-start desktop:justify-end">
+        <div className="tablet:flex mb-10 hidden h-[39px] w-full items-center">
+          <div className="desktop:justify-end relative flex h-full w-full items-center justify-start">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/figma/ai-badge-line.svg"
@@ -208,23 +202,23 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
         </div>
 
         {/* Header: heading + subtext (Figma 102:437/102:438, 649px) */}
-        <div className="flex w-full flex-col gap-3 desktop:mb-16 desktop:max-w-[649px] desktop:gap-6">
-          <h2 className="font-sans text-2xl leading-[1.3] font-bold tracking-[-0.02em] text-white tablet:text-4xl tablet:leading-[1.15]">
+        <div className="desktop:mb-16 desktop:max-w-[649px] desktop:gap-6 flex w-full flex-col gap-3">
+          <h2 className="tablet:text-4xl tablet:leading-[1.15] font-sans text-2xl leading-[1.3] font-bold tracking-[-0.02em] text-white">
             {renderHeading()}
           </h2>
-          <p className="text-xs leading-[1.4] whitespace-pre-line text-[#52525b] tablet:text-base tablet:leading-[1.5]">
+          <p className="tablet:text-base tablet:leading-[1.5] text-xs leading-[1.4] whitespace-pre-line text-[#52525b]">
             {subtext}
           </p>
         </div>
 
         {/* Column labels - tablet (Figma 411:5351) */}
-        <div className="mb-3 hidden w-full items-center gap-9 text-xs leading-[1.4] text-[#52525b] tablet:flex desktop:hidden">
+        <div className="tablet:flex desktop:hidden mb-3 hidden w-full items-center gap-9 text-xs leading-[1.4] text-[#52525b]">
           <span className="w-[96px] shrink-0 px-6 text-left">Layer Name</span>
           <span className="flex-1">Benefits</span>
         </div>
 
         {/* Column labels - desktop (Figma 102:443, 1200px) */}
-        <div className="mb-3 hidden w-full max-w-[1200px] items-center justify-between text-xs leading-[1.4] text-[#52525b] desktop:flex">
+        <div className="desktop:flex mb-3 hidden w-full max-w-[1200px] items-center justify-between text-xs leading-[1.4] text-[#52525b]">
           <div className="flex items-center gap-4">
             <span className="w-[96px]">Layer</span>
             <span className="w-[96px]">Layer Name</span>
@@ -246,14 +240,14 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
                 } desktop:flex-row desktop:items-start desktop:gap-4`}
               >
                 {/* Number + title/desc stack */}
-                <div className="flex w-full flex-col gap-4 desktop:flex-1 desktop:flex-row desktop:gap-4">
-                  <div className="shrink-0 desktop:w-[96px]">
+                <div className="desktop:flex-1 desktop:flex-row desktop:gap-4 flex w-full flex-col gap-4">
+                  <div className="desktop:w-[96px] shrink-0">
                     <span className="text-xs leading-[1.4] text-[#aaa]">
                       {layer.number}
                     </span>
                   </div>
                   <div className="flex w-full flex-col gap-3">
-                    <h3 className="bg-gradient-to-b from-white to-white/90 bg-clip-text text-lg leading-[1.4] font-bold tracking-[-0.02em] text-transparent tablet:text-2xl tablet:leading-[1.3]">
+                    <h3 className="tablet:text-2xl tablet:leading-[1.3] bg-gradient-to-b from-white to-white/90 bg-clip-text text-lg leading-[1.4] font-bold tracking-[-0.02em] text-transparent">
                       {layer.title}
                     </h3>
                     <p className="text-xs leading-[1.4] text-[#52525b]">
@@ -263,7 +257,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
                 </div>
 
                 {/* Benefits pills (Figma 102:454, 592px desktop) */}
-                <div className="flex w-full flex-col gap-1 desktop:w-[592px] desktop:shrink-0">
+                <div className="desktop:w-[592px] desktop:shrink-0 flex w-full flex-col gap-1">
                   {layer.benefits.map((benefit, benefitIndex) => (
                     <div
                       key={benefit}

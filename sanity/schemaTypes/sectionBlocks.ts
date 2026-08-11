@@ -380,8 +380,16 @@ export const processBlock = defineType({
           name: "processStep",
           title: "Process Step",
           fields: [
-            defineField({ name: "number", title: "Number (01)", type: "string" }),
-            defineField({ name: "label", title: "Label (slider pill)", type: "string" }),
+            defineField({
+              name: "number",
+              title: "Number (01)",
+              type: "string",
+            }),
+            defineField({
+              name: "label",
+              title: "Label (slider pill)",
+              type: "string",
+            }),
             defineField({ name: "title", title: "Title", type: "string" }),
             defineField({ name: "desc", title: "Description", type: "text" }),
           ],

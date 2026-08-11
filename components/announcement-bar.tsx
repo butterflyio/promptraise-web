@@ -22,7 +22,9 @@ export function AnnouncementBar({
             <a
               href={announcement.linkUrl}
               className="underline decoration-1 underline-offset-2 hover:opacity-70"
-              target={announcement.linkUrl.startsWith("http") ? "_blank" : undefined}
+              target={
+                announcement.linkUrl.startsWith("http") ? "_blank" : undefined
+              }
               rel={
                 announcement.linkUrl.startsWith("http")
                   ? "noreferrer noopener"
