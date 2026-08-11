@@ -32,19 +32,34 @@ const BG_MASK_LAYERS = [
     src: figmaAssets.bgLayer1,
     maskPosition: "-256.9px -109.9px",
     blend: "normal",
-    childInset: { top: "-26.37%", right: "-13.95%", bottom: "-13.95%", left: "-13.95%" },
+    childInset: {
+      top: "-26.37%",
+      right: "-13.95%",
+      bottom: "-13.95%",
+      left: "-13.95%",
+    },
   },
   {
     src: figmaAssets.bgLayer2,
     maskPosition: "-256.9px -390.9px",
     blend: "difference",
-    childInset: { top: "-38.54%", right: "-13.93%", bottom: "-13.93%", left: "-13.93%" },
+    childInset: {
+      top: "-38.54%",
+      right: "-13.93%",
+      bottom: "-13.93%",
+      left: "-13.93%",
+    },
   },
   {
     src: figmaAssets.bgLayer3,
     maskPosition: "-256.9px -632.9px",
     blend: "screen",
-    childInset: { top: "-41.02%", right: "-8.89%", bottom: "-8.89%", left: "-8.89%" },
+    childInset: {
+      top: "-41.02%",
+      right: "-8.89%",
+      bottom: "-8.89%",
+      left: "-8.89%",
+    },
   },
 ] as const;
 
@@ -120,14 +135,16 @@ function TeamCard({
         />
       </div>
 
-      <div className="w-full shrink-0 pt-[12px] px-[12px]">
+      <div className="w-full shrink-0 px-[12px] pt-[12px]">
         <div className="relative h-[260px] w-full shrink-0 overflow-clip rounded-[24px]">
           {/* Member photo (fills the window; CMS-supplied) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
-            src={imageUrl(image, { width: 640, height: 520, fit: "crop" }) ?? image}
+            src={
+              imageUrl(image, { width: 640, height: 520, fit: "crop" }) ?? image
+            }
             srcSet={imageSrcSet(image, [320, 480, 640]) ?? undefined}
             sizes="(max-width: 768px) 100vw, 405px"
             loading="lazy"
@@ -172,7 +189,7 @@ function TeamCard({
 
       <div className="flex w-full shrink-0 flex-col items-start gap-[16px] px-[32px] pt-[16px] pb-[32px]">
         <div className="flex w-full shrink-0 flex-col items-start gap-[8px]">
-          <h3 className="w-full bg-gradient-to-b from-white to-[rgba(255,255,255,0.9)] bg-clip-text text-[24px] leading-[1.3] font-bold tracking-[-0.48px] text-transparent mobile:text-[18px] mobile:leading-[1.4] mobile:tracking-[-0.36px]">
+          <h3 className="mobile:text-[18px] mobile:leading-[1.4] mobile:tracking-[-0.36px] w-full bg-gradient-to-b from-white to-[rgba(255,255,255,0.9)] bg-clip-text text-[24px] leading-[1.3] font-bold tracking-[-0.48px] text-transparent">
             {name}
           </h3>
           <p className="w-full text-[12px] leading-[1.4] text-[#52525b]">
@@ -332,28 +349,28 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
                 </span>
               </div>
             </div>
-            <h2 className="text-center text-[24px] leading-[1.3] font-bold tracking-[-0.48px] text-white mobile:tracking-[-0.48px] tablet:text-[40px] tablet:leading-[1.15] tablet:tracking-[-0.8px]">
+            <h2 className="mobile:tracking-[-0.48px] tablet:text-[40px] tablet:leading-[1.15] tablet:tracking-[-0.8px] text-center text-[24px] leading-[1.3] font-bold tracking-[-0.48px] text-white">
               {content?.heading ?? "Built by Web3 Veterans"}
             </h2>
           </div>
 
           {/* ── Team cards (174:255) ─────────────────────────── */}
-          <div className="mt-[53px] flex flex-col items-center gap-[16px] tablet:flex-row tablet:items-stretch">
+          <div className="tablet:flex-row tablet:items-stretch mt-[53px] flex flex-col items-center gap-[16px]">
             {cards.map((card) => (
               <TeamCard
                 key={card.name}
                 {...card}
-                className="w-full max-w-[405px] tablet:flex-1 tablet:max-w-none desktop:w-[405px] desktop:flex-none"
+                className="tablet:flex-1 tablet:max-w-none desktop:w-[405px] desktop:flex-none w-full max-w-[405px]"
               />
             ))}
           </div>
 
           {/* ── Backed by (174:298) ──────────────────────────── */}
-          <div className="mt-[56px] flex flex-col items-center justify-center gap-[24px] tablet:flex-row tablet:gap-[24px]">
+          <div className="tablet:flex-row tablet:gap-[24px] mt-[56px] flex flex-col items-center justify-center gap-[24px]">
             <h3 className="bg-gradient-to-b from-white to-[rgba(255,255,255,0.9)] bg-clip-text pt-[10px] text-[24px] leading-[1.3] font-bold tracking-[-0.48px] whitespace-nowrap text-transparent">
               Backed by
             </h3>
-            <div className="flex w-full max-w-[372px] items-center gap-[12px] tablet:max-w-[384px] tablet:gap-[24px]">
+            <div className="tablet:max-w-[384px] tablet:gap-[24px] flex w-full max-w-[372px] items-center gap-[12px]">
               <BackedByChip
                 href="https://cicada-mm.com"
                 src={figmaAssets.cicadaLogo}
