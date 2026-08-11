@@ -1,9 +1,18 @@
 import { A } from "./assets";
 
 /**
- * Terminal art — the binary column + glass cards + LLM logos panel from the
- * Ask AI desktop BG (2046:8884 lighten copy, 2047:9111 opacity-12 copy).
- * Transcribed from ctx_2046-9001.txt (desktop), scaled for tablet/mobile.
+ * Ask AI background art — transcribed from Figma nodes:
+ *  - desktop 2046:9000 (BG) -> masked image 2029:4357 (composite PNG),
+ *    terminal columns 2046:8884 (bright) / 2047:9111 (dim), dim image 2046:9003
+ *  - tablet 2050:4404 (BG) -> masked image 2050:4408, terminal 2050:4421/4490,
+ *    dim image 2050:4560
+ *  - mobile 2054:9682 (BG) -> masked image 2054:9686, terminal 2054:9699/9768,
+ *    dim image 2054:9838
+ *
+ * All four layers live inside the `Mask group` (mix-blend-lighten) in DOM order:
+ * bright masked image -> bright terminal -> dim terminal -> dim masked image.
+ * The masked image area is rendered from Figma-exported composite PNGs so the
+ * whole Image Container (`05` + vectors + ellipse glows + noise) is exact.
  */
 
 const BINARY_ROWS: Array<Array<[string, number]>> = [
@@ -39,6 +48,16 @@ const BINARY_ROWS: Array<Array<[string, number]>> = [
   ],
 ];
 
+/** Second binary block inside the right-side mask group (2046:8927). */
+const MASKED_BINARY_ROWS: Array<Array<string>> = [
+  ["01000010", "01000010", "01000"],
+  ["010010", "01000010", "0100001"],
+  ["01000010", "01000010", "01000"],
+  ["01000010", "01000010", "01000"],
+  ["01101000", "01000010", "01000"],
+  ["01000", "01000010", "0100010"],
+];
+
 function BinaryText({ fontSize }: { fontSize: number }) {
   return (
     <div
@@ -71,16 +90,19 @@ function BinaryText({ fontSize }: { fontSize: number }) {
   );
 }
 
-interface TerminalPanelProps {
-  /** Width of the whole terminal column (design px). */
+/**
+ * The terminal column (2046:8884 bright / 2047:9111 dim).
+ * `w` is the column width in design px (543.601 desktop/tablet, 369.196 mobile);
+ * positions below are relative to the column origin (448.47, 593 desktop).
+ */
+export function TerminalPanel({
+  w,
+  dim = false,
+}: {
   w: number;
-  /** Whether this is the dim (opacity-12) duplicate. */
   dim?: boolean;
-}
-
-/** The two stacked glass cards with LLM logos + the gradient binary panel. */
-export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
-  const s = w / 543.601; // scale factor relative to desktop
+}) {
+  const s = w / 543.601;
   const opacity = dim ? 0.12 : 1;
 
   return (
@@ -93,14 +115,55 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
         mixBlendMode: dim ? undefined : "lighten",
       }}
     >
-      {/* glass card top-right: ChatGPT */}
+      {/* base frosted rounded rect (2046:8886 / rect6111) */}
+      <div
+        className="absolute overflow-hidden"
+        style={{
+          left: 0,
+          top: 0,
+          width: 524.48 * s,
+          height: 425.974 * s,
+          borderRadius: 37.864 * s,
+          background: "rgba(30,30,30,0.62)",
+          backdropFilter: `blur(${24.49 * s}px)`,
+          WebkitBackdropFilter: `blur(${24.49 * s}px)`,
+          transform: `rotate(2.65deg)`,
+        }}
+      />
+
+      {/* container with stars (2046:8887) - small glass chip top-left */}
       <div
         className="absolute flex items-center justify-center"
         style={{
-          left: (757.94 - 448.47) * s,
-          top: (651.58 - 593) * s,
-          width: 122.093 * s,
-          height: 122.093 * s,
+          left: (503.98 - 448.47) * s,
+          top: (632.64 - 593) * s,
+          width: 81.302 * s,
+          height: 74.161 * s,
+        }}
+      >
+        <div
+          className="absolute flex items-center justify-center"
+          style={{ transform: `rotate(2.65deg)` }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt=""
+            aria-hidden
+            src={A.containerWithStars}
+            className="block max-w-none"
+            style={{ width: 78.123 * s, height: 70.627 * s }}
+          />
+        </div>
+      </div>
+
+      {/* glass card top-left: Perplexity/V icon (2046:8890 + 8891) */}
+      <div
+        className="absolute flex items-center justify-center"
+        style={{
+          left: (738.97 - 448.47) * s,
+          top: (633.07 - 593) * s,
+          width: 152.571 * s,
+          height: 150.886 * s,
         }}
       >
         <div
@@ -117,7 +180,7 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
         <img
           alt=""
           aria-hidden
-          src={A.chatgpt1}
+          src={A.vectorP}
           className="absolute object-contain"
           style={{
             width: 67.985 * s,
@@ -128,7 +191,7 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
         />
       </div>
 
-      {/* glass card right: Claude */}
+      {/* glass card right: Claude (2046:8892 + 8893) */}
       <div
         className="absolute flex items-center justify-center"
         style={{
@@ -163,7 +226,7 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
         />
       </div>
 
-      {/* glass card rightmost: sparkle/vector */}
+      {/* glass card rightmost: ChatGPT (2046:8894 + 8895) */}
       <div
         className="absolute flex items-center justify-center"
         style={{
@@ -187,7 +250,7 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
         <img
           alt=""
           aria-hidden
-          src={A.vectorP}
+          src={A.chatgpt1}
           className="absolute object-contain"
           style={{
             width: 68.083 * s,
@@ -198,7 +261,7 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
         />
       </div>
 
-      {/* gradient binary panel */}
+      {/* gradient binary panel (2046:8896) */}
       <div
         className="absolute flex items-center justify-center"
         style={{
@@ -215,178 +278,178 @@ export function TerminalPanel({ w, dim = false }: TerminalPanelProps) {
             height: 279.545 * s,
             background:
               "linear-gradient(105.618deg, rgb(65,65,65) 21.939%, rgb(40,114,69) 50.78%)",
-            boxShadow: insetBox(s),
+            boxShadow: `inset 0 ${9.466 * s}px ${36.326 * s}px 0 #ffffff`,
             filter: `drop-shadow(0px ${10.649 * s}px ${5.325 * s}px rgba(0,0,0,0.25))`,
             transform: `rotate(2.65deg)`,
           }}
         />
         <BinaryText fontSize={26.623 * s} />
-        {/* right side fade */}
+        {/* right-side glass overlay (2046:8924 / rect6113) */}
         <div
-          className="absolute"
+          className="absolute overflow-hidden"
           style={{
-            width: 95.844 * s,
-            height: 279.628 * s,
-            left: (157.08 / 543.601) * 100 + "%",
-            top: -0.08,
-            background:
-              "linear-gradient(to right, rgba(45,48,52,0), rgba(45,48,52,0.8))",
+            left: (252.92 / 543.601) * 100 + "%",
+            top: 0,
+            width: (244.935 / 543.601) * 100 + "%",
+            height: (279.545 / 543.601) * 100 + "%",
+            background: "rgba(45,48,52,0.82)",
+            backdropFilter: `blur(${24.49 * s}px)`,
+            WebkitBackdropFilter: `blur(${24.49 * s}px)`,
             transform: `rotate(2.65deg)`,
           }}
+        />
+        {/* masked binary text (2046:8925/8927) */}
+        <div
+          className="absolute flex flex-col gap-[0.3em]"
+          style={{
+            left: (127.79 / 543.601) * 100 + "%",
+            top: (23.96 / 543.601) * 100 + "%",
+            width: (449.935 / 543.601) * 100 + "%",
+            opacity: 0.1,
+            color: "#d9d9d9",
+            fontFamily: "IBM Plex Mono, monospace",
+            fontWeight: 500,
+            fontSize: 26.623 * s,
+            lineHeight: 1.2,
+            letterSpacing: "0.02em",
+            whiteSpace: "nowrap",
+            maskImage: `url(${A.columnContainer})`,
+            WebkitMaskImage: `url(${A.columnContainer})`,
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            maskPosition: `${123.905 * s}px ${-18.155 * s}px`,
+            WebkitMaskPosition: `${123.905 * s}px ${-18.155 * s}px`,
+            maskSize: `${255.907 * s}px ${288.882 * s}px`,
+            WebkitMaskSize: `${255.907 * s}px ${288.882 * s}px`,
+          }}
+        >
+          {MASKED_BINARY_ROWS.map((row, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-[0.2em] whitespace-nowrap"
+            >
+              {row.map((txt, j) => (
+                <span key={j} className="shrink-0">
+                  {txt}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+        {/* union (2046:8952) - green vertical bar */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt=""
+          aria-hidden
+          src={A.union}
+          className="absolute max-w-none"
+          style={{
+            left: (236.95 / 543.601) * 100 + "%",
+            top: 0,
+            width: (29.286 / 543.601) * 100 + "%",
+            height: (279.545 / 543.601) * 100 + "%",
+          }}
+        />
+      </div>
+
+      {/* ellipse 336 (2046:8885) - tiny dot at column bottom-right */}
+      <div
+        className="absolute flex items-center justify-center"
+        style={{
+          left: (823.08 - 448.47) * s,
+          top: (984.36 - 593) * s,
+          width: 3.511 * s,
+          height: 0.162 * s,
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt=""
+          aria-hidden
+          src={A.ellipse336}
+          className="block max-w-none"
+          style={{ width: 3.515 * s, transform: `rotate(2.65deg)` }}
         />
       </div>
     </div>
   );
 }
 
-function insetBox(s: number) {
-  return `inset 0 ${9.466 * s}px ${36.326 * s}px 0 #ffffff`;
-}
+/**
+ * Breakpoint configs - the four `Mask group` layers in DOM order.
+ * Image layer geometry (centered on the viewport via left-1/2 -translate-x-1/2):
+ *   desktop/tablet: 1440x810 composite; desktop top 158, tablet top 84, mobile top 106.94
+ * Terminal column origin: desktop (448.47, 593), tablet (112.47, 519), mobile (11.58, 402.38),
+ * with width 543.601 (desktop/tablet) or 369.196 (mobile).
+ */
+const LAYOUT = {
+  desktop: { top: 158, term: { x: 448.47, y: 593, w: 543.601 } },
+  tablet: { top: 84, term: { x: 112.47, y: 519, w: 543.601 } },
+  // Mobile BG (2054:9682) itself sits at top 181; children are relative to it.
+  mobile: {
+    top: 181 + 106.94,
+    term: { x: 11.58, y: 181 + 402.38, w: 369.196 },
+  },
+} as const;
 
-/** The full Background art per breakpoint (masked image + noise + terminal). */
+/** The full Background art per breakpoint. */
 export function AskAiBackground({
   variant,
 }: {
   variant: "desktop" | "tablet" | "mobile";
 }) {
-  if (variant === "desktop") {
-    return (
-      <div aria-hidden className="absolute inset-0 overflow-clip">
-        {/* masked main image */}
-        <div className="absolute top-[158px] left-1/2 -translate-x-1/2">
-          <div
-            className="absolute"
-            style={{
-              width: 1440,
-              height: 810,
-              background: "#000f00",
-              overflow: "clip",
-              ...maskStyles(-180, -37, 1800, 884),
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt=""
-              src={A.mainImage}
-              className="absolute max-w-none object-cover"
-              style={{
-                width: 1478.25,
-                height: 985.5,
-                left: "calc(50% + 0.38px)",
-                top: "calc(50% + 87.75px)",
-                transform: "translate(-50%, -50%)",
-                opacity: 0.45,
-              }}
-            />
-            <div className="absolute inset-0 bg-[#287245] mix-blend-hue" />
-          </div>
-        </div>
+  const cfg = LAYOUT[variant];
 
-        {/* noise overlays */}
-        <div
-          className="absolute top-1/2 left-1/2 h-[1527px] w-[1441.5px] -translate-x-1/2 -translate-y-1/2 opacity-20 mix-blend-overlay"
-          style={{
-            backgroundImage: `url(${A.noise})`,
-            backgroundSize: "540px 337.5px",
-          }}
-        />
-
-        {/* terminal panels - bright copy at Figma coords, dim copy below */}
-        <div className="absolute top-[593px] left-[448.47px]">
-          <TerminalPanel w={543.601} />
-        </div>
-        <div className="absolute top-[593px] left-[448.47px]">
-          <TerminalPanel w={543.601} dim />
-        </div>
-      </div>
-    );
-  }
-  if (variant === "tablet") {
-    return (
-      <div aria-hidden className="absolute inset-0 overflow-clip">
-        <div className="absolute top-[158px] left-1/2 -translate-x-1/2">
-          <div
-            className="absolute"
-            style={{
-              width: 1440,
-              height: 810,
-              background: "#000f00",
-              overflow: "clip",
-              ...maskStyles(-180, -37, 1800, 884),
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt=""
-              src={A.mainImage}
-              className="absolute max-w-none object-cover"
-              style={{
-                width: 1478.25,
-                height: 985.5,
-                left: "calc(50% + 0.38px)",
-                top: "calc(50% + 87.75px)",
-                transform: "translate(-50%, -50%)",
-                opacity: 0.45,
-              }}
-            />
-            <div className="absolute inset-0 bg-[#287245] mix-blend-hue" />
-          </div>
-        </div>
-        {/* tablet terminal column: left 112.47 / top 519, width 543.6 -> 368 scale */}
-        <div className="absolute top-[519px] left-[112.47px]">
-          <TerminalPanel w={369.196} dim />
-        </div>
-      </div>
-    );
-  }
   return (
     <div aria-hidden className="absolute inset-0 overflow-clip">
-      {/* mobile masked main image: mask -122.25 -25.13 / 1023.6 600.9 */}
-      <div className="absolute top-[181px] left-1/2 -translate-x-1/2">
+      {/* Mask group - all four layers, mix-blend-lighten */}
+      <div style={{ position: "absolute", inset: 0, mixBlendMode: "lighten" }}>
+        {/* 1. bright masked image (`05`) */}
         <div
-          className="absolute"
+          className="absolute left-1/2 -translate-x-1/2"
+          style={{ top: cfg.top, width: 1440, height: 810 }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt=""
+            aria-hidden
+            src={A.bg05Bright}
+            className="block max-w-none"
+            style={{ width: 1440, height: 810 }}
+          />
+        </div>
+
+        {/* 2. bright terminal (2046:8884 / 2050:4421 / 2054:9699) */}
+        <div className="absolute" style={{ left: cfg.term.x, top: cfg.term.y }}>
+          <TerminalPanel w={cfg.term.w} />
+        </div>
+
+        {/* 3. dim terminal (2047:9111 / 2050:4490 / 2054:9768) */}
+        <div className="absolute" style={{ left: cfg.term.x, top: cfg.term.y }}>
+          <TerminalPanel w={cfg.term.w} dim />
+        </div>
+
+        {/* 4. dim masked image (2046:9003 / 2050:4560 / 2054:9838) - plus-lighter 40% */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2"
           style={{
-            width: 392,
-            height: 550.125,
-            background: "#000f00",
-            overflow: "clip",
-            ...maskStyles(-122.25, -25.13, 1023.6, 600.9),
+            top: cfg.top,
+            width: 1440,
+            height: 810,
+            mixBlendMode: "plus-lighter",
+            opacity: 0.4,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt=""
-            src={A.mainImage1}
-            className="absolute max-w-none object-cover"
-            style={{
-              width: 1003.5,
-              height: 669,
-              left: "calc(50% + 0.26px)",
-              top: "calc(50% + 59.55px)",
-              transform: "translate(-50%, -50%)",
-              opacity: 0.45,
-            }}
+            aria-hidden
+            src={A.bg05Dim}
+            className="block max-w-none"
+            style={{ width: 1440, height: 810 }}
           />
-          <div className="absolute inset-0 bg-[#287245] mix-blend-hue" />
         </div>
-      </div>
-      {/* mobile terminal column: left 11.58 / top 402.38, width 369.196 */}
-      <div className="absolute top-[402.38px] left-[11.58px]">
-        <TerminalPanel w={369.196} dim />
       </div>
     </div>
   );
-}
-
-function maskStyles(px: number, py: number, sx: number, sy: number) {
-  return {
-    maskImage: `url(${A.mask05})`,
-    WebkitMaskImage: `url(${A.mask05})`,
-    maskRepeat: "no-repeat",
-    WebkitMaskRepeat: "no-repeat",
-    maskPosition: `${px}px ${py}px`,
-    WebkitMaskPosition: `${px}px ${py}px`,
-    maskSize: `${sx}px ${sy}px`,
-    WebkitMaskSize: `${sx}px ${sy}px`,
-  } as const;
 }
