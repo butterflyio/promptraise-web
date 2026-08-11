@@ -1,10 +1,10 @@
-import {
-  DsBadge,
-  DsSection,
-  DsSectionContainer,
-} from "@/components/design-system";
+import { DsSection, DsSectionContainer } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import type { HomePage } from "@/sanity/lib/queries";
+
+import { A } from "./askai/assets";
+import { AskAiBackground } from "./askai/background";
+import { AskAiBadgeRow } from "./askai/badge-row";
 
 /**
  * Default prompt used to ask the AI assistants about PromptRaise.
@@ -25,114 +25,136 @@ const DEFAULT_AI_ASSISTANTS = [
   {
     name: "Ask ChatGPT",
     baseHref: "https://chatgpt.com/?q=",
-    icon: "/figma/figma-da76e9a6-4b33-4f5e-8a69-a4abf0215daa.svg",
+    icon: A.chatgpt2,
     iconAlt: "ChatGPT logo",
+    iconStyle: {},
   },
   {
     name: "Ask Claude",
     baseHref: "https://claude.ai/new?q=",
-    icon: "/figma/figma-eedd4525-9e90-49ba-ac6c-1f050c041f1f.svg",
+    icon: A.claude2,
     iconAlt: "Claude logo",
+    iconStyle: { left: "50%", top: "50%", transform: "translate(-50%,-50%)" },
   },
   {
     name: "Ask Perplexity",
     baseHref: "https://www.perplexity.ai/search?q=",
-    icon: "/figma/figma-517a7666-6d0e-4347-9807-74e3f821f682.svg",
+    icon: A.vectorP2,
     iconAlt: "Perplexity logo",
+    iconStyle: {
+      width: 16.86,
+      height: 22.364,
+      left: "calc(50% - 0.43px)",
+      top: "50%",
+      transform: "translate(-50%,-50%)",
+    },
   },
 ] as const;
 
-/** Decorative binary rows - echoes the terminal visual from the Figma frame. */
-const BINARY_ROWS = [
-  "01000010 01000010 010000",
-  "010010 01000010 010000",
-  "01000010 01000010 01000",
-  "01000010 01000010 0100001",
-  "01101000 01000010 010000",
-  "01000 01000010 0100010",
-] as const;
+function AskButton({
+  name,
+  href,
+  icon,
+  iconAlt,
+  iconStyle,
+}: {
+  name: string;
+  href: string;
+  icon: string;
+  iconAlt: string;
+  iconStyle: React.CSSProperties;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex h-[56px] w-full items-center justify-between rounded-[9999px] border border-[rgba(0,0,0,0.91)] bg-[rgba(255,255,255,0.1)] py-1 pr-1 pl-6 backdrop-blur-[6px] transition-all hover:bg-white/15"
+    >
+      <span className="text-[16px] leading-[1.5] tracking-[-0.32px] whitespace-nowrap text-white">
+        {name}
+      </span>
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[9999px] bg-[#09090b] p-3">
+        <span className="relative block h-6 w-6 overflow-clip">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={icon}
+            alt={iconAlt}
+            aria-hidden="true"
+            className="absolute block max-w-none object-contain"
+            style={{ width: 24, height: 24, ...iconStyle }}
+          />
+        </span>
+      </span>
+    </a>
+  );
+}
 
 export function AskAiSection({ content }: { content?: HomePage["askAi"] }) {
   const aiAssistants = DEFAULT_AI_ASSISTANTS.map((assistant) => ({
     ...assistant,
     href: buildAskUrl(assistant.baseHref, content?.prompt),
   }));
+
+  const badge = content?.badge ?? "Ask AI";
+  const heading =
+    content?.heading ?? "Still deciding? Let the AI decide for you.";
+  const subtext =
+    content?.subtext ??
+    "PromptRaise makes projects visible where decisions actually happen: inside AI answers.";
+
   return (
-    <DsSection id="ask-ai" className="overflow-hidden bg-[#000f00]">
+    <DsSection id="ask-ai" className="overflow-clip bg-[#000f00]">
       <SectionLabel name="AskAiSection" />
 
-      {/* ── Binary / terminal background visual ───────────────── */}
+      {/* ── Background art: masked image + noise + terminal panels ───── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 overflow-hidden select-none"
+        className="pointer-events-none absolute inset-0"
+        style={{ backgroundColor: "#000f00" }}
       >
-        {/* Green atmospheric glows */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_72%_35%,rgba(40,114,69,0.4),transparent_70%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_20%_90%,rgba(103,255,103,0.08),transparent_70%)]" />
-
-        {/* Binary text wall */}
-        <div className="desktop:flex absolute inset-x-0 top-1/2 hidden -translate-y-1/2 flex-col gap-[10px] font-mono text-[22px] leading-none tracking-[0.03em] whitespace-nowrap text-white opacity-[0.07]">
-          {BINARY_ROWS.map((row, index) => (
-            <div key={index} className="flex justify-between px-8">
-              <span>
-                {row} {row} {row}
-              </span>
-              <span className={index % 2 === 0 ? "opacity-40" : "opacity-20"}>
-                {row}
-              </span>
-            </div>
-          ))}
-          {BINARY_ROWS.map((row, index) => (
-            <div key={`b-${index}`} className="flex justify-between px-24">
-              <span className={index % 2 === 0 ? "opacity-20" : "opacity-40"}>
-                {row}
-              </span>
-              <span>
-                {row} {row}
-              </span>
-            </div>
-          ))}
+        <div className="desktop:block hidden">
+          <AskAiBackground variant="desktop" />
+        </div>
+        <div className="desktop:hidden tablet:block hidden">
+          <AskAiBackground variant="tablet" />
+        </div>
+        <div className="tablet:hidden block">
+          <AskAiBackground variant="mobile" />
         </div>
       </div>
 
+      {/* ── Desktop / tablet: side-by-side row (Figma 2046:8994) ─────── */}
       <DsSectionContainer className="relative">
-        <div className="desktop:grid-cols-[minmax(0,1fr)_349px] desktop:gap-[160px] grid items-center gap-12">
-          {/* ── Left: heading + subtext ─────────────────────── */}
-          <div className="flex flex-col items-start gap-6">
-            <DsBadge variant="muted">{content?.badge ?? "Ask AI"}</DsBadge>
-            <h2 className="tablet:text-[40px] tablet:leading-[1.15] max-w-[649px] text-[24px] leading-[1.3] font-bold tracking-[-0.02em] text-white">
-              {content?.heading ?? "Still deciding? Let the AI decide for you."}
-            </h2>
-            <p className="tablet:text-[16px] tablet:leading-[1.5] max-w-[477px] text-[12px] leading-[1.4] tracking-[-0.02em] text-white/40">
-              {content?.subtext ??
-                "PromptRaise makes projects visible where decisions actually happen: inside AI answers."}
-            </p>
-          </div>
+        <div className="mobile:min-h-[869px] tablet:min-h-[1017px] desktop:min-h-[1126px] mobile:pt-[100px] mobile:pb-[60px] tablet:pt-[120px] tablet:pb-[60px] desktop:pt-[337px] desktop:pb-[60px] relative mx-auto flex w-full max-w-[1248px] items-center">
+          <div className="tablet:gap-[32px] desktop:gap-[160px] desktop:flex-row desktop:items-center flex w-full flex-col items-start">
+            {/* left: heading + subtext */}
+            <div className="tablet:min-w-px desktop:flex-1 relative flex min-w-px flex-col items-start gap-6">
+              {/* badge row sits above the heading (Pricing Container 2029:4391) */}
+              <AskAiBadgeRow label={badge} />
+              <div className="mobile:pt-[39px] tablet:pt-[39px] desktop:pt-0">
+                <h2 className="mobile:text-[32px] mobile:leading-[1.3] mobile:tracking-[-0.64px] tablet:text-[40px] tablet:leading-[1.15] tablet:tracking-[-0.8px] max-w-[649px] text-[32px] leading-[1.3] font-bold tracking-[-0.64px] text-white">
+                  {heading}
+                </h2>
+                <p className="mobile:max-w-none mobile:text-[16px] tablet:max-w-none tablet:text-[16px] max-w-[477px] text-[16px] leading-[1.5] tracking-[-0.32px] text-[#52525b]">
+                  {subtext}
+                </p>
+              </div>
+            </div>
 
-          {/* ── Right: deep-link buttons ────────────────────── */}
-          <div className="flex w-full flex-col gap-4">
-            {aiAssistants.map((assistant) => (
-              <a
-                key={assistant.name}
-                href={assistant.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-14 w-full items-center justify-between rounded-full border border-black bg-white/10 py-1.5 pr-1.5 pl-6 backdrop-blur-[6px] transition-all hover:bg-white/15"
-              >
-                <span className="text-[16px] tracking-[-0.02em] whitespace-nowrap text-white">
-                  {assistant.name}
-                </span>
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#09090b] p-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={assistant.icon}
-                    alt=""
-                    aria-hidden="true"
-                    className="block h-6 w-6 object-contain"
-                  />
-                </span>
-              </a>
-            ))}
+            {/* right: deep-link buttons */}
+            <div className="tablet:w-full desktop:w-[349px] flex shrink-0 flex-col gap-1 overflow-clip rounded-[32px]">
+              {aiAssistants.map((assistant) => (
+                <AskButton
+                  key={assistant.name}
+                  name={assistant.name}
+                  href={assistant.href}
+                  icon={assistant.icon}
+                  iconAlt={assistant.iconAlt}
+                  iconStyle={assistant.iconStyle}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </DsSectionContainer>

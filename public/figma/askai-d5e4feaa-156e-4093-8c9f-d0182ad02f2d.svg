@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="40" height="25" viewBox="0 0 40 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Inner Frame">
+<path id="Decorative Shape" d="M17.135 10.2056C10.2428 9.36327 4.02338 5.65899 1.1365e-06 3.49691e-06L0 13L40 13L17.135 10.2056Z" fill="url(#paint0_linear_0_32)"/>
+<path id="Decorative Shape_2" d="M17.135 14.7944C10.2428 15.6367 4.02338 19.341 1.1365e-06 25L2.31845e-06 12L40 12L17.135 14.7944Z" fill="url(#paint1_linear_0_32)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_32" x1="40" y1="6.50001" x2="-0.00105957" y2="7.22118" gradientUnits="userSpaceOnUse">
+<stop stop-color="#484C50"/>
+<stop offset="1" stop-color="#151515"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_32" x1="40" y1="18.5" x2="-0.00105828" y2="17.7788" gradientUnits="userSpaceOnUse">
+<stop stop-color="#484C50"/>
+<stop offset="1" stop-color="#151515"/>
+</linearGradient>
+</defs>
+</svg>
