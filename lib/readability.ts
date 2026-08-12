@@ -24,6 +24,21 @@ export interface WordAnalysis {
   isWeb3Term: boolean;
 }
 
+export interface SentenceBreakdown {
+  text: string;
+  wordCount: number;
+  hard: boolean; // long (>= 20 words) - flagged for review
+}
+
+export interface EngineVerdict {
+  engine: string;
+  emoji: string;
+  score: number; // 0-100 probability-ish of being cited well
+  label: string; // High / Medium / Low
+  reasoning: string; // why
+  tip: string; // specific improvement
+}
+
 export interface ReadabilityResult {
   charCount: number;
   charCountNoSpaces: number;
@@ -36,9 +51,15 @@ export interface ReadabilityResult {
   avgSyllablesPerWord: number; // ASW
   readingEase: number | null; // Flesch Reading Ease 0-100
   gradeLevel: number | null; // Flesch-Kincaid Grade Level
+  gunningFog: number | null; // grade level
+  smog: number | null; // grade level
+  colemanLiau: number | null; // grade level
+  ari: number | null; // grade level
   readingTimeMinutes: number;
   uniqueWeb3Terms: string[];
   wordAnalyses: WordAnalysis[]; // for inline highlighting
+  complexWordList: string[]; // distinct complex words found
+  longestSentences: SentenceBreakdown[]; // longest, for review
 }
 
 export interface CitationReadinessResult {
@@ -53,6 +74,7 @@ export interface CitationReadinessResult {
 export interface AnalysisResult {
   readability: ReadabilityResult;
   citation: CitationReadinessResult;
+  engineVerdicts: EngineVerdict[];
   preview: string;
 }
 
@@ -147,6 +169,28 @@ const WEB3_TERMS = new Set<string>([
   "zkevm",
   "evm",
   "solana-ecosystem",
+  // layer-2s / rollups / infra
+  "validium",
+  "sequencer",
+  "proposer",
+  "blobs",
+  "restaking",
+  "liquid-staking",
+  "depeg",
+  "pegged",
+  "peg",
+  "dlt",
+  "multisig",
+  "zksnark",
+  "monero",
+  "wallet",
+  "wallets",
+  "airdrop",
+  "tokens",
+  "liquidation",
+  "borrowers",
+  "lenders",
+  "oracles",
   // ask engines / visibility (PromptRaise core)
   "chatgpt",
   "perplexity",
@@ -162,6 +206,8 @@ const WEB3_TERMS = new Set<string>([
   "web3",
   "geography",
   "geometric",
+  "llm",
+  "llms",
   // compliance / finance
   "custody",
   "audited",
@@ -180,6 +226,33 @@ const WEB3_TERMS = new Set<string>([
   "apy",
   "fdv",
   "mc",
+]);
+
+// Web3 terms that should NOT count as "complex" purely for being long or
+// multi-syllable, even though the raw heuristic might otherwise flag them.
+const WEB3_COMPLEX_WHITELIST = new Set<string>([
+  "blockchain",
+  "tokenomics",
+  "cryptocurrency",
+  "cryptocurrencies",
+  "ethereum",
+  "avalanche",
+  "arbitrum",
+  "optimism",
+  "polkadot",
+  "cardano",
+  "solana",
+  "hyperliquid",
+  "uniswap",
+  "eigenlayer",
+  "makerdao",
+  "stablecoin",
+  "impermanent",
+  "liquidation",
+  "validators",
+  "perplexity",
+  "chatgpt",
+  "restaking",
 ]);
 
 // Terms the Web3 dictionary should NOT inflate. Lowercase keys -> syllable count.
@@ -294,9 +367,10 @@ function syllablesForWord(rawWord: string): number {
 
 // --- Complexity -------------------------------------------------------------
 
-/** Complex = 3+ syllables, unless the word is a Web3 term (never "complex" on its own). */
+/** Complex = 3+ syllables, unless the word is Web3 (whitelisted, never complex on its own). */
 function isComplexWord(rawWord: string, syllables: number): boolean {
-  if (WEB3_TERMS.has(rawWord.toLowerCase())) return false;
+  const key = rawWord.toLowerCase();
+  if (WEB3_TERMS.has(key) || WEB3_COMPLEX_WHITELIST.has(key)) return false;
   return syllables >= 3;
 }
 
@@ -360,6 +434,62 @@ export function analyzeReadability(text: string): ReadabilityResult {
 
   const readingTimeMinutes = wordCount / 230; // ~230 wpm
 
+  // Letters across words - needed for Coleman-Liau + ARI.
+  const letters = wordAnalyses.reduce(
+    (n, wa) => n + wa.word.replace(/[^a-z]/g, "").length,
+    0,
+  );
+
+  // --- Additional readability formulas ------------------------------------
+  // Gunning Fog = 0.4 * (ASL + 100 * (complex / total words))
+  let gunningFog: number | null = null;
+  if (wordCount > 0 && realSentences > 0) {
+    const fog =
+      0.4 * (avgSentenceLength + 100 * (complexWordCount / wordCount));
+    gunningFog = Math.round(fog * 10) / 10;
+  }
+
+  // SMOG = 1.043 * sqrt(30 * (polysyllable words / sentences)) + 3.1291
+  let smog: number | null = null;
+  if (wordCount > 0 && realSentences > 0) {
+    const polysyllables = wordAnalyses.filter((wa) => wa.syllables >= 3).length;
+    const rawSmog =
+      1.043 * Math.sqrt(30 * (polysyllables / realSentences)) + 3.1291;
+    smog = Math.round(rawSmog * 10) / 10;
+  }
+
+  // Coleman-Liau = 0.0588 * (letters/100w) - 0.296 * (sentences/100w) - 15.8
+  let colemanLiau: number | null = null;
+  if (wordCount > 0 && realSentences > 0) {
+    const l = (letters / wordCount) * 100;
+    const s = (realSentences / wordCount) * 100;
+    const cl = 0.0588 * l - 0.296 * s - 15.8;
+    colemanLiau = Math.round(cl * 10) / 10;
+  }
+
+  // ARI = 4.71 * (letters/words) + 0.5 * (words/sentences) - 21.43
+  let ari: number | null = null;
+  if (wordCount > 0 && realSentences > 0) {
+    const rawAri =
+      4.71 * (letters / wordCount) + 0.5 * avgSentenceLength - 21.43;
+    ari = Math.round(rawAri * 10) / 10;
+  }
+
+  // Distinct complex words + longest-sentence breakdown (for review UI).
+  const complexWordList: string[] = [];
+  for (const wa of wordAnalyses) {
+    if (wa.complex && !complexWordList.includes(wa.word))
+      complexWordList.push(wa.word);
+  }
+
+  const longestSentences: SentenceBreakdown[] = sentences
+    .map((s) => {
+      const c = tokenize(s).words.length;
+      return { text: s.trim(), wordCount: c, hard: c >= 20 };
+    })
+    .sort((a, b) => b.wordCount - a.wordCount)
+    .slice(0, 5);
+
   return {
     charCount,
     charCountNoSpaces,
@@ -372,9 +502,15 @@ export function analyzeReadability(text: string): ReadabilityResult {
     avgSyllablesPerWord,
     readingEase,
     gradeLevel,
+    gunningFog,
+    smog,
+    colemanLiau,
+    ari,
     readingTimeMinutes,
     uniqueWeb3Terms: [...findWeb3Terms(words)],
     wordAnalyses,
+    complexWordList,
+    longestSentences,
   };
 }
 
@@ -538,15 +674,109 @@ export function analyzeCitationReadiness(
   };
 }
 
+// --- Per-engine verdict -----------------------------------------------------
+// A heuristic, fully client-side breakdown of how each answer engine is likely
+// to treat the text. No APIs, no cost. Based on the same citation signals.
+export function analyzeEngineVerdicts(
+  c: CitationReadinessResult,
+): EngineVerdict[] {
+  const grade = (v: number) => (v >= 70 ? "High" : v >= 45 ? "Medium" : "Low");
+
+  // ChatGPT - entity + grounding focused, loves quotable plain-English sentences.
+  const chatgptScore = Math.round(
+    c.entityClarity * 0.4 + c.groundability * 0.3 + c.structure * 0.3,
+  );
+  const chatgpt: EngineVerdict = {
+    engine: "ChatGPT",
+    emoji: "💬",
+    score: chatgptScore,
+    label: grade(chatgptScore),
+    reasoning:
+      chatgptScore >= 70
+        ? "Balanced - it can pull a grounded, plain-English sentence."
+        : "Needs more quotable entity facts or shorter sentences.",
+    tip:
+      chatgptScore < 70
+        ? "Lead with the protocol name + a verifiable number in plain English."
+        : "Keep the grounded facts and definition-style sentences.",
+  };
+
+  // Perplexity - citation/source driven, rewards explicit grounding and sources.
+  const perpScore = Math.round(
+    c.groundability * 0.45 +
+      c.definedTerms * 0.25 +
+      c.entityClarity * 0.2 +
+      c.structure * 0.1,
+  );
+  const perp: EngineVerdict = {
+    engine: "Perplexity",
+    emoji: "🔍",
+    score: perpScore,
+    label: grade(perpScore),
+    reasoning:
+      perpScore >= 70
+        ? "Strong - it can cite a verifiable, defined claim."
+        : "Weakens without concrete numbers or named sources.",
+    tip:
+      perpScore < 70
+        ? "Add specific, checkable figures (TVL, users, APY) - Perplexity cites verifiable claims."
+        : "Keep citing the audited numbers and definitions.",
+  };
+
+  // Claude - definition + clarity focused, values self-contained reasoning.
+  const claudeScore = Math.round(
+    c.definedTerms * 0.4 +
+      c.structure * 0.3 +
+      c.entityClarity * 0.2 +
+      c.groundability * 0.1,
+  );
+  const claude: EngineVerdict = {
+    engine: "Claude",
+    emoji: "🟠",
+    score: claudeScore,
+    label: grade(claudeScore),
+    reasoning:
+      claudeScore >= 70
+        ? "Good - it can reason from your defined terms."
+        : "Undefined jargon or long sentences hurt its confidence.",
+    tip:
+      claudeScore < 70
+        ? 'Define each Web3 term on first use ("X is a...") and keep sentences under 20 words.'
+        : "Keep terms defined and sentences self-contained.",
+  };
+
+  // Gemini - headline + grounding focused, favors scannable key facts.
+  const geminiScore = Math.round(
+    c.entityClarity * 0.35 + c.structure * 0.35 + c.groundability * 0.3,
+  );
+  const gemini: EngineVerdict = {
+    engine: "Gemini",
+    emoji: "✨",
+    score: geminiScore,
+    label: grade(geminiScore),
+    reasoning:
+      geminiScore >= 70
+        ? "Scannable - it can surface your key facts quickly."
+        : "Long sentences or weak opener bury the key facts.",
+    tip:
+      geminiScore < 70
+        ? "Front-load the who + what, then a number. Keep sentences tight and scannable."
+        : "Keep the tight opener and bold facts.",
+  };
+
+  return [chatgpt, perp, claude, gemini];
+}
+
 // --- Convenience wrapper ----------------------------------------------------
 
 export function analyzeText(text: string): AnalysisResult {
   const readability = analyzeReadability(text);
   const citation = analyzeCitationReadiness(text, readability);
+  const engineVerdicts = analyzeEngineVerdicts(citation);
   const preview = String(text ?? "")
     .trim()
     .slice(0, 160);
-  return { readability, citation, preview };
+  return { readability, citation, engineVerdicts, preview };
 }
 
 // --- Grade-level label helpers ----------------------------------------------
