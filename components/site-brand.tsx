@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 type SiteBrandProps = {
@@ -29,7 +30,15 @@ export function SiteBrand({
       className={`flex items-center gap-2 ${className}`.trim()}
       aria-label={label}
     >
-      <img src={markSrc} alt="" aria-hidden="true" className={markClassName} />
+      <Image
+        src={markSrc}
+        alt=""
+        aria-hidden
+        width={16}
+        height={16}
+        unoptimized
+        className={markClassName}
+      />
       <span className={wordmarkClassName}>{siteName}</span>
     </Link>
   );
