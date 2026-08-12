@@ -191,14 +191,11 @@ body {
   gap: 4px;
   overflow: hidden;
   padding: 12px 24px;
-  border: 1px solid rgba(95, 108, 112, 0.58);
   border-radius: 20px;
-  background: rgba(35, 43, 40, 0.76);
-  backdrop-filter: blur(7px);
+  background: #232b28;
   box-shadow:
-    0 10px 22px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 0 0 3px rgba(35, 43, 40, 0.85);
+    0 9px 16.9px rgba(0, 0, 0, 0.25),
+    0 0 0 3px #232b28;
 }
 
 .prompt-feature-card-value {
@@ -220,11 +217,11 @@ body {
 
 .prompt-feature-card-label {
   margin: 0;
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.4;
   letter-spacing: 0;
   font-weight: 500;
-  color: rgba(212, 221, 217, 0.36);
+  color: #71717a;
   text-align: center;
   white-space: nowrap;
 }
@@ -345,32 +342,41 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 75% 20%, rgba(165, 255, 170, 0.22), transparent 48%),
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(165, 255, 170, 0.22),
+      transparent 48%
+    ),
     radial-gradient(circle at 25% 80%, rgba(0, 0, 0, 0.52), transparent 58%),
-    linear-gradient(160deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.02) 42%, rgba(0, 0, 0, 0.42) 100%);
+    linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 0.24),
+      rgba(0, 0, 0, 0.02) 42%,
+      rgba(0, 0, 0, 0.42) 100%
+    );
 }
 
 .prompt-stats-core-mark {
   width: 154px;
-  height: 76px;
+  height: 154px;
   color: #ffffff;
 }
 
 @media (max-width: 1439px) {
   .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.92);
+    transform: scale(0.92);
   }
 }
 
 @media (max-width: 1023px) {
   .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.72);
+    transform: scale(0.72);
   }
 }
 
 @media (max-width: 767px) {
   .prompt-stats-canvas {
-    transform: translateX(-50%) scale(0.46);
+    transform: scale(0.46);
   }
 }
 
@@ -467,8 +473,16 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 88%, rgba(103, 255, 103, 0.1) 0%, transparent 42%),
-    radial-gradient(circle at 82% 12%, rgba(103, 255, 103, 0.07) 0%, transparent 40%),
+    radial-gradient(
+      circle at 18% 88%,
+      rgba(103, 255, 103, 0.1) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 82% 12%,
+      rgba(103, 255, 103, 0.07) 0%,
+      transparent 40%
+    ),
     linear-gradient(180deg, #070807 0%, #090b0a 52%, #050605 100%);
 }
 
@@ -482,8 +496,16 @@ body {
     linear-gradient(rgba(214, 223, 222, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(214, 223, 222, 0.05) 1px, transparent 1px);
   background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 78%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 0%,
+    transparent 78%
+  );
 }
 
 /* Top / bottom edge blur + fade so cards dissolve at the boundaries */
@@ -514,10 +536,14 @@ body {
 
 /* Central window */
 .prompt-problem-window {
-  border-radius: 18px;
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background:
-    radial-gradient(circle at 50% -10%, rgba(103, 255, 103, 0.12), transparent 46%),
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(103, 255, 103, 0.12),
+      transparent 46%
+    ),
     linear-gradient(180deg, rgba(20, 23, 21, 0.92), rgba(9, 11, 10, 0.96));
   box-shadow:
     0 40px 80px rgba(0, 0, 0, 0.55),
@@ -531,10 +557,12 @@ body {
 }
 
 .prompt-problem-window-title {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0;
-  color: rgba(212, 221, 217, 0.55);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #a1a1aa;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 /* Dots used in the window bar and card headers */
@@ -552,36 +580,62 @@ body {
   background: rgba(214, 223, 222, 0.28);
 }
 
-/* Floating problem cards */
+/* Floating problem cards - per Figma 344:7724 (Card)
+   bg #131315, border rgba(255,255,255,0.91), radius 20, ring shadow,
+   pad 24, width 225, gap 16, icon chip + gradient title + #aaa body */
 .prompt-problem-card {
-  width: 224px;
-  border-radius: 16px;
-  border: 1px solid rgba(95, 108, 112, 0.5);
-  background: rgba(20, 24, 22, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  width: 225px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.91);
+  background: #131315;
   box-shadow:
-    0 18px 38px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  padding: 16px;
+    0 9px 16.9px 0 rgba(0, 0, 0, 0.25),
+    0 0 0 3px #131619;
+  overflow: clip;
+}
+
+.prompt-problem-card-icon {
+  flex-shrink: 0;
+  height: 8px;
+  width: 30.7px;
 }
 
 .prompt-problem-card-title {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  /* 16px bold, white -> 90% gradient, Neutral Sans Bold */
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   font-weight: 700;
-  color: var(--text-primary);
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  white-space: pre-wrap;
 }
 
 .prompt-problem-card-body {
-  margin: 6px 0 0;
-  font-size: 11px;
-  line-height: 1.45;
-  letter-spacing: 0;
-  font-weight: 500;
-  color: rgba(212, 221, 217, 0.42);
+  margin: 0;
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  color: #aaa;
+  white-space: pre-wrap;
 }
 
 /* Stage that holds the absolutely-positioned float layout */

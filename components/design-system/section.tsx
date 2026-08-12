@@ -13,7 +13,7 @@ export function DsSection({ children, className, id }: DsSectionProps) {
     <section
       id={id}
       className={cn(
-        "border-b border-[var(--border-default)] bg-[var(--bg-base)]",
+        "relative border-b border-[var(--border-default)] bg-[var(--bg-base)]",
         className,
       )}
     >
@@ -34,7 +34,7 @@ export function DsSectionContainer({
   return (
     <div
       className={cn(
-        "mobile:px-6 mx-auto w-full max-w-[1248px] px-4 py-16 tablet:py-24",
+        "mobile:px-6 tablet:py-24 mx-auto w-full max-w-[1248px] px-4 py-16",
         className,
       )}
     >
@@ -42,4 +42,3 @@ export function DsSectionContainer({
     </div>
   );
 }
-

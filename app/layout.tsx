@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 
+import { AnnouncementBar } from "@/components/announcement-bar";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/sanity/lib/queries";
 
@@ -88,28 +89,46 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-function StructuredData() {
-  const brandLogo = `${siteUrl}/brand/promptraise-mark.svg`;
+function StructuredData({
+  settings,
+}: {
+  settings: Awaited<ReturnType<typeof getSiteSettings>>;
+}) {
+  const brandMark = `${siteUrl}/brand/promptraise-mark.svg`;
+  const logo = settings?.logo?.asset?.url ?? brandMark;
+  const legalName = settings?.organizationLegalName || "PromptRaise";
+  const siteName = settings?.siteName || "PromptRaise";
+  const socialLinks = settings?.socialLinks ?? {};
+  const sameAs = [
+    socialLinks.x,
+    socialLinks.telegram,
+    socialLinks.discord,
+    socialLinks.reddit,
+    socialLinks.youtube,
+  ].filter(Boolean) as string[];
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "PromptRaise",
+    name: legalName,
     url: siteUrl,
-    logo: brandLogo,
+    logo,
     description:
       "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
-    sameAs: ["https://twitter.com/promptraise", "https://t.me/promptraise"],
+    ...(sameAs.length > 0 ? { sameAs } : {}),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
-      url: "https://audit.promptraise.com",
+      ...(socialLinks.telegram
+        ? { url: socialLinks.telegram }
+        : { url: "https://t.me/promptraise" }),
     },
   };
 
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "PromptRaise",
+    name: siteName,
     url: siteUrl,
     potentialAction: {
       "@type": "SearchAction",
@@ -139,17 +158,19 @@ function StructuredData() {
   );
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
   return (
     <html lang="en" className="h-full antialiased">
       <head>
-        <StructuredData />
+        <StructuredData settings={settings} />
       </head>
       <body className="min-h-full">
+        <AnnouncementBar announcement={settings?.announcement} />
         <SiteShell>{children}</SiteShell>
         <Analytics />
       </body>

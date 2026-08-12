@@ -12,7 +12,7 @@ export default function CookiesPage() {
       <h1 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
         Cookie Usage
       </h1>
-      <div className="mt-12 flex flex-col gap-6 text-[var(--text-secondary)] leading-relaxed">
+      <div className="mt-12 flex flex-col gap-6 leading-relaxed text-[var(--text-secondary)]">
         <p>
           PromptRaise does not use tracking or advertising cookies on the
           marketing website.

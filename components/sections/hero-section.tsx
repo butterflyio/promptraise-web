@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  DsBadge,
-  DsButton,
-} from "@/components/design-system";
+import { DsBadge, DsButton } from "@/components/design-system";
+import { SectionLabel } from "@/components/section-label";
 import type { HomePageHero } from "@/sanity/lib/queries";
 
 interface HeroSectionProps {
@@ -30,13 +28,14 @@ const defaultHeroContent = {
     label: "Tracking visibility in",
     badge: "48 LLMs",
     logos: [
-      { name: "Octals", symbol: "◌", dimmed: true },
-      { name: "45 Degrees°", symbol: "↗" },
-      { name: "Acme Corp", symbol: "✦" },
-      { name: "AlphaWave", symbol: "⬢" },
-      { name: "Alt+Shift", symbol: "◍" },
-      { name: "Capsule", symbol: "●" },
-      { name: "Basis", symbol: "✶", dimmed: true },
+      { name: "ChatGPT", logo: "/logos/llm-chatgpt.svg" },
+      { name: "Claude", logo: "/logos/llm-claude.svg" },
+      { name: "Gemini", logo: "/logos/llm-gemini.svg" },
+      { name: "Perplexity", logo: "/logos/llm-perplexity.svg" },
+      { name: "DeepSeek", logo: "/logos/llm-deepseek.svg" },
+      { name: "Grok", logo: "/logos/llm-grok.svg" },
+      { name: "Llama", logo: "/logos/llm-llama.svg" },
+      { name: "Mistral", logo: "/logos/llm-mistral.svg" },
     ],
   },
 };
@@ -62,6 +61,7 @@ export function HeroSection({
 
   return (
     <section className="prompt-hero-bg desktop:min-h-[960px] relative min-h-[780px] overflow-hidden bg-[var(--bg-hero)]">
+      <SectionLabel name="HeroSection" />
       <video
         className="absolute inset-0 h-full w-full object-cover object-center [filter:brightness(0.94)_saturate(1.06)]"
         autoPlay
@@ -92,7 +92,7 @@ export function HeroSection({
             {content?.headlineSuffix ?? defaultHeroContent.headlineSuffix}
           </h1>
 
-          <p className="prompt-hero-body mb-12 max-w-[330px] text-white/80 tablet:max-w-[584px]">
+          <p className="prompt-hero-body tablet:max-w-[584px] mb-12 max-w-[330px] text-white/80">
             {bodyLines.map((line, index) => (
               <span key={line}>
                 {line}
@@ -112,10 +112,7 @@ export function HeroSection({
               {primaryLabel}
             </DsButton>
 
-            <DsButton
-              href={secondaryHref}
-              variant="hero-secondary"
-            >
+            <DsButton href={secondaryHref} variant="hero-secondary">
               {secondaryLabel}
             </DsButton>
           </div>
@@ -135,17 +132,28 @@ export function HeroSection({
           </div>
 
           <div className="prompt-trust-mask w-full max-w-[978px] overflow-hidden px-4">
-            <div className="tablet:gap-8 flex items-center justify-center gap-6">
+            <div className="tablet:gap-10 flex items-center justify-center gap-8">
               {trustLogos.map((company, index) => (
                 <div
                   key={`${company.name ?? "trust-logo"}-${index}`}
                   className={`flex shrink-0 items-center gap-2 text-white ${
-                    company.dimmed ? "opacity-[0.15]" : "opacity-[0.92]"
+                    "dimmed" in company && company.dimmed
+                      ? "opacity-[0.15]"
+                      : "opacity-[0.92]"
                   }`}
                 >
-                  <span className="text-[22px] leading-none">
-                    {company.symbol}
-                  </span>
+                  {company.logo ? (
+                    <img
+                      src={company.logo}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-[18px] w-[18px]"
+                    />
+                  ) : (
+                    <span className="text-[22px] leading-none">
+                      {"symbol" in company ? company.symbol : ""}
+                    </span>
+                  )}
                   <span className="text-[13px] leading-none font-semibold whitespace-nowrap">
                     {company.name}
                   </span>

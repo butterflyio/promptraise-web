@@ -12,6 +12,7 @@ PromptRaise helps Web3 projects rank across AI summaries, LLM responses, and sea
 ## Pages
 
 - ${siteUrl}/ — Landing page with service overview, pricing, case studies, and team
+- ${siteUrl}/glossary — Web3 AI visibility glossary: terms answer engines use to discover, read and cite protocols
 - ${siteUrl}/privacy — Privacy notice and data handling practices
 - ${siteUrl}/studio — Sanity CMS studio (admin only)
 

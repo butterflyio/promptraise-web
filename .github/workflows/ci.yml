@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -33,17 +33,29 @@ jobs:
       - name: Format check
         run: npm run format:check
 
+      - name: No localhost references
+        run: bash scripts/check-no-localhost.sh
+
       - name: Build
         run: npm run build
+        env:
+          # Public NEXT_PUBLIC_* values (exposed client-side anyway; also in .env.example)
+          NEXT_PUBLIC_SANITY_PROJECT_ID: 4pws3pyj
+          NEXT_PUBLIC_SANITY_DATASET: production
 
   secret-scan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # Full history so gitleaks can resolve its push-event diff range
+          # (<before>^..<head>). Default fetch-depth:1 breaks it with
+          # "ambiguous argument ... unknown revision".
+          fetch-depth: 0
 
       - name: Gitleaks scan
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@dcedce43c6f43de0b836d1fe38946645c9c638dc # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

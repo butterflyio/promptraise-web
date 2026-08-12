@@ -6,6 +6,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Legacy tool URLs -> consolidated free tools
+      {
+        source: "/tools/flesch-kincaid",
+        destination: "/free/flesch-kincaid-calculator",
+        permanent: true,
+      },
+      {
+        source: "/tools/readability",
+        destination: "/free/flesch-kincaid-calculator",
+        permanent: true,
+      },
       // Redirect apex domain to www (uncomment when apex domain is configured)
       // {
       //   source: "/:path*",

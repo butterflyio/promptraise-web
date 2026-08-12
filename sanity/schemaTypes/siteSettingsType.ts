@@ -41,6 +41,40 @@ export const siteSettingsType = defineType({
       description: "Used when the site is shared on social platforms.",
     }),
     defineField({
+      name: "announcement",
+      title: "Announcement Bar",
+      type: "object",
+      description: "Optional global banner shown above the header.",
+      fields: [
+        defineField({
+          name: "enabled",
+          title: "Enabled",
+          type: "boolean",
+          initialValue: false,
+        }),
+        defineField({
+          name: "text",
+          title: "Message",
+          type: "string",
+          description: "Example: We now rank in 48 LLMs.",
+        }),
+        defineField({
+          name: "linkLabel",
+          title: "Link Label",
+          type: "string",
+          description: "Optional call-to-action text, e.g. Check your audit",
+        }),
+        defineField({
+          name: "linkUrl",
+          title: "Link URL",
+          type: "url",
+          description: "Destination for the link label.",
+          validation: (rule) =>
+            rule.uri({ scheme: ["https", "http", "mailto"] }),
+        }),
+      ],
+    }),
+    defineField({
       name: "primaryTelegramCtaUrl",
       title: "Primary Telegram CTA URL",
       type: "url",

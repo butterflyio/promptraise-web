@@ -214,15 +214,18 @@ Update this file after every meaningful implementation change.
   - Rebuilt section background layering in code (dark base + glow field + concentric ellipses + decorative vector arcs) to remove dependency on runtime localhost asset rendering for this slice.
   - Added direct dependency: `framer-motion` in `package.json`.
   - Current command snapshot after slice 1 pass: `npm run lint` passes with warnings only (0 errors), `npm run design:verify` passes, `npm run build` passes.
-- **Security + quality remediation pass completed (latest):**
-  - Fixed blocking lint/type issues in `problem-section-client.tsx` and `process-section.tsx` (hooks usage, state-effect lint, and strict indexed-access safety).
-  - Replaced currently flagged `<img>` usages in `team-section.tsx` and `site-brand.tsx` with `next/image`.
-  - Upgraded frontend runtime/lint stack to patched versions (`next@16.3.0`, `eslint-config-next@16.3.0`, `react@19.2.8`, `react-dom@19.2.8`) and applied non-breaking `npm audit fix`.
-  - Current command snapshot after remediation: `npm run typecheck` passes, `npm run lint` passes; `npm run build` fails in this sandbox due unresolved placeholder Sanity host (`your-project-id.apicdn.sanity.io`) when env vars are not populated.
-- **Security + quality remediation follow-up completed (latest):**
-  - Hardened Sanity query reads to return `null` when `NEXT_PUBLIC_SANITY_PROJECT_ID` is unset/placeholder and to fail closed on fetch exceptions.
-  - Updated Sanity package stack to patched versions (`sanity@6.9.1`, `@sanity/vision@6.9.1`, `next-sanity@13.3.1`) and refreshed lockfile.
-  - Current command snapshot after follow-up: `npm audit` (0 vulnerabilities), `npm run lint` pass, `npm run typecheck` pass, `npm run build` pass.
+- **Composition layer completed (latest):**
+  - Added shared section block types (`sanity/schemaTypes/sectionBlocks.ts`) for all 11 sections and refactored `homePageType` to reference them (single source of copy truth).
+  - Added `page` document type (`sanity/schemaTypes/pageType.ts`): title, slug, meta fields, `noindex`, social image, drag-and-drop `sections[]` array. Registered in Studio; "Pages" list added to desk structure.
+  - Added section registry + renderer (`components/sections/registry.tsx`): `_type` maps 1:1 to component; unknown types render nothing; hero/auditCta receive CTA URLs from site settings.
+  - Added queries (`sanity/lib/queries.ts`): `getPageBySlug`, `getAllPages`, `normalizePageSlug`, `PageDoc` type; slug storage is without leading slash (home = "/").
+  - Replaced `app/page.tsx` with catch-all `app/[[...slug]]/page.tsx`: SSG for home + every page doc, `generateStaticParams`, per-page metadata, ISR 5m, `notFound()` for missing slugs, legacy `homePage` fallback while `/` page doc bootstraps.
+  - Added `app/api/revalidate/route.ts` (POST) guarded by `TRIGGER_SECRET_KEY`; Sanity webhook posts here on page doc changes (webhook itself still needs dashboard grant - see Open Questions).
+  - Made `app/sitemap.ts` dynamic from `getAllPages()`.
+  - Added CI guard `scripts/check-no-localhost.sh` to `.github/workflows/ci.yml` to prevent localhost asset regressions.
+  - Added `context/docs/block-catalogue.md` (block registry + reserved slugs).
+  - Deployed to staging: home page renders from `page` doc (11 sections, correct metadata), new page `/campaign-x` created purely via Sanity document is live, unknown URLs 404, `/api/revalidate` returns 401 without secret and 200 with it, `/privacy` `/terms` `/studio` unaffected.
+  - Current command snapshot after composition layer: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npx tsc --noEmit` passes.
 
 ## In Progress
 
@@ -304,3 +307,6 @@ Update this file after every meaningful implementation change.
 - [ ] Add Google Search Console and Bing Webmaster verification codes to Vercel env vars when available.
 - [ ] Update DNS A record for `www.promptraise.com` to `76.76.21.21` (or CNAME to `cname.vercel-dns.com`).
 - [ ] Update Sanity site settings with real social URLs when available.
+- Added `/tools/flesch-kincaid` page (renamed from `/tools/readability`): SSR page with site header/footer via SiteShell, FAQPage + HowTo + WebPage JSON-LD, richer educational SEO content, Figma-aligned hero `/100` scores and "Content type" label.
+- FAQ section converted to accordion (answers remain in DOM for SEO/AI visibility; visually collapsed behind clickable questions). New component: `components/tools/faq-accordion.tsx`.
+- Current command snapshot: `npx tsc --noEmit` passes, `npm run build` passes, route `/tools/flesch-kincaid` static.

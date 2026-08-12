@@ -25,4 +25,3 @@ export const figmaDesignContract = {
   heroNode: "102:297",
   requiredBreakpoints: [393, 768, 1440] as const,
 } as const;
-

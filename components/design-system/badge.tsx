@@ -2,12 +2,7 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
-type BadgeVariant =
-  | "muted"
-  | "hero"
-  | "section"
-  | "dark"
-  | "glass";
+type BadgeVariant = "muted" | "hero" | "section" | "dark" | "glass";
 
 interface DsBadgeProps {
   children: ReactNode;
@@ -16,8 +11,7 @@ interface DsBadgeProps {
 }
 
 const badgeVariantClasses: Record<BadgeVariant, string> = {
-  muted:
-    "border border-white/10 bg-white/[0.03] text-white/45",
+  muted: "border border-white/10 bg-white/[0.03] text-white/45",
   hero: "bg-white/10 text-white/70 backdrop-blur-md",
   section:
     "border border-white/10 bg-white/[0.03] text-[var(--text-muted)] backdrop-blur-[12px]",
@@ -43,4 +37,3 @@ export function DsBadge({
     </span>
   );
 }
-

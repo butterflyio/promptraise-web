@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { designSystemAssets } from "@/components/design-system";
 
 type SiteBrandProps = {
   href?: string;
@@ -12,7 +11,7 @@ type SiteBrandProps = {
   wordmarkClassName?: string;
 };
 
-const fallbackMark = designSystemAssets.brand.mark;
+const fallbackMark = "/images/logo-mark.png";
 
 export function SiteBrand({
   href = "/",
