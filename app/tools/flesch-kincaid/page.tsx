@@ -6,15 +6,15 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
 
 export const metadata: Metadata = {
-  title: "Web3 Readability & AI Citation Checker",
+  title: "Flesch-Kincaid Calculator for Web3",
   description:
-    "Free Web3 readability checker: Flesch Reading Ease, Flesch-Kincaid Grade Level and a proprietary Citation Readiness score that shows how likely ChatGPT, Perplexity and Claude are to cite your protocol.",
-  alternates: { canonical: `${siteUrl}/tools/readability` },
+    "Free Web3 readability calculator: Flesch Reading Ease, Flesch-Kincaid Grade Level and a proprietary Citation Readiness score that shows how likely ChatGPT, Perplexity and Claude are to cite your protocol.",
+  alternates: { canonical: `${siteUrl}/tools/flesch-kincaid` },
   openGraph: {
-    title: "Web3 Readability & AI Citation Checker",
+    title: "Flesch-Kincaid Calculator for Web3",
     description:
       "Paste your Web3 copy and see Flesch readability plus how citable it is to answer engines.",
-    url: `${siteUrl}/tools/readability`,
+    url: `${siteUrl}/tools/flesch-kincaid`,
   },
 };
 
@@ -50,11 +50,8 @@ export default function ReadabilityPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
-        Free tool
-      </p>
       <h1 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
-        Web3 Readability &amp; AI Citation Checker
+        Flesch-Kincaid Calculator for Web3
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-[var(--text-secondary)]">
         Paste your copy and see two things: how hard it is to read (Flesch), and
