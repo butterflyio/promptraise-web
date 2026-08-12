@@ -15,6 +15,189 @@ export interface GlossaryTerm {
   example?: string;
 }
 
+/**
+ * Term-to-term cross links (Phase 0 of the topical-authority plan). Maps a
+ * term name to the names of related terms. Each entry becomes a "See also"
+ * chip linking to that term's `#term-<slug>` anchor, and a `mentions` entry
+ * in the DefinedTerm JSON-LD. Kept in one map (not inline) so the graph is
+ * easy to audit and every edge is bidirectional-by-definition.
+ */
+export const GLOSSARY_RELATED: Record<string, string[]> = {
+  // ---- How AI discovers you ----
+  "AI visibility": [
+    "GEO (generative engine optimization)",
+    "Answer engine",
+    "Citation",
+  ],
+  "GEO (generative engine optimization)": [
+    "AI visibility",
+    "Answer capsule",
+    "Structured data",
+  ],
+  "Answer engine": [
+    "AI visibility",
+    "Citation",
+    "Retrieval-augmented generation (RAG)",
+  ],
+  Crawler: ["robots.txt", "Indexability", "sitemap.xml"],
+  "robots.txt": ["Crawler", "Indexability", "sitemap.xml"],
+  "sitemap.xml": ["Indexability", "Crawler", "Whitepaper indexability"],
+  Indexability: ["Crawler", "robots.txt", "Whitepaper indexability"],
+  // ---- How LLMs answer ----
+  "Knowledge cutoff": [
+    "Parametric knowledge",
+    "Retrieval-augmented generation (RAG)",
+  ],
+  "Parametric knowledge": [
+    "Knowledge cutoff",
+    "Retrieval-augmented generation (RAG)",
+    "Grounding",
+  ],
+  "Retrieval-augmented generation (RAG)": [
+    "Grounding",
+    "Citation",
+    "Knowledge cutoff",
+  ],
+  Grounding: [
+    "Retrieval-augmented generation (RAG)",
+    "Citation",
+    "On-chain grounding",
+  ],
+  Citation: ["Source graph", "Zero-click AI answer", "AI visibility"],
+  "Source graph": [
+    "Citation",
+    "Entity authority",
+    "Digital public relations (digital PR)",
+  ],
+  // ---- Becoming a citable source ----
+  "First-party data": [
+    "Canonical facts",
+    "Onchain transparency",
+    "TVL (total value locked)",
+  ],
+  "Answer capsule": [
+    "GEO (generative engine optimization)",
+    "Context window",
+    "First-party data",
+  ],
+  "Canonical facts": [
+    "First-party data",
+    "Organization schema",
+    "Entity resolution",
+  ],
+  "Onchain transparency": [
+    "On-chain grounding",
+    "TVL (total value locked)",
+    "First-party data",
+  ],
+  "TVL (total value locked)": [
+    "Onchain transparency",
+    "On-chain grounding",
+    "First-party data",
+  ],
+  "Audit as a trust signal": [
+    "Onchain transparency",
+    "Decentralized identity (DID) for AI",
+    "First-party data",
+  ],
+  "Digital public relations (digital PR)": [
+    "Source graph",
+    "Entity authority",
+    "Brand mention monitoring",
+  ],
+  // ---- Structured data ----
+  "Structured data": ["JSON-LD", "DefinedTerm", "Rich results"],
+  "JSON-LD": ["Structured data", "DefinedTerm", "Organization schema"],
+  DefinedTerm: ["Structured data", "JSON-LD", "Rich results"],
+  "FAQPage schema": ["Structured data", "Rich results", "Answer capsule"],
+  "Rich results": ["Structured data", "FAQPage schema", "DefinedTerm"],
+  "Organization schema": ["JSON-LD", "Entity resolution", "Canonical facts"],
+  // ---- Measurement ----
+  "Citation per query": [
+    "Brand mention monitoring",
+    "AI share of voice (AI SOV)",
+    "Citation",
+  ],
+  "AI referral traffic": [
+    "Zero-click AI answer",
+    "Citation per query",
+    "Brand mention monitoring",
+  ],
+  "Brand mention monitoring": [
+    "Citation per query",
+    "AI share of voice (AI SOV)",
+    "Source graph",
+  ],
+  "AI share of voice (AI SOV)": [
+    "Citation per query",
+    "Brand mention monitoring",
+    "Zero-click AI answer",
+  ],
+  "Zero-click AI answer": [
+    "Citation",
+    "AI referral traffic",
+    "AI share of voice (AI SOV)",
+  ],
+  // ---- Web3 x AI specifics ----
+  "Entity resolution": [
+    "Organization schema",
+    "Canonical facts",
+    "Ticker hallucination",
+  ],
+  "On-chain grounding": [
+    "Grounding",
+    "Onchain transparency",
+    "TVL (total value locked)",
+  ],
+  "Whitepaper indexability": ["Indexability", "Crawler", "Entity resolution"],
+  "Ticker hallucination": [
+    "Entity resolution",
+    "Entity authority",
+    "Canonical facts",
+  ],
+  "Decentralized identity (DID) for AI": [
+    "Onchain transparency",
+    "Audit as a trust signal",
+    "Entity authority",
+  ],
+  // ---- Advanced GEO & AI mechanics ----
+  "Semantic embeddings": [
+    "Retrieval-augmented generation (RAG)",
+    "Context window",
+    "Answer capsule",
+  ],
+  "Context window": [
+    "Semantic embeddings",
+    "Answer capsule",
+    "Whitepaper indexability",
+  ],
+  "Entity authority": [
+    "Source graph",
+    "Digital public relations (digital PR)",
+    "Entity resolution",
+  ],
+  "Prompt injection": [
+    "Entity authority",
+    "Onchain transparency",
+    "Decentralized identity (DID) for AI",
+  ],
+};
+
+export function relatedFor(term: string): string[] {
+  return GLOSSARY_RELATED[term] ?? [];
+}
+
+/** #term-<slug> anchor for a term name (must match rendering on the pages). */
+export function termAnchor(term: string): string {
+  return (
+    "term-" +
+    term
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  );
+}
+
 export const GLOSSARY_CATEGORIES = [
   "How AI discovers you",
   "How LLMs answer",

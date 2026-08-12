@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 
-import { GLOSSARY_CATEGORIES, GLOSSARY_TERMS } from "@/lib/glossary-terms";
+import {
+  GLOSSARY_CATEGORIES,
+  GLOSSARY_TERMS,
+  relatedFor,
+  termAnchor,
+} from "@/lib/glossary-terms";
 import GlossaryScroller from "@/components/glossary-scroller";
 
 import type { GlossaryTerm } from "@/lib/glossary-terms";
@@ -42,6 +47,13 @@ export default function AcademyGlossaryPage() {
       ...(t.aliases && t.aliases.length
         ? { alternateName: t.aliases.slice(0, 4) }
         : {}),
+      ...(relatedFor(t.term).length
+        ? {
+            mentions: relatedFor(t.term).map(
+              (r) => `${siteUrl}/academy/glossary#${termAnchor(r)}`,
+            ),
+          }
+        : {}),
       inDefinedTermSet: `${siteUrl}/academy/glossary`,
     })),
   };
@@ -61,9 +73,9 @@ export default function AcademyGlossaryPage() {
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-[var(--text-secondary)]">
         The language answer engines use to discover, read and cite your
-        protocol. If you are wondering why ChatGPT and Perplexity do not
-        mention you, these {GLOSSARY_TERMS.length} terms explain the machinery -
-        and how to become a source instead of a rumor.
+        protocol. If you are wondering why ChatGPT and Perplexity do not mention
+        you, these {GLOSSARY_TERMS.length} terms explain the machinery - and how
+        to become a source instead of a rumor.
       </p>
 
       {/* Category pill nav - static anchor links */}
@@ -86,7 +98,10 @@ export default function AcademyGlossaryPage() {
       </nav>
 
       {/* Client enhancement: search + A-Z jump (terms stay SSR'd below) */}
-      <GlossaryScroller terms={GLOSSARY_TERMS} categories={[...GLOSSARY_CATEGORIES]} />
+      <GlossaryScroller
+        terms={GLOSSARY_TERMS}
+        categories={[...GLOSSARY_CATEGORIES]}
+      />
 
       <div className="mt-6 flex flex-col gap-12">
         {termsByCategory.map(({ category, terms }) => (
@@ -134,6 +149,22 @@ function TermCard({ term }: { term: GlossaryTerm }) {
               Example:{" "}
             </span>
             {term.example}
+          </span>
+        ) : null}
+        {relatedFor(term.term).length ? (
+          <span className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="text-xs tracking-[0.1em] text-[var(--text-muted)] uppercase">
+              See also
+            </span>
+            {relatedFor(term.term).map((r) => (
+              <a
+                key={r}
+                href={`#${termAnchor(r)}`}
+                className="rounded-full border border-[var(--border-soft)] px-3 py-1 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+              >
+                {r}
+              </a>
+            ))}
           </span>
         ) : null}
       </dd>

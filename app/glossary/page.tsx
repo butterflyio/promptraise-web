@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 
-import { GLOSSARY_CATEGORIES, GLOSSARY_TERMS } from "@/lib/glossary-terms";
+import {
+  GLOSSARY_CATEGORIES,
+  GLOSSARY_TERMS,
+  relatedFor,
+  termAnchor,
+} from "@/lib/glossary-terms";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
@@ -40,6 +45,13 @@ export default function GlossaryPage() {
       description: t.definition,
       ...(t.aliases && t.aliases.length
         ? { alternateName: t.aliases.slice(0, 3) }
+        : {}),
+      ...(relatedFor(t.term).length
+        ? {
+            mentions: relatedFor(t.term).map(
+              (r) => `${siteUrl}/glossary#${termAnchor(r)}`,
+            ),
+          }
         : {}),
       inDefinedTermSet: `${siteUrl}/glossary`,
     })),
@@ -119,6 +131,22 @@ export default function GlossaryPage() {
                           Example:{" "}
                         </span>
                         {t.example}
+                      </span>
+                    ) : null}
+                    {relatedFor(t.term).length ? (
+                      <span className="mt-3 flex flex-wrap items-center gap-2">
+                        <span className="text-xs tracking-[0.1em] text-[var(--text-muted)] uppercase">
+                          See also
+                        </span>
+                        {relatedFor(t.term).map((r) => (
+                          <a
+                            key={r}
+                            href={`#${termAnchor(r)}`}
+                            className="rounded-full border border-[var(--border-soft)] px-3 py-1 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                          >
+                            {r}
+                          </a>
+                        ))}
                       </span>
                     ) : null}
                   </dd>
