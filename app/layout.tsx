@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { SiteShell } from "@/components/site-shell";
+import TermlyCMP from "@/components/termly-cmp";
 import { getSiteSettings } from "@/sanity/lib/queries";
 
 import "./globals.css";
@@ -170,6 +172,12 @@ export default async function RootLayout({
         <StructuredData settings={settings} />
       </head>
       <body className="min-h-full">
+        <Suspense fallback={null}>
+          <TermlyCMP
+            websiteUUID="7e325b94-5a2f-4d14-9502-ccf9e7e8e5e7"
+            autoBlock={true}
+          />
+        </Suspense>
         <AnnouncementBar announcement={settings?.announcement} />
         <SiteShell>{children}</SiteShell>
         <Analytics />

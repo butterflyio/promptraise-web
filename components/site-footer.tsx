@@ -56,6 +56,12 @@ export async function SiteFooter() {
                 {link.label}
               </a>
             ))}
+            <a
+              href="#"
+              className="termly-display-preferences px-1 py-1 text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
+            >
+              Consent Preferences
+            </a>
           </nav>
         </div>
       </div>
