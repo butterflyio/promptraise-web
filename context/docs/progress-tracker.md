@@ -307,3 +307,6 @@ Update this file after every meaningful implementation change.
 - [ ] Add Google Search Console and Bing Webmaster verification codes to Vercel env vars when available.
 - [ ] Update DNS A record for `www.promptraise.com` to `76.76.21.21` (or CNAME to `cname.vercel-dns.com`).
 - [ ] Update Sanity site settings with real social URLs when available.
+- Added `/tools/flesch-kincaid` page (renamed from `/tools/readability`): SSR page with site header/footer via SiteShell, FAQPage + HowTo + WebPage JSON-LD, richer educational SEO content, Figma-aligned hero `/100` scores and "Content type" label.
+- FAQ section converted to accordion (answers remain in DOM for SEO/AI visibility; visually collapsed behind clickable questions). New component: `components/tools/faq-accordion.tsx`.
+- Current command snapshot: `npx tsc --noEmit` passes, `npm run build` passes, route `/tools/flesch-kincaid` static.

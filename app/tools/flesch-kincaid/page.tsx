@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import FaqAccordion from "@/components/tools/faq-accordion";
 import ReadabilityTool from "@/components/tools/readability-tool";
 
 const siteUrl =
@@ -146,20 +147,8 @@ export default function ReadabilityPage() {
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
           Flesch &amp; AI citation, explained
         </h2>
-        <div className="mt-6 flex flex-col gap-4">
-          {FAQ.map((f) => (
-            <div
-              key={f.q}
-              className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface-panel)] p-5"
-            >
-              <h3 className="font-semibold text-[var(--text-primary)]">
-                {f.q}
-              </h3>
-              <p className="mt-2 leading-relaxed text-[var(--text-secondary)]">
-                {f.a}
-              </p>
-            </div>
-          ))}
+        <div className="mt-6">
+          <FaqAccordion items={FAQ} />
         </div>
       </section>
     </main>
