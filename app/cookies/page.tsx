@@ -1,27 +1,25 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 export const metadata = {
   title: "Cookie Usage",
-  description: "Cookie usage for PromptRaise.",
+  description:
+    "How PromptRaise uses cookies and similar technologies, first- and third-party cookies, and how you can control them.",
 };
 
-export default function CookiesPage() {
+export default async function CookiesPage() {
+  const html = await readFile(
+    path.join(process.cwd(), "app/cookies/cookies-content.html"),
+    "utf8",
+  );
+
   return (
     <main className="mobile:px-6 tablet:py-20 mx-auto w-full max-w-3xl px-4 py-16">
-      <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
-        Legal
-      </p>
-      <h1 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
-        Cookie Usage
-      </h1>
-      <div className="mt-12 flex flex-col gap-6 leading-relaxed text-[var(--text-secondary)]">
-        <p>
-          PromptRaise does not use tracking or advertising cookies on the
-          marketing website.
-        </p>
-        <p>
-          If a future feature requires cookies, we will update this page and the
-          privacy notice before enabling them.
-        </p>
-      </div>
+      <div
+        data-custom-class="body"
+        className="leading-relaxed text-[var(--text-secondary)]"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </main>
   );
 }
