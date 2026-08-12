@@ -157,6 +157,7 @@ export interface HomePage {
     heading?: string;
     subtext?: string;
     features?: string[];
+    companies?: Array<{ name?: string; logo?: string }>;
   };
   whyChoose?: {
     badge?: string;
@@ -189,12 +190,14 @@ export interface HomePage {
       linkedin?: string;
       x?: string;
     }>;
+    backedBy?: Array<{ label?: string; href?: string; logo?: string }>;
   };
   askAi?: {
     badge?: string;
     heading?: string;
     subtext?: string;
     prompt?: string;
+    assistants?: Array<{ name?: string; baseHref?: string }>;
   };
 }
 

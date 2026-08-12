@@ -128,13 +128,15 @@ function CheckCell({
 function CompanyColumn({
   company,
   columns,
+  columnIndex,
   className = "",
 }: {
   company: CompanyMeta;
   columns: ReadonlyArray<readonly boolean[]>;
+  columnIndex: number;
   className?: string;
 }) {
-  const index = COMPANIES.indexOf(company);
+  const index = columnIndex;
   const highlight = company.key === "promptraise";
   return (
     <div
@@ -166,12 +168,18 @@ function CompanyColumn({
   );
 }
 
-function LabelColumn({ className = "" }: { className?: string }) {
+function LabelColumn({
+  className = "",
+  labels = FEATURES,
+}: {
+  className?: string;
+  labels?: readonly string[];
+}) {
   return (
     <div
       className={`flex h-[458px] shrink-0 flex-col content-stretch items-start gap-4 rounded-[20px] px-6 pt-[60px] pb-6 ${className}`}
     >
-      {FEATURES.map((feature) => (
+      {labels.map((feature) => (
         <div
           key={feature}
           className="relative flex w-full flex-col items-center justify-center rounded-[12px] px-6 py-2"
@@ -242,13 +250,19 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
 
 /* Mobile: label column + ONE company column at a time, switched by the
  * TabBar of logo pills (Figma 422:6012 + 422:6333). */
-function MobileComparison() {
+function MobileComparison({
+  companies = COMPANIES,
+  labels = FEATURES,
+}: {
+  companies?: CompanyMeta[];
+  labels?: readonly string[];
+}) {
   const [active, setActive] = useState(0);
-  const company = COMPANIES[active]!;
+  const company = companies[active] ?? companies[0]!;
   return (
     <div className="flex flex-col items-start gap-12">
       <div className="flex w-full [scrollbar-width:none] items-center gap-0 overflow-x-auto px-4 [&::-webkit-scrollbar]:hidden">
-        {COMPANIES.map((c, i) => {
+        {companies.map((c, i) => {
           const isActive = i === active;
           const isPromptRaise = c.key === "promptraise";
           return (
@@ -272,10 +286,11 @@ function MobileComparison() {
       </div>
 
       <div className="flex w-full content-stretch items-center gap-[9px] pr-6">
-        <LabelColumn className="w-[256px]" />
+        <LabelColumn className="w-[256px]" labels={labels} />
         <CompanyColumn
           company={company}
           columns={ROW_MATRIX}
+          columnIndex={active}
           className="min-w-px flex-[1_0_0]"
         />
       </div>
@@ -283,11 +298,40 @@ function MobileComparison() {
   );
 }
 
+/** CMS overrides for the comparison table. Labels + competitor columns are
+ * editable; the check matrix and the PromptRaise column stay design-side. */
+function resolveComparison(content?: HomePage["comparison"]) {
+  const labels =
+    (content?.features?.length ?? 0) >= 1 ? content!.features! : FEATURES;
+
+  const companies = COMPANIES.map((company, index) => {
+    const cms = content?.companies?.[index];
+    if (!cms?.name && !cms?.logo) return company;
+    return {
+      ...company,
+      name: cms.name || company.name,
+      logo: cms.logo ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={cms.logo}
+          alt={cms.name ?? cms.logo}
+          className="h-[24px] max-w-[120px] object-contain"
+        />
+      ) : (
+        company.logo
+      ),
+    } as CompanyMeta;
+  });
+
+  return { labels, companies };
+}
+
 interface ComparisonSectionProps {
   content?: HomePage["comparison"];
 }
 
 export function ComparisonSection({ content }: ComparisonSectionProps) {
+  const { labels, companies } = resolveComparison(content);
   return (
     <DsSection className="ds-section-alt relative overflow-hidden">
       <SectionLabel name="ComparisonSection" />
@@ -334,32 +378,24 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
 
         {/* Desktop + tablet: 5-column table (label + 4 companies) */}
         <div className="tablet:flex mt-12 hidden w-full items-end gap-[9px]">
-          <LabelColumn className="desktop:w-[328px] w-[208px]" />
-          <CompanyColumn
-            company={COMPANIES[0]!}
-            columns={ROW_MATRIX}
-            className="desktop:w-[156px] w-[122px]"
+          <LabelColumn
+            className="desktop:w-[328px] w-[208px]"
+            labels={labels}
           />
-          <CompanyColumn
-            company={COMPANIES[1]!}
-            columns={ROW_MATRIX}
-            className="desktop:w-[156px] w-[122px]"
-          />
-          <CompanyColumn
-            company={COMPANIES[2]!}
-            columns={ROW_MATRIX}
-            className="desktop:w-[156px] w-[122px]"
-          />
-          <CompanyColumn
-            company={COMPANIES[3]!}
-            columns={ROW_MATRIX}
-            className="desktop:w-[156px] w-[122px]"
-          />
+          {companies.map((company, i) => (
+            <CompanyColumn
+              key={company.key}
+              company={company}
+              columns={ROW_MATRIX}
+              columnIndex={i}
+              className="desktop:w-[156px] w-[122px]"
+            />
+          ))}
         </div>
 
         {/* Mobile: TabBar + label + active company column */}
         <div className="tablet:hidden mt-12">
-          <MobileComparison />
+          <MobileComparison companies={companies} labels={labels} />
         </div>
       </DsSectionContainer>
     </DsSection>

@@ -420,8 +420,48 @@ export const comparisonBlock = defineType({
     defineField({
       name: "features",
       title: "Comparison Features",
+      description:
+        "Row labels (one per row). When fewer than 5 are provided, the design's remaining rows use their defaults.",
       type: "array",
       of: [defineArrayMember({ type: "string" })],
+      initialValue: [
+        "Content gap analysis",
+        "LLM tracking (ChatGPT, Gemini...)",
+        "Content from real creators",
+        "On-chain verification",
+        "Tier-1-2 Web3 media PR",
+      ],
+    }),
+    defineField({
+      name: "companies",
+      title: "Competitor Columns",
+      description:
+        "The 3 competitor columns after PromptRaise, in order. Leave a name empty to keep the design default.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "comparisonCompany",
+          title: "Competitor",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+            }),
+            defineField({
+              name: "logo",
+              title: "Logo path or URL",
+              type: "string",
+              description:
+                "e.g. /figma/comparison-profound.png or an https URL",
+            }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "logo" },
+          },
+        }),
+      ],
     }),
   ],
 });
@@ -603,6 +643,48 @@ export const teamBlock = defineType({
           ],
         }),
       ],
+      initialValue: [
+        {
+          name: "Maxim Moris",
+          role: "Co-founder & CEO, Cicada",
+        },
+        {
+          name: "Zain Khan",
+          role: "Co-founder, PromptRaise",
+        },
+      ],
+    }),
+    defineField({
+      name: "backedBy",
+      title: "Backed By Chips",
+      description:
+        "The two 'Backed by' chips under the team cards. Leave label empty to keep the design defaults.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "backedByChip",
+          title: "Backed By Chip",
+          fields: [
+            defineField({ name: "label", title: "Label", type: "string" }),
+            defineField({
+              name: "href",
+              title: "URL",
+              type: "url",
+              description: "e.g. https://cicada-mm.com",
+            }),
+            defineField({
+              name: "logo",
+              title: "Logo path or URL",
+              type: "string",
+              description: "e.g. /figma/team-backed-cicada.svg or an https URL",
+            }),
+          ],
+          preview: {
+            select: { title: "label", subtitle: "href" },
+          },
+        }),
+      ],
     }),
   ],
 });
@@ -638,6 +720,36 @@ export const askAiBlock = defineType({
       type: "text",
       description:
         "Sent to ChatGPT, Claude and Perplexity when someone clicks the deep links.",
+    }),
+    defineField({
+      name: "assistants",
+      title: "AI Assistant Buttons",
+      description:
+        "The three deep-link buttons. Leave name empty to keep the design defaults (ChatGPT / Claude / Perplexity).",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "askAiAssistant",
+          title: "Assistant Button",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Button Label",
+              type: "string",
+            }),
+            defineField({
+              name: "baseHref",
+              title: "Base URL",
+              type: "url",
+              description: "e.g. https://chatgpt.com/?q=",
+            }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "baseHref" },
+          },
+        }),
+      ],
     }),
   ],
 });

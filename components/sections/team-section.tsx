@@ -372,15 +372,15 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
             </h3>
             <div className="tablet:max-w-[384px] tablet:gap-[24px] flex w-full max-w-[372px] items-center gap-[12px]">
               <BackedByChip
-                href="https://cicada-mm.com"
-                src={figmaAssets.cicadaLogo}
-                label="Market Making"
+                href={content?.backedBy?.[0]?.href || "https://cicada-mm.com"}
+                src={content?.backedBy?.[0]?.logo || figmaAssets.cicadaLogo}
+                label={content?.backedBy?.[0]?.label || "Market Making"}
                 widthClassName="min-w-0 flex-1"
               />
               <BackedByChip
-                href="https://OxD.one"
-                src={figmaAssets.strategyLogo}
-                label="AI Marketing Strategy"
+                href={content?.backedBy?.[1]?.href || "https://OxD.one"}
+                src={content?.backedBy?.[1]?.logo || figmaAssets.strategyLogo}
+                label={content?.backedBy?.[1]?.label || "AI Marketing Strategy"}
                 widthClassName="min-w-0 flex-1"
               />
             </div>

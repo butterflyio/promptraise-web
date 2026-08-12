@@ -62,15 +62,19 @@ function CardHeader({
    Card 1 — "Full cycle, not just tracking"
    Figma: PromptRaise Cycle widget with Analysis + Content rows
 ───────────────────────────────────────────────────────────────────────────── */
-function FullCycleCard() {
+function FullCycleCard({
+  title = "Full cycle, not just tracking",
+  description = "Analysis \u2192 content \u2192 publication \u2192 tracking.\nNo Web3 competitor closes everything in one product.",
+}: {
+  title?: string;
+  description?: string;
+}) {
   return (
     <BentoCard>
       <CardHeader
         icon="/figma/icon.svg"
-        title="Full cycle, not just tracking"
-        description={
-          "Analysis \u2192 content \u2192 publication \u2192 tracking.\nNo Web3 competitor closes everything in one product."
-        }
+        title={title}
+        description={description}
       />
 
       {/* PromptRaise Cycle widget */}
@@ -171,13 +175,19 @@ function FullCycleCard() {
    Card 2 — "Real creators, not AI text"
    Figma: Blurred avatar grid + PromptRaise green R logo centered
 ───────────────────────────────────────────────────────────────────────────── */
-function RealCreatorsCard() {
+function RealCreatorsCard({
+  title = "Real creators, not AI text",
+  description = "LLMs filter AI-generated content. Real person with real audience — an EEAT signal that can't be faked.",
+}: {
+  title?: string;
+  description?: string;
+}) {
   return (
     <BentoCard>
       <CardHeader
         icon="/figma/icon-2.svg"
-        title="Real creators, not AI text"
-        description="LLMs filter AI-generated content. Real person with real audience — an EEAT signal that can't be faked."
+        title={title}
+        description={description}
       />
 
       {/* Avatar grid + logo overlay */}
@@ -232,15 +242,19 @@ function RealCreatorsCard() {
    Card 3 — "Transparency at every step"
    Figma: Dashed-border connection diagram with name pills
 ───────────────────────────────────────────────────────────────────────────── */
-function TransparencyCard() {
+function TransparencyCard({
+  title = "Transparency at every step",
+  description = `Client sees who writes, what they write, and where it's published. No "we did the work" without proof.`,
+}: {
+  title?: string;
+  description?: string;
+}) {
   return (
     <BentoCard>
       <CardHeader
         icon="/figma/icon-4.svg"
-        title="Transparency at every step"
-        description={
-          'Client sees who writes, what they write, and where it\'s published. No "we did the work" without proof.'
-        }
+        title={title}
+        description={description}
       />
 
       {/* Connection diagram */}
@@ -342,17 +356,21 @@ function TransparencyCard() {
    Card 4 — "Numbers, not promises"
    Figma: Analytics widget with 6,281 users + bar chart + +21.76% stat
 ───────────────────────────────────────────────────────────────────────────── */
-function NumbersCard() {
+function NumbersCard({
+  title = "Numbers, not promises",
+  description = `Not "wrote 20 articles." But "ChatGPT mentions you in X of 5 queries on topic Y." Baseline and growth in every report.`,
+}: {
+  title?: string;
+  description?: string;
+}) {
   const barHeights = [89, 41, 71, 114, 55, 89, 60];
 
   return (
     <BentoCard>
       <CardHeader
         icon="/figma/icon-1.svg"
-        title="Numbers, not promises"
-        description={
-          'Not "wrote 20 articles." But "ChatGPT mentions you in X of 5 queries on topic Y." Baseline and growth in every report.'
-        }
+        title={title}
+        description={description}
       />
 
       {/* Analytics widget */}
@@ -453,13 +471,19 @@ function NumbersCard() {
    Card 5 — "Web3 from the inside"
    Figma: card-21.png background + Cicada logo centered
 ───────────────────────────────────────────────────────────────��───────────── */
-function Web3InsideCard() {
+function Web3InsideCard({
+  title = "Web3 from the inside",
+  description = "Cicada in crypto since 2018. 100+ clients, 1000+ listings. We understand DeFi, TGE, tokenomics firsthand.",
+}: {
+  title?: string;
+  description?: string;
+}) {
   return (
     <BentoCard>
       <CardHeader
         icon="/figma/icon-3.svg"
-        title="Web3 from the inside"
-        description="Cicada in crypto since 2018. 100+ clients, 1000+ listings. We understand DeFi, TGE, tokenomics firsthand."
+        title={title}
+        description={description}
       />
 
       {/* Background image + Cicada logo */}
@@ -505,15 +529,21 @@ function Web3InsideCard() {
    Card 6 — "Narrative + market = power"
    Figma: PromptRaise + Cicada logos side-by-side + horizontal bar chart
 ───────────────────────────────────────────────────────────────────────────── */
-function NarrativeCard() {
+function NarrativeCard({
+  title = "Narrative + market = power",
+  description = "Cicada builds liquidity. PromptRaise builds narrative. AI-visible projects list more easily and hold price post-TGE.",
+}: {
+  title?: string;
+  description?: string;
+}) {
   const barWidths = [85, 68, 75, 60, 72, 55];
 
   return (
     <BentoCard>
       <CardHeader
         icon="/figma/icon.svg"
-        title="Narrative + market = power"
-        description="Cicada builds liquidity. PromptRaise builds narrative. AI-visible projects list more easily and hold price post-TGE."
+        title={title}
+        description={description}
       />
 
       {/* Logos + bar chart */}
@@ -649,48 +679,45 @@ export function WhyChooseSection({
           </div>
         </div>
 
-        {cmsCards ? (
-          /* CMS-driven simple cards when content is provided */
-          <div className="tablet:grid-cols-2 desktop:grid-cols-3 grid grid-cols-1 gap-4">
-            {cmsCards.map((card, i) => (
-              <div
-                key={i}
-                className="relative flex flex-col overflow-hidden rounded-2xl p-8"
-                style={{
-                  background: "#0e0f10",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                }}
-              >
-                <h3 className="mb-3 text-[15px] leading-snug font-bold text-white">
-                  {card.title}
-                </h3>
-                <p className="text-[12px] leading-[1.6] text-white/40">
-                  {card.desc}
-                </p>
-              </div>
-            ))}
+        {/* Design skeleton ALWAYS renders; CMS `cards[]` overrides title/desc
+            per position so the Figma layout stays intact. */}
+        <div className="tablet:grid-cols-3 grid grid-cols-1 gap-4">
+          {/* Column 1 */}
+          <div className="flex flex-col gap-4">
+            <FullCycleCard
+              title={cmsCards?.[0]?.title}
+              description={cmsCards?.[0]?.desc}
+            />
+            <NumbersCard
+              title={cmsCards?.[3]?.title}
+              description={cmsCards?.[3]?.desc}
+            />
           </div>
-        ) : (
-          <div className="tablet:grid-cols-3 grid grid-cols-1 gap-4">
-            {/* Column 1 */}
-            <div className="flex flex-col gap-4">
-              <FullCycleCard />
-              <NumbersCard />
-            </div>
 
-            {/* Column 2 */}
-            <div className="flex flex-col gap-4">
-              <RealCreatorsCard />
-              <Web3InsideCard />
-            </div>
-
-            {/* Column 3 */}
-            <div className="flex flex-col gap-4">
-              <TransparencyCard />
-              <NarrativeCard />
-            </div>
+          {/* Column 2 */}
+          <div className="flex flex-col gap-4">
+            <RealCreatorsCard
+              title={cmsCards?.[1]?.title}
+              description={cmsCards?.[1]?.desc}
+            />
+            <Web3InsideCard
+              title={cmsCards?.[4]?.title}
+              description={cmsCards?.[4]?.desc}
+            />
           </div>
-        )}
+
+          {/* Column 3 */}
+          <div className="flex flex-col gap-4">
+            <TransparencyCard
+              title={cmsCards?.[2]?.title}
+              description={cmsCards?.[2]?.desc}
+            />
+            <NarrativeCard
+              title={cmsCards?.[5]?.title}
+              description={cmsCards?.[5]?.desc}
+            />
+          </div>
+        </div>
       </DsSectionContainer>
     </DsSection>
   );

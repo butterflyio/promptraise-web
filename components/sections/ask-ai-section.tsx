@@ -91,10 +91,18 @@ function AskButton({
 }
 
 export function AskAiSection({ content }: { content?: HomePage["askAi"] }) {
-  const aiAssistants = DEFAULT_AI_ASSISTANTS.map((assistant) => ({
-    ...assistant,
-    href: buildAskUrl(assistant.baseHref, content?.prompt),
-  }));
+  // Deep-link buttons: CMS `assistants[]` overrides label/base URL by index;
+  // icons and styling stay design-driven (Figma assets).
+  const aiAssistants = DEFAULT_AI_ASSISTANTS.map((assistant, index) => {
+    const cms = content?.assistants?.[index];
+    const baseHref = cms?.baseHref || assistant.baseHref;
+    return {
+      ...assistant,
+      name: cms?.name || assistant.name,
+      baseHref,
+      href: buildAskUrl(baseHref, content?.prompt),
+    };
+  });
 
   const badge = content?.badge ?? "Ask AI";
   const heading =
