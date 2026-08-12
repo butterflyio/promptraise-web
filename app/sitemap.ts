@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
-      url: `${siteUrl}/tools/flesch-kincaid`,
+      url: `${siteUrl}/free/flesch-kincaid-calculator`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.6,

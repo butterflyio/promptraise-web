@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   title: "Flesch-Kincaid Calculator for Web3",
   description:
     "Free Web3 readability calculator: Flesch Reading Ease, Flesch-Kincaid Grade Level and a proprietary Citation Readiness score that shows how likely ChatGPT, Perplexity and Claude are to cite your protocol.",
-  alternates: { canonical: `${siteUrl}/tools/flesch-kincaid` },
+  alternates: { canonical: `${siteUrl}/free/flesch-kincaid-calculator` },
   openGraph: {
     title: "Flesch-Kincaid Calculator for Web3",
     description:
       "Paste your Web3 copy and see Flesch readability plus how citable it is to answer engines.",
-    url: `${siteUrl}/tools/flesch-kincaid`,
+    url: `${siteUrl}/free/flesch-kincaid-calculator`,
   },
 };
 
@@ -89,7 +89,7 @@ export default function ReadabilityPage() {
     name: "Flesch-Kincaid Calculator for Web3",
     description:
       "Free Web3 readability and AI citation checker. Runs Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI, plus a Citation Readiness score for AI visibility.",
-    url: `${siteUrl}/tools/flesch-kincaid`,
+    url: `${siteUrl}/free/flesch-kincaid-calculator`,
     isPartOf: { "@type": "WebSite", name: "PromptRaise", url: siteUrl },
   };
 
