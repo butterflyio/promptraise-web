@@ -177,7 +177,7 @@ function LabelColumn({
 }) {
   return (
     <div
-      className={`flex h-[458px] shrink-0 flex-col content-stretch items-start gap-4 rounded-[20px] px-6 pt-[60px] pb-6 ${className}`}
+      className={`flex shrink-0 flex-col content-stretch items-start gap-4 rounded-[20px] px-6 pt-[60px] pb-6 ${className}`}
     >
       {labels.map((feature) => (
         <div
