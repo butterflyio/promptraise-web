@@ -1,17 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1328.22" height="1716.96" viewBox="0 0 1328.22 1716.96" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Decorative Vector" filter="url(#filter0_f_0_652)" style="mix-blend-mode:overlay">
-<path d="M724.61 188.982H556.696L189.1 1527.98H1139.1L724.61 188.982Z" fill="url(#paint0_linear_0_652)"/>
-<path d="M724.61 188.982H556.696L189.1 1527.98H1139.1L724.61 188.982Z" stroke="#163F16" stroke-width="0.755929"/>
-</g>
-<defs>
-<filter id="filter0_f_0_652" x="6.85453e-07" y="-4.50015e-06" width="1328.22" height="1716.96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="94.3022" result="effect1_foregroundBlur_0_652"/>
-</filter>
-<linearGradient id="paint0_linear_0_652" x1="664.1" y1="188.982" x2="664.1" y2="1527.98" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="1328.22" height="1716.96" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 1328.22 1716.96"><g id="Decorative Vector" filter="url(#filter0_f_0_652)" style="mix-blend-mode:overlay"><path fill="url(#paint0_linear_0_652)" d="M724.61 188.982H556.696L189.1 1527.98H1139.1L724.61 188.982Z"/><path stroke="#163F16" stroke-width=".756" d="M724.61 188.982H556.696L189.1 1527.98H1139.1L724.61 188.982Z"/></g><defs><filter id="filter0_f_0_652" width="1328.22" height="1716.96" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_652" stdDeviation="94.302"/></filter><linearGradient id="paint0_linear_0_652" x1="664.1" x2="664.1" y1="188.982" y2="1527.98" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-opacity="0"/></linearGradient></defs></svg>

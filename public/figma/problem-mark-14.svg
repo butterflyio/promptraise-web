@@ -1,18 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="27.1904" height="31.4504" viewBox="0 0 27.1904 31.4504" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Inner Frame" opacity="0.32">
-<path id="Decorative Vector" d="M0.190381 19.2331L26.2294 8.51072" stroke="url(#paint0_linear_0_4)"/>
-<path id="Decorative Vector_2" d="M7.19038 31.2331L22.1578 0.217307" stroke="url(#paint1_linear_0_4)"/>
-</g>
-<defs>
-<linearGradient id="paint0_linear_0_4" x1="2.00092" y1="19.0937" x2="21.2226" y2="24.12" gradientUnits="userSpaceOnUse">
-<stop stop-color="white" stop-opacity="0"/>
-<stop offset="0.49" stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0"/>
-</linearGradient>
-<linearGradient id="paint1_linear_0_4" x1="7.24827" y1="28.5439" x2="20.3911" y2="0.902589" gradientUnits="userSpaceOnUse">
-<stop stop-color="white" stop-opacity="0"/>
-<stop offset="0.55" stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="27.19" height="31.45" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 27.19 31.45"><g id="Inner Frame" opacity=".32"><path id="Decorative Vector" stroke="url(#paint0_linear_0_4)" d="M0.190381 19.2331L26.2294 8.51072"/><path id="Decorative Vector_2" stroke="url(#paint1_linear_0_4)" d="M7.19038 31.2331L22.1578 0.217307"/></g><defs><linearGradient id="paint0_linear_0_4" x1="2.001" x2="21.223" y1="19.094" y2="24.12" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".49" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="paint1_linear_0_4" x1="7.248" x2="20.391" y1="28.544" y2=".903" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>

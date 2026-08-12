@@ -1,17 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<foreignObject x="inf" y="inf" width="-inf" height="-inf"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(14.99px);clip-path:url(#bgblur_0_0_63_clip_path);height:100%;width:100%"></div></foreignObject><g id="Vector 02" opacity="0" filter="url(#filter0_f_0_63)" data-figma-bg-blur-radius="29.9837" style="mix-blend-mode:plus-lighter">
-<ellipse cx="167.199" cy="63.6577" rx="167.199" ry="63.6577" fill="url(#paint0_linear_0_63)"/>
-</g>
-<defs>
-<filter id="filter0_f_0_63" x="inf" y="inf" width="-inf" height="-inf" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="44.9755" result="effect1_foregroundBlur_0_63"/>
-</filter>
-<clipPath id="bgblur_0_0_63_clip_path" transform="translate(-inf -inf)"><ellipse cx="167.199" cy="63.6577" rx="167.199" ry="63.6577"/>
-</clipPath><linearGradient id="paint0_linear_0_63" x1="167.199" y1="0" x2="167.199" y2="127.315" gradientUnits="userSpaceOnUse">
-<stop stop-color="#56A876"/>
-<stop offset="1" stop-color="#287245"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="32" height="32" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 32 32"><foreignObject width="-inf" height="-inf" x="inf" y="inf"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(14.99px);clip-path:url(#bgblur_0_0_63_clip_path);height:100%;width:100%"/></foreignObject><g id="Vector 02" data-figma-bg-blur-radius="29.984" filter="url(#filter0_f_0_63)" opacity="0" style="mix-blend-mode:plus-lighter"><ellipse cx="167.199" cy="63.658" fill="url(#paint0_linear_0_63)" rx="167.199" ry="63.658"/></g><defs><filter id="filter0_f_0_63" width="-inf" height="-inf" x="inf" y="inf" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_63" stdDeviation="44.975"/></filter><clipPath id="bgblur_0_0_63_clip_path" transform="translate(-inf -inf)"><ellipse cx="167.199" cy="63.658" rx="167.199" ry="63.658"/></clipPath><linearGradient id="paint0_linear_0_63" x1="167.199" x2="167.199" y1="0" y2="127.315" gradientUnits="userSpaceOnUse"><stop stop-color="#56A876"/><stop offset="1" stop-color="#287245"/></linearGradient></defs></svg>

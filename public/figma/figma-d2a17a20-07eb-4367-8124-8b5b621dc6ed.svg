@@ -1,12 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="293" height="45" viewBox="0 0 293 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Inner Frame">
-<g clip-path="url(#clip0_0_29)">
-<path id="Combined Shape" fill-rule="evenodd" clip-rule="evenodd" d="M293 22.5C293 10.0736 282.926 0 270.5 0H22.5C10.0736 0 2.86102e-06 10.0736 2.86102e-06 22.5C2.86102e-06 34.9264 10.0736 45 22.5 45H270.5C282.926 45 293 34.9264 293 22.5Z" fill="#171919"/>
-</g>
-</g>
-<defs>
-<clipPath id="clip0_0_29">
-<path d="M0 22.5C0 10.0736 10.0736 0 22.5 0H293V45H22.5C10.0736 45 0 34.9264 0 22.5V22.5Z" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="293" height="45" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 293 45"><g id="Inner Frame"><g clip-path="url(#clip0_0_29)"><path id="Combined Shape" fill="#171919" fill-rule="evenodd" d="M293 22.5C293 10.0736 282.926 0 270.5 0H22.5C10.0736 0 2.86102e-06 10.0736 2.86102e-06 22.5C2.86102e-06 34.9264 10.0736 45 22.5 45H270.5C282.926 45 293 34.9264 293 22.5Z" clip-rule="evenodd"/></g></g><defs><clipPath id="clip0_0_29"><path fill="#fff" d="M0 22.5C0 10.0736 10.0736 0 22.5 0H293V45H22.5C10.0736 45 0 34.9264 0 22.5V22.5Z"/></clipPath></defs></svg>

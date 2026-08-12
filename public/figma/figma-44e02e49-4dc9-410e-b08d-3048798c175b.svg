@@ -1,16 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="917.278" height="2278.28" viewBox="0 0 917.278 2278.28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Decorative Ellipse" opacity="0.2" filter="url(#filter0_f_0_144)" style="mix-blend-mode:plus-lighter">
-<ellipse cx="458.639" cy="1139.14" rx="365.5" ry="1046" fill="url(#paint0_linear_0_144)"/>
-</g>
-<defs>
-<filter id="filter0_f_0_144" x="0" y="0" width="917.278" height="2278.28" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="46.5694" result="effect1_foregroundBlur_0_144"/>
-</filter>
-<linearGradient id="paint0_linear_0_144" x1="458.639" y1="93.1389" x2="458.639" y2="2185.14" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1E885C" stop-opacity="0"/>
-<stop offset="1" stop-color="#1E885C"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="917.278" height="2278.28" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 917.278 2278.28"><g id="Decorative Ellipse" filter="url(#filter0_f_0_144)" opacity=".2" style="mix-blend-mode:plus-lighter"><ellipse cx="458.639" cy="1139.14" fill="url(#paint0_linear_0_144)" rx="365.5" ry="1046"/></g><defs><filter id="filter0_f_0_144" width="917.278" height="2278.28" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_144" stdDeviation="46.569"/></filter><linearGradient id="paint0_linear_0_144" x1="458.639" x2="458.639" y1="93.139" y2="2185.14" gradientUnits="userSpaceOnUse"><stop stop-color="#1E885C" stop-opacity="0"/><stop offset="1" stop-color="#1E885C"/></linearGradient></defs></svg>

@@ -1,9 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1" height="97" viewBox="0 0 1 97" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Decorative Vector" d="M0.5 0.5V96.5" stroke="url(#paint0_linear_0_581)" stroke-linecap="round"/>
-<defs>
-<linearGradient id="paint0_linear_0_581" x1="1" y1="0.5" x2="1" y2="96.5" gradientUnits="userSpaceOnUse">
-<stop stop-color="#67FF67"/>
-<stop offset="1" stop-color="#67FF67" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="1" height="97" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 1 97"><path id="Decorative Vector" stroke="url(#paint0_linear_0_581)" stroke-linecap="round" d="M0.5 0.5V96.5"/><defs><linearGradient id="paint0_linear_0_581" x1="1" x2="1" y1=".5" y2="96.5" gradientUnits="userSpaceOnUse"><stop stop-color="#67FF67"/><stop offset="1" stop-color="#67FF67" stop-opacity="0"/></linearGradient></defs></svg>
