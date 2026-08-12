@@ -106,7 +106,9 @@ export default function ReadabilityTool() {
       {/* ---- Controls ---- */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm text-[var(--text-muted)]">Genre:</span>
+          <span className="text-sm text-[var(--text-muted)]">
+            Content type:
+          </span>
           {GENRES.map((g) => (
             <button
               key={g.id}
@@ -377,8 +379,11 @@ function ScoreHeader({
             {citeLabel}
           </span>
         </div>
-        <p className={cn("mt-2 text-5xl font-bold", citeColor)}>
-          {citationScore}
+        <p className="mt-2 flex items-baseline gap-2">
+          <span className={cn("text-5xl font-bold", citeColor)}>
+            {citationScore}
+          </span>
+          <span className="text-sm text-[var(--text-muted)]">/100</span>
         </p>
         <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
           How likely answer engines are to pull a clean, grounded, citable
@@ -400,8 +405,11 @@ function ScoreHeader({
             {inTarget ? "In target" : "Off target"} for {genreLabel}
           </span>
         </div>
-        <p className="mt-2 text-5xl font-bold text-[var(--text-primary)]">
-          {readingEase ?? "-"}
+        <p className="mt-2 flex items-baseline gap-2">
+          <span className="text-5xl font-bold text-[var(--text-primary)]">
+            {readingEase ?? "-"}
+          </span>
+          <span className="text-sm text-[var(--text-muted)]">/100</span>
         </p>
         <p className="mt-2 text-sm text-[var(--text-secondary)]">
           {easeLabel} · Grade level{" "}
