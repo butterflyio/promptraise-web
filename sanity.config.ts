@@ -44,6 +44,15 @@ export default defineConfig({
                   .schemaType("siteSettings")
                   .documentId("site-settings"),
               ),
+            S.listItem()
+              .title("Audit Landing")
+              .schemaType("auditLanding")
+              .child(
+                S.editor()
+                  .schemaType("auditLanding")
+                  .documentId("auditLanding")
+                  .title("Audit Landing"),
+              ),
           ]),
     }),
     visionTool(),
