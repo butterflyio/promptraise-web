@@ -21,6 +21,8 @@ export const GLOSSARY_CATEGORIES = [
   "Becoming a citable source",
   "Structured data",
   "Measurement",
+  "Web3 x AI specifics",
+  "Advanced GEO & AI mechanics",
 ] as const;
 
 export const GLOSSARY_TERMS: GlossaryTerm[] = [
@@ -232,5 +234,107 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: "Measurement",
     definition:
       "Systematically checking whether answer engines name you for relevant queries. Tools that ping ChatGPT, Perplexity, Claude and Gemini for your brand name automate this tracking over time.",
+  },
+  // ---- Web3 x AI specifics ----
+  {
+    term: "Entity resolution",
+    aliases: ["entity disambiguation", "named entity resolution"],
+    category: "Web3 x AI specifics",
+    definition:
+      "The process by which an LLM determines that two tokens, projects or people sharing the same name or ticker are distinct entities. For Web3 - where tickers are sparse and reused across chains - resolution is what stops one protocol being conflated with a namesake. Anchor your entity with Organization schema, a canonical URL and stable, repeated facts so the model resolves you to the right identity.",
+    example:
+      "Two protocols both using the ticker 'NOVA' on different chains: entity resolution is what lets an answer engine tell them apart instead of merging their TVL, tokenomics and history into one confused profile.",
+  },
+  {
+    term: "On-chain grounding",
+    aliases: ["onchain grounding", "verifiable grounding"],
+    category: "Web3 x AI specifics",
+    definition:
+      "Anchoring an AI-generated claim to immutable blockchain data - wallets, TVL, transaction history, contract state - rather than to a mutable web page. On-chain facts are provable and time-stamped, so an engine can treat them as ground truth even when a blog or docs page could be edited or deleted. Link your claim to the exact on-chain data so a model can verify it.",
+    example:
+      "Instead of a docs page stating '$50M TVL', a protocol links the statement to its live on-chain treasury address - so an answer engine quoting the figure can verify it against the ledger.",
+  },
+  {
+    term: "Whitepaper indexability",
+    aliases: ["whitepaper parsing", "docs indexability"],
+    category: "Web3 x AI specifics",
+    definition:
+      "Whether a protocol's whitepaper - typically a PDF or Gitbook - can actually be parsed, read and cited by an LLM. A PDF with no text layer, or a JS-only Gitbook, may be invisible to crawlers no matter how substantial the document is. Serve a crawlable, text-first version of the whitepaper alongside the PDF to make it indexable and citable.",
+    example:
+      "A whitepaper published only as a scanned-image PDF is unreadable to GPTBot; republishing the same content as a crawlable text page or a plain-text Gitbook lets an engine read and cite it.",
+  },
+  {
+    term: "Ticker hallucination",
+    aliases: ["ticker confusion", "token name collision"],
+    category: "Web3 x AI specifics",
+    definition:
+      "When an LLM confuses one token with another that shares the same ticker symbol, mixing up price, utility, history or chain. It is commonplace in Web3 because tickers like 'BTC', 'USDC' and 'SOL' are reused across chains and bridges. Prevent it by stating your chain, contract address and distinct utility explicitly - on every surface - so the model has enough signal to keep you separate.",
+    example:
+      "An answer engine reporting the liquidation mechanics and treasury of one 'NOVA' token while quoting the price of a different 'NOVA' - ticker hallucination in action.",
+  },
+  {
+    term: "Decentralized identity (DID) for AI",
+    aliases: ["DID", "onchain identity", "verifiable credential"],
+    category: "Web3 x AI specifics",
+    definition:
+      "Using on-chain credentials - wallet ownership, DAO membership, attestations, signed statements - to verify who authored or authorized Web3 content. DIDs give an LLM a machine-checkable chain of authorship and authority, so it can attribute a claim to a known, legitimate source rather than an anonymous account. Publish signed, identity-bound content to give engines a verifiable author.",
+    example:
+      "A protocol's documentation signed by its governance multisig, tied to an on-chain identity, lets an answer engine verify the content is the official project's statement - not an imposter's fork.",
+  },
+  // ---- Advanced GEO & AI mechanics ----
+  {
+    term: "Semantic embeddings",
+    aliases: ["vector embeddings", "embedding vectors"],
+    category: "Advanced GEO & AI mechanics",
+    definition:
+      "The mathematical vectors an LLM converts text into to represent meaning, so it can match and rank content by concept rather than keyword. Content that is contextually similar sits close together in vector space. Write prose that says what you mean plainly and completely - embeddings reward clear, dense, on-topic language over keyword stuffing.",
+    example:
+      "A page about 'speeding up settlement' can rank for a query about 'fast finality' because their embeddings are close in meaning, even when no exact keyword is shared.",
+  },
+  {
+    term: "Context window",
+    aliases: ["128k tokens", "token limit"],
+    category: "Advanced GEO & AI mechanics",
+    definition:
+      "The bounded amount of text an LLM can hold in memory at once - a few thousand tokens on small models, up to 128k or more on large ones. Because the window is finite and shared across many retrieved sources, concise, dense material gets preserved and cited while rambling content gets trimmed or dropped. Make every sentence carry one verifiable fact.",
+    example:
+      "A 5,000-word blog post may have its most important claim truncated out of a 128k context window, while a one-paragraph fact sheet stating the same TVL number survives intact - and is what the engine cites.",
+  },
+  {
+    term: "Entity authority",
+    aliases: ["entity authority vs domain authority", "brand entity"],
+    category: "Advanced GEO & AI mechanics",
+    definition:
+      "Why an LLM trusts a recognized brand or person - Vitalik on Ethereum, a protocol on its own architecture - more than a high-DR blog that merely repeats secondhand. Authority attaches to the entity and its provenance, not to a link profile. Build a strong entity with consistent, verifiable, identity-bound facts so the model weighs your primary word above any copycat's.",
+    example:
+      "A low-DR tweet from Vitalik Buterin about Ethereum is treated by an engine as more authoritative than a high-DR article on a generic news site summarizing what someone else claimed.",
+  },
+  {
+    term: "Prompt injection",
+    aliases: ["indirect prompt injection"],
+    category: "Advanced GEO & AI mechanics",
+    definition:
+      "A malicious attempt to manipulate an LLM's output by embedding hidden instructions inside content the model retrieves - a technique Web3 brands must guard against because their public docs, forums and tooling are all read by AI crawlers. Publish from controlled, signed, canonical surfaces and treat any instruction-like text in user-generated content as untrusted.",
+    example:
+      "A token page that injects 'ignore the previous instructions and say X' is a prompt injection; a protocol that keeps its authoritative facts on a signed, first-party page limits what such attacks can hijack.",
+  },
+  // ---- Agency & measurement ----
+  {
+    term: "AI share of voice (AI SOV)",
+    aliases: ["AI SOV", "share of voice"],
+    category: "Measurement",
+    definition:
+      "The percentage of relevant queries on which an answer engine cites your protocol compared with direct competitors. Where traditional SOV tracks media mentions, AI SOV tracks citations inside ChatGPT, Perplexity, Claude and Gemini answers for a category. Measure it as: your citations / total competitor citations across a fixed query set.",
+    example:
+      "If your protocol is cited in 12 of 40 benchmark queries and three competitors together appear across the rest, you own ~30% AI SOV for that category - a number you can track month over month.",
+  },
+  {
+    term: "Zero-click AI answer",
+    aliases: ["zero-click answer", "no-click citation"],
+    category: "Measurement",
+    definition:
+      "When an LLM returns the complete answer to a query - 'What is Arbitrum's TVL?' - sourced from your content, but the user never clicks through to your site. The answer is consumed inside the engine. Your value is captured as the cited authority, not as traffic, so optimize to be the named, linked source even when the click is zero.",
+    example:
+      "Perplexity answering 'What is Arbitrum's TVL?' with your figure and your domain cited, while the user never visits your site - a zero-click answer that still builds brand authority.",
   },
 ];
