@@ -274,6 +274,9 @@ export const problemBlock = defineType({
       name: "problems",
       title: "Floating Problem Cards",
       type: "array",
+      description:
+        "Exactly 4 cards. Each maps (by order) to one of the four fixed floating positions; the last two used to be hardcoded defaults.",
+      validation: (rule) => rule.min(4).max(4),
       of: [
         defineArrayMember({
           type: "object",
@@ -283,7 +286,31 @@ export const problemBlock = defineType({
             defineField({ name: "title", title: "Title", type: "string" }),
             defineField({ name: "desc", title: "Description", type: "text" }),
           ],
+          preview: {
+            select: {
+              title: "title",
+              subtitle: "desc",
+            },
+          },
         }),
+      ],
+      initialValue: [
+        {
+          title: "72% of B2B buyers start research with AI",
+          desc: "Not through Google. Not through your website.",
+        },
+        {
+          title: "Traditional marketing doesn't reach AI",
+          desc: "Your SEO tactics won't work on Claude, ChatGPT, or Perplexity.",
+        },
+        {
+          title: "You're invisible where decisions are made",
+          desc: "Founders, investors, and users discover you through AI. Or they don't.",
+        },
+        {
+          title: "Competitors are already in ChatGPT",
+          desc: "They're getting cited. They're getting traffic. You're not.",
+        },
       ],
     }),
   ],
