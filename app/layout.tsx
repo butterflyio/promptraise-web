@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
-import { AnnouncementBar } from "@/components/announcement-bar";
-import { SiteShell } from "@/components/site-shell";
+import { SiteChrome } from "@/components/site-chrome";
 import TermlyCMP from "@/components/termly-cmp";
 import { getSiteSettings } from "@/sanity/lib/queries";
 
@@ -178,8 +177,7 @@ export default async function RootLayout({
             autoBlock={true}
           />
         </Suspense>
-        <AnnouncementBar announcement={settings?.announcement} />
-        <SiteShell>{children}</SiteShell>
+        <SiteChrome settings={settings}>{children}</SiteChrome>
         <Analytics />
       </body>
     </html>

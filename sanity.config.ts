@@ -13,6 +13,10 @@ import { schemaTypes } from "./sanity/schemaTypes";
 export default defineConfig({
   name: "default",
   title: "PromptRaise CMS",
+  // Must match the route the Studio is served at (app/studio/[[...tool]]).
+  // Without this, the Studio resolves tool names from the root URL - so
+  // /studio shows "Tool not found: studio" while /structure works directly.
+  basePath: "/studio",
   projectId: sanityEnv.projectId,
   dataset: sanityEnv.dataset,
   plugins: [
