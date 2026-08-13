@@ -48,6 +48,14 @@ const PUBLISHABLE_FIELDS = [
   "intro",
   "categories",
   "terms",
+  // Blog post fields
+  "excerpt",
+  "coverImage",
+  "body",
+  "author",
+  "publishedAt",
+  "status",
+  "featured",
 ];
 
 /**
@@ -210,6 +218,10 @@ function normalizeSlugForRevalidate(doc: Record<string, unknown>): string {
   const slug = doc.slug as { current?: string } | undefined;
   if (doc._type === "siteSettings") return "/";
   if (doc._type === "glossary") return "/academy/glossary";
+  if (doc._type === "post") {
+    const s = slug?.current?.replace(/^\/+|\/+$/g, "");
+    return s ? `/blog/${s}` : "/blog";
+  }
   const s = slug?.current?.replace(/^\/+|\/+$/g, "");
   return s ? `/${s}` : "/";
 }

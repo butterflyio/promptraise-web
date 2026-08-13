@@ -1,9 +1,16 @@
 import { defineField, defineType } from "sanity";
 
 /**
- * Blog post document. Blog list/detail pages are built on top of this
- * schema (planned after the production cutover). Includes SEO + publish
- * state fields so a post can be drafted internally and published in one step.
+ * Blog post document - fully CMS-editable (promptraise.com/blog).
+ *
+ * Every field an editor needs is here: title, slug, excerpt, cover image,
+ * author details (name/role/avatar/bio/socials), categories, a rich portable
+ * text body (headings, paragraphs, links, images, video embeds, code, block
+ * quotes), plus SEO + publish-state fields (draft -> review -> published).
+ *
+ * Publishing a post is a pure CMS action: draft in the Studio, Preview via
+ * Draft Mode, fl>ip status to Published with publishedAt, and ISR makes it
+ * live (~30s) with no code deploy.
  */
 export const postType = defineType({
   name: "post",
@@ -37,6 +44,7 @@ export const postType = defineType({
       title: "Cover Image",
       type: "image",
       options: { hotspot: true },
+      description: "Hero image shown on the blog card and post header.",
     }),
     defineField({
       name: "categories",
@@ -46,7 +54,8 @@ export const postType = defineType({
       options: {
         layout: "tags",
       },
-      description: "Example: AI Visibility, Web3 Marketing, SEO",
+      description:
+        "Example: AI Strategy, Research, Protocol Insights, Case Study, Product",
     }),
     defineField({
       name: "body",
@@ -56,25 +65,84 @@ export const postType = defineType({
         { type: "block" },
         { type: "image" },
         {
+          type: "object",
+          name: "video",
+          title: "Video embed",
+          fields: [
+            defineField({
+              name: "url",
+              title: "Video URL",
+              type: "url",
+              description:
+                "YouTube / Vimeo / mp4 URL to embed in the post body.",
+            }),
+            defineField({
+              name: "caption",
+              title: "Caption",
+              type: "string",
+              description: "Optional caption below the video.",
+            }),
+          ],
+        },
+        {
           type: "code",
           options: {
             language: "shell",
             languageAlternatives: [
               { title: "Shell", value: "shell" },
               { title: "JavaScript", value: "javascript" },
+              { title: "TypeScript", value: "typescript" },
               { title: "JSON", value: "json" },
             ],
             withFilename: true,
           },
         },
       ],
-      description: "Rich text content. Code blocks supported for guides.",
+      description:
+        "Rich text content. Headings, paragraphs, links, images, video embeds and code blocks supported.",
     }),
+    // ── Author details ───────────────────────────────────────────────────
     defineField({
-      name: "authorName",
-      title: "Author Name",
-      type: "string",
-      initialValue: "PromptRaise",
+      name: "author",
+      title: "Author",
+      type: "object",
+      description: "Author shown on the post byline and cards.",
+      fields: [
+        defineField({
+          name: "name",
+          title: "Name",
+          type: "string",
+          initialValue: "PromptRaise",
+        }),
+        defineField({
+          name: "role",
+          title: "Role / Title",
+          type: "string",
+          description: "e.g. PromptRaise Research, Co-founder, Analyst.",
+        }),
+        defineField({
+          name: "avatar",
+          title: "Avatar",
+          type: "image",
+          options: { hotspot: true },
+        }),
+        defineField({
+          name: "bio",
+          title: "Short bio",
+          type: "text",
+          rows: 2,
+        }),
+        defineField({
+          name: "twitter",
+          title: "X / Twitter URL",
+          type: "url",
+        }),
+        defineField({
+          name: "linkedin",
+          title: "LinkedIn URL",
+          type: "url",
+        }),
+      ],
     }),
     defineField({
       name: "publishedAt",
@@ -126,6 +194,14 @@ export const postType = defineType({
       type: "boolean",
       initialValue: false,
     }),
+    defineField({
+      name: "featured",
+      title: "Featured post",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "When enabled, this post is highlighted at the top of the blog list (first featured wins).",
+    }),
   ],
   orderings: [
     {
@@ -133,12 +209,27 @@ export const postType = defineType({
       name: "publishedAtDesc",
       by: [{ field: "publishedAt", direction: "desc" }],
     },
+    {
+      title: "Created date, newest first",
+      name: "createdAtDesc",
+      by: [{ field: "_createdAt", direction: "desc" }],
+    },
   ],
   preview: {
     select: {
       title: "title",
       subtitle: "status",
       media: "coverImage",
+      author: "author.name",
+    },
+    prepare({ title, subtitle, media, author }) {
+      return {
+        title: title ?? "Untitled post",
+        subtitle: subtitle
+          ? `${subtitle}${author ? ` - ${author}` : ""}`
+          : (author ?? ""),
+        media,
+      };
     },
   },
 });

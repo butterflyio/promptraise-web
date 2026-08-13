@@ -18,10 +18,15 @@ const PREVIEWABLE_TYPES = [
   "glossary",
 ];
 
-/** Fixed slugs for single-doc types that live at a non-slug route. */
+/** Fixed slugs for single-doc types that live at a non-slug route, and the
+ * path prefix for document types that live under a namespace (posts -> /blog). */
 const FIXED_PREVIEW_SLUGS: Record<string, string> = {
   siteSettings: "/",
   glossary: "/academy/glossary",
+};
+
+const PREVIEW_PATH_PREFIX: Record<string, string> = {
+  post: "/blog",
 };
 
 function previewUrlFor(doc: {
@@ -34,7 +39,8 @@ function previewUrlFor(doc: {
     slug = FIXED_PREVIEW_SLUGS[doc._type] ?? "/";
   } else if (doc.slug?.current) {
     const s = doc.slug.current.replace(/^\/+|\/+$/g, "");
-    slug = s ? `/${s}` : "/";
+    const prefix = PREVIEW_PATH_PREFIX[doc._type] ?? "";
+    slug = s ? `${prefix}/${s}` : prefix || "/";
   }
   const qs = new URLSearchParams({ slug });
   if (previewSecret) qs.set("secret", previewSecret);

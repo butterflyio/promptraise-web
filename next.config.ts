@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
       "style-src 'self' 'unsafe-inline' https:",
       "script-src 'self' 'unsafe-inline' https://app.termly.io https://*.termly.io",
       "connect-src 'self' https:",
-      "frame-src https://app.termly.io https://*.termly.io",
+      "frame-src https://app.termly.io https://*.termly.io https://www.youtube.com https://youtube.com https://player.vimeo.com",
       "object-src 'none'",
       "form-action 'self'",
       "upgrade-insecure-requests",

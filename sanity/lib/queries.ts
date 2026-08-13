@@ -391,3 +391,101 @@ export async function getGlossaryPreview(): Promise<GlossaryDoc | null> {
     return getGlossary();
   }
 }
+
+// ── Blog posts ───────────────────────────────────────────────────────────
+
+export interface PostAuthor {
+  name?: string;
+  role?: string;
+  bio?: string;
+  twitter?: string;
+  linkedin?: string;
+  avatar?: { asset?: { url?: string } };
+}
+
+export interface PostDoc {
+  _id: string;
+  _type: string;
+  _updatedAt?: string;
+  _createdAt?: string;
+  title?: string;
+  slug?: { current?: string };
+  excerpt?: string;
+  coverImage?: { asset?: { url?: string } };
+  categories?: string[];
+  body?: Array<Record<string, unknown>>;
+  author?: PostAuthor;
+  publishedAt?: string;
+  status?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  openGraphImage?: { asset?: { url?: string } };
+  noindex?: boolean;
+  featured?: boolean;
+}
+
+const POST_PROJECTION = `{
+  _id,
+  _type,
+  _updatedAt,
+  _createdAt,
+  title,
+  slug,
+  excerpt,
+  coverImage{asset->{url}},
+  categories,
+  body,
+  author{
+    name,
+    role,
+    bio,
+    twitter,
+    linkedin,
+    avatar{asset->{url}}
+  },
+  publishedAt,
+  status,
+  metaTitle,
+  metaDescription,
+  openGraphImage{asset->{url}},
+  noindex,
+  featured
+}`;
+
+/** All published posts (status == published, publishedAt <= now). */
+export async function getAllPosts(): Promise<PostDoc[]> {
+  const query = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now())] | order(publishedAt desc)${POST_PROJECTION}`;
+  return sanityClient.fetch(query);
+}
+
+/** Single published post by slug. */
+export async function getPostBySlug(slug: string): Promise<PostDoc | null> {
+  const query = `*[_type == "post" && slug.current == $slug && status == "published" && (!defined(publishedAt) || publishedAt <= now())][0]${POST_PROJECTION}`;
+  return sanityClient.fetch(query, { slug });
+}
+
+/** Draft-aware variant for post preview (unpublished edits render live). */
+export async function getPostBySlugPreview(
+  slug: string,
+): Promise<PostDoc | null> {
+  const query = `*[_type == "post" && slug.current == $slug][0]${POST_PROJECTION}`;
+  try {
+    return await getPreviewClient().fetch(query, { slug });
+  } catch {
+    return getPostBySlug(slug);
+  }
+}
+
+/** All post slugs (for generateStaticParams) regardless of status. */
+export async function getAllPostSlugs(): Promise<Array<{ slug: string }>> {
+  const query = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now())]{
+    slug
+  }`;
+  const docs = (await sanityClient.fetch(query)) as Array<{
+    slug?: { current?: string };
+  }>;
+  return docs
+    .map((d) => d.slug?.current)
+    .filter((s): s is string => Boolean(s))
+    .map((slug) => ({ slug }));
+}

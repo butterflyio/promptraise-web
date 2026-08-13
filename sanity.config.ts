@@ -35,7 +35,13 @@ export default defineConfig({
             S.listItem()
               .title("Blog")
               .schemaType("post")
-              .child(S.documentTypeList("post").title("Blog Posts")),
+              .child(
+                S.documentTypeList("post")
+                  .title("Blog Posts")
+                  .defaultOrdering([
+                    { field: "publishedAt", direction: "desc" },
+                  ]),
+              ),
             S.listItem()
               .title("Glossary")
               .schemaType("glossary")

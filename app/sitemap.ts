@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
 
-import { getAllPages } from "@/sanity/lib/queries";
+import { getAllPages, getAllPosts } from "@/sanity/lib/queries";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = await getAllPages();
+  const posts = await getAllPosts();
 
   const pageEntries: MetadataRoute.Sitemap = pages
     .filter((p) => !p.noindex)
@@ -33,6 +34,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     ...pageEntries,
+    {
+      url: `${siteUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...buildBlogEntries(posts, siteUrl),
     {
       url: `${siteUrl}/privacy`,
       lastModified: new Date(),
@@ -64,4 +72,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.3,
     },
   ];
+}
+
+function buildBlogEntries(
+  posts: Awaited<ReturnType<typeof getAllPosts>>,
+  siteUrl: string,
+): MetadataRoute.Sitemap {
+  return posts
+    .filter((p) => !p.noindex)
+    .map((p) => {
+      const slug = p.slug?.current;
+      if (!slug) return null;
+      return {
+        url: `${siteUrl}/blog/${slug}`,
+        lastModified: p._updatedAt ? new Date(p._updatedAt) : new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      };
+    })
+    .filter((e): e is NonNullable<typeof e> => e !== null);
 }
