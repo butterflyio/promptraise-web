@@ -310,3 +310,10 @@ Update this file after every meaningful implementation change.
 - Added `/tools/flesch-kincaid` page (renamed from `/tools/readability`): SSR page with site header/footer via SiteShell, FAQPage + HowTo + WebPage JSON-LD, richer educational SEO content, Figma-aligned hero `/100` scores and "Content type" label.
 - FAQ section converted to accordion (answers remain in DOM for SEO/AI visibility; visually collapsed behind clickable questions). New component: `components/tools/faq-accordion.tsx`.
 - Current command snapshot: `npx tsc --noEmit` passes, `npm run build` passes, route `/tools/flesch-kincaid` static.
+- **Glossary fully CMS-editable (latest):** whole glossary page is now editable via Sanity (single `glossary` document, id `glossary`):
+  - New schema `sanity/schemaTypes/glossaryType.ts`: metaTitle/metaDescription, intro, ordered `categories[]`, and `terms[]` each with term, aliases[], category, definition, example, related[]. Single doc so Draft preview + sync-to-production work unchanged.
+  - New resolver `lib/glossary-content.ts`: fetches Sanity glossary with TS-constants fallback; shared by both `/academy/glossary` and `/glossary` (never drift).
+  - Both glossary pages now async + draft-mode aware (Preview action routes to `/academy/glossary`); both switched from static to ISR 30s.
+  - Queries `getGlossary()`/`getGlossaryPreview()`; Studio Desk "Glossary" item added; sync-to-production includes glossary fields and revalidates `/academy/glossary`.
+  - Seeded current content into staging dataset: 7 categories, 40 terms, related cross-links (idempotent via `scripts/seed-glossary.ts`).
+  - Verified live on staging: 40 DefinedTerm JSON-LD entries on both pages. Production untouched (user publishes).
