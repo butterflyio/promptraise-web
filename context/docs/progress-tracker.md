@@ -317,3 +317,10 @@ Update this file after every meaningful implementation change.
   - Queries `getGlossary()`/`getGlossaryPreview()`; Studio Desk "Glossary" item added; sync-to-production includes glossary fields and revalidates `/academy/glossary`.
   - Seeded current content into staging dataset: 7 categories, 40 terms, related cross-links (idempotent via `scripts/seed-glossary.ts`).
   - Verified live on staging: 40 DefinedTerm JSON-LD entries on both pages. Production untouched (user publishes).
+- **Blog CMS + publish workflow (latest, PRD approved):** the blog moved onto `promptraise.com/blog` as a fully CMS-editable, crawlable blog (replacing the URL-less Vite SPA at `blog.promptraise.com`):
+  - `post` schema enhanced: rich author (name/role/avatar/bio/twitter/linkedin), video embed block in the body, `featured` flag, plus existing portable-text body/SEO/status.
+  - Queries `getAllPosts`, `getPostBySlug`, `getPostBySlugPreview` (draft-aware), `getAllPostSlugs`.
+  - Routes: `app/blog/page.tsx` (list, ISR 30s, featured + grid) and `app/blog/[slug]/page.tsx` (SSG + ISR, `generateStaticParams`).
+  - `components/post-body.tsx` portable-text renderer (headings, para, links, image, video embed, code block, lists, quote).
+  - Desk "Blog" list ordered by publishedAt; Preview routes posts to `/blog/[slug]`; sync-to-production copies post fields + revalidates `/blog/[slug]`; sitemap + llms.txt include blog URLs; CSP allows YouTube/Vimeo embeds.
+  - Seeded 7 legacy posts into staging via `scripts/seed-posts.ts` (idempotent). Verified live: `/blog` and `/blog/[slug]` 200 + SSR content on staging. Production untouched.
