@@ -57,8 +57,12 @@ function revalidatePathFor(doc: {
 }
 
 export async function POST(request: Request) {
+  // Validate against the SAME public secret the client action sends
+  // (NEXT_PUBLIC_SANITY_STUDIO_SYNC_SECRET). This keeps the client pairing
+  // consistent regardless of how the server-only counterpart is configured.
+  const expectedSecret = process.env.NEXT_PUBLIC_SANITY_STUDIO_SYNC_SECRET ?? "";
   const secret = request.headers.get("x-sync-secret") ?? "";
-  if (sanityEnv.studioSyncSecret && secret !== sanityEnv.studioSyncSecret) {
+  if (expectedSecret && secret !== expectedSecret) {
     return NextResponse.json(
       { ok: false, error: "Invalid sync secret" },
       { status: 401 },
