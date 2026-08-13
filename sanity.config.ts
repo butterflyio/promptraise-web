@@ -37,6 +37,15 @@ export default defineConfig({
               .schemaType("post")
               .child(S.documentTypeList("post").title("Blog Posts")),
             S.listItem()
+              .title("Glossary")
+              .schemaType("glossary")
+              .child(
+                S.editor()
+                  .schemaType("glossary")
+                  .documentId("glossary")
+                  .title("Glossary"),
+              ),
+            S.listItem()
               .title("Site Settings")
               .schemaType("siteSettings")
               .child(

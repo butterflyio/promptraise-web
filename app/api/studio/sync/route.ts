@@ -43,6 +43,11 @@ const PUBLISHABLE_FIELDS = [
   "announcement",
   "primaryTelegramCtaUrl",
   "freeAuditCtaUrl",
+  "metaTitle",
+  "metaDescription",
+  "intro",
+  "categories",
+  "terms",
 ];
 
 /**
@@ -204,6 +209,7 @@ export async function POST(request: Request) {
 function normalizeSlugForRevalidate(doc: Record<string, unknown>): string {
   const slug = doc.slug as { current?: string } | undefined;
   if (doc._type === "siteSettings") return "/";
+  if (doc._type === "glossary") return "/academy/glossary";
   const s = slug?.current?.replace(/^\/+|\/+$/g, "");
   return s ? `/${s}` : "/";
 }

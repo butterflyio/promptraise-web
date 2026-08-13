@@ -8,7 +8,7 @@ import type { DocumentActionComponent } from "sanity";
  * confirmation dialog first so this stays an explicit, review-first action -
  * matching the project rule: the user alone publishes to production.
  */
-const SYNCABLE_TYPES = ["page", "post", "siteSettings"];
+const SYNCABLE_TYPES = ["page", "post", "siteSettings", "glossary"];
 
 export const syncToProductionAction: DocumentActionComponent = (props) => {
   if (!SYNCABLE_TYPES.includes(props.type)) {

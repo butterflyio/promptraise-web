@@ -10,7 +10,19 @@ import type { DocumentActionComponent } from "sanity";
  * and the site are served from the same domain on Vercel), so no CORS or
  * hardcoded domain is needed.
  */
-const PREVIEWABLE_TYPES = ["page", "post", "siteSettings", "homePage"];
+const PREVIEWABLE_TYPES = [
+  "page",
+  "post",
+  "siteSettings",
+  "homePage",
+  "glossary",
+];
+
+/** Fixed slugs for single-doc types that live at a non-slug route. */
+const FIXED_PREVIEW_SLUGS: Record<string, string> = {
+  siteSettings: "/",
+  glossary: "/academy/glossary",
+};
 
 function previewUrlFor(doc: {
   _type: string;
@@ -18,7 +30,9 @@ function previewUrlFor(doc: {
 }): string {
   const previewSecret = process.env.NEXT_PUBLIC_SANITY_PREVIEW_SECRET ?? "";
   let slug = "/";
-  if (doc._type !== "siteSettings" && doc.slug?.current) {
+  if (doc._type in FIXED_PREVIEW_SLUGS) {
+    slug = FIXED_PREVIEW_SLUGS[doc._type] ?? "/";
+  } else if (doc.slug?.current) {
     const s = doc.slug.current.replace(/^\/+|\/+$/g, "");
     slug = s ? `/${s}` : "/";
   }

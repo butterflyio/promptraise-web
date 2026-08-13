@@ -1,62 +1,54 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 
+import GlossaryScroller from "@/components/glossary-scroller";
 import {
-  GLOSSARY_CATEGORIES,
-  GLOSSARY_TERMS,
+  getGlossaryContent,
   relatedFor,
   termAnchor,
-} from "@/lib/glossary-terms";
-import GlossaryScroller from "@/components/glossary-scroller";
-
+  type GlossaryContent,
+} from "@/lib/glossary-content";
 import type { GlossaryTerm } from "@/lib/glossary-terms";
+
+export const revalidate = 30;
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
 
-export const metadata: Metadata = {
-  title: "Web3 AI Visibility Glossary | PromptRaise Academy",
-  description: `The PromptRaise Academy glossary: ${GLOSSARY_TERMS.length} Web3 + AI-visibility terms answer engines use to discover, read and cite your protocol - from GEO and grounding to DefinedTerm and citation-per-query.`,
-  alternates: { canonical: `${siteUrl}/academy/glossary` },
-  openGraph: {
-    title: "Web3 AI Visibility Glossary | PromptRaise Academy",
-    description:
-      "The language of AI visibility for Web3: how ChatGPT, Perplexity, Claude and Gemini discover, read and cite your protocol.",
-    url: `${siteUrl}/academy/glossary`,
-  },
-};
+interface PageProps {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
 
-export default function AcademyGlossaryPage() {
-  const termsByCategory = GLOSSARY_CATEGORIES.map((category) => ({
-    category,
-    terms: GLOSSARY_TERMS.filter((t) => t.category === category),
-  })).filter((group) => group.terms.length > 0);
+export async function generateMetadata(): Promise<Metadata> {
+  const { draftMode: dm } = await import("next/headers");
+  const isDraft = await dm();
+  const content = await getGlossaryContent(isDraft);
+  return {
+    title:
+      content.metaTitle || "Web3 AI Visibility Glossary | PromptRaise Academy",
+    description:
+      content.metaDescription ||
+      `The PromptRaise Academy glossary: ${content.terms.length} Web3 + AI-visibility terms answer engines use to discover, read and cite your protocol - from GEO and grounding to DefinedTerm and citation-per-query.`,
+    alternates: { canonical: `${siteUrl}/academy/glossary` },
+    openGraph: {
+      title: "Web3 AI Visibility Glossary | PromptRaise Academy",
+      description:
+        "The language of AI visibility for Web3: how ChatGPT, Perplexity, Claude and Gemini discover, read and cite your protocol.",
+      url: `${siteUrl}/academy/glossary`,
+    },
+  };
+}
+
+export default async function AcademyGlossaryPage(_props: PageProps) {
+  const isDraft = await draftMode();
+  const content = await getGlossaryContent(isDraft);
+  const { categories, terms, intro } = content;
+
+  const termsByCategory = buildTermsByCategory(categories, terms);
 
   // DefinedTermSet JSON-LD: the machine-readable facts this page exists to
   // provide (see ai-visibility.md -> DefinedTerm). Server-rendered.
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "DefinedTermSet",
-    name: "Web3 AI Visibility Glossary",
-    description:
-      "Terms answer engines use to discover, read and cite Web3 protocols. Part of the PromptRaise Academy.",
-    url: `${siteUrl}/academy/glossary`,
-    hasDefinedTerm: GLOSSARY_TERMS.map((t) => ({
-      "@type": "DefinedTerm",
-      name: t.term,
-      description: t.definition,
-      ...(t.aliases && t.aliases.length
-        ? { alternateName: t.aliases.slice(0, 4) }
-        : {}),
-      ...(relatedFor(t.term).length
-        ? {
-            mentions: relatedFor(t.term).map(
-              (r) => `${siteUrl}/academy/glossary#${termAnchor(r)}`,
-            ),
-          }
-        : {}),
-      inDefinedTermSet: `${siteUrl}/academy/glossary`,
-    })),
-  };
+  const jsonLd = buildJsonLd(siteUrl, content);
 
   return (
     <main className="mobile:px-6 tablet:py-20 mx-auto w-full max-w-4xl px-4 py-16">
@@ -72,10 +64,11 @@ export default function AcademyGlossaryPage() {
         Web3 AI Visibility Glossary
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-[var(--text-secondary)]">
-        The language answer engines use to discover, read and cite your
+        {intro ??
+          `The language answer engines use to discover, read and cite your
         protocol. If you are wondering why ChatGPT and Perplexity do not mention
-        you, these {GLOSSARY_TERMS.length} terms explain the machinery - and how
-        to become a source instead of a rumor.
+        you, these ${terms.length} terms explain the machinery - and how
+        to become a source instead of a rumor.`}
       </p>
 
       {/* Category pill nav - static anchor links */}
@@ -83,7 +76,7 @@ export default function AcademyGlossaryPage() {
         aria-label="Glossary categories"
         className="mt-8 flex flex-wrap gap-2"
       >
-        {termsByCategory.map(({ category, terms }) => (
+        {termsByCategory.map(({ category, terms: group }) => (
           <a
             key={category}
             href={`#${slugify(category)}`}
@@ -91,31 +84,28 @@ export default function AcademyGlossaryPage() {
           >
             {category}
             <span className="ml-1.5 text-[var(--text-muted)]">
-              {terms.length}
+              {group.length}
             </span>
           </a>
         ))}
       </nav>
 
       {/* Client enhancement: search + A-Z jump (terms stay SSR'd below) */}
-      <GlossaryScroller
-        terms={GLOSSARY_TERMS}
-        categories={[...GLOSSARY_CATEGORIES]}
-      />
+      <GlossaryScroller terms={terms} categories={[...categories]} />
 
       <div className="mt-6 flex flex-col gap-12">
-        {termsByCategory.map(({ category, terms }) => (
+        {termsByCategory.map(({ category, terms: group }) => (
           <section key={category} id={slugify(category)}>
             <h2 className="flex items-baseline gap-3 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
               {category}
               <span className="text-sm font-normal text-[var(--text-muted)]">
-                {terms.length} {terms.length === 1 ? "term" : "terms"}
+                {group.length} {group.length === 1 ? "term" : "terms"}
               </span>
             </h2>
 
             <dl className="mt-6 flex flex-col gap-3">
-              {terms.map((t) => (
-                <TermCard key={t.term} term={t} />
+              {group.map((t) => (
+                <TermCard key={t.term} term={t} content={content} />
               ))}
             </dl>
           </section>
@@ -125,7 +115,52 @@ export default function AcademyGlossaryPage() {
   );
 }
 
-function TermCard({ term }: { term: GlossaryTerm }) {
+function buildTermsByCategory(
+  categories: string[],
+  terms: GlossaryTerm[],
+): Array<{ category: string; terms: GlossaryTerm[] }> {
+  return categories
+    .map((category) => ({
+      category,
+      terms: terms.filter((t) => t.category === category),
+    }))
+    .filter((group) => group.terms.length > 0);
+}
+
+function buildJsonLd(siteUrl: string, content: GlossaryContent) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: "Web3 AI Visibility Glossary",
+    description:
+      "Terms answer engines use to discover, read and cite Web3 protocols. Part of the PromptRaise Academy.",
+    url: `${siteUrl}/academy/glossary`,
+    hasDefinedTerm: content.terms.map((t) => ({
+      "@type": "DefinedTerm",
+      name: t.term,
+      description: t.definition,
+      ...(t.aliases && t.aliases.length
+        ? { alternateName: t.aliases.slice(0, 4) }
+        : {}),
+      ...(relatedFor(content.related, t.term).length
+        ? {
+            mentions: relatedFor(content.related, t.term).map(
+              (r) => `${siteUrl}/academy/glossary#${termAnchor(r)}`,
+            ),
+          }
+        : {}),
+      inDefinedTermSet: `${siteUrl}/academy/glossary`,
+    })),
+  };
+}
+
+function TermCard({
+  term,
+  content,
+}: {
+  term: GlossaryTerm;
+  content: GlossaryContent;
+}) {
   return (
     <div
       id={"term-" + slugify(term.term)}
@@ -151,12 +186,12 @@ function TermCard({ term }: { term: GlossaryTerm }) {
             {term.example}
           </span>
         ) : null}
-        {relatedFor(term.term).length ? (
+        {relatedFor(content.related, term.term).length ? (
           <span className="mt-3 flex flex-wrap items-center gap-2">
             <span className="text-xs tracking-[0.1em] text-[var(--text-muted)] uppercase">
               See also
             </span>
-            {relatedFor(term.term).map((r) => (
+            {relatedFor(content.related, term.term).map((r) => (
               <a
                 key={r}
                 href={`#${termAnchor(r)}`}

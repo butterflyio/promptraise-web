@@ -1,6 +1,7 @@
 import { type SchemaTypeDefinition } from "sanity";
 
 import { auditLandingType } from "./auditLandingType";
+import { glossaryType } from "./glossaryType";
 import { homePageType } from "./homePageType";
 import { pageType } from "./pageType";
 import { postType } from "./postType";
@@ -13,5 +14,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   homePageType,
   pageType,
   postType,
+  glossaryType,
   ...sectionBlockTypes,
 ];

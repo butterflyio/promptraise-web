@@ -340,3 +340,54 @@ export async function getAllPages(): Promise<PageDoc[]> {
   }`;
   return sanityClient.fetch(query);
 }
+
+export interface GlossaryTermDoc {
+  _key?: string;
+  term: string;
+  aliases?: string[];
+  category?: string;
+  definition?: string;
+  example?: string;
+  related?: string[];
+}
+
+export interface GlossaryDoc {
+  _id: string;
+  _updatedAt?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  intro?: string;
+  categories?: string[];
+  terms?: GlossaryTermDoc[];
+}
+
+const GLOSSARY_QUERY = `*[_type == "glossary" && _id == "glossary"][0]{
+  _id,
+  _updatedAt,
+  metaTitle,
+  metaDescription,
+  intro,
+  categories,
+  terms[]{
+    _key,
+    term,
+    aliases,
+    category,
+    definition,
+    example,
+    related
+  }
+}`;
+
+export async function getGlossary(): Promise<GlossaryDoc | null> {
+  return sanityClient.fetch(GLOSSARY_QUERY);
+}
+
+/** Draft-aware variant used by Draft Mode: resolves drafts.* docs. */
+export async function getGlossaryPreview(): Promise<GlossaryDoc | null> {
+  try {
+    return await getPreviewClient().fetch(GLOSSARY_QUERY);
+  } catch {
+    return getGlossary();
+  }
+}
