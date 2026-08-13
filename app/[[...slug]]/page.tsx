@@ -8,7 +8,6 @@ import {
 } from "@/components/sections/registry";
 import {
   getAllPages,
-  getHomePage,
   getPageBySlug,
   getPageBySlugPreview,
   getSiteSettings,
@@ -31,30 +30,6 @@ function parseSlug(params: Awaited<PageProps["params"]>): string {
   const parts = params.slug ?? [];
   if (parts.length === 0) return HOME_SLUG;
   return normalizePageSlug(parts.join("/"));
-}
-
-/** The legacy home page as an ordered list of registry blocks. */
-function homePageSections(
-  homePage: NonNullable<Awaited<ReturnType<typeof getHomePage>>>,
-): SectionBlock[] {
-  const blocks: SectionBlock[] = [];
-  if (homePage.hero) blocks.push({ _type: "hero", ...homePage.hero });
-  if (homePage.visibilitySection)
-    blocks.push({ _type: "visibility", ...homePage.visibilitySection });
-  if (homePage.problem) blocks.push({ _type: "problem", ...homePage.problem });
-  if (homePage.aiTraining)
-    blocks.push({ _type: "aiTraining", ...homePage.aiTraining });
-  if (homePage.process) blocks.push({ _type: "process", ...homePage.process });
-  if (homePage.comparison)
-    blocks.push({ _type: "comparison", ...homePage.comparison });
-  if (homePage.whyChoose)
-    blocks.push({ _type: "whyChoose", ...homePage.whyChoose });
-  if (homePage.plans) blocks.push({ _type: "plans", ...homePage.plans });
-  if (homePage.auditCta)
-    blocks.push({ _type: "auditCta", ...homePage.auditCta });
-  if (homePage.team) blocks.push({ _type: "team", ...homePage.team });
-  if (homePage.askAi) blocks.push({ _type: "askAi", ...homePage.askAi });
-  return blocks;
 }
 
 /** Blocks for a page doc: its sections array as registry blocks. */
@@ -125,17 +100,14 @@ export default async function Page({ params }: PageProps) {
   let faq: PageDoc["faq"] = [];
 
   if (slug === HOME_SLUG) {
-    // Home: prefer the `page` doc with slug "/", fall back to the legacy
-    // homePage doc during the transition.
+    // Home: rendered from the `page` doc with slug "/". Legacy homePage doc
+    // was retired - `page-home` is the single source of truth.
     const pageDoc = isDraft
       ? await getPageBySlugPreview(HOME_SLUG)
       : await getPageBySlug(HOME_SLUG);
     if (pageDoc) {
       blocks = pageDocSections(pageDoc);
       faq = pageDoc.faq;
-    } else {
-      const homePage = await getHomePage();
-      blocks = homePage ? homePageSections(homePage) : [];
     }
   } else {
     const doc = isDraft

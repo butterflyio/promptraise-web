@@ -1,12 +1,13 @@
 import { defineConfig } from "sanity";
-import { deskTool } from "sanity/desk";
 import { visionTool } from "@sanity/vision";
 import { codeInput } from "@sanity/code-input";
+import { structureTool } from "sanity/structure";
 
 import { sanityEnv } from "./sanity/lib/env";
 import { autoPublishAction } from "./sanity/plugins/auto-publish-action";
 import { previewAction } from "./sanity/plugins/preview-action";
-import { syncToProductionAction } from "./sanity/plugins/sync-to-production-action";
+import { filterSingletonActions } from "./sanity/plugins/singleton-guard";
+import { statusBadge } from "./sanity/plugins/status-badge";
 import { schemaTypes } from "./sanity/schemaTypes";
 
 export default defineConfig({
@@ -15,7 +16,7 @@ export default defineConfig({
   projectId: sanityEnv.projectId,
   dataset: sanityEnv.dataset,
   plugins: [
-    deskTool({
+    structureTool({
       structure: (S) =>
         S.list()
           .title("Content")
@@ -78,6 +79,11 @@ export default defineConfig({
     types: schemaTypes,
   },
   document: {
-    actions: (prev) => [autoPublishAction, previewAction, syncToProductionAction, ...prev],
+    badges: (prev) => [...prev, statusBadge],
+    actions: (prev, context) => [
+      autoPublishAction,
+      previewAction,
+      ...filterSingletonActions(prev, context.schemaType),
+    ],
   },
 });

@@ -80,6 +80,12 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   return sanityClient.fetch(query);
 }
 
+/**
+ * Shared type namespace for legacy home sections. Section components import
+ * nested types from here (e.g. `HomePage["process"]`) for their CMS content
+ * props. The legacy `homePage` DOCUMENT was retired (home renders from the
+ * `page` doc `page-home`), but the type remains as the section shape source.
+ */
 export interface HomePageCta {
   label?: string;
   href?: string;
@@ -199,11 +205,6 @@ export interface HomePage {
     prompt?: string;
     assistants?: Array<{ name?: string; baseHref?: string }>;
   };
-}
-
-export async function getHomePage(): Promise<HomePage | null> {
-  const query = `*[_type == "homePage" && _id == "home-page"][0]`;
-  return sanityClient.fetch(query);
 }
 
 export interface PageDoc {
