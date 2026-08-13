@@ -6,16 +6,21 @@ import type { DocumentActionComponent } from "sanity";
 /**
  * Auto-Publish on Save.
  *
- * Replaces the manual "Publish" / "Approve & Sync to Production" step for
- * CMS-editable docs. Whenever the draft changes in Studio (i.e. you hit
- * Save), it POSTs to /api/studio/publish which copies the draft to the
- * published document in the same dataset and revalidates the live site - so
- * edits made in the CMS are reflected on the main site automatically.
+ * Replaces the manual "Publish" step for a narrow whitelist of global
+ * settings docs. Whenever the draft changes in Studio (i.e. you hit Save),
+ * it POSTs to /api/studio/publish which copies the draft to the published
+ * document in the same dataset and revalidates the live site - so edits land
+ * immediately.
+ *
+ * IMPORTANT: ONLY `siteSettings` is in the whitelist. Content that should be
+ * deliberately published (blog posts, glossary, pages, home) stays on the
+ * manual Publish button. Blog posts are additionally gated by their own
+ * `status == "published"` + publishedAt fields server-side.
  *
  * Debounced to fire once per save (not per keystroke). The write token and
  * revalidation secret stay server-side.
  */
-const AUTOPUBLISH_TYPES = ["siteSettings", "page", "post", "homePage"];
+const AUTOPUBLISH_TYPES = ["siteSettings"];
 
 export const autoPublishAction: DocumentActionComponent = (props) => {
   const lastFiredRev = useRef<string | null>(null);

@@ -4,20 +4,27 @@ import { NextResponse } from "next/server";
 import { sanityEnv } from "@/sanity/lib/env";
 
 /**
- * Auto-Publish on Save (siteSettings / page / post).
+ * Auto-Publish on Save (whitelist below).
  *
  * Studio's save flow only writes to the DRAFT document (drafts.<id>). The
  * live site renders the PUBLISHED document (<id>), so edits stay invisible
- * until someone clicks Publish. This route closes that gap: it reads the
- * draft (unpublished edits included), writes the publishable fields over the
- * published document in the SAME dataset, then triggers site revalidation -
- * so a CMS save is reflected on the main site automatically, no manual
- * Publish / Approve & Sync step needed.
+ * until someone clicks Publish. This route closes that gap for GLOBAL
+ * SETTINGS ONLY: it reads the draft (unpublished edits included), writes the
+ * publishable fields over the published document in the SAME dataset, then
+ * triggers site revalidation - so a CMS save is reflected on the main site
+ * automatically, no manual Publish / Approve & Sync step needed.
+ *
+ * Only `AUTOPUBLISH_TYPES` are accepted. Content that must be deliberately
+ * published (blog posts, glossary, pages, home) is rejected here so it stays
+ * gated behind the Studio Publish button - never auto-promoted.
  *
  * The write token and trigger secret stay server-side; the client only posts
  * {_id, _type} gated by the x-sync-secret header (same pattern as the
  * existing sync route).
  */
+
+/** Only these doc types auto-publish on save. Everything else is manual. */
+const AUTOPUBLISH_TYPES = ["siteSettings"];
 
 const PUBLISHABLE_FIELDS = [
   "_type",
@@ -81,6 +88,18 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { ok: false, error: "_id and _type required" },
       { status: 400 },
+    );
+  }
+
+  // Hard gate: only whitelisted types may auto-publish. Blog posts, glossary,
+  // pages and home must go through the manual Publish button instead.
+  if (!AUTOPUBLISH_TYPES.includes(_type)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `Type "${_type}" is not auto-published; use the Publish button in Studio.`,
+      },
+      { status: 403 },
     );
   }
 
