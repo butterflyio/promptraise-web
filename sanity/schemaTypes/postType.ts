@@ -126,6 +126,27 @@ export const postType = defineType({
         "Post appears on the site from this timestamp. Leave empty until ready.",
     }),
     defineField({
+      name: "lastUpdated",
+      title: "Last Updated",
+      type: "datetime",
+      description:
+        "When the content was last meaningfully revised. Shown as a visible freshness/Trust signal. Leave empty unless you updated the post after publishing.",
+    }),
+    defineField({
+      name: "reviewedBy",
+      title: "Reviewed By (editor / SME)",
+      type: "string",
+      description:
+        "Named subject-matter expert or editor who reviewed this post (E-E-A-T Trust signal), e.g. 'Jane Doe, Head of Research'. Leave empty if not reviewed.",
+    }),
+    defineField({
+      name: "reviewedDate",
+      title: "Reviewed Date",
+      type: "datetime",
+      description:
+        "When the review happened. Used alongside Reviewed By on YMYL-ish (money/Web3-adjacent) posts.",
+    }),
+    defineField({
       name: "status",
       title: "Status",
       type: "string",

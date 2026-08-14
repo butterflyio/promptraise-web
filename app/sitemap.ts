@@ -47,6 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     ...buildBlogEntries(posts, siteUrl),
+    {
+      url: `${siteUrl}/blog/authors`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    },
     ...buildAuthorEntries(authors, siteUrl),
     {
       url: `${siteUrl}/privacy`,

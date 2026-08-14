@@ -111,6 +111,7 @@ function StructuredData({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${siteUrl}/#organization`,
     name: legalName,
     url: siteUrl,
     logo,

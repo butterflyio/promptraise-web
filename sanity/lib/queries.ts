@@ -444,6 +444,9 @@ export interface PostDoc {
   author?: PostAuthor;
   publishedAt?: string;
   status?: string;
+  lastUpdated?: string;
+  reviewedBy?: string;
+  reviewedDate?: string;
   metaTitle?: string;
   metaDescription?: string;
   openGraphImage?: { asset?: { url?: string } };
@@ -498,6 +501,9 @@ const POST_PROJECTION = `{
   },
   publishedAt,
   status,
+  lastUpdated,
+  reviewedBy,
+  reviewedDate,
   metaTitle,
   metaDescription,
   openGraphImage{asset->{url}},
@@ -580,4 +586,28 @@ export async function getAllAuthorSlugs(): Promise<Array<{ slug: string }>> {
 export async function getPostsByAuthor(authorId: string): Promise<PostDoc[]> {
   const query = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now()) && author._ref == $authorId] | order(publishedAt desc)${POST_PROJECTION}`;
   return sanityClient.fetch(query, { authorId });
+}
+
+/** Related published posts sharing at least one category with the current
+ * post (excluding it), newest first - powers the related-posts module. */
+export async function getRelatedPosts(
+  currentId: string,
+  categories: string[] = [],
+  limit = 3,
+): Promise<PostDoc[]> {
+  const base = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now()) && _id != $currentId`;
+  const catClause =
+    categories.length > 0
+      ? ` && (count((categories)[@ in $categories]) > 0)`
+      : "";
+  const query = `${base}${catClause}] | order(publishedAt desc)[0...$limit]${POST_PROJECTION}`;
+  try {
+    return (await sanityClient.fetch(query, {
+      currentId,
+      categories,
+      limit,
+    })) as PostDoc[];
+  } catch {
+    return [];
+  }
 }

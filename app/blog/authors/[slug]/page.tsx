@@ -212,9 +212,15 @@ export default async function AuthorPage({ params }: PageProps) {
       <div className="mt-10 border-t border-[var(--border-soft)] pt-6">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-[var(--accent-primary)] hover:underline"
+          className="mr-5 inline-flex items-center gap-2 text-sm text-[var(--accent-primary)] hover:underline"
         >
           ← Back to Blog
+        </Link>
+        <Link
+          href="/blog/authors"
+          className="inline-flex items-center gap-2 text-sm text-[var(--accent-primary)] hover:underline"
+        >
+          All authors
         </Link>
       </div>
     </main>
