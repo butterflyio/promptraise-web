@@ -170,6 +170,12 @@ export default async function RootLayout({
     <html lang="en" className="h-full antialiased">
       <head>
         <StructuredData settings={settings} />
+        {/* Ahrefs Analytics - sitewide traffic measurement */}
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="lV0hEymR0FuxRpoJU0kVKg"
+          async
+        />
       </head>
       <body className="min-h-full">
         <Suspense fallback={null}>
