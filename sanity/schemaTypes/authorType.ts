@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { seoSlugify, truncateSlug } from "../../lib/seo-slug";
 
 /**
  * Author document - the canonical "who wrote this" entity.
@@ -32,9 +33,13 @@ export const authorType = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "name", maxLength: 96 },
+      options: {
+        source: "name",
+        maxLength: 96,
+        slugify: (input: string) => truncateSlug(seoSlugify(input), 96),
+      },
       description:
-        "Canonical author page URL: /blog/authors/<slug>. Keep stable once live.",
+        "Canonical author page URL: /blog/authors/<slug>. The Generate button follows Google URL-structure + RFC 3986 (STD 66): lowercase, hyphens, no reserved chars. Keep stable once live.",
       validation: (rule) => rule.required(),
     }),
     defineField({

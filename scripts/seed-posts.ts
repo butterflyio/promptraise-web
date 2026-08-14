@@ -4,6 +4,7 @@
 //   npx tsx scripts/seed-posts.ts
 import { createClient } from "@sanity/client";
 import * as dotenv from "dotenv";
+import { seoSlugify } from "../lib/seo-slug";
 dotenv.config({ path: ".env.local" });
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "";
@@ -25,11 +26,7 @@ const client = createClient({
   token,
 });
 
-const slugify = (s: string) =>
-  s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+const slugify = (s: string) => seoSlugify(s);
 
 /** Convert plain paragraphs into Sanity portable-text block objects. */
 function blocks(paragraphs: string[]): Array<Record<string, unknown>> {

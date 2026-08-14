@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 import { sectionBlockNames } from "./sectionBlocks";
+import { seoSlugify, truncateSlug } from "../../lib/seo-slug";
 
 /**
  * `page` document type - the composition layer's core.
@@ -26,10 +27,12 @@ export const pageType = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      description: "URL path. Use '/' (single slash) for the home page.",
+      description:
+        "URL path. Use '/' (single slash) for the home page. Generate follows Google URL-structure + RFC 3986 (STD 66).",
       options: {
         source: "title",
         maxLength: 96,
+        slugify: (input: string) => truncateSlug(seoSlugify(input), 96),
       },
       validation: (rule) => rule.required(),
     }),

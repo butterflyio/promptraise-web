@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { seoSlugify, truncateSlug } from "../../lib/seo-slug";
 
 /**
  * Blog post document - fully CMS-editable (promptraise.com/blog).
@@ -27,7 +28,13 @@ export const postType = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "title", maxLength: 96 },
+      options: {
+        source: "title",
+        maxLength: 96,
+        slugify: (input: string) => truncateSlug(seoSlugify(input), 96),
+      },
+      description:
+        "Canonical URL: /blog/<slug>. The Generate button follows Google URL-structure + RFC 3986 (STD 66): lowercase, hyphens, no reserved chars. Keep stable once published.",
       validation: (rule) => rule.required(),
     }),
     defineField({
