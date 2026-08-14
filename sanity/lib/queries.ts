@@ -395,13 +395,39 @@ export async function getGlossaryPreview(): Promise<GlossaryDoc | null> {
 
 // ── Blog posts ───────────────────────────────────────────────────────────
 
+export interface AuthorDoc {
+  _id: string;
+  _type: string;
+  _updatedAt?: string;
+  _createdAt?: string;
+  name?: string;
+  slug?: { current?: string };
+  role?: string;
+  avatar?: { asset?: { url?: string } };
+  shortBio?: string;
+  longBio?: Array<Record<string, unknown>>;
+  linkedin?: string;
+  twitter?: string;
+  github?: string;
+  website?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  openGraphImage?: { asset?: { url?: string } };
+  noindex?: boolean;
+}
+
+/** Author shape as it appears on a post (resolved via the reference). */
 export interface PostAuthor {
+  _id?: string;
   name?: string;
   role?: string;
-  bio?: string;
-  twitter?: string;
+  shortBio?: string;
   linkedin?: string;
+  twitter?: string;
+  github?: string;
+  website?: string;
   avatar?: { asset?: { url?: string } };
+  slug?: { current?: string };
 }
 
 export interface PostDoc {
@@ -425,6 +451,28 @@ export interface PostDoc {
   featured?: boolean;
 }
 
+/** Shared projection for an author document (full profile). */
+const AUTHOR_PROJECTION = `{
+  _id,
+  _type,
+  _updatedAt,
+  _createdAt,
+  name,
+  slug,
+  role,
+  avatar{asset->{url}},
+  shortBio,
+  longBio,
+  linkedin,
+  twitter,
+  github,
+  website,
+  metaTitle,
+  metaDescription,
+  openGraphImage{asset->{url}},
+  noindex
+}`;
+
 const POST_PROJECTION = `{
   _id,
   _type,
@@ -436,13 +484,17 @@ const POST_PROJECTION = `{
   coverImage{asset->{url}},
   categories,
   body,
-  author{
+  author->{
+    _id,
     name,
     role,
-    bio,
-    twitter,
+    shortBio,
+    avatar{asset->{url}},
     linkedin,
-    avatar{asset->{url}}
+    twitter,
+    github,
+    website,
+    slug
   },
   publishedAt,
   status,
@@ -489,4 +541,42 @@ export async function getAllPostSlugs(): Promise<Array<{ slug: string }>> {
     .map((d) => d.slug?.current)
     .filter((s): s is string => Boolean(s))
     .map((slug) => ({ slug }));
+}
+
+// ── Authors ──────────────────────────────────────────────────────────────
+
+/** All authors (for the studio list + sitemap). */
+export async function getAllAuthors(): Promise<AuthorDoc[]> {
+  const query = `*[_type == "author"] | order(name asc)${AUTHOR_PROJECTION}`;
+  return sanityClient.fetch(query);
+}
+
+/** All public, indexable authors (not noindex). */
+export async function getAllPublicAuthors(): Promise<AuthorDoc[]> {
+  const query = `*[_type == "author" && !noindex] | order(name asc)${AUTHOR_PROJECTION}`;
+  return sanityClient.fetch(query);
+}
+
+/** Single author by slug. */
+export async function getAuthorBySlug(slug: string): Promise<AuthorDoc | null> {
+  const query = `*[_type == "author" && slug.current == $slug][0]${AUTHOR_PROJECTION}`;
+  return sanityClient.fetch(query, { slug });
+}
+
+/** All author slugs (for generateStaticParams). */
+export async function getAllAuthorSlugs(): Promise<Array<{ slug: string }>> {
+  const query = `*[_type == "author"]{ slug }`;
+  const docs = (await sanityClient.fetch(query)) as Array<{
+    slug?: { current?: string };
+  }>;
+  return docs
+    .map((d) => d.slug?.current)
+    .filter((s): s is string => Boolean(s))
+    .map((slug) => ({ slug }));
+}
+
+/** Author's published posts, newest first. */
+export async function getPostsByAuthor(authorId: string): Promise<PostDoc[]> {
+  const query = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now()) && author._ref == $authorId] | order(publishedAt desc)${POST_PROJECTION}`;
+  return sanityClient.fetch(query, { authorId });
 }

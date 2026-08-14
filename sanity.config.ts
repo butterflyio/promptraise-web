@@ -49,6 +49,14 @@ export default defineConfig({
                   ]),
               ),
             S.listItem()
+              .title("Authors")
+              .schemaType("author")
+              .child(
+                S.documentTypeList("author")
+                  .title("Authors")
+                  .defaultOrdering([{ field: "name", direction: "asc" }]),
+              ),
+            S.listItem()
               .title("Glossary")
               .schemaType("glossary")
               .child(

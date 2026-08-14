@@ -11,7 +11,13 @@ import {
   type PostDoc,
 } from "@/sanity/lib/queries";
 import { imageUrl } from "@/lib/sanity-image";
-import { postUrl, formatLongDate, readTime } from "@/lib/blog";
+import {
+  postUrl,
+  authorHref,
+  authorUrl,
+  formatLongDate,
+  readTime,
+} from "@/lib/blog";
 
 export const revalidate = 30;
 
@@ -73,6 +79,34 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <article className="mobile:px-6 tablet:py-16 mx-auto w-full max-w-4xl px-4 py-12">
+      {/* Person JSON-LD for the author (E-E-A-T recognition signal) */}
+      {post.author?.name ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: post.author.name,
+              ...(post.author.role ? { jobTitle: post.author.role } : {}),
+              ...(post.author.slug ? { url: authorUrl(post.author) } : {}),
+              ...(post.author.avatar?.asset?.url
+                ? { image: post.author.avatar.asset.url }
+                : {}),
+              ...(() => {
+                const sameAs = [
+                  post.author?.linkedin,
+                  post.author?.twitter,
+                  post.author?.github,
+                  post.author?.website,
+                ].filter((u): u is string => Boolean(u));
+                return sameAs.length ? { sameAs } : {};
+              })(),
+            }),
+          }}
+        />
+      ) : null}
+
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-3">
         {post.categories?.[0] ? (
@@ -112,11 +146,25 @@ export default async function PostPage({ params }: PageProps) {
         </div>
         <div>
           <p className="text-sm font-medium text-[var(--text-primary)]">
-            {post.author?.name ?? "PromptRaise"}
+            {post.author?.slug ? (
+              <Link
+                href={authorHref(post.author)}
+                className="hover:text-[var(--accent-primary)]"
+              >
+                {post.author?.name ?? "PromptRaise"}
+              </Link>
+            ) : (
+              (post.author?.name ?? "PromptRaise")
+            )}
           </p>
           {post.author?.role ? (
             <p className="text-xs text-[var(--text-muted)]">
               {post.author.role}
+            </p>
+          ) : null}
+          {post.author?.shortBio ? (
+            <p className="mt-0.5 text-xs text-[var(--text-muted)]">
+              {post.author.shortBio}
             </p>
           ) : null}
         </div>

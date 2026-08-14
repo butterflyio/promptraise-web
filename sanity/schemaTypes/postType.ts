@@ -101,48 +101,15 @@ export const postType = defineType({
       description:
         "Rich text content. Headings, paragraphs, links, images, video embeds and code blocks supported.",
     }),
-    // ── Author details ───────────────────────────────────────────────────
+    // ── Author (reference to the Author document) ─────────────────────
     defineField({
       name: "author",
       title: "Author",
-      type: "object",
-      description: "Author shown on the post byline and cards.",
-      fields: [
-        defineField({
-          name: "name",
-          title: "Name",
-          type: "string",
-          initialValue: "PromptRaise",
-        }),
-        defineField({
-          name: "role",
-          title: "Role / Title",
-          type: "string",
-          description: "e.g. PromptRaise Research, Co-founder, Analyst.",
-        }),
-        defineField({
-          name: "avatar",
-          title: "Avatar",
-          type: "image",
-          options: { hotspot: true },
-        }),
-        defineField({
-          name: "bio",
-          title: "Short bio",
-          type: "text",
-          rows: 2,
-        }),
-        defineField({
-          name: "twitter",
-          title: "X / Twitter URL",
-          type: "url",
-        }),
-        defineField({
-          name: "linkedin",
-          title: "LinkedIn URL",
-          type: "url",
-        }),
-      ],
+      type: "reference",
+      to: [{ type: "author" }],
+      description:
+        "The Author document this post is by. Author details (bio, avatar, socials, Person schema) live ONCE on the author and are inherited by every post.",
+      options: { disableNew: false },
     }),
     defineField({
       name: "publishedAt",
@@ -220,14 +187,14 @@ export const postType = defineType({
       title: "title",
       subtitle: "status",
       media: "coverImage",
-      author: "author.name",
+      authorName: "author.name",
     },
-    prepare({ title, subtitle, media, author }) {
+    prepare({ title, subtitle, media, authorName }) {
       return {
         title: title ?? "Untitled post",
         subtitle: subtitle
-          ? `${subtitle}${author ? ` - ${author}` : ""}`
-          : (author ?? ""),
+          ? `${subtitle}${authorName ? ` - ${authorName}` : ""}`
+          : (authorName ?? ""),
         media,
       };
     },

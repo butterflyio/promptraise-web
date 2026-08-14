@@ -26,6 +26,22 @@ export function postUrl(post: {
   return `${siteUrl}${postHref(post)}`;
 }
 
+export function authorHref(author: {
+  slug?: { current?: string };
+  name?: string;
+}): string {
+  const slug = author.slug?.current;
+  if (!slug) return "/blog/authors";
+  return `/blog/authors/${slug}`;
+}
+
+export function authorUrl(author: {
+  slug?: { current?: string };
+  name?: string;
+}): string {
+  return `${siteUrl}${authorHref(author)}`;
+}
+
 /** en-US short date: "Aug 8, 2025" */
 export function formatShortDate(iso?: string): string {
   if (!iso) return "";
