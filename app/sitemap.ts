@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getAllPages, getAllPosts } from "@/sanity/lib/queries";
+import { postUrl } from "@/lib/blog";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
@@ -84,7 +85,7 @@ function buildBlogEntries(
       const slug = p.slug?.current;
       if (!slug) return null;
       return {
-        url: `${siteUrl}/blog/${slug}`,
+        url: postUrl(p),
         lastModified: p._updatedAt ? new Date(p._updatedAt) : new Date(),
         changeFrequency: "weekly" as const,
         priority: 0.7,

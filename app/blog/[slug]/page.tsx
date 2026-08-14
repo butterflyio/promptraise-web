@@ -11,6 +11,7 @@ import {
   type PostDoc,
 } from "@/sanity/lib/queries";
 import { imageUrl } from "@/lib/sanity-image";
+import { postUrl, formatLongDate, readTime } from "@/lib/blog";
 
 export const revalidate = 30;
 
@@ -38,7 +39,7 @@ export async function generateMetadata({
   if (!post) {
     return { title: "Post not found" };
   }
-  const url = `${siteUrl}/blog/${slug}`;
+  const url = postUrl(post);
   const title = post.metaTitle || post.title || "Blog";
   const description = post.metaDescription || post.excerpt || "";
   const image = post.openGraphImage?.asset?.url || post.coverImage?.asset?.url;
@@ -59,15 +60,6 @@ export async function generateMetadata({
   };
 }
 
-function formatDate(iso?: string): string {
-  if (!iso) return "";
-  return new Date(iso).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params;
   const dm = await draftMode();
@@ -79,52 +71,48 @@ export default async function PostPage({ params }: PageProps) {
     notFound();
   }
 
-  return <PostView post={post} />;
-}
-
-function PostView({ post }: { post: PostDoc }) {
-  const hero =
-    post.coverImage?.asset?.url &&
-    imageUrl(post.coverImage.asset.url, {
-      width: 1400,
-      height: 700,
-      fit: "crop",
-    });
-  const author = post.author?.name ?? "PromptRaise";
-
   return (
-    <main className="mobile:px-6 tablet:py-16 mx-auto w-full max-w-4xl px-4 py-12">
-      {/* Hero */}
+    <article className="mobile:px-6 tablet:py-16 mx-auto w-full max-w-4xl px-4 py-12">
+      {/* Meta row */}
       <div className="flex flex-wrap items-center gap-3">
         {post.categories?.[0] ? (
-          <span className="inline-flex items-center rounded-full border border-[var(--accent-primary)]/20 bg-[var(--accent-primary)]/5 px-3 py-1 text-xs text-[var(--accent-primary)]">
+          <span className="inline-flex items-center rounded-full border border-[rgba(103,255,103,0.2)] bg-[rgba(103,255,103,0.08)] px-3 py-1 text-[12px] text-[#67ff67]">
             {post.categories[0]}
           </span>
         ) : null}
         <span className="text-sm text-[var(--text-muted)]">
-          {formatDate(post.publishedAt)}
+          {formatLongDate(post.publishedAt)}
         </span>
+        {post.excerpt ? (
+          <>
+            <span className="h-1 w-1 rounded-full bg-[var(--text-muted)]" />
+            <span className="text-sm text-[var(--text-muted)]">
+              {readTime(post.excerpt)}
+            </span>
+          </>
+        ) : null}
       </div>
 
-      <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
+      <h1 className="mt-5 text-3xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
         {post.title}
       </h1>
 
+      {/* Author */}
       <div className="mt-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-primary)]/15 text-sm font-semibold text-[var(--accent-primary)]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(103,255,103,0.15)] text-sm font-semibold text-[var(--accent-primary)]">
           {post.author?.avatar?.asset?.url ? (
             <img
               src={post.author.avatar.asset.url}
-              alt={author}
+              alt={post.author?.name ?? "author"}
               className="h-full w-full rounded-full object-cover"
             />
           ) : (
-            author.charAt(0).toUpperCase()
+            (post.author?.name ?? "P").charAt(0).toUpperCase()
           )}
         </div>
         <div>
           <p className="text-sm font-medium text-[var(--text-primary)]">
-            {author}
+            {post.author?.name ?? "PromptRaise"}
           </p>
           {post.author?.role ? (
             <p className="text-xs text-[var(--text-muted)]">
@@ -134,18 +122,29 @@ function PostView({ post }: { post: PostDoc }) {
         </div>
       </div>
 
-      {hero ? (
-        <img
-          src={hero}
-          alt={post.title ?? ""}
-          className="mt-8 aspect-[2/1] w-full rounded-2xl border border-[var(--border-soft)] object-cover"
-        />
-      ) : null}
+      {/* Cover */}
+      {(() => {
+        const cover = post.coverImage?.asset?.url;
+        if (!cover) return null;
+        const src = imageUrl(cover, { width: 1400, height: 700, fit: "crop" });
+        if (!src) return null;
+        return (
+          <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--border-soft)]">
+            <img
+              src={src}
+              alt={post.title ?? ""}
+              className="aspect-[2/1] w-full object-cover"
+            />
+          </div>
+        );
+      })()}
 
-      <article className="prose-blog mt-10">
+      {/* Body */}
+      <div className="prose-blog mt-10">
         <PostBody blocks={(post.body ?? []) as never} />
-      </article>
+      </div>
 
+      {/* Footer */}
       <div className="mt-10 border-t border-[var(--border-soft)] pt-6">
         <Link
           href="/blog"
@@ -154,6 +153,6 @@ function PostView({ post }: { post: PostDoc }) {
           ← Back to Blog
         </Link>
       </div>
-    </main>
+    </article>
   );
 }

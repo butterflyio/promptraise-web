@@ -1,11 +1,14 @@
 import type { NextConfig } from "next";
+import { slugRedirectEntries } from "./lib/slug-redirects";
 
 const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
   async redirects() {
+    // Blog post slug 301s (renamed posts) + legacy tool consolidation.
     return [
+      ...slugRedirectEntries(),
       // Legacy tool URLs -> consolidated free tools
       {
         source: "/tools/flesch-kincaid",
