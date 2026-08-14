@@ -551,9 +551,10 @@ export async function getAllAuthors(): Promise<AuthorDoc[]> {
   return sanityClient.fetch(query);
 }
 
-/** All public, indexable authors (not noindex). */
+/** All public, indexable authors (not noindex). GROQ `!noindex` is falsy for
+ * unset (null) fields, so use `noindex != true` to include default authors. */
 export async function getAllPublicAuthors(): Promise<AuthorDoc[]> {
-  const query = `*[_type == "author" && !noindex] | order(name asc)${AUTHOR_PROJECTION}`;
+  const query = `*[_type == "author" && noindex != true] | order(name asc)${AUTHOR_PROJECTION}`;
   return sanityClient.fetch(query);
 }
 
