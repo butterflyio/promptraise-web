@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { DsBadge, DsButton } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import type { HomePageHero } from "@/sanity/lib/queries";
@@ -44,6 +46,14 @@ export function HeroSection({
   auditUrl = "https://audit.promptraise.com",
   content,
 }: HeroSectionProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
   const bodyCandidate = content?.body?.filter(Boolean) ?? [];
   const bodyLines =
     bodyCandidate.length > 0 ? bodyCandidate : defaultHeroContent.body;
@@ -72,14 +82,16 @@ export function HeroSection({
         preload="metadata"
         poster="/images/hero-poster.jpg"
       >
-        {/* Mobile: tiny 340KB 720p encode (was 16.5MB 1080p) - do not make mobile
-            download the full desktop video. Desktop keeps the original quality. */}
+        {/* Render a SINGLE source based on viewport so mobile never downloads
+            the 16.5MB desktop encode. Mobile = 340KB 720p encode. */}
         <source
-          src="/videos/bg-video-promptraise-mobile.mp4"
+          src={
+            isMobile
+              ? "/videos/bg-video-promptraise-mobile.mp4"
+              : "/videos/bg-video-promptraise.mp4"
+          }
           type="video/mp4"
-          media="(max-width: 768px)"
         />
-        <source src="/videos/bg-video-promptraise.mp4" type="video/mp4" />
       </video>
 
       <div className="mobile:px-6 tablet:pt-[220px] desktop:min-h-[960px] desktop:pt-[255px] relative z-10 mx-auto flex min-h-[780px] max-w-[1248px] flex-col items-center px-5 pt-[170px] text-center">

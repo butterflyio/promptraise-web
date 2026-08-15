@@ -398,6 +398,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                     <img
                       src="/figma/process-noise.png"
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                       className="block size-full max-w-none"
                     />
                   </div>
