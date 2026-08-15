@@ -69,7 +69,16 @@ export function HeroSection({
         loop
         playsInline
         aria-hidden="true"
+        preload="metadata"
+        poster="/images/hero-poster.jpg"
       >
+        {/* Mobile: tiny 340KB 720p encode (was 16.5MB 1080p) - do not make mobile
+            download the full desktop video. Desktop keeps the original quality. */}
+        <source
+          src="/videos/bg-video-promptraise-mobile.mp4"
+          type="video/mp4"
+          media="(max-width: 768px)"
+        />
         <source src="/videos/bg-video-promptraise.mp4" type="video/mp4" />
       </video>
 
