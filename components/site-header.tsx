@@ -1,6 +1,7 @@
 import { getSiteSettings } from "@/sanity/lib/queries";
-import { DsButton, MenuIcon } from "@/components/design-system";
+import { DsButton } from "@/components/design-system";
 import { SiteBrand } from "./site-brand";
+import { MobileMenu } from "./mobile-menu";
 
 const defaultNavItems = [
   { href: "#solutions", label: "Solutions" },
@@ -28,13 +29,14 @@ export async function SiteHeader() {
       <div className="tablet:px-9 desktop:px-24 mx-auto flex w-full flex-col items-start px-4 py-6">
         <div className="flex w-full items-center justify-between rounded-[9999px] backdrop-blur-[14.012px]">
           <div className="flex items-center gap-6">
-            <button
-              type="button"
-              aria-label="Open navigation"
-              className="tablet:hidden inline-flex h-6 w-6 items-center justify-center text-white"
-            >
-              <MenuIcon className="h-6 w-6" />
-            </button>
+            <MobileMenu
+              navItems={[
+                ...navItems,
+                { href: auditUrl, label: headerCtaLabel },
+              ]}
+              auditUrl={auditUrl}
+              auditLabel={headerCtaLabel}
+            />
 
             <SiteBrand
               siteName={siteName}

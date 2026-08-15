@@ -17,6 +17,7 @@ interface DsButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   showTrailingArrow?: boolean;
+  onClick?: () => void;
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -43,10 +44,12 @@ export function DsButton({
   variant = "primary",
   size = "lg",
   showTrailingArrow = false,
+  onClick,
 }: DsButtonProps) {
   return (
     <a
       href={href}
+      onClick={onClick}
       className={cn(
         "inline-flex items-center rounded-full leading-none font-normal tracking-[0] transition-all hover:opacity-90",
         variantClasses[variant],
