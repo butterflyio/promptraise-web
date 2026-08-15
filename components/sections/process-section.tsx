@@ -235,6 +235,24 @@ interface ProcessSectionProps {
 export function ProcessSection({ content }: ProcessSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Mobile-safe card positions: keep the card entirely inside the viewport.
+  // Desktop keeps the Figma travel spread (2%..66%); mobile centers each card
+  // so no step ever slides off-screen (Figma mobile frame 393, one card at a
+  // time).
+  const cardOffsets = isMobile
+    ? ["50%", "50%", "50%", "50%", "50%"]
+    : CARD_OFFSETS;
+  const cardTranslateX = isMobile ? "translateX(-50%)" : "none";
 
   // Override step copy/label/number from CMS while keeping the 5-step structure
   const steps = STEPS.map((step, i) => {
@@ -493,9 +511,12 @@ export function ProcessSection({ content }: ProcessSectionProps) {
           {/* Card (Figma 338:707; w-389, rounded-32, glass) */}
           <motion.div
             className="absolute top-0"
-            animate={{ left: CARD_OFFSETS[activeStep] }}
+            animate={{
+              left: cardOffsets[activeStep],
+              x: isMobile ? "-50%" : 0,
+            }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-            style={{ width: "min(389px, 86vw)" }}
+            style={{ width: "min(389px, 84vw)" }}
           >
             <div
               className="relative w-full overflow-hidden rounded-[32px] border border-white/90 shadow-[0_0_0_4px_rgba(255,255,255,0.07)]"
@@ -603,9 +624,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             aria-hidden
             className="absolute"
             animate={{
-              left: `calc(min(${CARD_OFFSETS[activeStep]}, 66%) + ${
-                Math.min(CARD_WIDTH, 389) / 2
-              }px)`,
+              left: isMobile
+                ? `calc(50% + ${Math.min(CARD_WIDTH, 389) / 2}px)`
+                : `calc(min(${CARD_OFFSETS[activeStep]}, 66%) + ${
+                    Math.min(CARD_WIDTH, 389) / 2
+                  }px)`,
             }}
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
             style={{ top: 388, width: 1, transform: "translateX(-50%)" }}
@@ -638,6 +661,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 number={step.number}
                 totalSegments={TOTAL_SEGMENTS}
                 activeSegments={activeSegments}
+                isMobile={isMobile}
               />
             </div>
           </div>
@@ -654,24 +678,36 @@ function StepPill({
   number,
   totalSegments,
   activeSegments,
+  isMobile,
 }: {
   label: string;
   number: string;
   totalSegments: number;
   activeSegments: number;
+  isMobile?: boolean;
 }) {
-  const pct = (activeSegments / totalSegments) * 100;
+  // Mobile: center the pill above the slider so it never leaves the viewport
+  // (Figma mobile frame 393). Desktop keeps the active-segment % tracking.
+  const pct = isMobile ? 50 : (activeSegments / totalSegments) * 100;
   return (
     <motion.div
-      className="absolute -top-[34px] flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
-      animate={{ left: `${pct}%` }}
+      className={
+        isMobile
+          ? "absolute -top-[34px] flex items-center justify-center gap-1.5 self-center rounded-full px-3 py-1 text-xs font-semibold"
+          : "absolute -top-[34px] flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+      }
+      animate={isMobile ? undefined : { left: `${pct}%` }}
       transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
       style={{
-        transform: "translateX(-50%)",
+        left: isMobile ? 0 : undefined,
+        right: isMobile ? 0 : undefined,
+        marginInline: isMobile ? "auto" : undefined,
+        transform: isMobile ? "none" : "translateX(-50%)",
         background: "rgba(20,24,20,0.92)",
         border: "1px solid rgba(103,255,103,0.35)",
         color: "white",
         whiteSpace: "nowrap",
+        width: isMobile ? "max-content" : undefined,
         boxShadow: "0 2px 12px rgba(0,0,0,0.5)",
         backdropFilter: "blur(6px)",
       }}

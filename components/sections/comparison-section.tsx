@@ -108,18 +108,23 @@ function CheckCell({
   active: boolean;
 }) {
   return (
-    <div className="relative flex w-full items-center justify-center rounded-[12px] px-6 py-2">
+    <div className="mobile:px-2 relative flex w-full items-center justify-center rounded-[12px] px-6 py-2">
       {active ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
           src={company.check}
           alt=""
           aria-hidden
-          className="relative size-6"
+          className="mobile:size-4 relative size-6"
         />
       ) : (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={MINUS} alt="" aria-hidden className="relative size-6" />
+        <img
+          src={MINUS}
+          alt=""
+          aria-hidden
+          className="mobile:size-4 relative size-6"
+        />
       )}
     </div>
   );
@@ -171,9 +176,11 @@ function CompanyColumn({
 function LabelColumn({
   className = "",
   labels = FEATURES,
+  mobile = false,
 }: {
   className?: string;
   labels?: readonly string[];
+  mobile?: boolean;
 }) {
   return (
     <div
@@ -182,9 +189,19 @@ function LabelColumn({
       {labels.map((feature) => (
         <div
           key={feature}
-          className="relative flex w-full flex-col items-center justify-center rounded-[12px] px-6 py-2"
+          className={
+            mobile
+              ? "relative flex w-full flex-col items-center justify-center rounded-[12px] px-1 py-2"
+              : "relative flex w-full flex-col items-center justify-center rounded-[12px] px-6 py-2"
+          }
         >
-          <span className="text-center text-[16px] leading-[1.5] tracking-[-0.32px] whitespace-nowrap text-[var(--fg-secondary,#d4d4d8)]">
+          <span
+            className={
+              mobile
+                ? "text-center text-[11px] leading-[1.35] text-[var(--fg-secondary,#d4d4d8)]"
+                : "text-center text-[16px] leading-[1.5] tracking-[-0.32px] whitespace-nowrap text-[var(--fg-secondary,#d4d4d8)]"
+            }
+          >
             {feature}
           </span>
         </div>
@@ -205,7 +222,7 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
         aria-hidden
         width={40}
         height={25}
-        className="shrink-0"
+        className="mobile:hidden shrink-0"
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -214,7 +231,7 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
         aria-hidden
         width={120}
         height={6}
-        className="shrink-0"
+        className="mobile:hidden shrink-0"
         style={{ transform: "scaleX(-1)" }}
       />
       <div
@@ -233,7 +250,7 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
         aria-hidden
         width={120}
         height={6}
-        className="shrink-0"
+        className="mobile:hidden shrink-0"
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -242,7 +259,7 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
         aria-hidden
         width={40}
         height={25}
-        className="shrink-0"
+        className="mobile:hidden shrink-0"
       />
     </div>
   );
@@ -285,13 +302,21 @@ function MobileComparison({
         })}
       </div>
 
-      <div className="flex w-full content-stretch items-center gap-[9px] pr-6">
-        <LabelColumn className="w-[256px]" labels={labels} />
+      <div
+        className={
+          "mobile:gap-[6px] mobile:pr-0 flex w-full content-stretch items-center gap-[9px] pr-6"
+        }
+      >
+        <LabelColumn
+          className="mobile:w-[118px] mobile:px-3 w-[256px]"
+          labels={labels}
+          mobile
+        />
         <CompanyColumn
           company={company}
           columns={ROW_MATRIX}
           columnIndex={active}
-          className="min-w-px flex-[1_0_0]"
+          className="mobile:flex-[1_1_0%] mobile:p-4 min-w-px flex-[1_0_0]"
         />
       </div>
     </div>
@@ -333,7 +358,7 @@ interface ComparisonSectionProps {
 export function ComparisonSection({ content }: ComparisonSectionProps) {
   const { labels, companies } = resolveComparison(content);
   return (
-    <DsSection className="ds-section-alt relative overflow-hidden">
+    <DsSection className="ds-section-alt mobile:overflow-x-clip relative overflow-hidden">
       <SectionLabel name="ComparisonSection" />
 
       {/* Radial glows like the Figma background */}
