@@ -82,11 +82,11 @@ export function MobileMenu({
       <div
         id="mobile-menu"
         hidden={!open}
-        className="tablet:hidden fixed inset-x-0 top-0 bottom-0 z-[60]"
+        className="tablet:hidden fixed inset-x-0 top-0 bottom-0 z-[80]"
         style={{
-          background: "rgba(15,15,15,0.6)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
+          background: "rgba(10,10,12,0.88)",
+          backdropFilter: "blur(28px)",
+          WebkitBackdropFilter: "blur(28px)",
         }}
       >
         <div className="flex h-full flex-col px-5 pt-6 pb-10">

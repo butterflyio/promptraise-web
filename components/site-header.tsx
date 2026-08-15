@@ -10,6 +10,16 @@ const defaultNavItems = [
   { href: "#resources", label: "Resources" },
 ];
 
+/**
+ * Normalize nav hrefs so anchors work from ANY page, not just the homepage.
+ * "#pricing" -> "/#pricing" (jumps to the homepage section from anywhere).
+ * Absolute URLs and real paths pass through unchanged.
+ */
+function normalizeHref(href: string): string {
+  if (href.startsWith("#")) return `/${href}`;
+  return href;
+}
+
 export async function SiteHeader() {
   const settings = await getSiteSettings();
   const siteName = settings?.siteName ?? "PromptRaise";
@@ -31,7 +41,10 @@ export async function SiteHeader() {
           <div className="flex items-center gap-6">
             <MobileMenu
               navItems={[
-                ...navItems,
+                ...navItems.map((item) => ({
+                  href: normalizeHref(item.href),
+                  label: item.label,
+                })),
                 { href: auditUrl, label: headerCtaLabel },
               ]}
               auditUrl={auditUrl}
@@ -54,7 +67,7 @@ export async function SiteHeader() {
             {navItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={normalizeHref(item.href)}
                 className="rounded-full px-3 py-2 text-[16px] leading-[1.5] tracking-[-0.32px] text-white transition-colors hover:text-white/85"
               >
                 {item.label}
