@@ -117,6 +117,25 @@ export default function ReadabilityPage() {
         penalties on industry terms.
       </p>
 
+      {/*
+        Privacy + offline note - prominent, directly under the intro.
+        The tool is 100% client-side: after the initial page load there are no
+        network requests, your text never leaves the browser.
+      */}
+      <div
+        role="note"
+        className="mt-5 flex flex-col gap-2 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5"
+      >
+        <span className="text-sm font-semibold tracking-wide text-white">
+          Runs 100% in your browser - fully offline
+        </span>
+        <p className="max-w-2xl text-sm leading-relaxed text-[var(--text-muted)]">
+          Your text is analyzed on this device only. Nothing is uploaded,
+          stored, or sent to a server - the calculator works even if you lose
+          your connection after the page loads.
+        </p>
+      </div>
+
       <div className="mt-10">
         <ReadabilityTool />
       </div>
