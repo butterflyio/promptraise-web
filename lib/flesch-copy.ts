@@ -111,6 +111,7 @@ export interface FleschCopy {
 
   formulasTitle: string;
   formulasSubtext: string;
+  glossaryLinkLabel: string;
   formulaDefinitions: FleschCopyFormulaDef[];
 
   engineVerdictTitle: string;
@@ -330,6 +331,8 @@ export const DEFAULT_COPY: FleschCopy = {
   formulasTitle: "Readability formulas",
   formulasSubtext:
     "Higher ease = easier \u00b7 grades = reading level. Disagreement between formulas is normal.",
+  glossaryLinkLabel:
+    "New to these formulas? Every one is explained in the Web3 AI Visibility glossary.",
   formulaDefinitions: DEFAULT_FORMULA_DEFINITIONS,
 
   engineVerdictTitle: "Answer engine verdict",

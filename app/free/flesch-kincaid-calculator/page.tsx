@@ -64,6 +64,7 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "introBody2",
     "formulasTitle",
     "formulasSubtext",
+    "glossaryLinkLabel",
     "engineVerdictTitle",
     "engineVerdictIntro",
     "citationSectionTitle",

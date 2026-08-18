@@ -183,6 +183,13 @@ export const fleschKincaidLandingType = defineType({
         "Small line under the formulas title explaining how to read the grid.",
     }),
     defineField({
+      name: "glossaryLinkLabel",
+      title: "Glossary Link (under formulas)",
+      type: "string",
+      description:
+        "Text of the internal link from the formulas grid to the glossary. Default: New to these formulas? Every one is explained in the Web3 AI Visibility glossary.",
+    }),
+    defineField({
       name: "formulaDefinitions",
       title: "Formula Explainer",
       type: "array",

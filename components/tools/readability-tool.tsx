@@ -27,6 +27,30 @@ import {
 const LINK_RE =
   /(?:https?:\/\/|www\.)\S+|(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:com|org|net|io|xyz|app|dev|ai|co|eth|me|finance|exchange|link|fi|one|sol)\b/i;
 
+/**
+ * Maps each readability formula key to its glossary term name, so the formula
+ * card label becomes an internal link to that term's anchor on
+ * /academy/glossary (and /glossary). Anchors use #term-<slug>.
+ */
+const FORMULA_GLOSSARY: Record<string, string> = {
+  readingEase: "Flesch Reading Ease",
+  gradeLevel: "Flesch-Kincaid Grade Level",
+  gunningFog: "Gunning Fog Index",
+  smog: "SMOG Index",
+  colemanLiau: "Coleman-Liau Index",
+  ari: "Automated Readability Index",
+};
+
+/** Same slug rule the glossary pages use for their #term- | #category anchors. */
+function glossarySlug(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+const GLOSSARY_URL = "/academy/glossary";
+
 export default function ReadabilityTool({
   copy = DEFAULT_COPY,
 }: {
@@ -509,14 +533,27 @@ function FormulaGrid({
             typeof raw === "number" &&
             raw >= target[0] &&
             raw <= target[1];
+          const glossaryTerm = FORMULA_GLOSSARY[f.key];
+          const termHref = glossaryTerm
+            ? `${GLOSSARY_URL}#term-${glossarySlug(glossaryTerm)}`
+            : null;
           return (
             <div
               key={f.key}
               className="flex flex-col rounded-2xl border border-[var(--border-default)] bg-[var(--bg-base)] p-4"
             >
-              <p className="text-xs font-medium text-[var(--text-muted)]">
-                {f.label}
-              </p>
+              {termHref ? (
+                <a
+                  href={termHref}
+                  className="text-xs font-medium text-[var(--text-muted)] transition-colors group-hover:underline hover:text-[var(--accent-primary)]"
+                >
+                  {f.label}
+                </a>
+              ) : (
+                <p className="text-xs font-medium text-[var(--text-muted)]">
+                  {f.label}
+                </p>
+              )}
               <p className="mt-1 text-2xl font-semibold text-[var(--text-primary)]">
                 {val}
               </p>
@@ -539,6 +576,12 @@ function FormulaGrid({
           );
         })}
       </div>
+      <a
+        href={GLOSSARY_URL}
+        className="mt-4 inline-block text-xs text-[var(--text-muted)] transition-colors hover:text-[var(--accent-primary)]"
+      >
+        {copy.glossaryLinkLabel}
+      </a>
     </div>
   );
 }

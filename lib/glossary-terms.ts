@@ -181,6 +181,59 @@ export const GLOSSARY_RELATED: Record<string, string[]> = {
     "Onchain transparency",
     "Decentralized identity (DID) for AI",
   ],
+  // ---- Readability & content clarity ----
+  Readability: [
+    "Flesch Reading Ease",
+    "Flesch-Kincaid Grade Level",
+    "Gunning Fog Index",
+    "SMOG Index",
+  ],
+  "Flesch Reading Ease": [
+    "Readability",
+    "Flesch-Kincaid Grade Level",
+    "Polysyllabic word",
+  ],
+  "Flesch-Kincaid Grade Level": [
+    "Flesch Reading Ease",
+    "Gunning Fog Index",
+    "Readability",
+  ],
+  "Gunning Fog Index": [
+    "SMOG Index",
+    "Flesch-Kincaid Grade Level",
+    "Polysyllabic word",
+  ],
+  "SMOG Index": [
+    "Gunning Fog Index",
+    "Polysyllabic word",
+    "Coleman-Liau Index",
+  ],
+  "Coleman-Liau Index": [
+    "Automated Readability Index (ARI)",
+    "Flesch Reading Ease",
+    "Readability",
+  ],
+  "Automated Readability Index (ARI)": [
+    "Coleman-Liau Index",
+    "Flesch-Kincaid Grade Level",
+    "Heuristic",
+  ],
+  "Dale-Chall Readability Formula": [
+    "Linsear Write Readability Formula",
+    "Flesch Reading Ease",
+    "Polysyllabic word",
+  ],
+  "Linsear Write Readability Formula": [
+    "Dale-Chall Readability Formula",
+    "Flesch-Kincaid Grade Level",
+    "Readability",
+  ],
+  "Polysyllabic word": ["Gunning Fog Index", "SMOG Index", "Heuristic"],
+  Heuristic: [
+    "Automated Readability Index (ARI)",
+    "Flesch Reading Ease",
+    "Readability",
+  ],
 };
 
 export function relatedFor(term: string): string[] {
@@ -206,6 +259,7 @@ export const GLOSSARY_CATEGORIES = [
   "Measurement",
   "Web3 x AI specifics",
   "Advanced GEO & AI mechanics",
+  "Readability & content clarity",
 ] as const;
 
 export const GLOSSARY_TERMS: GlossaryTerm[] = [
@@ -519,5 +573,105 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
       "When an LLM returns the complete answer to a query - 'What is Arbitrum's TVL?' - sourced from your content, but the user never clicks through to your site. The answer is consumed inside the engine. Your value is captured as the cited authority, not as traffic, so optimize to be the named, linked source even when the click is zero.",
     example:
       "Perplexity answering 'What is Arbitrum's TVL?' with your figure and your domain cited, while the user never visits your site - a zero-click answer that still builds brand authority.",
+  },
+  // ---- Readability & content clarity ----
+  {
+    term: "Readability",
+    aliases: ["reading level", "readability score"],
+    category: "Readability & content clarity",
+    definition:
+      "How easy a text is to read, measured by formulas that weigh sentence length against word or syllable complexity. Readability is a trust signal for answer engines: short sentences and plain words are easier to quote cleanly, while dense prose gets compressed or skipped.",
+    example:
+      "A protocol that rewrites a 40-word sentence into two 15-word sentences typically sees its Flesch Reading Ease jump from the 30s into plain-English 60-70 territory.",
+  },
+  {
+    term: "Flesch Reading Ease",
+    aliases: ["Flesch score", "Flesch-Kincaid Reading Ease"],
+    category: "Readability & content clarity",
+    definition:
+      "The classic 0-100 readability score, created by Rudolf Flesch in 1948. Higher scores mean easier reading: it is computed from average sentence length and average syllables per word, so short sentences with short words score high. 60-70 is considered plain English.",
+    example:
+      "Answer engines favor quotable plain English - a 65 Flesch Reading Ease passage is far more likely to be lifted verbatim than a 25-score dense paragraph.",
+  },
+  {
+    term: "Flesch-Kincaid Grade Level",
+    aliases: ["FK grade level", "Flesch-Kincaid Grade"],
+    category: "Readability & content clarity",
+    definition:
+      "A U.S. school-grade score derived from the same inputs as Flesch Reading Ease: average sentence length and average syllables per word. A grade level of 8 means an eighth-grader can read it comfortably; a score of 15+ signals graduate-level density that answer engines are less likely to quote.",
+    example:
+      "DeFi documentation aimed at retail users typically targets grade 8-9, while a protocol whitepaper can legitimately land at grade 13+.",
+  },
+  {
+    term: "Gunning Fog Index",
+    aliases: ["Gunning Fog", "Fog Index"],
+    category: "Readability & content clarity",
+    definition:
+      "A grade-level readability formula that adds average sentence length to the percentage of complex words (3+ syllables), then multiplies by 0.4. The Fog Index punishes long sentences and jargon equally, making it a quick check for how much industry vocabulary your copy carries.",
+    example:
+      "'The platform facilitates user staking across multiple networks' reads at a higher Fog index than 'Users can stake across networks' - the simpler sentence scores closer to grade 8.",
+  },
+  {
+    term: "SMOG Index",
+    aliases: ["SMOG", "Simple Measure of Gobbledygook"],
+    category: "Readability & content clarity",
+    definition:
+      "A readability formula, full name Simple Measure of Gobbledygook, that estimates the education needed to fully understand a text by counting polysyllabic words in sample sentences. It is usually the strictest of the common formulas - if your copy passes SMOG, it is genuinely readable.",
+    example:
+      "A whitepaper with a SMOG of 18 demands a college-graduate reading level, while the same ideas restated as short, concrete sentences can drop to a SMOG of 10.",
+  },
+  {
+    term: "Coleman-Liau Index",
+    aliases: ["Coleman-Liau formula"],
+    category: "Readability & content clarity",
+    definition:
+      "A grade-level formula based on characters per word and sentences per 100 words, with no syllable counting at all. Because it ignores syllables, it behaves differently on technical and Web3 text - which is why comparing it against Flesch and Gunning Fog is usually more informative than trusting any single formula.",
+    example:
+      "On the same protocol docs, Flesch-Kincaid may report grade 9 while Coleman-Liau reports grade 11 - the spread itself is a useful signal that word length is driving difficulty.",
+  },
+  {
+    term: "Automated Readability Index (ARI)",
+    aliases: ["ARI", "Automated Readability Index"],
+    category: "Readability & content clarity",
+    definition:
+      "A grade-level formula that uses characters per word and words per sentence to estimate the U.S. grade level needed to read a text. Because it works on characters rather than syllables, it is simple to compute and stays stable across inconsistent syllable counting - helpful for technical contracts and tokenomics pages.",
+    example:
+      "Token audit reports packed with long contract terms often show an ARI 3-4 grades above Flesch-Kincaid, flagging that character-dense words are the main drag.",
+  },
+  {
+    term: "Dale-Chall Readability Formula",
+    aliases: ["Dale-Chall index"],
+    category: "Readability & content clarity",
+    definition:
+      "A readability formula that compares every word against a list of roughly 3,000 familiar words and weighs unfamiliar words plus average sentence length. It is one of the harshest judges of jargon, which makes it a good sanity check for Web3 copy full of protocol-specific vocabulary.",
+    example:
+      "A page that constantly repeats 'decentralized autonomous organization' trips the Dale-Chall unfamiliar-word count even when sentences are short.",
+  },
+  {
+    term: "Linsear Write Readability Formula",
+    aliases: ["Linsear Write"],
+    category: "Readability & content clarity",
+    definition:
+      "A readability formula developed by Linsear Write and used by the U.S. Air Force for technical manuals. It counts easy and hard words per sample sentence to produce a grade level, and is considered one of the simpler, more practical checks for documentation-style content.",
+    example:
+      "Tutorial-style docs with imperative verbs and short sentences typically score grade 6-8 on Linsear Write, well inside the readability range for retail users.",
+  },
+  {
+    term: "Polysyllabic word",
+    aliases: ["polysyllable", "long word", "complex word"],
+    category: "Readability & content clarity",
+    definition:
+      "A word with three or more syllables. Readability formulas treat polysyllabic words as complex because they slow readers down, and answer engines prefer short words when lifting a quotable sentence. Web3 vocabulary like 'protocol' and 'infrastructure' is polysyllabic, which is why Web3-aware tools adjust for it.",
+    example:
+      "'Decentralized', 'liquidity' and 'governance' are polysyllabic; a paragraph that swaps 'utilization' for 'use' drops its complexity count without losing meaning.",
+  },
+  {
+    term: "Heuristic",
+    aliases: ["rule of thumb", "heuristic method"],
+    category: "Readability & content clarity",
+    definition:
+      "A practical, approximate rule used when a perfect computation is too costly or impossible. Score-like signals in AI-visibility tools - including the Citation Readiness score and per-engine verdicts - are heuristics: fast, client-side estimates of behavior, not live measurements of what an engine actually did.",
+    example:
+      "PromptRaise's per-engine verdicts are heuristics built from citation signals (entity clarity, defined terms, grounding), so they are directionally useful without calling live APIs on every check.",
   },
 ];

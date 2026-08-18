@@ -71,6 +71,15 @@ export default async function AcademyGlossaryPage(_props: PageProps) {
         to become a source instead of a rumor.`}
       </p>
 
+      {/* Internal link partner: the free readability tool */}
+      <a
+        href="/free/flesch-kincaid-calculator"
+        className="mt-4 inline-block text-sm font-medium text-[var(--accent-primary)] transition-opacity hover:opacity-80"
+      >
+        Free tool - measure the readability of any Web3 copy with our
+        Flesch-Kincaid calculator
+      </a>
+
       {/* Category pill nav - static anchor links */}
       <nav
         aria-label="Glossary categories"

@@ -37,7 +37,13 @@ for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
 
 const projectId =
   env.SANITY_PROJECT_ID ?? env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "";
-const dataset = env.SANITY_DATASET ?? env.NEXT_PUBLIC_SANITY_DATASET ?? "";
+// THE production dataset key is SANITY_API_DATASET=production. NEXT_PUBLIC_
+// SANITY_DATASET=staging locally is dev-only - never seed there for live CMS.
+const dataset =
+  env.SANITY_API_DATASET ??
+  env.SANITY_DATASET ??
+  env.NEXT_PUBLIC_SANITY_DATASET ??
+  "";
 const token = env.SANITY_API_WRITE_TOKEN ?? "";
 if (!projectId || !dataset || !token) {
   console.error("Missing SANITY project/dataset/write-token in .env.local");
@@ -81,6 +87,8 @@ const doc = {
   formulasTitle: "Readability formulas",
   formulasSubtext:
     "Higher ease = easier \u00b7 grades = reading level. Disagreement between formulas is normal.",
+  glossaryLinkLabel:
+    "New to these formulas? Every one is explained in the Web3 AI Visibility glossary.",
   formulaDefinitions: [
     {
       _key: "f-readingEase",

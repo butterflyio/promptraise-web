@@ -92,6 +92,15 @@ export default async function GlossaryPage() {
         become a source instead of a rumor.`}
       </p>
 
+      {/* Internal link partner: the free readability tool */}
+      <a
+        href="/free/flesch-kincaid-calculator"
+        className="mt-4 inline-block text-sm font-medium text-[var(--accent-primary)] transition-opacity hover:opacity-80"
+      >
+        Free tool - measure the readability of any Web3 copy with our
+        Flesch-Kincaid calculator
+      </a>
+
       <nav
         aria-label="Glossary categories"
         className="mt-8 flex flex-wrap gap-2"
