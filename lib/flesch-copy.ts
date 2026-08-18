@@ -124,6 +124,11 @@ export interface FleschCopy {
   contactEmailLabel: string;
   contactEmail: string;
 
+  embedSectionTitle: string;
+  embedBody: string;
+  apiSectionTitle: string;
+  apiBody: string;
+
   faqSectionTitle: string;
 
   sampleText: string;
@@ -363,6 +368,13 @@ export const DEFAULT_COPY: FleschCopy = {
     "This calculator runs entirely in your browser - pasted text never leaves your device. The six formulas (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI) are computed client-side from their original published equations. The Citation Readiness score and per-engine verdicts are PromptRaise heuristics built from four citation signals: entity clarity, defined terms, groundable statements and sentence structure. Web3 vocabulary (DeFi, TVL, AMM, protocol names) is scored with a Web3-aware dictionary so legitimate industry terms are not falsely penalized as complex.",
   contactEmailLabel: "Questions or feedback?",
   contactEmail: "readability@promptraise.com",
+
+  embedSectionTitle: "Embed this calculator on your site",
+  embedBody:
+    "Free to embed anywhere - docs, blog, or landing page. The calculator runs entirely in the visitor's browser, so embedding costs you nothing and captures no data.",
+  apiSectionTitle: "For developers & AI agents",
+  apiBody:
+    "The same analysis is available as a simple JSON API, so AI agents and scripts can score text programmatically without a browser.",
 
   faqSectionTitle: "Flesch & AI citation, explained",
 

@@ -30,8 +30,18 @@ PromptRaise helps Web3 projects rank across AI summaries, LLM responses, and sea
 - ${siteUrl}/blog — Blog: research, case studies and strategy on Web3 AI visibility
 - ${siteUrl}/glossary — Web3 AI visibility glossary: terms answer engines use to discover, read and cite protocols
 - ${siteUrl}/academy/glossary — Web3 AI visibility glossary (Academy)
+- ${siteUrl}/free/flesch-kincaid-calculator — Free Flesch-Kincaid readability calculator for Web3: six readability formulas plus a Citation Readiness score. 100% offline in the browser, no signup, no data capture.
+- ${siteUrl}/free/flesch-kincaid-calculator/embed — iframe-embeddable version of the calculator for any site
 - ${siteUrl}/privacy — Privacy notice and data handling practices
 - ${siteUrl}/studio — Sanity CMS studio (admin only)
+
+## Tools
+
+- ${siteUrl}/free/flesch-kincaid-calculator — Web3-aware readability calculator (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI) + Citation Readiness heuristics for answer-engine citability
+
+## API
+
+- POST ${siteUrl}/api/readability — JSON API for AI agents and scripts. Send {"text": "your copy"} and receive readability scores, citation signals and per-engine verdicts. See the calculator page for examples.
 
 ## Blog
 

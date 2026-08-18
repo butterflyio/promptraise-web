@@ -1,10 +1,11 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState } from "react";
 
 import { cn } from "@/lib/cn";
 
-export type FaqItem = { q: string; a: string };
+export type FaqItem = { q: string; a: ReactNode };
 
 /**
  * Accessible FAQ accordion. Answers stay in the DOM (good for SEO + AI

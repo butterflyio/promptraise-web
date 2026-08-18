@@ -367,3 +367,10 @@ Update this file after every meaningful implementation change.
 - **FK calculator - prominent share CTA + fetch truncation notice (2026-08-18):**
   - Copy report link now uses the primary accent CTA styling (like Analyze/Fetch).
   - /api/fetch-text returns truncated flag; client shows a CMS-editable truncationNote ("This page is large - analyzing the first 50,000 characters...") when a fetched page exceeds the 50k char cap.
+- **FK calculator - AI-agent API, embed widget, glossary auto-links, llms.txt (2026-08-18):**
+  - POST /api/readability: JSON API mirroring the full analysis (readability scores, citation signals, per-engine verdicts) so AI agents/scripts can score text without a browser. Documented on-page with a curl example.
+  - Embed widget: /free/flesch-kincaid-calculator/embed (chrome-free tool + powered-by line) + CMS-editable "Embed this calculator" section with a copy-paste iframe snippet.
+  - Glossary auto-linking: lib/glossary-links.tsx wraps known readability terms in <a href="/academy/glossary#term-..."> inside intro paragraphs, methodology, and FAQ answers - real clickable cross-links (users AND AI crawlers see them). FaqAccordion answers now accept ReactNode.
+  - llms.txt now lists the calculator, embed URL, and the /api/readability endpoint for AI-agent discovery.
+  - Research: no other Web3-specific FK calculator exists - the Web3-aware dictionary + Citation Readiness is unique.
+  - mergeCopy extracted to lib/flesch-merge.ts (shared by page + embed).

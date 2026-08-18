@@ -4,20 +4,12 @@ import { draftMode } from "next/headers";
 import FaqAccordion from "@/components/tools/faq-accordion";
 import ReadabilityTool from "@/components/tools/readability-tool";
 import { DEFAULT_COPY, type FleschCopy } from "@/lib/flesch-copy";
+import { linkGlossaryTerms } from "@/lib/glossary-links";
+import { mergeCopy } from "@/lib/flesch-merge";
 import {
   getFleschKincaidLanding,
   getFleschKincaidLandingPreview,
 } from "@/sanity/lib/queries";
-
-/** Fallback display names when the CMS leaves a formula label blank. */
-const DEFAULT_FORMULA_LABELS: Record<string, string> = {
-  readingEase: "Flesch Reading Ease",
-  gradeLevel: "Flesch-Kincaid Grade",
-  gunningFog: "Gunning Fog",
-  smog: "SMOG",
-  colemanLiau: "Coleman-Liau",
-  ari: "ARI",
-};
 
 export const revalidate = 30;
 
@@ -37,200 +29,18 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * Merge the CMS doc over the in-code defaults so a blank or missing CMS field
- * never drops a section. `formulaDefinitions` and `faq` are arrays, so replace
- * them wholesale when the CMS provides non-empty arrays, else keep defaults.
- */
-function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
-  if (!doc) return DEFAULT_COPY;
-  const copy = { ...DEFAULT_COPY };
+const EMBED_SNIPPET = `<iframe src="${siteUrl}/free/flesch-kincaid-calculator/embed" width="100%" height="900" style="border:1px solid #dde0e5;border-radius:12px" title="Flesch-Kincaid calculator by PromptRaise" loading="lazy"></iframe>`;
 
-  const simpleKeys: (keyof FleschCopy)[] = [
-    "heroTitle",
-    "heroSubtitle",
-    "privacyBadge",
-    "privacyTitle",
-    "privacyBody",
-    "trustLine",
-    "contentTypeLabel",
-    "emptyTextError",
-    "tooShortError",
-    "linkError",
-    "invalidContentError",
-    "fetchError",
-    "disclaimerText",
-    "truncationNote",
-    "methodologyTitle",
-    "methodologyBody",
-    "contactEmailLabel",
-    "contactEmail",
-    "faqSectionTitle",
-    "sampleText",
-    "introSectionTitle",
-    "introBody1",
-    "introBody2",
-    "formulasTitle",
-    "formulasSubtext",
-    "glossaryLinkLabel",
-    "engineVerdictTitle",
-    "engineVerdictIntro",
-    "citationSectionTitle",
-    "citationSectionIntro",
-    "ctaHeading",
-    "ctaBody",
-    "ctaLabel",
-    "ctaHref",
-  ];
-  for (const key of simpleKeys) {
-    const val = doc[key];
-    if (typeof val === "string" && val.trim().length > 0) {
-      (copy as Record<string, unknown>)[key] = val;
-    }
-  }
+const API_SNIPPET = `curl -s -X POST ${siteUrl}/api/readability \\
+  -H 'Content-Type: application/json' \\
+  -d '{"text": "Your Web3 copy goes here..."}'`;
 
-  const formulas = doc["formulaDefinitions"];
-  if (Array.isArray(formulas) && formulas.length > 0) {
-    const mapped = formulas
-      .map((f) => {
-        const entry = f as {
-          key?: string;
-          label?: string;
-          description?: string;
-        };
-        if (!entry.key || typeof entry.description !== "string") return null;
-        return {
-          key: entry.key,
-          label:
-            typeof entry.label === "string" && entry.label.trim().length > 0
-              ? entry.label
-              : (DEFAULT_FORMULA_LABELS[entry.key] ?? entry.key),
-          description: entry.description,
-        };
-      })
-      .filter(
-        (x): x is { key: string; label: string; description: string } =>
-          x !== null,
-      );
-    if (mapped.length > 0) copy.formulaDefinitions = mapped;
-  }
-
-  const genres = doc["genres"];
-  if (Array.isArray(genres) && genres.length > 0) {
-    const mapped = genres
-      .map((g) => {
-        const entry = g as {
-          id?: string;
-          label?: string;
-          targetMin?: number;
-          targetMax?: number;
-          note?: string;
-        };
-        if (
-          typeof entry.id !== "string" ||
-          entry.id.trim().length === 0 ||
-          typeof entry.label !== "string" ||
-          entry.label.trim().length === 0 ||
-          typeof entry.targetMin !== "number" ||
-          typeof entry.targetMax !== "number"
-        ) {
-          return null;
-        }
-        return {
-          id: entry.id,
-          label: entry.label,
-          targetMin: entry.targetMin,
-          targetMax: entry.targetMax,
-          note: typeof entry.note === "string" ? entry.note : "",
-        };
-      })
-      .filter(
-        (x): x is NonNullable<typeof x> =>
-          x !== null && x.targetMax >= x.targetMin,
-      );
-    if (mapped.length > 0) copy.genres = mapped;
-  }
-
-  const ui = doc["ui"];
-  if (ui && typeof ui === "object") {
-    const uiSrc = ui as Record<string, unknown>;
-    const merged: Record<string, unknown> = { ...copy.ui };
-    for (const key of [
-      "analyzeLabel",
-      "exampleLabel",
-      "clearLabel",
-      "textareaPlaceholder",
-      "pasteHint",
-      "pasteModeLabel",
-      "urlModeLabel",
-      "urlInputPlaceholder",
-      "fetchButtonLabel",
-      "fetchingLabel",
-      "fetchedWordsLabel",
-      "shareButtonLabel",
-      "copiedLabel",
-      "sharedStripLabel",
-      "citationScoreTitle",
-      "readingEaseTitle",
-      "scoreSuffix",
-      "citationScoreDesc",
-      "inTargetLabel",
-      "offTargetLabel",
-      "forGenreSuffix",
-      "gradeLevelPrefix",
-      "formulaTargetPrefix",
-      "tipPrefix",
-      "verdictFootnote",
-      "metricWords",
-      "metricSentences",
-      "metricSyllables",
-      "metricCharacters",
-      "metricComplexWords",
-      "metricAvgSentence",
-      "metricAvgSyllables",
-      "metricReadingTime",
-      "complexWordsTitle",
-      "longestSentencesTitle",
-      "noComplexWords",
-      "noSentences",
-      "web3TermsTitlePrefix",
-      "web3TermsFootnote",
-      "legendComplexWord",
-      "legendLongSentence",
-      "legendWeb3Term",
-      "autoDetectedLabel",
-    ]) {
-      const val = uiSrc[key];
-      if (typeof val === "string" && val.trim().length > 0) {
-        merged[key] = val;
-      }
-    }
-    copy.ui = merged as unknown as typeof copy.ui;
-  }
-
-  const faq = doc["faq"];
-  if (Array.isArray(faq) && faq.length > 0) {
-    const mapped = faq
-      .map((f) => {
-        const entry = f as { question?: string; answer?: string };
-        if (
-          typeof entry.question !== "string" ||
-          typeof entry.answer !== "string"
-        ) {
-          return null;
-        }
-        return { question: entry.question, answer: entry.answer };
-      })
-      .filter(
-        (x): x is { question: string; answer: string } =>
-          x !== null &&
-          x.question.trim().length > 0 &&
-          x.answer.trim().length > 0,
-      );
-    if (mapped.length > 0) copy.faq = mapped;
-  }
-
-  return copy;
+function CodeBlock({ code }: { code: string }) {
+  return (
+    <pre className="mt-4 overflow-x-auto rounded-2xl border border-[var(--border-default)] bg-[#0c0f14] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">
+      <code>{code}</code>
+    </pre>
+  );
 }
 
 export default async function ReadabilityPage() {
@@ -267,7 +77,7 @@ export default async function ReadabilityPage() {
         "@type": "HowToStep",
         position: 2,
         name: "Choose your content type",
-        text: "Pick General, Web3 Explainer, Whitepaper or Tutorial to set the target reading range.",
+        text: "Pick General, Web3 Explainer, Whitepaper, Tutorial or Social media to set the target reading range.",
       },
       {
         "@type": "HowToStep",
@@ -340,8 +150,8 @@ export default async function ReadabilityPage() {
           {copy.introSectionTitle}
         </h2>
         <div className="mt-4 flex flex-col gap-4 leading-relaxed text-[var(--text-secondary)]">
-          <p>{copy.introBody1}</p>
-          <p>{copy.introBody2}</p>
+          <p>{linkGlossaryTerms(copy.introBody1)}</p>
+          <p>{linkGlossaryTerms(copy.introBody2)}</p>
         </div>
 
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
@@ -349,9 +159,34 @@ export default async function ReadabilityPage() {
         </h2>
         <div className="mt-6">
           <FaqAccordion
-            items={copy.faq.map((f) => ({ q: f.question, a: f.answer }))}
+            items={copy.faq.map((f) => ({
+              q: f.question,
+              a: linkGlossaryTerms(f.answer),
+            }))}
           />
         </div>
+      </section>
+
+      {/* Embed widget - distribution + backlinks */}
+      <section className="mt-16 border-t border-[var(--border-default)] pt-10">
+        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+          {copy.embedSectionTitle}
+        </h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
+          {copy.embedBody}
+        </p>
+        <CodeBlock code={EMBED_SNIPPET} />
+      </section>
+
+      {/* AI-agent / developer API */}
+      <section className="mt-16 border-t border-[var(--border-default)] pt-10">
+        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+          {copy.apiSectionTitle}
+        </h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
+          {copy.apiBody}
+        </p>
+        <CodeBlock code={API_SNIPPET} />
       </section>
 
       {/* Methodology + contact - small, modeled on readabilitycheck.com/about */}
@@ -360,7 +195,7 @@ export default async function ReadabilityPage() {
           {copy.methodologyTitle}
         </h2>
         <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
-          {copy.methodologyBody}
+          {linkGlossaryTerms(copy.methodologyBody)}
         </p>
         <p className="mt-4 text-sm text-[var(--text-muted)]">
           {copy.contactEmailLabel}{" "}

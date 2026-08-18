@@ -89,6 +89,12 @@ const doc = {
     "This calculator runs entirely in your browser - pasted text never leaves your device. The six formulas (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI) are computed client-side from their original published equations. The Citation Readiness score and per-engine verdicts are PromptRaise heuristics built from four citation signals: entity clarity, defined terms, groundable statements and sentence structure. Web3 vocabulary (DeFi, TVL, AMM, protocol names) is scored with a Web3-aware dictionary so legitimate industry terms are not falsely penalized as complex.",
   contactEmailLabel: "Questions or feedback?",
   contactEmail: "readability@promptraise.com",
+  embedSectionTitle: "Embed this calculator on your site",
+  embedBody:
+    "Free to embed anywhere - docs, blog, or landing page. The calculator runs entirely in the visitor's browser, so embedding costs you nothing and captures no data.",
+  apiSectionTitle: "For developers & AI agents",
+  apiBody:
+    "The same analysis is available as a simple JSON API, so AI agents and scripts can score text programmatically without a browser.",
   faqSectionTitle: "Flesch & AI citation, explained",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",

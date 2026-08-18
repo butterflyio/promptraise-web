@@ -149,6 +149,34 @@ export const fleschKincaidLandingType = defineType({
       initialValue: "readability@promptraise.com",
     }),
     defineField({
+      name: "embedSectionTitle",
+      title: "Embed Section Title",
+      type: "string",
+      description:
+        "Heading for the embed-widget section. Default: Embed this calculator on your site",
+    }),
+    defineField({
+      name: "embedBody",
+      title: "Embed Section Body",
+      type: "text",
+      rows: 3,
+      description: "Short pitch for embedding the calculator on other sites.",
+    }),
+    defineField({
+      name: "apiSectionTitle",
+      title: "API Section Title",
+      type: "string",
+      description:
+        "Heading for the developer/AI-agent API section. Default: For developers & AI agents",
+    }),
+    defineField({
+      name: "apiBody",
+      title: "API Section Body",
+      type: "text",
+      rows: 3,
+      description: "Short description of the JSON API for AI agents.",
+    }),
+    defineField({
       name: "faqSectionTitle",
       title: "FAQ Section Title (H2)",
       type: "string",
