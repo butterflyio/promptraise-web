@@ -355,3 +355,8 @@ Update this file after every meaningful implementation change.
   - FAQ accordion now opens ALL items by default (readable without clicking; still toggleable).
   - Blog series ideas logged as BUZ-5/6/7 (3-part readability series) in Linear.
   - Production glossary page will show 51 terms (content-only, no deploy). Code changes (links, FAQ) deployed to staging pending prod sign-off.
+- **FK calculator - URL fetch toggle + methodology/contact section (2026-08-18):**
+  - New server route /api/fetch-text (SSRF-guarded: http/https public hosts only, private/loopback refused, 15s timeout, 50k char cap) fetches a page and extracts main text (prefers <main>/<article>, strips nav/footer/script).
+  - Paste-vs-URL toggle in the tool (readabilitycheck.com pattern): URL mode shows a URL input + Fetch button, fetches, shows "Fetched {words} words from {url}", auto-detects genre and auto-analyzes. All labels CMS-editable (ui.pasteModeLabel, urlModeLabel, urlInputPlaceholder, fetchButtonLabel, fetchingLabel, fetchedWordsLabel) + fetchError.
+  - Methodology & how it works section + contact (readability@promptraise.com) at page bottom, CMS-editable (methodologyTitle, methodologyBody, contactEmailLabel, contactEmail) - modeled on readabilitycheck.com/about.
+  - Research note: readabilitycheck.com (reference) has consensus grade, sentence annotation, URL fetch; fleschkincaidcalculator.com is a bare JS SPA.

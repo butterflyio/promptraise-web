@@ -40,6 +40,14 @@ export interface FleschUiLabels {
   textareaPlaceholder: string;
   pasteHint: string;
 
+  // URL fetch mode
+  pasteModeLabel: string;
+  urlModeLabel: string;
+  urlInputPlaceholder: string;
+  fetchButtonLabel: string;
+  fetchingLabel: string;
+  fetchedWordsLabel: string;
+
   // Score header
   citationScoreTitle: string;
   readingEaseTitle: string;
@@ -100,6 +108,12 @@ export interface FleschCopy {
   tooShortError: string;
   linkError: string;
   invalidContentError: string;
+  fetchError: string;
+
+  methodologyTitle: string;
+  methodologyBody: string;
+  contactEmailLabel: string;
+  contactEmail: string;
 
   faqSectionTitle: string;
 
@@ -224,6 +238,13 @@ export const DEFAULT_UI: FleschUiLabels = {
   pasteHint:
     "Paste text above and hit Analyze - or use the Web3 example to see how it works.",
 
+  pasteModeLabel: "Paste text",
+  urlModeLabel: "Fetch a URL",
+  urlInputPlaceholder: "https://your.protocol.xyz",
+  fetchButtonLabel: "Fetch",
+  fetchingLabel: "Fetching...",
+  fetchedWordsLabel: "Fetched {words} words from {url}",
+
   citationScoreTitle: "Citation Readiness",
   readingEaseTitle: "Flesch Reading Ease",
   scoreSuffix: "/100",
@@ -316,6 +337,13 @@ export const DEFAULT_COPY: FleschCopy = {
     "It looks like you pasted a link or URL. This tool analyzes text, not links - paste the actual article, post or docs copy instead.",
   invalidContentError:
     "That doesn't look like readable text. Paste plain sentences (words and punctuation) to get a readability score.",
+  fetchError:
+    "Couldn't fetch that page. It may block automatic requests - try pasting the text directly instead.",
+  methodologyTitle: "Methodology & how it works",
+  methodologyBody:
+    "This calculator runs entirely in your browser - pasted text never leaves your device. The six formulas (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI) are computed client-side from their original published equations. The Citation Readiness score and per-engine verdicts are PromptRaise heuristics built from four citation signals: entity clarity, defined terms, groundable statements and sentence structure. Web3 vocabulary (DeFi, TVL, AMM, protocol names) is scored with a Web3-aware dictionary so legitimate industry terms are not falsely penalized as complex.",
+  contactEmailLabel: "Questions or feedback?",
+  contactEmail: "readability@promptraise.com",
 
   faqSectionTitle: "Flesch & AI citation, explained",
 

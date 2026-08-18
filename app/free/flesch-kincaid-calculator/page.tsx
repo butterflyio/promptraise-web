@@ -57,6 +57,11 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "tooShortError",
     "linkError",
     "invalidContentError",
+    "fetchError",
+    "methodologyTitle",
+    "methodologyBody",
+    "contactEmailLabel",
+    "contactEmail",
     "faqSectionTitle",
     "sampleText",
     "introSectionTitle",
@@ -153,6 +158,12 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
       "clearLabel",
       "textareaPlaceholder",
       "pasteHint",
+      "pasteModeLabel",
+      "urlModeLabel",
+      "urlInputPlaceholder",
+      "fetchButtonLabel",
+      "fetchingLabel",
+      "fetchedWordsLabel",
       "citationScoreTitle",
       "readingEaseTitle",
       "scoreSuffix",
@@ -332,6 +343,25 @@ export default async function ReadabilityPage() {
             items={copy.faq.map((f) => ({ q: f.question, a: f.answer }))}
           />
         </div>
+      </section>
+
+      {/* Methodology + contact - small, modeled on readabilitycheck.com/about */}
+      <section className="mt-16 border-t border-[var(--border-default)] pt-10">
+        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+          {copy.methodologyTitle}
+        </h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
+          {copy.methodologyBody}
+        </p>
+        <p className="mt-4 text-sm text-[var(--text-muted)]">
+          {copy.contactEmailLabel}{" "}
+          <a
+            href={`mailto:${copy.contactEmail}`}
+            className="text-[var(--accent-primary)] hover:underline"
+          >
+            {copy.contactEmail}
+          </a>
+        </p>
       </section>
     </main>
   );

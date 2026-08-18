@@ -90,6 +90,44 @@ export const fleschKincaidLandingType = defineType({
         "Shown when the input has no letters (pure numbers/symbols/code). Default: That doesn't look like readable text...",
     }),
     defineField({
+      name: "fetchError",
+      title: "URL Fetch Error",
+      type: "string",
+      description:
+        "Shown when a URL could not be fetched (blocked, 403, timeout). Default: Couldn't fetch that page...",
+    }),
+    defineField({
+      name: "methodologyTitle",
+      title: "Methodology Section Title",
+      type: "string",
+      description:
+        "Heading for the small methodology + contact section at the bottom of the page.",
+      initialValue: "Methodology & how it works",
+    }),
+    defineField({
+      name: "methodologyBody",
+      title: "Methodology Body",
+      type: "text",
+      rows: 6,
+      description:
+        "How the tool works: client-side, formula origins, Web3-aware dictionary, Citation Readiness heuristics. Modeled on readabilitycheck.com/about.",
+    }),
+    defineField({
+      name: "contactEmailLabel",
+      title: "Contact Label",
+      type: "string",
+      description:
+        "Small label before the contact email. Default: Questions or feedback?",
+      initialValue: "Questions or feedback?",
+    }),
+    defineField({
+      name: "contactEmail",
+      title: "Contact Email",
+      type: "string",
+      description: "mailto target shown in the methodology section.",
+      initialValue: "readability@promptraise.com",
+    }),
+    defineField({
       name: "faqSectionTitle",
       title: "FAQ Section Title (H2)",
       type: "string",
@@ -279,6 +317,20 @@ export const fleschKincaidLandingType = defineType({
           "pasteHint",
           "Empty-State Hint",
           "Shown before any analysis. Default: Paste text above and hit Analyze...",
+        ),
+        uiString("pasteModeLabel", "Paste Mode Toggle", "Default: Paste text"),
+        uiString("urlModeLabel", "URL Mode Toggle", "Default: Fetch a URL"),
+        uiString(
+          "urlInputPlaceholder",
+          "URL Input Placeholder",
+          "Default: https://your.protocol.xyz",
+        ),
+        uiString("fetchButtonLabel", "Fetch Button", "Default: Fetch"),
+        uiString("fetchingLabel", "Fetching State", "Default: Fetching..."),
+        uiString(
+          "fetchedWordsLabel",
+          "Fetched-Words Note",
+          "Template with {words} and {url} placeholders. Default: Fetched {words} words from {url}",
         ),
         uiString(
           "citationScoreTitle",

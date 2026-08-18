@@ -76,6 +76,13 @@ const doc = {
     "It looks like you pasted a link or URL. This tool analyzes text, not links - paste the actual article, post or docs copy instead.",
   invalidContentError:
     "That doesn't look like readable text. Paste plain sentences (words and punctuation) to get a readability score.",
+  fetchError:
+    "Couldn't fetch that page. It may block automatic requests - try pasting the text directly instead.",
+  methodologyTitle: "Methodology & how it works",
+  methodologyBody:
+    "This calculator runs entirely in your browser - pasted text never leaves your device. The six formulas (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI) are computed client-side from their original published equations. The Citation Readiness score and per-engine verdicts are PromptRaise heuristics built from four citation signals: entity clarity, defined terms, groundable statements and sentence structure. Web3 vocabulary (DeFi, TVL, AMM, protocol names) is scored with a Web3-aware dictionary so legitimate industry terms are not falsely penalized as complex.",
+  contactEmailLabel: "Questions or feedback?",
+  contactEmail: "readability@promptraise.com",
   faqSectionTitle: "Flesch & AI citation, explained",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",
@@ -227,6 +234,12 @@ const doc = {
       "Paste your Web3 copy, whitepaper excerpt, or landing page text here...",
     pasteHint:
       "Paste text above and hit Analyze - or use the Web3 example to see how it works.",
+    pasteModeLabel: "Paste text",
+    urlModeLabel: "Fetch a URL",
+    urlInputPlaceholder: "https://your.protocol.xyz",
+    fetchButtonLabel: "Fetch",
+    fetchingLabel: "Fetching...",
+    fetchedWordsLabel: "Fetched {words} words from {url}",
     citationScoreTitle: "Citation Readiness",
     readingEaseTitle: "Flesch Reading Ease",
     scoreSuffix: "/100",

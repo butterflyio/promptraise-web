@@ -70,6 +70,16 @@ export default function ReadabilityTool({
   const [manualGenre, setManualGenre] = useState(false);
   const [autoDetected, setAutoDetected] = useState(false);
 
+  // Paste vs URL-fetch mode.
+  const [mode, setMode] = useState<"paste" | "url">("paste");
+  const [url, setUrl] = useState("");
+  const [fetching, setFetching] = useState(false);
+  const [fetchErrorMsg, setFetchErrorMsg] = useState<string | null>(null);
+  const [fetchedInfo, setFetchedInfo] = useState<{
+    words: number;
+    url: string;
+  } | null>(null);
+
   const trimmed = text.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
   const isEmpty = trimmed.length === 0;
@@ -151,6 +161,49 @@ export default function ReadabilityTool({
     setAutoDetected(false);
   };
 
+  const handleFetch = async () => {
+    const trimmed = url.trim();
+    if (!trimmed) {
+      setFetchErrorMsg(copy.emptyTextError);
+      return;
+    }
+    if (!/^https?:\/\/[^\s]+/.test(trimmed)) {
+      setFetchErrorMsg(copy.fetchError);
+      return;
+    }
+    setFetching(true);
+    setFetchErrorMsg(null);
+    try {
+      const res = await fetch(
+        `/api/fetch-text?url=${encodeURIComponent(trimmed)}`,
+      );
+      const data = (await res.json()) as {
+        ok?: boolean;
+        words?: number;
+        text?: string;
+        url?: string;
+      };
+      if (!res.ok || !data.ok || !data.text) {
+        setFetchErrorMsg(copy.fetchError);
+        return;
+      }
+      setText(data.text);
+      setTried(false);
+      setFetchedInfo({ words: data.words ?? 0, url: data.url ?? trimmed });
+      if (!manualGenre) {
+        const r = analyzeText(data.text);
+        setGenre(detectContentGenre(data.text, r.readability));
+        setAutoDetected(true);
+      }
+      // Fetching a page is an explicit action - analyze it immediately.
+      setAnalyzedText(data.text);
+    } catch {
+      setFetchErrorMsg(copy.fetchError);
+    } finally {
+      setFetching(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-10">
       {/* ---- Controls ---- */}
@@ -183,17 +236,82 @@ export default function ReadabilityTool({
           )}
         </p>
 
-        <textarea
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-            setTried(false);
-            // Strict gating: any edit invalidates the previous analysis.
-            setAnalyzedText(null);
-          }}
-          placeholder={ui.textareaPlaceholder}
-          className="min-h-[200px] w-full resize-y rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5 text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
-        />
+        {/* Paste vs URL-fetch toggle */}
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => setMode("paste")}
+            className={cn(
+              "rounded-full border px-4 py-1.5 text-sm transition-colors",
+              mode === "paste"
+                ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
+                : "border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]",
+            )}
+          >
+            {ui.pasteModeLabel}
+          </button>
+          <button
+            onClick={() => setMode("url")}
+            className={cn(
+              "rounded-full border px-4 py-1.5 text-sm transition-colors",
+              mode === "url"
+                ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
+                : "border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]",
+            )}
+          >
+            {ui.urlModeLabel}
+          </button>
+        </div>
+
+        {mode === "paste" ? (
+          <textarea
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+              setTried(false);
+              // Strict gating: any edit invalidates the previous analysis.
+              setAnalyzedText(null);
+            }}
+            placeholder={ui.textareaPlaceholder}
+            className="min-h-[200px] w-full resize-y rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5 text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
+          />
+        ) : (
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <input
+                value={url}
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                  setFetchErrorMsg(null);
+                }}
+                placeholder={ui.urlInputPlaceholder}
+                type="url"
+                className="min-w-[260px] flex-1 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-5 py-3 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
+              />
+              <button
+                onClick={handleFetch}
+                disabled={fetching}
+                className="rounded-full bg-[var(--accent-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--accent-foreground)] transition-opacity hover:opacity-90 disabled:opacity-60"
+              >
+                {fetching ? ui.fetchingLabel : ui.fetchButtonLabel}
+              </button>
+            </div>
+            {fetchErrorMsg && (
+              <div
+                role="alert"
+                className="rounded-2xl border border-[#ff7a6e]/50 bg-[#ff7a6e]/10 px-4 py-3 text-sm leading-relaxed text-[#ff9d94]"
+              >
+                {fetchErrorMsg}
+              </div>
+            )}
+            {fetchedInfo && (
+              <p className="text-xs text-[var(--text-muted)]">
+                {ui.fetchedWordsLabel
+                  .replace("{words}", String(fetchedInfo.words))
+                  .replace("{url}", fetchedInfo.url)}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Validation feedback - shown when they try to analyze too little text */}
         {error && (
