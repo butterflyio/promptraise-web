@@ -1,10 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-
-import { AnnouncementBar } from "./announcement-bar";
-import { SiteShell } from "./site-shell";
-import type { SiteSettings } from "@/sanity/lib/queries";
 
 /**
  * Wraps site pages with the global chrome (announcement bar + header/footer)
@@ -14,23 +11,21 @@ import type { SiteSettings } from "@/sanity/lib/queries";
  * layout. Without this gate, the announcement bar and site header/footer would
  * wrap around the Studio. Here we detect the path and skip the chrome for any
  * route under /studio (and /structure, the legacy raw Studio tool path).
+ *
+ * The chrome itself is passed in as SERVER-RENDERED `chrome`/`bare` slots from
+ * the layout, so SiteShell and the async SiteHeader/SiteFooter stay server
+ * components and never run their data fetch in the browser.
  */
 export function SiteChrome({
-  settings,
-  children,
+  chrome,
+  bare,
 }: {
-  settings?: SiteSettings | null;
-  children: React.ReactNode;
+  chrome: ReactNode;
+  bare: ReactNode;
 }) {
   const pathname = usePathname();
   const isStudio = pathname?.startsWith("/studio");
 
-  if (isStudio) return <>{children}</>;
-
-  return (
-    <>
-      <AnnouncementBar announcement={settings?.announcement} />
-      <SiteShell>{children}</SiteShell>
-    </>
-  );
+  if (isStudio) return <>{bare}</>;
+  return <>{chrome}</>;
 }

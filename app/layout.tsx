@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
 import { SiteChrome } from "@/components/site-chrome";
+import { SiteShell } from "@/components/site-shell";
 import TermlyCMP from "@/components/termly-cmp";
 import { getSiteSettings } from "@/sanity/lib/queries";
 
@@ -184,7 +185,10 @@ export default async function RootLayout({
             autoBlock={true}
           />
         </Suspense>
-        <SiteChrome settings={settings}>{children}</SiteChrome>
+        <SiteChrome
+          chrome={<SiteShell settings={settings ?? null}>{children}</SiteShell>}
+          bare={<>{children}</>}
+        />
         <Analytics />
       </body>
     </html>

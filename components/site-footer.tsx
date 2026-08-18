@@ -1,4 +1,4 @@
-import { getSiteSettings } from "@/sanity/lib/queries";
+import type { SiteSettings } from "@/sanity/lib/queries";
 
 import { SiteBrand } from "./site-brand";
 
@@ -10,8 +10,7 @@ const defaultFooterLinks = [
   { label: "Cookie Usage", href: "/cookies" },
 ];
 
-export async function SiteFooter() {
-  const settings = await getSiteSettings();
+export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
   const siteName = settings?.siteName ?? "PromptRaise";
   const logoUrl = settings?.logo?.asset?.url;
   const poweredByText = settings?.footerPoweredByText ?? "powered by Cicada";

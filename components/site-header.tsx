@@ -1,4 +1,4 @@
-import { getSiteSettings } from "@/sanity/lib/queries";
+import type { SiteSettings } from "@/sanity/lib/queries";
 import { DsButton } from "@/components/design-system";
 import { SiteBrand } from "./site-brand";
 import { MobileMenu } from "./mobile-menu";
@@ -20,8 +20,7 @@ function normalizeHref(href: string): string {
   return href;
 }
 
-export async function SiteHeader() {
-  const settings = await getSiteSettings();
+export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
   const siteName = settings?.siteName ?? "PromptRaise";
   const auditUrl =
     settings?.headerCtaUrl ??
