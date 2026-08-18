@@ -637,6 +637,7 @@ const FLESCH_PROJECTION = `{
   contactEmailLabel,
   contactEmail,
   embedSectionTitle,
+  embedHeroTitle,
   embedBody,
   embedBadges,
   embedSteps[]{_key, title, body},

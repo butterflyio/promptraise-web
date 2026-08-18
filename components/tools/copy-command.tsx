@@ -41,12 +41,10 @@ export default function CopyCommand({
         ok = false;
       }
     }
-    if (ok) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } else {
-      window.prompt("Copy:", text);
-    }
+    // Always show feedback so the user knows the click registered.
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+    if (!ok) window.prompt("Copy:", text);
   };
 
   return (

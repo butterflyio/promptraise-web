@@ -43,6 +43,7 @@ export function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "contactEmailLabel",
     "contactEmail",
     "embedSectionTitle",
+    "embedHeroTitle",
     "embedBody",
     "embedBadges",
     "apiSectionTitle",

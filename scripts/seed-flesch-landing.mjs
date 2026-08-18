@@ -90,6 +90,7 @@ const doc = {
   contactEmailLabel: "Questions or feedback?",
   contactEmail: "readability@promptraise.com",
   embedSectionTitle: "Embed this calculator on your site",
+  embedHeroTitle: "Embed once, use free forever",
   embedBody:
     "Free, no-account, no-API-key embeddable widget. Drop it into your docs, blog, or landing page - the calculator runs entirely in the visitor's browser, so it costs you nothing and captures no data.",
   embedBadges: "Free forever · No account needed · No API key · No data capture",

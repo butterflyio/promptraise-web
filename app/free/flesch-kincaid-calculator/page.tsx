@@ -182,8 +182,11 @@ export default async function ReadabilityPage() {
 
       {/* Embed widget - distribution + backlinks */}
       <section className="mt-16 border-t border-[var(--border-default)] pt-10">
-        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+        <p className="text-xs tracking-[0.12em] text-[var(--text-muted)] uppercase">
           {copy.embedSectionTitle}
+        </p>
+        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+          {copy.embedHeroTitle}
         </h2>
         <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
           {copy.embedBody}
@@ -215,16 +218,22 @@ export default async function ReadabilityPage() {
 
         <CopyCommand text={EMBED_SNIPPET} />
 
-        {/* Live preview - the widget exactly as it will appear */}
+        {/* Animated demo - the widget embedded on a docs-style site */}
         <div className="mt-6 overflow-hidden rounded-2xl border border-[var(--border-default)]">
-          <iframe
-            src={`${siteUrl}/free/flesch-kincaid-calculator/embed`}
-            width="100%"
-            height="700"
-            title="Live preview - Flesch-Kincaid calculator embed"
-            loading="lazy"
+          <img
+            src="/gifs/fk-embed-demo.gif"
+            alt="Animated demo of the Flesch-Kincaid calculator embedded on a website"
+            width={720}
+            height={590}
+            className="w-full"
           />
         </div>
+        <a
+          href={`${siteUrl}/free/flesch-kincaid-calculator/embed`}
+          className="mt-3 inline-block text-xs text-[var(--text-muted)] transition-colors hover:text-[var(--accent-primary)]"
+        >
+          Open the live embed in a new tab
+        </a>
 
         <h3 className="mt-10 text-xl font-semibold tracking-tight text-[var(--text-primary)]">
           Embedding FAQ

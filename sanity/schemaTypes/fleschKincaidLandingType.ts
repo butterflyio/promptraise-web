@@ -150,10 +150,17 @@ export const fleschKincaidLandingType = defineType({
     }),
     defineField({
       name: "embedSectionTitle",
-      title: "Embed Section Title",
+      title: "Embed Section Eyebrow",
       type: "string",
       description:
-        "Heading for the embed-widget section. Default: Embed this calculator on your site",
+        "Small eyebrow above the embed section. Default: Embed this calculator on your site",
+    }),
+    defineField({
+      name: "embedHeroTitle",
+      title: "Embed Section Heading (H2)",
+      type: "string",
+      description:
+        "Main heading for the embed section. Default: Embed once, use free forever",
     }),
     defineField({
       name: "embedBody",

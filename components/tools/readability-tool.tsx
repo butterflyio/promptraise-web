@@ -275,13 +275,29 @@ export default function ReadabilityTool({
     if (!analyzedText) return;
     const compressed = encodeShare(analyzedText);
     const url = `${window.location.origin}${window.location.pathname}?r=${compressed}`;
+    let ok = false;
     try {
       await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      ok = true;
     } catch {
-      window.prompt("Copy your report link:", url);
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = url;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        ok = document.execCommand("copy");
+        ta.remove();
+      } catch {
+        ok = false;
+      }
     }
+    // Always show feedback so the user knows the click registered.
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+    if (!ok) window.prompt("Copy your report link:", url);
   };
 
   return (

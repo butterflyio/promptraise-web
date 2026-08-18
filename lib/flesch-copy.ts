@@ -125,6 +125,7 @@ export interface FleschCopy {
   contactEmail: string;
 
   embedSectionTitle: string;
+  embedHeroTitle: string;
   embedBody: string;
   embedBadges: string;
   embedSteps: Array<{ title: string; body: string }>;
@@ -373,6 +374,7 @@ export const DEFAULT_COPY: FleschCopy = {
   contactEmail: "readability@promptraise.com",
 
   embedSectionTitle: "Embed this calculator on your site",
+  embedHeroTitle: "Embed once, use free forever",
   embedBody:
     "Free, no-account, no-API-key embeddable widget. Drop it into your docs, blog, or landing page - the calculator runs entirely in the visitor's browser, so it costs you nothing and captures no data.",
   embedBadges:
