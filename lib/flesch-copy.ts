@@ -417,7 +417,7 @@ export const DEFAULT_COPY: FleschCopy = {
   ],
   apiSectionTitle: "For developers & AI agents",
   apiBody:
-    "Score the readability of any text or content programmatically with a single command - no browser, no signup, no API key. Works with any AI agent: ChatGPT, Claude, Gemini, Perplexity, and coding assistants.",
+    "Score the readability of any text or content with a single JSON request - no browser, no signup, no API key. Works with any AI agent: ChatGPT, Claude, Gemini, Perplexity, and coding assistants.",
 
   faqSectionTitle: "Flesch & AI citation, explained",
 

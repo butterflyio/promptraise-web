@@ -271,33 +271,45 @@ export default function ReadabilityTool({
     }
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     if (!analyzedText) return;
     const compressed = encodeShare(analyzedText);
     const url = `${window.location.origin}${window.location.pathname}?r=${compressed}`;
-    let ok = false;
+
+    // Synchronous legacy path first (works in iframes, no permission prompts).
+    let legacyOk = false;
     try {
-      await navigator.clipboard.writeText(url);
-      ok = true;
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, url.length);
+      legacyOk = document.execCommand("copy");
+      ta.remove();
     } catch {
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = url;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        ok = document.execCommand("copy");
-        ta.remove();
-      } catch {
-        ok = false;
-      }
+      legacyOk = false;
     }
-    // Always show feedback so the user knows the click registered.
+    // Modern clipboard API - fire and forget so it can never block the UI.
+    if (
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === "function"
+    ) {
+      navigator.clipboard.writeText(url).catch(() => {});
+    }
+    // Feedback ALWAYS shows immediately.
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
-    if (!ok) window.prompt("Copy your report link:", url);
+    const hasModern =
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === "function";
+    if (!legacyOk && !hasModern) {
+      window.prompt("Copy your report link:", url);
+    }
   };
 
   return (

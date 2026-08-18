@@ -29,14 +29,14 @@ export const metadata: Metadata = {
   },
 };
 
-const EMBED_SNIPPET = `<iframe src="${siteUrl}/free/flesch-kincaid-calculator/embed" width="100%" height="700" style="border:1px solid #dde0e5;border-radius:12px" title="Flesch-Kincaid calculator by PromptRaise" loading="lazy"></iframe>`;
+const EMBED_SNIPPET = `<iframe src="${siteUrl}/free/flesch-kincaid-calculator/embed" width="100%" height="700" style="border:1px solid #dde0e5;border-radius:12px" title="Flesch-Kincaid calculator by PromptRaise" loading="lazy" allow="clipboard-write"></iframe>`;
 
 /** A single natural-language command a user can paste into any AI agent. */
-const AGENT_COMMAND = `Use the PromptRaise readability API to measure the readability of your text or content. Send a POST request to ${siteUrl}/api/readability with a JSON body {"text": "<the text to score>"}. It returns six readability scores (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI). No API key needed.`;
+const AGENT_COMMAND = `Use the PromptRaise readability JSON endpoint to measure the readability of your text or content. Send a POST request to ${siteUrl}/api/readability with a JSON body {"text": "<the text to score>"}. It returns six readability scores (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI). No API key needed.`;
 
 const CURL_SNIPPET = `curl -s -X POST ${siteUrl}/api/readability \\
   -H 'Content-Type: application/json' \\
-  -d '{"text": "Your Web3 copy goes here..."}'`;
+  -d '{"text": "Your Web3 copy goes here..."}' | jq -`;
 
 export default async function ReadabilityPage() {
   const isDraft = (await draftMode()).isEnabled;

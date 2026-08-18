@@ -6,8 +6,12 @@ import { cn } from "@/lib/cn";
 
 /**
  * Copy-to-clipboard command block: a <pre><code> with a Copy button that
- * changes color and label to "Copied!" after a successful copy.
- * Used for the AI-agent command and the embed snippet.
+ * changes color and label to "Copied!" on every click.
+ *
+ * The copy handler is intentionally SYNCHRONOUS-first: it runs the legacy
+ * execCommand path immediately, fires the modern clipboard API without
+ * awaiting it (its promise can hang in cross-origin iframes), and ALWAYS
+ * shows the "Copied!" feedback right away - so the click is never silent.
  */
 export default function CopyCommand({
   text,
@@ -20,31 +24,45 @@ export default function CopyCommand({
 }) {
   const [copied, setCopied] = useState(false);
 
-  const copy = async () => {
-    let ok = false;
+  const copy = () => {
+    // 1) Synchronous legacy path - immediate, no permission prompts.
+    let legacyOk = false;
     try {
-      await navigator.clipboard.writeText(text);
-      ok = true;
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      legacyOk = document.execCommand("copy");
+      ta.remove();
     } catch {
-      // Fallback for older/insecure contexts.
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        ok = document.execCommand("copy");
-        ta.remove();
-      } catch {
-        ok = false;
-      }
+      legacyOk = false;
     }
-    // Always show feedback so the user knows the click registered.
+
+    // 2) Modern clipboard API - fire and forget so it can never block the UI.
+    if (
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === "function"
+    ) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+
+    // 3) Feedback ALWAYS shows immediately.
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-    if (!ok) window.prompt("Copy:", text);
+
+    // 4) Only when no copy path exists at all, give the manual fallback.
+    const hasModern =
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === "function";
+    if (!legacyOk && !hasModern) {
+      window.prompt("Copy:", text);
+    }
   };
 
   return (
