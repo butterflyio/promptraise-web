@@ -380,3 +380,7 @@ Update this file after every meaningful implementation change.
   - Open-source decision deferred by Zain.
 - **FK calculator - much shorter share links (2026-08-18):**
   - Swapped share-link codec from lz-string to fflate deflate + URL-safe base64 (level 9). Measured: 11.8k-char text URL shrank 5640 -> 772 chars (86% smaller); realistic prose ~15-20% smaller on short text, big gains on large/repetitive (fetched-page) text. Backward-compatible decode (deflate first, lz-string fallback) so previously shared links still open. Deploying to prod (incl. copy-button/text fixes staged as 45e743a).
+- **FK calculator - embed GIF demo, "Embed once, use free forever" heading, copy fix, SEO research (2026-08-18):**
+  - Embed section: new CMS hero heading "Embed once, use free forever" + replaced the (empty-looking) iframe preview with an animated GIF of the widget embedded on a docs-style site (generated from real headless-chromium screenshots; public/gifs/fk-embed-demo.gif, 393KB). Kept an "Open the live embed" link.
+  - Copy feedback: CopyCommand + share button now ALWAYS show "Copied!" after a click (execCommand fallback + manual prompt only if copy genuinely failed) - fixes the "no Copied message" report.
+  - SEO research in docs/flesch-kincaid-seo-research.md: formulas help SEO via UX/AI-citability/quality (not direct rank factors); fits all Web3 content types; recommend Rix/Lix/Dale-Chall/Linsear as glossary + keyword pages (and optional collapsible "advanced" formulas) but NOT headline metrics; consensus grade (PR-24) first.
