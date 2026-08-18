@@ -787,6 +787,79 @@ export function analyzeText(text: string): AnalysisResult {
   return { readability, citation, engineVerdicts, preview };
 }
 
+// --- Content-type (genre) auto-detection ------------------------------------
+// Heuristic classifier that picks the most likely content type from the text
+// and its readability metrics. Returns one of the fixed genre ids the tool
+// ships with: social / tutorial / whitepaper / explainer. Falls back to
+// "explainer" (the tool's default) when nothing scores. The user can always
+// override manually - this only pre-selects.
+
+export function detectContentGenre(text: string, r: ReadabilityResult): string {
+  const lower = String(text ?? "").toLowerCase();
+  const words = r.wordCount;
+  const ease = r.readingEase ?? 50;
+  const grade = r.gradeLevel ?? 8;
+  const avgSent = r.avgSentenceLength;
+  const complexPct = r.complexWordPct;
+  const web3Count = r.uniqueWeb3Terms.length;
+
+  let social = 0;
+  let tutorial = 0;
+  let whitepaper = 0;
+  let explainer = 0;
+
+  // Social media: needs a distinct social signal (emoji, hashtag, @mention)
+  // or a very-short + very-easy + punchy combo. Short+easy alone is not enough
+  // (tutorials and simple prose are also short and easy).
+  if (/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(text)) social += 2;
+  if (/(^|\s)[#@][a-z0-9_]+/i.test(text)) social += 2;
+  if (words > 0 && words < 40 && ease >= 65 && avgSent > 0 && avgSent <= 12) {
+    social += 2;
+  }
+
+  // Tutorial/docs: how-to language, imperative verbs, numbered steps.
+  if (
+    /\b(step|steps|how to|guide|instructions?|tutorial|walkthrough|click|paste|open|select|run|install|navigate|follow|press|enter|scroll|download|create|choose)\b/i.test(
+      lower,
+    )
+  ) {
+    tutorial += 2;
+  }
+  if (/(?:^|\n)\s*\d+[.)]/m.test(text)) tutorial += 2;
+  else if (/\b\d+[.)]\s+[A-Z]/i.test(text)) tutorial += 1;
+  if (ease >= 55 && ease <= 80) tutorial += 1;
+
+  // Whitepaper: dense, formal vocabulary, complex words, long sentences.
+  if (
+    /\b(protocol|network|token|architecture|ecosystem|consensus|governance|infrastructure|mechanism|liquidity|vault|incentive|validator|staking|collateral|leverage|derivative)\b/i.test(
+      lower,
+    )
+  ) {
+    whitepaper += 2;
+  }
+  if (complexPct >= 12) whitepaper += 2;
+  if (avgSent >= 17) whitepaper += 1;
+  if (grade >= 10) whitepaper += 1;
+  if (words >= 200) whitepaper += 1;
+
+  // Web3 explainer: Web3-aware vocabulary at medium complexity.
+  if (web3Count >= 3) explainer += 3;
+  else if (web3Count >= 1) explainer += 1;
+  if (ease >= 45 && ease <= 62) explainer += 1;
+  if (avgSent >= 12 && avgSent <= 20) explainer += 1;
+
+  const scores: Array<[string, number]> = [
+    ["social", social],
+    ["tutorial", tutorial],
+    ["whitepaper", whitepaper],
+    ["explainer", explainer],
+  ];
+  scores.sort((a, b) => b[1] - a[1]);
+  const top = scores[0]!;
+  if (top[1] <= 1) return "general"; // no strong signal - plain content
+  return top[0];
+}
+
 // --- Grade-level label helpers ----------------------------------------------
 
 export function readingEaseLabel(ease: number | null): string {

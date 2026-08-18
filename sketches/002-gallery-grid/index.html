@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PromptRaise Doodles - Gallery Grid</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg-base: #0f0f0f;
+    --bg-surface: #242628;
+    --bg-surface-hover: #2a2d2f;
+    --text-primary: #ffffff;
+    --text-secondary: #dedcd7;
+    --text-muted: #c9cdd2;
+    --accent-primary: #67ff67;
+    --accent-secondary: #3d6944;
+    --accent-foreground: #0f0f0f;
+    --border-default: #242628;
+    --border-subtle: #1a1a1a;
+    --font: "Neutral Sans", "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  header { border-bottom: 1px solid var(--border-default); padding: 20px 0; }
+  .nav { display: flex; align-items: center; justify-content: space-between; max-width: 1248px; margin: 0 auto; padding: 0 24px; }
+  .logo { font-weight: 700; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent-primary); }
+  .nav a { color: var(--text-muted); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav a:hover { color: var(--text-primary); }
+  .cta { background: var(--accent-primary); color: var(--accent-foreground) !important; border-radius: 999px; padding: 8px 18px; font-weight: 600; margin-left: 24px; }
+
+  .hero { max-width: 1248px; margin: 0 auto; padding: 64px 24px 32px; }
+  .eyebrow { color: var(--accent-primary); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(30px, 4.5vw, 48px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; }
+  .hero p { color: var(--text-secondary); font-size: 16px; max-width: 620px; }
+  .filters { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
+  .filter { border: 1px solid var(--border-default); color: var(--text-muted); background: transparent; border-radius: 999px; padding: 7px 16px; font-size: 13px; cursor: pointer; font-family: var(--font); }
+  .filter.active { background: var(--accent-primary); color: var(--accent-foreground); border-color: var(--accent-primary); font-weight: 600; }
+  .filter:hover:not(.active) { color: var(--text-primary); border-color: var(--text-muted); }
+
+  .grid { max-width: 1248px; margin: 0 auto; padding: 28px 24px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 14px; overflow: hidden; transition: background 0.2s, transform 0.2s; cursor: pointer; }
+  .card:hover { background: var(--bg-surface-hover); transform: translateY(-2px); }
+  .art { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 44px; position: relative; border-bottom: 1px solid var(--border-subtle); }
+  .art .badge { position: absolute; top: 10px; left: 10px; background: rgba(15,15,15,0.75); border: 1px solid var(--border-default); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 999px; color: var(--text-muted); }
+  .art.art1 { background: linear-gradient(135deg, #1a2a1f, #0f1a12); }
+  .art.art2 { background: linear-gradient(135deg, #242628, #14151a); }
+  .art.art3 { background: linear-gradient(135deg, #12240f, #1a3317); }
+  .art.art4 { background: linear-gradient(135deg, #1a1f2a, #101418); }
+  .art.art5 { background: linear-gradient(135deg, #1f2a1a, #11170f); }
+  .art.art6 { background: linear-gradient(135deg, #2a1f1a, #1a100f); }
+
+  .card .body { padding: 16px 18px 18px; }
+  .card .date { font-family: var(--mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.06em; }
+  .card h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin: 6px 0 6px; }
+  .card .desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; min-height: 40px; }
+  .card .meta { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px; }
+  .card .delta { font-family: var(--mono); font-size: 13px; color: var(--accent-primary); }
+  .card .reactions { color: var(--text-muted); font-size: 12px; }
+  .demo { display: inline-block; background: var(--accent-secondary); color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 4px; padding: 2px 6px; margin-left: 6px; vertical-align: middle; }
+
+  footer { border-top: 1px solid var(--border-default); padding: 32px 24px; color: var(--text-muted); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; max-width: 1248px; margin: 0 auto; }
+  footer a { color: var(--text-muted); text-decoration: none; margin-left: 16px; }
+  footer a:hover { color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">Prompt<span>Raise</span></div>
+    <div>
+      <a href="#">Solutions</a>
+      <a href="#">Pricing</a>
+      <a href="#">Resources</a>
+      <a href="#" class="cta">Get Audit</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Doodles <span class="demo">Prototype</span></div>
+  <h1>AI x Crypto, one doodle at a time.</h1>
+  <p>When the industry moves, we draw it. Every doodle marks a milestone - and carries the visibility data that shows what it actually changed.</p>
+  <div class="filters">
+    <button class="filter active">All</button>
+    <button class="filter">Model releases</button>
+    <button class="filter">Conferences</button>
+    <button class="filter">Market moments</button>
+    <button class="filter">AI crawlers</button>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="card" data-tag="model">
+    <div class="art art1">🧬<span class="badge">Model release</span></div>
+    <div class="body">
+      <div class="date">AUG 14, 2026</div>
+      <h3>GLM-5.3 <span class="demo">Demo</span></h3>
+      <p class="desc">New frontier model. Citation behavior shifted on protocol queries within hours.</p>
+      <div class="meta"><span class="delta">Vis +6</span><span class="reactions">173 reactions</span></div>
+    </div>
+  </div>
+  <div class="card" data-tag="model">
+    <div class="art art2">⚡<span class="badge">Model release</span></div>
+    <div class="body">
+      <div class="date">AUG 13, 2026</div>
+      <h3>Gemini 3.7 Flash</h3>
+      <p class="desc">Google's fast tier. Faster answers, modest citation gains for exchanges.</p>
+      <div class="meta"><span class="delta">Vis +8</span><span class="reactions">105 reactions</span></div>
+    </div>
+  </div>
+  <div class="card" data-tag="conference">
+    <div class="art art3">🌏<span class="badge">Conference</span></div>
+    <div class="body">
+      <div class="date">OCT 2026</div>
+      <h3>TOKEN2049 Singapore</h3>
+      <p class="desc">25k attendees. We'll snapshot sponsor visibility across the week.</p>
+      <div class="meta"><span class="delta">Scheduled</span><span class="reactions">0 reactions</span></div>
+    </div>
+  </div>
+  <div class="card" data-tag="conference">
+    <div class="art art4">🇰🇷<span class="badge">Conference</span></div>
+    <div class="body">
+      <div class="date">SEP 29 - OCT 1</div>
+      <h3>Korea Blockchain Week</h3>
+      <p class="desc">Pre/post snapshot for event sponsors. Historic data: big citation spikes.</p>
+      <div class="meta"><span class="delta">Scheduled</span><span class="reactions">0 reactions</span></div>
+    </div>
+  </div>
+  <div class="card" data-tag="market">
+    <div class="art art5">₿<span class="badge">Market moment</span></div>
+    <div class="body">
+      <div class="date">DEC 4, 2024</div>
+      <h3>Bitcoin 100K Doodle</h3>
+      <p class="desc">BTC crossed $100k. AI engines updated their answers same-day. Our first capture.</p>
+      <div class="meta"><span class="delta">Vis +23</span><span class="reactions">90 reactions</span></div>
+    </div>
+  </div>
+  <div class="card" data-tag="market">
+    <div class="art art6">🍕<span class="badge">Market moment</span></div>
+    <div class="body">
+      <div class="date">MAY 22</div>
+      <h3>Bitcoin Pizza Day</h3>
+      <p class="desc">The $9,600 pizza. AI engines now narrate it consistently - good citation check.</p>
+      <div class="meta"><span class="delta">Vis +4</span><span class="reactions">64 reactions</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>PromptRaise Doodles <span style="color:var(--accent-secondary)">- prototype</span></div>
+  <div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+</footer>
+
+<script>
+  document.querySelectorAll('.filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var tag = btn.textContent.trim();
+      var showAll = tag === 'All';
+      var map = { 'Model releases': 'model', 'Conferences': 'conference', 'Market moments': 'market' };
+      document.querySelectorAll('.card').forEach(function(card) {
+        card.style.display = showAll || card.dataset.tag === map[tag] ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

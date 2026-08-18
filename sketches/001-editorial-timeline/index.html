@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PromptRaise Milestones - Editorial Timeline</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg-base: #0f0f0f;
+    --bg-surface: #242628;
+    --bg-surface-hover: #2a2d2f;
+    --text-primary: #ffffff;
+    --text-secondary: #dedcd7;
+    --text-muted: #c9cdd2;
+    --accent-primary: #67ff67;
+    --accent-secondary: #3d6944;
+    --accent-foreground: #0f0f0f;
+    --border-default: #242628;
+    --border-subtle: #1a1a1a;
+    --font: "Neutral Sans", "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header { border-bottom: 1px solid var(--border-default); padding: 20px 0; }
+  .nav { display: flex; align-items: center; justify-content: space-between; max-width: 1248px; margin: 0 auto; padding: 0 24px; }
+  .logo { font-weight: 700; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent-primary); }
+  .nav a { color: var(--text-muted); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav a:hover { color: var(--text-primary); }
+  .cta { background: var(--accent-primary); color: var(--accent-foreground) !important; border-radius: 999px; padding: 8px 18px; font-weight: 600; margin-left: 24px; }
+
+  /* Hero */
+  .hero { padding: 72px 0 40px; }
+  .eyebrow { color: var(--accent-primary); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { font-style: normal; color: var(--accent-primary); }
+  .hero p { color: var(--text-secondary); font-size: 17px; max-width: 640px; }
+
+  /* Timeline */
+  .timeline { position: relative; padding: 32px 0 80px; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 40px; bottom: 40px; width: 2px; background: var(--border-default); }
+  .entry { position: relative; padding: 0 0 48px 44px; }
+  .entry::before { content: ""; position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg-base); border: 2px solid var(--accent-primary); }
+  .entry.past::before { border-color: var(--accent-secondary); }
+  .entry.future::before { border-color: var(--text-muted); background: var(--bg-surface); }
+
+  .date { font-family: var(--mono); font-size: 12px; color: var(--accent-primary); letter-spacing: 0.06em; }
+  .entry.past .date { color: var(--text-muted); }
+  h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin: 6px 0 8px; }
+  .entry p.desc { color: var(--text-secondary); font-size: 15px; margin-bottom: 16px; max-width: 640px; }
+
+  /* Data card */
+  .datacard { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+  .datacard .label { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .scores { display: flex; gap: 12px; flex-wrap: wrap; }
+  .score { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 14px; min-width: 140px; }
+  .score .engine { font-size: 12px; color: var(--text-muted); }
+  .score .val { font-family: var(--mono); font-size: 18px; font-weight: 600; margin-top: 2px; }
+  .score .val .delta { font-size: 12px; font-weight: 500; }
+  .up { color: var(--accent-primary); }
+  .down { color: #ff6b6b; }
+
+  .demo { display: inline-block; background: var(--accent-secondary); color: #fff; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 4px; padding: 2px 6px; margin-left: 8px; vertical-align: middle; }
+  .tag { display: inline-block; border: 1px solid var(--accent-secondary); color: var(--accent-primary); font-size: 12px; border-radius: 999px; padding: 2px 10px; margin-right: 6px; margin-top: 4px; }
+  .entry .link { color: var(--accent-primary); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .entry .link:hover { text-decoration: underline; }
+
+  footer { border-top: 1px solid var(--border-default); padding: 32px 0; color: var(--text-muted); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--text-muted); text-decoration: none; margin-left: 16px; }
+  footer a:hover { color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">Prompt<span>Raise</span></div>
+    <div>
+      <a href="#">Solutions</a>
+      <a href="#">Pricing</a>
+      <a href="#">Resources</a>
+      <a href="#" class="cta">Get Audit</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Milestones Archive</div>
+    <h1>The moments that shaped how AI<br>talks about <em>crypto</em>.</h1>
+    <p>Every major release, event and market moment changes what AI engines answer, cite and say about Web3. We capture those moments as they happen, with visibility data straight from our checker.</p>
+  </div>
+</section>
+
+<section class="timeline">
+  <div class="wrap">
+
+    <div class="entry past">
+      <div class="date">AUG 14, 2026</div>
+      <h2>GLM-5.3 lands <span class="demo">Demo data</span></h2>
+      <p class="desc">The latest frontier model hit the leaderboards on Aug 14. We re-ran the standard protocol question set the same day to see how citation behavior shifted.</p>
+      <div class="datacard">
+        <div class="label">AI visibility snapshot <span class="demo">Demo data</span></div>
+        <div class="scores">
+          <div class="score"><div class="engine">ChatGPT</div><div class="val">47 <span class="delta up">+6</span></div></div>
+          <div class="score"><div class="engine">Perplexity</div><div class="val">52 <span class="delta up">+3</span></div></div>
+          <div class="score"><div class="engine">Gemini</div><div class="val">44 <span class="delta down">-2</span></div></div>
+        </div>
+      </div>
+      <div>
+        <span class="tag">Model release</span>
+        <span class="tag">Citation shift</span>
+      </div>
+      <div style="margin-top:12px"><a class="link" href="#">Read the analysis</a></div>
+    </div>
+
+    <div class="entry past">
+      <div class="date">AUG 13, 2026</div>
+      <h2>Gemini 3.7 Flash ships</h2>
+      <p class="desc">Google's fast-tier model update. Early checks suggest faster answer generation with modest citation changes for exchange and protocol queries.</p>
+      <div class="datacard">
+        <div class="label">AI visibility snapshot <span class="demo">Demo data</span></div>
+        <div class="scores">
+          <div class="score"><div class="engine">Gemini</div><div class="val">51 <span class="delta up">+8</span></div></div>
+          <div class="score"><div class="engine">ChatGPT</div><div class="val">45 <span class="delta up">+1</span></div></div>
+          <div class="score"><div class="engine">Perplexity</div><div class="val">49 <span class="delta up">+2</span></div></div>
+        </div>
+      </div>
+      <div><span class="tag">Model release</span></div>
+      <div style="margin-top:12px"><a class="link" href="#">Read the analysis</a></div>
+    </div>
+
+    <div class="entry future">
+      <div class="date">SEP 29 - OCT 1, 2026</div>
+      <h2>Korea Blockchain Week</h2>
+      <p class="desc">One of the year's largest gatherings. We'll snapshot AI visibility for the main event sponsors before, during and after the conference.</p>
+      <div><span class="tag">Conference</span><span class="tag">Scheduled</span></div>
+    </div>
+
+    <div class="entry future">
+      <div class="date">OCT 2026</div>
+      <h2>TOKEN2049 Singapore</h2>
+      <p class="desc">25k+ attendees expected. Historic data shows conference weeks move AI citation volume for sponsors. Watch this space.</p>
+      <div><span class="tag">Conference</span><span class="tag">Scheduled</span></div>
+    </div>
+
+    <div class="entry future">
+      <div class="date">Q4 2026</div>
+      <h2>GPT-6 / Claude 5 / DeepSeek V4 window</h2>
+      <p class="desc">The next frontier wave is expected before year-end. Each major release gets the same before/after treatment.</p>
+      <div><span class="tag">Model release</span><span class="tag">Expected</span></div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div>PromptRaise Milestones <span style="color:var(--accent-secondary)">- prototype</span></div>
+  <div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+</footer>
+
+</body>
+</html>

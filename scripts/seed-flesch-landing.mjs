@@ -250,6 +250,7 @@ const doc = {
     legendComplexWord: "complex word",
     legendLongSentence: "long sentence (20+ words)",
     legendWeb3Term: "Web3 term",
+    autoDetectedLabel: "auto-detected",
   },
   ctaHeading: "Want AI to actually cite your protocol?",
   ctaBody:

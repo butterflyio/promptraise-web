@@ -81,6 +81,9 @@ export interface FleschUiLabels {
   legendComplexWord: string;
   legendLongSentence: string;
   legendWeb3Term: string;
+
+  // Genre auto-detection
+  autoDetectedLabel: string;
 }
 
 export interface FleschCopy {
@@ -257,6 +260,8 @@ export const DEFAULT_UI: FleschUiLabels = {
   legendComplexWord: "complex word",
   legendLongSentence: "long sentence (20+ words)",
   legendWeb3Term: "Web3 term",
+
+  autoDetectedLabel: "auto-detected",
 };
 
 export const DEFAULT_FAQ: FleschCopyFaq[] = [

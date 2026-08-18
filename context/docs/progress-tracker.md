@@ -343,3 +343,7 @@ Update this file after every meaningful implementation change.
   - Pasting a URL/link (http/www or bare domain like aave.com, docs.aave.com) now blocks Analyze with a CMS-editable linkError instead of silently scoring the URL as text (a long URL passed the 8-word gate and got nonsense scores).
   - Content with no letters at all (pure numbers/symbols/code) blocked with CMS-editable invalidContentError.
   - LINK_RE hoisted module-scope (no /g) in readability-tool.tsx; error priority: empty -> link -> no-letters -> too-short. Regex unit-tested (7 cases pass). Reseeded CMS doc.
+- **Flesch-Kincaid calculator - content-type auto-detection (latest, 2026-08-18):**
+  - New `detectContentGenre(text, readability)` in lib/readability.ts: heuristic classifier scoring social (emoji/hashtag/@ or very-short+easy+punchy), tutorial (how-to words, imperative verbs, numbered steps), whitepaper (formal vocab, complex words, dense), explainer (Web3 term count + medium complexity). Falls back to "general" when nothing scores > 1.
+  - Auto-selected on Analyze / Try Web3 example only while the user has NOT manually clicked a pill (manualGenre flag); a clickable pill selection always wins and shows no badge. Small CMS-editable "auto-detected" badge appears next to the genre note (ui.autoDetectedLabel).
+  - Unit-tested: brand sample -> explainer, tweet with emoji -> social, how-to -> tutorial, whitepaper excerpt -> whitepaper. Known caveat: the analyzer's aggressive syllable counter can push short dense text toward whitepaper - manual override covers it.

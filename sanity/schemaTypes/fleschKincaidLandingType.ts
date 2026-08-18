@@ -337,6 +337,11 @@ export const fleschKincaidLandingType = defineType({
         uiString("legendComplexWord", "Highlight Legend: Complex Word"),
         uiString("legendLongSentence", "Highlight Legend: Long Sentence"),
         uiString("legendWeb3Term", "Highlight Legend: Web3 Term"),
+        uiString(
+          "autoDetectedLabel",
+          "Auto-Detected Badge",
+          "Small badge next to the content-type note when the genre was picked automatically. Default: auto-detected",
+        ),
       ],
     }),
     defineField({

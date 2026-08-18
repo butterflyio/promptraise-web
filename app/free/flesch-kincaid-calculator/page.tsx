@@ -180,6 +180,7 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
       "legendComplexWord",
       "legendLongSentence",
       "legendWeb3Term",
+      "autoDetectedLabel",
     ]) {
       const val = uiSrc[key];
       if (typeof val === "string" && val.trim().length > 0) {

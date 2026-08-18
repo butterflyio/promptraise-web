@@ -11,6 +11,7 @@ import {
 } from "@/lib/flesch-copy";
 import {
   analyzeText,
+  detectContentGenre,
   gradeLevelLabel,
   readingEaseLabel,
   type EngineVerdict,
@@ -40,6 +41,10 @@ export default function ReadabilityTool({
     const defaultGenre = copy.genres.find((g) => g.id === "explainer");
     return (defaultGenre ?? copy.genres[0])?.id ?? "explainer";
   });
+  // false until the user clicks a genre pill themselves - auto-detection only
+  // runs while the user hasn't manually picked.
+  const [manualGenre, setManualGenre] = useState(false);
+  const [autoDetected, setAutoDetected] = useState(false);
 
   const trimmed = text.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
@@ -90,14 +95,23 @@ export default function ReadabilityTool({
 
   const handleAnalyze = () => {
     setTried(true);
-    if (valid) {
-      setAnalyzedText(text);
+    if (!valid) return;
+    const r = analyzeText(text);
+    if (!manualGenre) {
+      setGenre(detectContentGenre(text, r.readability));
+      setAutoDetected(true);
     }
+    setAnalyzedText(text);
   };
 
   const handleExample = () => {
     setTried(false);
     setText(copy.sampleText);
+    if (!manualGenre) {
+      const r = analyzeText(copy.sampleText);
+      setGenre(detectContentGenre(copy.sampleText, r.readability));
+      setAutoDetected(true);
+    }
     setAnalyzedText(copy.sampleText);
   };
 
@@ -105,6 +119,12 @@ export default function ReadabilityTool({
     setText("");
     setAnalyzedText(null);
     setTried(false);
+  };
+
+  const selectGenre = (id: string) => {
+    setGenre(id);
+    setManualGenre(true);
+    setAutoDetected(false);
   };
 
   return (
@@ -118,7 +138,7 @@ export default function ReadabilityTool({
           {copy.genres.map((g) => (
             <button
               key={g.id}
-              onClick={() => setGenre(g.id)}
+              onClick={() => selectGenre(g.id)}
               className={cn(
                 "rounded-full border px-4 py-1.5 text-sm transition-colors",
                 genre === g.id
@@ -130,7 +150,14 @@ export default function ReadabilityTool({
             </button>
           ))}
         </div>
-        <p className="text-sm text-[var(--text-muted)]">{activeGenre.note}</p>
+        <p className="text-sm text-[var(--text-muted)]">
+          {activeGenre.note}
+          {autoDetected && (
+            <span className="ml-2 text-xs font-medium text-[var(--accent-primary)]">
+              · {ui.autoDetectedLabel}
+            </span>
+          )}
+        </p>
 
         <textarea
           value={text}
