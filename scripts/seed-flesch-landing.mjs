@@ -139,7 +139,7 @@ const doc = {
   ],
   apiSectionTitle: "For developers & AI agents",
   apiBody:
-    "Score the readability of any text or content with a single JSON request - no browser, no signup, no API key. Works with any AI agent: ChatGPT, Claude, Gemini, Perplexity, and coding assistants.",
+    "Score the readability of any text or content with a single JSON request - no browser, no signup, no key, no account. Works with any AI agent: ChatGPT, Claude, Gemini, Perplexity, and coding assistants.",
   faqSectionTitle: "Flesch & AI citation, explained",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",

@@ -39,9 +39,9 @@ PromptRaise helps Web3 projects rank across AI summaries, LLM responses, and sea
 
 - ${siteUrl}/free/flesch-kincaid-calculator — Web3-aware readability calculator (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI) + Citation Readiness heuristics for answer-engine citability
 
-## API
+## JSON endpoint
 
-- POST ${siteUrl}/api/readability — a simple JSON endpoint for AI agents and scripts to measure readability. Send {"text": "your copy"} and receive six readability scores (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI). See the calculator page for examples.
+- POST ${siteUrl}/json/readability — a simple JSON endpoint for AI agents and scripts to measure readability. Send {"text": "your copy"} and receive six readability scores (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI). See the calculator page for examples.
 
 ## Blog
 
