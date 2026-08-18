@@ -3,7 +3,11 @@
 import { useMemo, useState } from "react";
 
 import { cn } from "@/lib/cn";
-import { DEFAULT_COPY, type FleschCopy } from "@/lib/flesch-copy";
+import {
+  DEFAULT_COPY,
+  MIN_ANALYZE_WORDS,
+  type FleschCopy,
+} from "@/lib/flesch-copy";
 import {
   analyzeText,
   gradeLevelLabel,
@@ -86,18 +90,34 @@ export default function ReadabilityTool({
 }) {
   const [text, setText] = useState("");
   const [analyzed, setAnalyzed] = useState(false);
+  const [tried, setTried] = useState(false);
   const [genre, setGenre] = useState<string>(GENRES[1]!.id);
 
+  const trimmed = text.trim();
+  const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
+  const isEmpty = trimmed.length === 0;
+  const isTooShort = !isEmpty && wordCount < MIN_ANALYZE_WORDS;
+  const valid = !isEmpty && !isTooShort;
+
   const result = useMemo(
-    () => (analyzed && text.trim().length > 0 ? analyzeText(text) : null),
-    [analyzed, text],
+    () => (analyzed && valid ? analyzeText(text) : null),
+    [analyzed, text, valid],
   );
 
   // Always compute highlighting data for whatever is in the box.
   const highlight = useMemo(
-    () => (text.trim().length > 0 ? analyzeText(text) : null),
-    [text],
+    () => (valid ? analyzeText(text) : null),
+    [text, valid],
   );
+
+  // Clear, user-facing validation message shown after they hit Analyze.
+  const error = tried
+    ? isEmpty
+      ? copy.emptyTextError
+      : isTooShort
+        ? copy.tooShortError
+        : null
+    : null;
 
   const activeGenre = GENRES.find((g) => g.id === genre) ?? GENRES[0]!;
   const inTarget =
@@ -133,10 +153,23 @@ export default function ReadabilityTool({
 
         <textarea
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+            setTried(false);
+          }}
           placeholder="Paste your Web3 copy, whitepaper excerpt, or landing page text here..."
           className="min-h-[200px] w-full resize-y rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5 text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
         />
+
+        {/* Validation feedback - shown when they try to analyze too little text */}
+        {error && (
+          <div
+            role="alert"
+            className="rounded-2xl border border-[#ff7a6e]/50 bg-[#ff7a6e]/10 px-4 py-3 text-sm leading-relaxed text-[#ff9d94]"
+          >
+            {error}
+          </div>
+        )}
 
         {/* Inline highlighting preview (complex words + hard sentences) */}
         {highlight && (
@@ -145,13 +178,17 @@ export default function ReadabilityTool({
 
         <div className="flex flex-wrap items-center gap-3">
           <button
-            onClick={() => setAnalyzed(true)}
+            onClick={() => {
+              setTried(true);
+              if (valid) setAnalyzed(true);
+            }}
             className="rounded-full bg-[var(--accent-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
           >
             Analyze text
           </button>
           <button
             onClick={() => {
+              setTried(false);
               setText(copy.sampleText);
               setAnalyzed(true);
             }}
@@ -164,6 +201,7 @@ export default function ReadabilityTool({
               onClick={() => {
                 setText("");
                 setAnalyzed(false);
+                setTried(false);
               }}
               className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
@@ -262,13 +300,13 @@ export default function ReadabilityTool({
             </a>
           </div>
         </div>
-      ) : (
+      ) : !error ? (
         <p className="text-sm text-[var(--text-muted)]">
           Paste text above and hit{" "}
           <span className="text-[var(--accent-primary)]">Analyze</span> - or use
           the Web3 example to see how it works.
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

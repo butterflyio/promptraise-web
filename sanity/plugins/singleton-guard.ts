@@ -8,7 +8,12 @@ import type { DocumentActionComponent } from "sanity";
  * unpublished. This filters those actions out of the document header for the
  * singleton types, so a stray click can't destabilize global chrome.
  */
-const SINGLETON_TYPES = new Set(["siteSettings", "glossary", "auditLanding"]);
+const SINGLETON_TYPES = new Set([
+  "siteSettings",
+  "glossary",
+  "auditLanding",
+  "fleschKincaidLanding",
+]);
 
 const FORBIDDEN_ACTION_NAMES = new Set(["delete", "duplicate", "unpublish"]);
 

@@ -624,6 +624,8 @@ const FLESCH_PROJECTION = `{
   privacyTitle,
   privacyBody,
   contentTypeLabel,
+  emptyTextError,
+  tooShortError,
   sampleText,
   introSectionTitle,
   introBody1,

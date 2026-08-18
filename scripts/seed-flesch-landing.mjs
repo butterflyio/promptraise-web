@@ -63,6 +63,9 @@ const doc = {
   privacyBody:
     "Your text is analyzed on this device only. Nothing is uploaded, stored, or sent to a server - the calculator works even if you lose your connection after the page loads.",
   contentTypeLabel: "Content type:",
+  emptyTextError: "Please paste or type some text to analyze.",
+  tooShortError:
+    "Not enough text to analyze. Paste at least a couple of full sentences (min 8 words) for a meaningful readability score.",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",
   introSectionTitle: "Why readability and AI citation matter for Web3",

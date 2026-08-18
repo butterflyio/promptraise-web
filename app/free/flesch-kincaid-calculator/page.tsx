@@ -43,6 +43,8 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "privacyTitle",
     "privacyBody",
     "contentTypeLabel",
+    "emptyTextError",
+    "tooShortError",
     "sampleText",
     "introSectionTitle",
     "introBody1",

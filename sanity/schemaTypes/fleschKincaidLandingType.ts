@@ -58,6 +58,20 @@ export const fleschKincaidLandingType = defineType({
       initialValue: "Content type:",
     }),
     defineField({
+      name: "emptyTextError",
+      title: "Empty Input Error",
+      type: "string",
+      description:
+        "Shown when someone hits Analyze with no text. Default: Please paste or type some text to analyze.",
+    }),
+    defineField({
+      name: "tooShortError",
+      title: "Too-Little-Text Error",
+      type: "string",
+      description:
+        "Shown when input is below the min words threshold. Include the min word count (8) so users know the bar.",
+    }),
+    defineField({
       name: "sampleText",
       title: "Try Web3 Example Text",
       type: "text",

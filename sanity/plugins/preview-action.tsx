@@ -10,13 +10,20 @@ import type { DocumentActionComponent } from "sanity";
  * and the site are served from the same domain on Vercel), so no CORS or
  * hardcoded domain is needed.
  */
-const PREVIEWABLE_TYPES = ["page", "post", "siteSettings", "glossary"];
+const PREVIEWABLE_TYPES = [
+  "page",
+  "post",
+  "siteSettings",
+  "glossary",
+  "fleschKincaidLanding",
+];
 
 /** Fixed slugs for single-doc types that live at a non-slug route, and the
  * path prefix for document types that live under a namespace (posts -> /blog). */
 const FIXED_PREVIEW_SLUGS: Record<string, string> = {
   siteSettings: "/",
   glossary: "/academy/glossary",
+  fleschKincaidLanding: "/free/flesch-kincaid-calculator",
 };
 
 const PREVIEW_PATH_PREFIX: Record<string, string> = {

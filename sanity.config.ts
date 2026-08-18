@@ -82,6 +82,15 @@ export default defineConfig({
                   .documentId("auditLanding")
                   .title("Audit Landing"),
               ),
+            S.listItem()
+              .title("Flesch-Kincaid Calculator")
+              .schemaType("fleschKincaidLanding")
+              .child(
+                S.editor()
+                  .schemaType("fleschKincaidLanding")
+                  .documentId("fleschKincaidLanding")
+                  .title("Flesch-Kincaid Calculator"),
+              ),
           ]),
     }),
     visionTool(),
