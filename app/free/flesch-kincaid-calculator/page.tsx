@@ -52,12 +52,14 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "privacyBadge",
     "privacyTitle",
     "privacyBody",
+    "trustLine",
     "contentTypeLabel",
     "emptyTextError",
     "tooShortError",
     "linkError",
     "invalidContentError",
     "fetchError",
+    "disclaimerText",
     "methodologyTitle",
     "methodologyBody",
     "contactEmailLabel",
@@ -164,6 +166,9 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
       "fetchButtonLabel",
       "fetchingLabel",
       "fetchedWordsLabel",
+      "shareButtonLabel",
+      "copiedLabel",
+      "sharedStripLabel",
       "citationScoreTitle",
       "readingEaseTitle",
       "scoreSuffix",
@@ -318,6 +323,9 @@ export default async function ReadabilityPage() {
         </span>
         <p className="max-w-2xl text-sm leading-relaxed text-[var(--text-muted)]">
           {copy.privacyBody}
+        </p>
+        <p className="text-xs font-medium text-[var(--accent-primary)]">
+          {copy.trustLine}
         </p>
       </div>
 

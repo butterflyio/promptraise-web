@@ -48,6 +48,11 @@ export interface FleschUiLabels {
   fetchingLabel: string;
   fetchedWordsLabel: string;
 
+  // Shareable report link
+  shareButtonLabel: string;
+  copiedLabel: string;
+  sharedStripLabel: string;
+
   // Score header
   citationScoreTitle: string;
   readingEaseTitle: string;
@@ -102,6 +107,8 @@ export interface FleschCopy {
   privacyTitle: string;
   privacyBody: string;
 
+  trustLine: string;
+
   contentTypeLabel: string;
 
   emptyTextError: string;
@@ -109,6 +116,7 @@ export interface FleschCopy {
   linkError: string;
   invalidContentError: string;
   fetchError: string;
+  disclaimerText: string;
 
   methodologyTitle: string;
   methodologyBody: string;
@@ -245,6 +253,10 @@ export const DEFAULT_UI: FleschUiLabels = {
   fetchingLabel: "Fetching...",
   fetchedWordsLabel: "Fetched {words} words from {url}",
 
+  shareButtonLabel: "Copy report link",
+  copiedLabel: "Copied!",
+  sharedStripLabel: "Report shared from promptraise.com",
+
   citationScoreTitle: "Citation Readiness",
   readingEaseTitle: "Flesch Reading Ease",
   scoreSuffix: "/100",
@@ -328,6 +340,8 @@ export const DEFAULT_COPY: FleschCopy = {
   privacyTitle: "Runs 100% in your browser - fully offline",
   privacyBody:
     "Your text is analyzed on this device only. Nothing is uploaded, stored, or sent to a server - the calculator works even if you lose your connection after the page loads.",
+  trustLine:
+    "Forever Free \u00b7 No signup \u00b7 No word limit \u00b7 No data capture, ever \u00b7 100% offline in your browser",
 
   contentTypeLabel: "Content type:",
 
@@ -339,6 +353,8 @@ export const DEFAULT_COPY: FleschCopy = {
     "That doesn't look like readable text. Paste plain sentences (words and punctuation) to get a readability score.",
   fetchError:
     "Couldn't fetch that page. It may block automatic requests - try pasting the text directly instead.",
+  disclaimerText:
+    "Use the Citation Readiness score to spot what to look at - but use your judgment to decide what to change.",
   methodologyTitle: "Methodology & how it works",
   methodologyBody:
     "This calculator runs entirely in your browser - pasted text never leaves your device. The six formulas (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI) are computed client-side from their original published equations. The Citation Readiness score and per-engine verdicts are PromptRaise heuristics built from four citation signals: entity clarity, defined terms, groundable statements and sentence structure. Web3 vocabulary (DeFi, TVL, AMM, protocol names) is scored with a Web3-aware dictionary so legitimate industry terms are not falsely penalized as complex.",

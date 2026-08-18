@@ -55,6 +55,13 @@ export const fleschKincaidLandingType = defineType({
       rows: 3,
     }),
     defineField({
+      name: "trustLine",
+      title: "Trust Line (badge strip)",
+      type: "string",
+      description:
+        "Badge strip under the privacy note. Default: Forever Free · No signup · No word limit · No data capture, ever · 100% offline in your browser",
+    }),
+    defineField({
       name: "contentTypeLabel",
       title: "Content Type Label",
       type: "string",
@@ -95,6 +102,13 @@ export const fleschKincaidLandingType = defineType({
       type: "string",
       description:
         "Shown when a URL could not be fetched (blocked, 403, timeout). Default: Couldn't fetch that page...",
+    }),
+    defineField({
+      name: "disclaimerText",
+      title: "Interpretation Disclaimer",
+      type: "string",
+      description:
+        "Small disclaimer under the scores. Default: Use the Citation Readiness score to spot what to look at - but use your judgment to decide what to change.",
     }),
     defineField({
       name: "methodologyTitle",
@@ -331,6 +345,17 @@ export const fleschKincaidLandingType = defineType({
           "fetchedWordsLabel",
           "Fetched-Words Note",
           "Template with {words} and {url} placeholders. Default: Fetched {words} words from {url}",
+        ),
+        uiString(
+          "shareButtonLabel",
+          "Share Button",
+          "Default: Copy report link",
+        ),
+        uiString("copiedLabel", "Copied Feedback", "Default: Copied!"),
+        uiString(
+          "sharedStripLabel",
+          "Shared-Report Strip",
+          "Small note when the report was opened from a share link. Default: Report shared from promptraise.com",
         ),
         uiString(
           "citationScoreTitle",

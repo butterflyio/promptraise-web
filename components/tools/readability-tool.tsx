@@ -1,6 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  compressToEncodedURIComponent,
+  decompressFromEncodedURIComponent,
+} from "lz-string";
 
 import { cn } from "@/lib/cn";
 import {
@@ -79,6 +83,33 @@ export default function ReadabilityTool({
     words: number;
     url: string;
   } | null>(null);
+
+  // Shareable report link state.
+  const [copied, setCopied] = useState(false);
+  const [sharedFrom, setSharedFrom] = useState(false);
+
+  // Load a shared report (?r=<compressed text>) on mount, fully client-side -
+  // nothing is stored or sent to a server.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const r = new URLSearchParams(window.location.search).get("r");
+    if (!r) return;
+    let decoded: string | null = null;
+    try {
+      decoded = decompressFromEncodedURIComponent(r);
+    } catch {
+      decoded = null;
+    }
+    if (!decoded || decoded.trim().length === 0) return;
+    setText(decoded);
+    setMode("paste");
+    setSharedFrom(true);
+    const res = analyzeText(decoded);
+    setGenre(detectContentGenre(decoded, res.readability));
+    setAutoDetected(true);
+    setAnalyzedText(decoded);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const trimmed = text.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
@@ -201,6 +232,19 @@ export default function ReadabilityTool({
       setFetchErrorMsg(copy.fetchError);
     } finally {
       setFetching(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!analyzedText) return;
+    const compressed = compressToEncodedURIComponent(analyzedText);
+    const url = `${window.location.origin}${window.location.pathname}?r=${compressed}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      window.prompt("Copy your report link:", url);
     }
   };
 
@@ -350,6 +394,23 @@ export default function ReadabilityTool({
       {/* ---- Results (only after using Analyze / Try Web3 example) ---- */}
       {result ? (
         <div className="flex flex-col gap-8">
+          {/* Shareable report link - shown once results exist */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            {sharedFrom ? (
+              <span className="text-xs text-[var(--text-muted)]">
+                {ui.sharedStripLabel}
+              </span>
+            ) : (
+              <span />
+            )}
+            <button
+              onClick={handleShare}
+              className="rounded-full border border-[var(--border-default)] px-4 py-1.5 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+            >
+              {copied ? ui.copiedLabel : ui.shareButtonLabel}
+            </button>
+          </div>
+
           <HighlightedText
             text={analyzedText ?? ""}
             result={result.readability}
@@ -364,6 +425,11 @@ export default function ReadabilityTool({
             genreLabel={activeGenre.label}
             ui={ui}
           />
+
+          {/* Interpretation disclaimer - scores guide, judgment decides */}
+          <p className="text-xs leading-relaxed text-[var(--text-muted)]">
+            {copy.disclaimerText}
+          </p>
 
           <FormulaGrid
             readability={result.readability}
