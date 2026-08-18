@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 
+import { cn } from "@/lib/cn";
+
 /**
- * Copy-to-clipboard command block: a <pre><code> with a Copy button.
+ * Copy-to-clipboard command block: a <pre><code> with a Copy button that
+ * changes color and label to "Copied!" after a successful copy.
  * Used for the AI-agent command and the embed snippet.
  */
 export default function CopyCommand({
@@ -18,11 +21,30 @@ export default function CopyCommand({
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
+    let ok = false;
     try {
       await navigator.clipboard.writeText(text);
+      ok = true;
+    } catch {
+      // Fallback for older/insecure contexts.
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        ok = document.execCommand("copy");
+        ta.remove();
+      } catch {
+        ok = false;
+      }
+    }
+    if (ok) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } else {
       window.prompt("Copy:", text);
     }
   };
@@ -34,7 +56,12 @@ export default function CopyCommand({
       </pre>
       <button
         onClick={copy}
-        className="absolute top-2 right-2 rounded-full bg-[var(--accent-primary)] px-3 py-1 text-xs font-semibold text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
+        className={cn(
+          "absolute top-2 right-2 rounded-full px-3 py-1 text-xs font-semibold transition-colors",
+          copied
+            ? "bg-[#67ff67] text-[#0c0f14]"
+            : "bg-[var(--accent-primary)] text-[var(--accent-foreground)] hover:opacity-90",
+        )}
       >
         {copied ? copiedLabel : label}
       </button>

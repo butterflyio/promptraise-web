@@ -41,7 +41,7 @@ PromptRaise helps Web3 projects rank across AI summaries, LLM responses, and sea
 
 ## API
 
-- POST ${siteUrl}/api/readability — JSON API for AI agents and scripts. Send {"text": "your copy"} and receive readability scores, citation signals and per-engine verdicts. See the calculator page for examples.
+- POST ${siteUrl}/api/readability — JSON API for AI agents and scripts to measure readability. Send {"text": "your copy"} and receive six readability scores (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI). See the calculator page for examples.
 
 ## Blog
 
