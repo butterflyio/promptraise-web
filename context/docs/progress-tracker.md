@@ -378,3 +378,5 @@ Update this file after every meaningful implementation change.
   - "For developers & AI agents" section moved right after the privacy/trust note (before the tool): single natural-language command to share with ANY AI agent (ChatGPT/Claude/Gemini/Perplexity/coding assistants) + direct curl, both with clickable copy buttons (CopyCommand component).
   - Embed section upgraded: free/no-account/no-API-key badges, 3 numbered steps, copyable iframe snippet, LIVE iframe preview of the widget, and an embedding-only FAQ accordion (CMS-editable embedBadges/embedSteps/embedFaq). Modeled on readabilitycheck.com/embed/.
   - Open-source decision deferred by Zain.
+- **FK calculator - much shorter share links (2026-08-18):**
+  - Swapped share-link codec from lz-string to fflate deflate + URL-safe base64 (level 9). Measured: 11.8k-char text URL shrank 5640 -> 772 chars (86% smaller); realistic prose ~15-20% smaller on short text, big gains on large/repetitive (fetched-page) text. Backward-compatible decode (deflate first, lz-string fallback) so previously shared links still open. Deploying to prod (incl. copy-button/text fixes staged as 45e743a).

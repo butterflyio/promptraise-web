@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import {
-  compressToEncodedURIComponent,
-  decompressFromEncodedURIComponent,
-} from "lz-string";
+import { inflateSync, strFromU8, strToU8, deflateSync } from "fflate";
+import { decompressFromEncodedURIComponent } from "lz-string";
 
 import { cn } from "@/lib/cn";
 import {
@@ -55,6 +53,41 @@ function glossarySlug(s: string): string {
 
 const GLOSSARY_URL = "/academy/glossary";
 
+/** bytes -> URL-safe base64 (no padding). */
+function bytesToB64Url(u8: Uint8Array): string {
+  let bin = "";
+  for (let i = 0; i < u8.length; i++) bin += String.fromCharCode(u8[i] ?? 0);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+/** URL-safe base64 -> bytes. */
+function b64UrlToBytes(s: string): Uint8Array {
+  const b64 =
+    s.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((s.length + 3) % 4);
+  const bin = atob(b64);
+  const u8 = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  return u8;
+}
+
+/** Encode report text into a compact URL segment (deflate + URL-safe base64). */
+function encodeShare(text: string): string {
+  return bytesToB64Url(deflateSync(strToU8(text), { level: 9 }));
+}
+
+/** Decode a ?r= payload - deflate first, lz-string fallback for old links. */
+function decodeShare(r: string): string | null {
+  try {
+    return strFromU8(inflateSync(b64UrlToBytes(r)));
+  } catch {
+    try {
+      return decompressFromEncodedURIComponent(r);
+    } catch {
+      return null;
+    }
+  }
+}
+
 export default function ReadabilityTool({
   copy = DEFAULT_COPY,
 }: {
@@ -97,7 +130,7 @@ export default function ReadabilityTool({
     if (!r) return;
     let decoded: string | null = null;
     try {
-      decoded = decompressFromEncodedURIComponent(r);
+      decoded = decodeShare(r);
     } catch {
       decoded = null;
     }
@@ -240,7 +273,7 @@ export default function ReadabilityTool({
 
   const handleShare = async () => {
     if (!analyzedText) return;
-    const compressed = compressToEncodedURIComponent(analyzedText);
+    const compressed = encodeShare(analyzedText);
     const url = `${window.location.origin}${window.location.pathname}?r=${compressed}`;
     try {
       await navigator.clipboard.writeText(url);
