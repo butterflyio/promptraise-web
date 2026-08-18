@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 
 import FaqAccordion from "@/components/tools/faq-accordion";
 import ReadabilityTool from "@/components/tools/readability-tool";
+import { DEFAULT_COPY, type FleschCopy } from "@/lib/flesch-copy";
+import {
+  getFleschKincaidLanding,
+  getFleschKincaidLandingPreview,
+} from "@/sanity/lib/queries";
+
+export const revalidate = 30;
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
@@ -19,33 +27,95 @@ export const metadata: Metadata = {
   },
 };
 
-const FAQ = [
-  {
-    q: "What is a good Flesch Reading Ease score?",
-    a: "A score of 60-70 is generally regarded as plain English that most adults can read easily. Higher scores are easier to read; lower scores are harder. For Web3 content, a 45-60 range is often appropriate for technical explainers.",
-  },
-  {
-    q: "Why does this tool differ from a normal Flesch calculator?",
-    a: "PromptRaise's checker is Web3-aware: protocol and chain names (DeFi, ethereum, tokenomics, TVL) are scored with a custom dictionary so legitimate industry terms are not falsely flagged as complex. It also adds a Citation Readiness score for AI visibility.",
-  },
-  {
-    q: "What is the Citation Readiness score?",
-    a: "It is a 0-100 PromptRaise signal estimating how likely answer engines are to pull a clean, grounded, citable sentence from your text, based on entity clarity, defined terms, groundable statements and sentence structure.",
-  },
-  {
-    q: "Which readability formulas are included?",
-    a: "The calculator runs six formulas at once: Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and the Automated Readability Index (ARI). Seeing them together shows where they disagree, which is usually more informative than any single figure.",
-  },
-];
+/**
+ * Merge the CMS doc over the in-code defaults so a blank or missing CMS field
+ * never drops a section. `formulaDefinitions` and `faq` are arrays, so replace
+ * them wholesale when the CMS provides non-empty arrays, else keep defaults.
+ */
+function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
+  if (!doc) return DEFAULT_COPY;
+  const copy = { ...DEFAULT_COPY };
 
-export default function ReadabilityPage() {
+  const simpleKeys: (keyof FleschCopy)[] = [
+    "heroTitle",
+    "heroSubtitle",
+    "privacyBadge",
+    "privacyTitle",
+    "privacyBody",
+    "contentTypeLabel",
+    "sampleText",
+    "introSectionTitle",
+    "introBody1",
+    "introBody2",
+    "formulasTitle",
+    "formulasSubtext",
+    "engineVerdictTitle",
+    "engineVerdictIntro",
+    "citationSectionTitle",
+    "citationSectionIntro",
+    "ctaHeading",
+    "ctaBody",
+    "ctaLabel",
+    "ctaHref",
+  ];
+  for (const key of simpleKeys) {
+    const val = doc[key];
+    if (typeof val === "string" && val.trim().length > 0) {
+      (copy as Record<string, unknown>)[key] = val;
+    }
+  }
+
+  const formulas = doc["formulaDefinitions"];
+  if (Array.isArray(formulas) && formulas.length > 0) {
+    const mapped = formulas
+      .map((f) => {
+        const entry = f as { key?: string; description?: string };
+        if (!entry.key || typeof entry.description !== "string") return null;
+        return { key: entry.key, description: entry.description };
+      })
+      .filter((x): x is { key: string; description: string } => x !== null);
+    if (mapped.length > 0) copy.formulaDefinitions = mapped;
+  }
+
+  const faq = doc["faq"];
+  if (Array.isArray(faq) && faq.length > 0) {
+    const mapped = faq
+      .map((f) => {
+        const entry = f as { question?: string; answer?: string };
+        if (
+          typeof entry.question !== "string" ||
+          typeof entry.answer !== "string"
+        ) {
+          return null;
+        }
+        return { question: entry.question, answer: entry.answer };
+      })
+      .filter(
+        (x): x is { question: string; answer: string } =>
+          x !== null &&
+          x.question.trim().length > 0 &&
+          x.answer.trim().length > 0,
+      );
+    if (mapped.length > 0) copy.faq = mapped;
+  }
+
+  return copy;
+}
+
+export default async function ReadabilityPage() {
+  const isDraft = (await draftMode()).isEnabled;
+  const doc = isDraft
+    ? await getFleschKincaidLandingPreview()
+    : await getFleschKincaidLanding();
+  const copy = mergeCopy(doc);
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
+    mainEntity: copy.faq.map((f) => ({
       "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
     })),
   };
 
@@ -108,66 +178,45 @@ export default function ReadabilityPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }}
       />
       <h1 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
-        Flesch-Kincaid Calculator for Web3
+        {copy.heroTitle}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-[var(--text-secondary)]">
-        Paste your copy and see two things: how hard it is to read (Flesch + 4
-        more formulas), and how likely answer engines are to actually cite your
-        protocol. Built for Web3 writing - no false &ldquo;complex word&rdquo;
-        penalties on industry terms.
+        {copy.heroSubtitle}
       </p>
 
-      {/*
-        Privacy + offline note - prominent, directly under the intro.
-        The tool is 100% client-side: after the initial page load there are no
-        network requests, your text never leaves the browser.
-      */}
       <div
         role="note"
         className="mt-5 flex flex-col gap-2 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5"
       >
         <span className="text-sm font-semibold tracking-wide text-white">
-          Runs 100% in your browser - fully offline
+          {copy.privacyBadge}
         </span>
         <p className="max-w-2xl text-sm leading-relaxed text-[var(--text-muted)]">
-          Your text is analyzed on this device only. Nothing is uploaded,
-          stored, or sent to a server - the calculator works even if you lose
-          your connection after the page loads.
+          {copy.privacyBody}
         </p>
       </div>
 
       <div className="mt-10">
-        <ReadabilityTool />
+        <ReadabilityTool copy={copy} />
       </div>
 
       {/* Educational SEO content - server-rendered for crawlers and AI engines */}
       <section className="mt-20 border-t border-[var(--border-default)] pt-12">
         <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
-          Why readability and AI citation matter for Web3
+          {copy.introSectionTitle}
         </h2>
         <div className="mt-4 flex flex-col gap-4 leading-relaxed text-[var(--text-secondary)]">
-          <p>
-            Answer engines like ChatGPT, Perplexity, Claude and Gemini favor
-            content that is easy to parse and grounded in verifiable facts. When
-            your protocol documentation is clearly written and defines its
-            terms, these engines are far more likely to quote it directly -
-            turning your docs into a source of AI referral traffic.
-          </p>
-          <p>
-            PromptRaise&rsquo;s Flesch-Kincaid calculator for Web3 is
-            Web3-aware: it recognizes protocol and chain vocabulary (DeFi, TVL,
-            AMM, tokenomics, liquidity) so legitimate industry language is not
-            falsely counted as complex. The Citation Readiness score layers on
-            top of classic readability to estimate how likely each answer engine
-            is to cite your text.
-          </p>
+          <p>{copy.introBody1}</p>
+          <p>{copy.introBody2}</p>
         </div>
 
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
           Flesch &amp; AI citation, explained
         </h2>
         <div className="mt-6">
-          <FaqAccordion items={FAQ} />
+          <FaqAccordion
+            items={copy.faq.map((f) => ({ q: f.question, a: f.answer }))}
+          />
         </div>
       </section>
     </main>

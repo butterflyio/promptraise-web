@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { cn } from "@/lib/cn";
+import { DEFAULT_COPY, type FleschCopy } from "@/lib/flesch-copy";
 import {
   analyzeText,
   gradeLevelLabel,
@@ -53,7 +54,7 @@ const FORMULAS: { key: keyof ReadabilityResult; label: string }[] = [
   { key: "ari", label: "ARI" },
 ];
 
-const SAMPLE = `Renzo is a liquid restaking protocol. It turns restaked ETH into a liquid token called ezETH. Users can deposit ether and receive ezETH in return, which keeps earning yield while staying spendable. The protocol is audited by multiple leading security firms. As of this quarter, Renzo manages over three billion dollars in total value locked across its vaults.`;
+const SAMPLE_PLACEHOLDER = ""; // sample text now comes from CMS copy.sampleText
 
 const EMPTY: ReadabilityResult = {
   charCount: 0,
@@ -78,7 +79,11 @@ const EMPTY: ReadabilityResult = {
   longestSentences: [],
 };
 
-export default function ReadabilityTool() {
+export default function ReadabilityTool({
+  copy = DEFAULT_COPY,
+}: {
+  copy?: FleschCopy;
+}) {
   const [text, setText] = useState("");
   const [analyzed, setAnalyzed] = useState(false);
   const [genre, setGenre] = useState<string>(GENRES[1]!.id);
@@ -107,7 +112,7 @@ export default function ReadabilityTool() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm text-[var(--text-muted)]">
-            Content type:
+            {copy.contentTypeLabel}
           </span>
           {GENRES.map((g) => (
             <button
@@ -147,7 +152,7 @@ export default function ReadabilityTool() {
           </button>
           <button
             onClick={() => {
-              setText(SAMPLE);
+              setText(copy.sampleText);
               setAnalyzed(true);
             }}
             className="rounded-full border border-[var(--border-default)] px-6 py-2.5 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)]"
@@ -182,26 +187,32 @@ export default function ReadabilityTool() {
           <FormulaGrid
             readability={result.readability}
             target={activeGenre.target}
+            copy={copy}
           />
 
-          <EngineVerdicts verdicts={result.engineVerdicts} />
+          <EngineVerdicts verdicts={result.engineVerdicts} copy={copy} />
 
           {result.citation.signals.length > 0 && (
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
-              <h3 className="mb-3 text-lg font-semibold text-[var(--text-primary)]">
-                How to make this more citable
+              <h3 className="text-lg font-semibold text-[var(--text-primary)]">
+                {copy.citationSectionTitle}
               </h3>
-              <ul className="flex flex-col gap-2">
+              <p className="mt-1 text-sm text-[var(--text-muted)]">
+                {copy.citationSectionIntro}
+              </p>
+              <ol className="mt-4 flex flex-col gap-3">
                 {result.citation.signals.map((s, i) => (
                   <li
                     key={i}
-                    className="text-sm leading-relaxed text-[var(--text-secondary)]"
+                    className="flex gap-3 text-sm leading-relaxed text-[var(--text-secondary)]"
                   >
-                    <span className="mr-2 text-[var(--accent-primary)]">+</span>
-                    {s}
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent-primary)]/15 text-xs font-semibold text-[var(--accent-primary)]">
+                      {i + 1}
+                    </span>
+                    <span>{s}</span>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
           )}
 
@@ -238,18 +249,16 @@ export default function ReadabilityTool() {
           {/* Lead capture - the real point of the tool */}
           <div className="rounded-2xl border border-[var(--accent-primary)] bg-[var(--bg-surface)] p-8 text-center">
             <h3 className="text-xl font-semibold text-[var(--text-primary)]">
-              Want AI to actually cite your protocol?
+              {copy.ctaHeading}
             </h3>
             <p className="mx-auto mt-2 max-w-xl text-sm text-[var(--text-secondary)]">
-              Get a free AI-viability audit and see how ChatGPT, Perplexity and
-              Claude currently talk about your project - and how to become the
-              answer instead of the rumor.
+              {copy.ctaBody}
             </p>
             <a
-              href="https://audit.promptraise.com"
+              href={copy.ctaHref}
               className="mt-6 inline-flex items-center rounded-full bg-[var(--accent-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
             >
-              Get free audit
+              {copy.ctaLabel}
             </a>
           </div>
         </div>
@@ -427,20 +436,26 @@ function ScoreHeader({
 function FormulaGrid({
   readability,
   target,
+  copy,
 }: {
   readability: ReadabilityResult;
   target: [number, number];
+  copy: FleschCopy;
 }) {
+  const defByKey = new Map(
+    copy.formulaDefinitions.map((d) => [d.key, d.description]),
+  );
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
-      <div className="mb-4 flex items-baseline justify-between">
-        <h3 className="text-lg font-semibold text-[var(--text-primary)]">
-          Readability formulas
-        </h3>
-        <span className="text-xs text-[var(--text-muted)]">
-          Higher ease = easier · grades = reading level. Disagreement between
-          formulas is normal.
-        </span>
+      <div className="mb-4 flex flex-col gap-1">
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)]">
+            {copy.formulasTitle}
+          </h3>
+          <span className="text-xs text-[var(--text-muted)]">
+            {copy.formulasSubtext}
+          </span>
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
         {FORMULAS.map((f) => {
@@ -452,12 +467,15 @@ function FormulaGrid({
             typeof raw === "number" &&
             raw >= target[0] &&
             raw <= target[1];
+          const desc = defByKey.get(String(f.key));
           return (
             <div
               key={f.key}
-              className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-base)] p-4"
+              className="flex flex-col rounded-2xl border border-[var(--border-default)] bg-[var(--bg-base)] p-4"
             >
-              <p className="text-xs text-[var(--text-muted)]">{f.label}</p>
+              <p className="text-xs font-medium text-[var(--text-muted)]">
+                {f.label}
+              </p>
               <p className="mt-1 text-2xl font-semibold text-[var(--text-primary)]">
                 {val}
               </p>
@@ -471,6 +489,11 @@ function FormulaGrid({
                   target {target[0]}-{target[1]}
                 </p>
               )}
+              {desc && (
+                <p className="mt-2 border-t border-[var(--border-default)] pt-2 text-xs leading-relaxed text-[var(--text-muted)]">
+                  {desc}
+                </p>
+              )}
             </div>
           );
         })}
@@ -481,12 +504,21 @@ function FormulaGrid({
 
 /* ---- Per-engine verdicts -------------------------------------------------- */
 
-function EngineVerdicts({ verdicts }: { verdicts: EngineVerdict[] }) {
+function EngineVerdicts({
+  verdicts,
+  copy,
+}: {
+  verdicts: EngineVerdict[];
+  copy: FleschCopy;
+}) {
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
-      <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
-        Answer engine verdict
+      <h3 className="mb-1 text-lg font-semibold text-[var(--text-primary)]">
+        {copy.engineVerdictTitle}
       </h3>
+      <p className="mb-4 text-sm leading-relaxed text-[var(--text-muted)]">
+        {copy.engineVerdictIntro}
+      </p>
       <div className="grid gap-3 md:grid-cols-2">
         {verdicts.map((v) => {
           const color =

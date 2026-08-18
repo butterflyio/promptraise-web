@@ -537,7 +537,7 @@ function scoreEntityClarity(sentences: string[]): {
     return {
       score: 0,
       signals: [
-        "Add an opening sentence that names your protocol and what it does.",
+        "Open with your protocol's name and what it does - answer engines lead with the who + what.",
       ],
     };
   const opener = sentences[0] ?? "";
@@ -555,11 +555,11 @@ function scoreEntityClarity(sentences: string[]): {
   const signals: string[] = [];
   if (!hasEntity)
     signals.push(
-      "First sentence should name your protocol/project explicitly.",
+      'Start with your protocol\'s name: "<Protocol> is a <category>...". Answer engines need the entity in the first sentence to cite it.',
     );
   if (!hasAction)
     signals.push(
-      "First sentence should state what the protocol does (builds, enables, powers...).",
+      'Add an action verb to your first sentence: "<Protocol> builds / enables / lets users...". A named protocol + a clear action = quotable opener.',
     );
   return { score, signals };
 }
@@ -588,7 +588,7 @@ function scoreDefinedTerms(
   const signals: string[] = [];
   if (ratio < 0.5) {
     signals.push(
-      'Define key Web3 terms ("X is a...") so answer engines can quote a clean definition.',
+      'Define each Web3 term on first use: "X is a...". Quote-ready definitions are exactly what answer engines copy verbatim.',
     );
   }
   return { score, signals };
@@ -614,7 +614,7 @@ function scoreGroundability(text: string): {
   const signals: string[] = [];
   if (numbers < 2)
     signals.push(
-      "Add concrete, verifiable numbers (TVL, users, APY) - answer engines love groundable statements.",
+      'Add one hard number: TVL, users, or APY. Say "over $3B in TVL", not "lots of value" - verifiable facts are what answer engines cite.',
     );
   return { score, signals };
 }
@@ -663,6 +663,14 @@ export function analyzeCitationReadiness(
     ...defined.signals,
     ...ground.signals,
   ].slice(0, 4);
+
+  // Structure signal: long sentences are the #1 readability drag and the
+  // hardest to quote cleanly. Only push when there is room and it applies.
+  if (readability.avgSentenceLength > 20 && signals.length < 4) {
+    signals.push(
+      `Split sentences over 20 words - yours average ${Math.round(readability.avgSentenceLength)}. Short, self-contained sentences are the easiest for answer engines to quote.`,
+    );
+  }
 
   return {
     score: clamp(score, 0, 100),

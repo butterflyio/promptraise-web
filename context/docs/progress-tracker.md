@@ -324,3 +324,10 @@ Update this file after every meaningful implementation change.
   - `components/post-body.tsx` portable-text renderer (headings, para, links, image, video embed, code block, lists, quote).
   - Desk "Blog" list ordered by publishedAt; Preview routes posts to `/blog/[slug]`; sync-to-production copies post fields + revalidates `/blog/[slug]`; sitemap + llms.txt include blog URLs; CSP allows YouTube/Vimeo embeds.
   - Seeded 7 legacy posts into staging via `scripts/seed-posts.ts` (idempotent). Verified live: `/blog` and `/blog/[slug]` 200 + SSR content on staging. Production untouched.
+- **Flesch-Kincaid calculator CMS-editable (latest):** `/free/flesch-kincaid-calculator` copy moved into a new `fleschKincaidLanding` Sanity singleton:
+  - New schema `sanity/schemaTypes/fleschKincaidLandingType.ts`: hero, privacy note, sample text, intro, formulas title/subtext + per-formula explainers (keyed to ReadabilityResult keys), answer-engine-verdict intro, citation-section title/intro, FAQ (also drives FAQPage JSON-LD), lead CTA. Registered in `schemaTypes/index.ts`.
+  - Fallback copy module `lib/flesch-copy.ts` (`DEFAULT_COPY`) so the page never breaks when the CMS is unreachable; queries `getFleschKincaidLanding()`/`getFleschKincaidLandingPreview()` in `sanity/lib/queries.ts`.
+  - `page.tsx` now async + ISR 30s + draft-mode aware; merges CMS doc over defaults; FAQ accordion + FAQPage JSON-LD fed from CMS.
+  - `components/tools/readability-tool.tsx` takes a `copy` prop: sample text, content-type label, formulas grid (now shows per-formula explainers under each score), engine-verdict intro line, numbered action-oriented "How to make this more citable" list, CTA copy all CMS-driven.
+  - `lib/readability.ts` citation signals rewritten action-first (patterns like "<Protocol> is a <category>...", "Add one hard number: TVL, users, or APY") + new long-sentence split signal.
+  - Seeded `fleschKincaidLanding` into the production dataset (only live dataset) via `scripts/seed-flesch-landing.mjs` (idempotent, verified fetch-back). "Try Web3 example" now demos Promptraise itself (94/100 citation, all-High verdicts). Production deploy pending user sign-off.

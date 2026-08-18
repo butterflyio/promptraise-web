@@ -611,3 +611,54 @@ export async function getRelatedPosts(
     return [];
   }
 }
+
+// ── Flesch-Kincaid calculator page copy ────────────────────────────────────
+// Editable singleton "fleschKincaidLanding". The Next page renders with the
+// in-code defaults (lib/flesch-copy.ts) when this doc is missing; every field
+// merges over the default so a blank CMS field never kills a section.
+
+const FLESCH_PROJECTION = `{
+  heroTitle,
+  heroSubtitle,
+  privacyBadge,
+  privacyTitle,
+  privacyBody,
+  contentTypeLabel,
+  sampleText,
+  introSectionTitle,
+  introBody1,
+  introBody2,
+  formulasTitle,
+  formulasSubtext,
+  formulaDefinitions[]{key, description},
+  engineVerdictTitle,
+  engineVerdictIntro,
+  citationSectionTitle,
+  citationSectionIntro,
+  faq[]{question, answer},
+  ctaHeading,
+  ctaBody,
+  ctaLabel,
+  ctaHref
+}`;
+
+const FLESCH_QUERY = `*[_type == "fleschKincaidLanding" && _id == "fleschKincaidLanding"][0]${FLESCH_PROJECTION}`;
+
+export type FleschLandingDoc = Record<string, unknown> | null;
+
+export async function getFleschKincaidLanding(): Promise<FleschLandingDoc> {
+  try {
+    return (await sanityClient.fetch(FLESCH_QUERY)) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** Draft-aware variant used by Draft Mode: resolves drafts.* docs. */
+export async function getFleschKincaidLandingPreview(): Promise<FleschLandingDoc> {
+  try {
+    return (await getPreviewClient().fetch(FLESCH_QUERY)) ?? null;
+  } catch {
+    return getFleschKincaidLanding();
+  }
+}
