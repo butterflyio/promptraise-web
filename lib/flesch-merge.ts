@@ -44,6 +44,7 @@ export function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "contactEmail",
     "embedSectionTitle",
     "embedBody",
+    "embedBadges",
     "apiSectionTitle",
     "apiBody",
     "faqSectionTitle",
@@ -209,6 +210,46 @@ export function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
           x.answer.trim().length > 0,
       );
     if (mapped.length > 0) copy.faq = mapped;
+  }
+
+  const embedSteps = doc["embedSteps"];
+  if (Array.isArray(embedSteps) && embedSteps.length > 0) {
+    const mapped = embedSteps
+      .map((s) => {
+        const entry = s as { title?: string; body?: string };
+        if (
+          typeof entry.title !== "string" ||
+          entry.title.trim().length === 0 ||
+          typeof entry.body !== "string"
+        ) {
+          return null;
+        }
+        return { title: entry.title, body: entry.body };
+      })
+      .filter((x): x is { title: string; body: string } => x !== null);
+    if (mapped.length > 0) copy.embedSteps = mapped;
+  }
+
+  const embedFaq = doc["embedFaq"];
+  if (Array.isArray(embedFaq) && embedFaq.length > 0) {
+    const mapped = embedFaq
+      .map((f) => {
+        const entry = f as { question?: string; answer?: string };
+        if (
+          typeof entry.question !== "string" ||
+          typeof entry.answer !== "string"
+        ) {
+          return null;
+        }
+        return { question: entry.question, answer: entry.answer };
+      })
+      .filter(
+        (x): x is { question: string; answer: string } =>
+          x !== null &&
+          x.question.trim().length > 0 &&
+          x.answer.trim().length > 0,
+      );
+    if (mapped.length > 0) copy.embedFaq = mapped;
   }
 
   return copy;

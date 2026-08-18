@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 
+import CopyCommand from "@/components/tools/copy-command";
 import FaqAccordion from "@/components/tools/faq-accordion";
 import ReadabilityTool from "@/components/tools/readability-tool";
-import { DEFAULT_COPY, type FleschCopy } from "@/lib/flesch-copy";
 import { linkGlossaryTerms } from "@/lib/glossary-links";
 import { mergeCopy } from "@/lib/flesch-merge";
 import {
@@ -29,19 +29,14 @@ export const metadata: Metadata = {
   },
 };
 
-const EMBED_SNIPPET = `<iframe src="${siteUrl}/free/flesch-kincaid-calculator/embed" width="100%" height="900" style="border:1px solid #dde0e5;border-radius:12px" title="Flesch-Kincaid calculator by PromptRaise" loading="lazy"></iframe>`;
+const EMBED_SNIPPET = `<iframe src="${siteUrl}/free/flesch-kincaid-calculator/embed" width="100%" height="700" style="border:1px solid #dde0e5;border-radius:12px" title="Flesch-Kincaid calculator by PromptRaise" loading="lazy"></iframe>`;
 
-const API_SNIPPET = `curl -s -X POST ${siteUrl}/api/readability \\
+/** A single natural-language command a user can paste into any AI agent. */
+const AGENT_COMMAND = `Use the PromptRaise readability API to score Web3 copy for AI visibility. Send a POST request to ${siteUrl}/api/readability with a JSON body {"text": "<the text to score>"}. It returns six readability scores (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau, ARI), a 0-100 Citation Readiness score, and per-engine verdicts for ChatGPT, Perplexity, Claude and Gemini. No API key needed.`;
+
+const CURL_SNIPPET = `curl -s -X POST ${siteUrl}/api/readability \\
   -H 'Content-Type: application/json' \\
   -d '{"text": "Your Web3 copy goes here..."}'`;
-
-function CodeBlock({ code }: { code: string }) {
-  return (
-    <pre className="mt-4 overflow-x-auto rounded-2xl border border-[var(--border-default)] bg-[#0c0f14] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">
-      <code>{code}</code>
-    </pre>
-  );
-}
 
 export default async function ReadabilityPage() {
   const isDraft = (await draftMode()).isEnabled;
@@ -140,6 +135,24 @@ export default async function ReadabilityPage() {
         </p>
       </div>
 
+      {/* For developers & AI agents - single command, works with any AI agent */}
+      <section className="mt-10 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
+        <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)]">
+          {copy.apiSectionTitle}
+        </h2>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">
+          {copy.apiBody}
+        </p>
+        <h3 className="mt-5 text-sm font-semibold text-[var(--text-primary)]">
+          Share this with any AI agent
+        </h3>
+        <CopyCommand text={AGENT_COMMAND} />
+        <h3 className="mt-5 text-sm font-semibold text-[var(--text-primary)]">
+          Or call it directly
+        </h3>
+        <CopyCommand text={CURL_SNIPPET} />
+      </section>
+
       <div className="mt-10">
         <ReadabilityTool copy={copy} />
       </div>
@@ -175,18 +188,55 @@ export default async function ReadabilityPage() {
         <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
           {copy.embedBody}
         </p>
-        <CodeBlock code={EMBED_SNIPPET} />
-      </section>
-
-      {/* AI-agent / developer API */}
-      <section className="mt-16 border-t border-[var(--border-default)] pt-10">
-        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
-          {copy.apiSectionTitle}
-        </h2>
-        <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">
-          {copy.apiBody}
+        <p className="mt-3 text-xs font-medium text-[var(--accent-primary)]">
+          {copy.embedBadges}
         </p>
-        <CodeBlock code={API_SNIPPET} />
+
+        <div className="mt-6 flex flex-col gap-3">
+          {copy.embedSteps.map((step, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-4 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface-panel)] p-4"
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--accent-primary)]/15 text-sm font-semibold text-[var(--accent-primary)]">
+                {i + 1}
+              </span>
+              <div>
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">
+                  {step.title}
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                  {step.body}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <CopyCommand text={EMBED_SNIPPET} />
+
+        {/* Live preview - the widget exactly as it will appear */}
+        <div className="mt-6 overflow-hidden rounded-2xl border border-[var(--border-default)]">
+          <iframe
+            src={`${siteUrl}/free/flesch-kincaid-calculator/embed`}
+            width="100%"
+            height="700"
+            title="Live preview - Flesch-Kincaid calculator embed"
+            loading="lazy"
+          />
+        </div>
+
+        <h3 className="mt-10 text-xl font-semibold tracking-tight text-[var(--text-primary)]">
+          Embedding FAQ
+        </h3>
+        <div className="mt-4">
+          <FaqAccordion
+            items={copy.embedFaq.map((f) => ({
+              q: f.question,
+              a: linkGlossaryTerms(f.answer),
+            }))}
+          />
+        </div>
       </section>
 
       {/* Methodology + contact - small, modeled on readabilitycheck.com/about */}

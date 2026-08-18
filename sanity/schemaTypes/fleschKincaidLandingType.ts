@@ -163,6 +163,70 @@ export const fleschKincaidLandingType = defineType({
       description: "Short pitch for embedding the calculator on other sites.",
     }),
     defineField({
+      name: "embedBadges",
+      title: "Embed Badges Line",
+      type: "string",
+      description:
+        "Badge strip in the embed section. Default: Free forever · No account needed · No API key · No data capture",
+    }),
+    defineField({
+      name: "embedSteps",
+      title: "Embed Steps",
+      type: "array",
+      description: "The numbered how-to steps for embedding the widget.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "embedStep",
+          title: "Step",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "body",
+              title: "Body",
+              type: "text",
+              rows: 2,
+            }),
+          ],
+          preview: { select: { title: "title" } },
+        }),
+      ],
+    }),
+    defineField({
+      name: "embedFaq",
+      title: "Embedding FAQ",
+      type: "array",
+      description: "FAQ items specific to embedding the widget.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "embedFaqItem",
+          title: "FAQ Item",
+          fields: [
+            defineField({
+              name: "question",
+              title: "Question",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 3,
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: { select: { title: "question" } },
+        }),
+      ],
+    }),
+    defineField({
       name: "apiSectionTitle",
       title: "API Section Title",
       type: "string",

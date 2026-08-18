@@ -126,6 +126,9 @@ export interface FleschCopy {
 
   embedSectionTitle: string;
   embedBody: string;
+  embedBadges: string;
+  embedSteps: Array<{ title: string; body: string }>;
+  embedFaq: Array<{ question: string; answer: string }>;
   apiSectionTitle: string;
   apiBody: string;
 
@@ -371,10 +374,48 @@ export const DEFAULT_COPY: FleschCopy = {
 
   embedSectionTitle: "Embed this calculator on your site",
   embedBody:
-    "Free to embed anywhere - docs, blog, or landing page. The calculator runs entirely in the visitor's browser, so embedding costs you nothing and captures no data.",
+    "Free, no-account, no-API-key embeddable widget. Drop it into your docs, blog, or landing page - the calculator runs entirely in the visitor's browser, so it costs you nothing and captures no data.",
+  embedBadges:
+    "Free forever · No account needed · No API key · No data capture",
+  embedSteps: [
+    {
+      title: "Copy the embed code",
+      body: "One line of HTML - copy it with the button below.",
+    },
+    {
+      title: "Paste it into your page",
+      body: "Anywhere in your site's HTML: docs, blog post, or landing page.",
+    },
+    {
+      title: "Publish and you're done",
+      body: "The calculator appears instantly, 100% client-side. Nothing to configure.",
+    },
+  ],
+  embedFaq: [
+    {
+      question: "Is the embed really free?",
+      answer:
+        "Yes. No account, no API key, no pricing tier. The calculator runs entirely in the visitor's browser, so there is no server cost for you or for us.",
+    },
+    {
+      question: "Will it work on my site?",
+      answer:
+        "It is a plain iframe, so it works on any site that allows iframes - docs platforms, blogs, landing pages, Notion embeds, and most static site builders.",
+    },
+    {
+      question: "Does it slow down my page or track my visitors?",
+      answer:
+        "No. The widget is lightweight and lazy-loads. Visitors' text never leaves their browser - nothing is tracked, stored, or captured.",
+    },
+    {
+      question: "Can I customize the look?",
+      answer:
+        "The embed matches the calculator's own design out of the box. For deeper customization, contact readability@promptraise.com.",
+    },
+  ],
   apiSectionTitle: "For developers & AI agents",
   apiBody:
-    "The same analysis is available as a simple JSON API, so AI agents and scripts can score text programmatically without a browser.",
+    "Score text programmatically with a single command - no browser, no signup, no API key. Works with any AI agent: ChatGPT, Claude, Gemini, Perplexity, and coding assistants.",
 
   faqSectionTitle: "Flesch & AI citation, explained",
 

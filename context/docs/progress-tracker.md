@@ -374,3 +374,7 @@ Update this file after every meaningful implementation change.
   - llms.txt now lists the calculator, embed URL, and the /api/readability endpoint for AI-agent discovery.
   - Research: no other Web3-specific FK calculator exists - the Web3-aware dictionary + Citation Readiness is unique.
   - mergeCopy extracted to lib/flesch-merge.ts (shared by page + embed).
+- **FK calculator - polished API/agent section + embed section (2026-08-18):**
+  - "For developers & AI agents" section moved right after the privacy/trust note (before the tool): single natural-language command to share with ANY AI agent (ChatGPT/Claude/Gemini/Perplexity/coding assistants) + direct curl, both with clickable copy buttons (CopyCommand component).
+  - Embed section upgraded: free/no-account/no-API-key badges, 3 numbered steps, copyable iframe snippet, LIVE iframe preview of the widget, and an embedding-only FAQ accordion (CMS-editable embedBadges/embedSteps/embedFaq). Modeled on readabilitycheck.com/embed/.
+  - Open-source decision deferred by Zain.

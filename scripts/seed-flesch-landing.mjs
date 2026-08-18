@@ -91,10 +91,54 @@ const doc = {
   contactEmail: "readability@promptraise.com",
   embedSectionTitle: "Embed this calculator on your site",
   embedBody:
-    "Free to embed anywhere - docs, blog, or landing page. The calculator runs entirely in the visitor's browser, so embedding costs you nothing and captures no data.",
+    "Free, no-account, no-API-key embeddable widget. Drop it into your docs, blog, or landing page - the calculator runs entirely in the visitor's browser, so it costs you nothing and captures no data.",
+  embedBadges: "Free forever · No account needed · No API key · No data capture",
+  embedSteps: [
+    {
+      _key: "es1",
+      title: "Copy the embed code",
+      body: "One line of HTML - copy it with the button below.",
+    },
+    {
+      _key: "es2",
+      title: "Paste it into your page",
+      body: "Anywhere in your site's HTML: docs, blog post, or landing page.",
+    },
+    {
+      _key: "es3",
+      title: "Publish and you're done",
+      body: "The calculator appears instantly, 100% client-side. Nothing to configure.",
+    },
+  ],
+  embedFaq: [
+    {
+      _key: "ef1",
+      question: "Is the embed really free?",
+      answer:
+        "Yes. No account, no API key, no pricing tier. The calculator runs entirely in the visitor's browser, so there is no server cost for you or for us.",
+    },
+    {
+      _key: "ef2",
+      question: "Will it work on my site?",
+      answer:
+        "It is a plain iframe, so it works on any site that allows iframes - docs platforms, blogs, landing pages, Notion embeds, and most static site builders.",
+    },
+    {
+      _key: "ef3",
+      question: "Does it slow down my page or track my visitors?",
+      answer:
+        "No. The widget is lightweight and lazy-loads. Visitors' text never leaves their browser - nothing is tracked, stored, or captured.",
+    },
+    {
+      _key: "ef4",
+      question: "Can I customize the look?",
+      answer:
+        "The embed matches the calculator's own design out of the box. For deeper customization, contact readability@promptraise.com.",
+    },
+  ],
   apiSectionTitle: "For developers & AI agents",
   apiBody:
-    "The same analysis is available as a simple JSON API, so AI agents and scripts can score text programmatically without a browser.",
+    "Score text programmatically with a single command - no browser, no signup, no API key. Works with any AI agent: ChatGPT, Claude, Gemini, Perplexity, and coding assistants.",
   faqSectionTitle: "Flesch & AI citation, explained",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",
