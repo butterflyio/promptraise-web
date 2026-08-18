@@ -111,6 +111,13 @@ export const fleschKincaidLandingType = defineType({
         "Small disclaimer under the scores. Default: Use the Citation Readiness score to spot what to look at - but use your judgment to decide what to change.",
     }),
     defineField({
+      name: "truncationNote",
+      title: "Fetch Truncation Note",
+      type: "string",
+      description:
+        "Shown when a fetched page is larger than 50k characters and was truncated. Default: This page is large - analyzing the first 50,000 characters...",
+    }),
+    defineField({
       name: "methodologyTitle",
       title: "Methodology Section Title",
       type: "string",

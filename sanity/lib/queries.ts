@@ -631,6 +631,7 @@ const FLESCH_PROJECTION = `{
   invalidContentError,
   fetchError,
   disclaimerText,
+  truncationNote,
   methodologyTitle,
   methodologyBody,
   contactEmailLabel,

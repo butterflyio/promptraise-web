@@ -364,3 +364,6 @@ Update this file after every meaningful implementation change.
   - Trust line under privacy note: "Forever Free · No signup · No word limit · No data capture, ever · 100% offline in your browser" (CMS-editable trustLine).
   - Interpretation disclaimer under the scores: "Use the Citation Readiness score to spot what to look at - but use your judgment to decide what to change." (CMS-editable disclaimerText).
   - Shareable report link: "Copy report link" button once results exist; encodes the analyzed text into the URL with lz-string (compressToEncodedURIComponent) - fully client-side, NO data stored/captured, matching the no-data-capture promise. Opening a ?r= link auto-loads + re-analyzes and shows a "Report shared from promptraise.com" strip (CMS-editable shareButtonLabel/copiedLabel/sharedStripLabel). Added lz-string dependency (verified roundtrip 1155->324 chars).
+- **FK calculator - prominent share CTA + fetch truncation notice (2026-08-18):**
+  - Copy report link now uses the primary accent CTA styling (like Analyze/Fetch).
+  - /api/fetch-text returns truncated flag; client shows a CMS-editable truncationNote ("This page is large - analyzing the first 50,000 characters...") when a fetched page exceeds the 50k char cap.

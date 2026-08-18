@@ -83,6 +83,7 @@ export default function ReadabilityTool({
     words: number;
     url: string;
   } | null>(null);
+  const [fetchedTruncated, setFetchedTruncated] = useState(false);
 
   // Shareable report link state.
   const [copied, setCopied] = useState(false);
@@ -213,6 +214,7 @@ export default function ReadabilityTool({
         words?: number;
         text?: string;
         url?: string;
+        truncated?: boolean;
       };
       if (!res.ok || !data.ok || !data.text) {
         setFetchErrorMsg(copy.fetchError);
@@ -221,6 +223,7 @@ export default function ReadabilityTool({
       setText(data.text);
       setTried(false);
       setFetchedInfo({ words: data.words ?? 0, url: data.url ?? trimmed });
+      setFetchedTruncated(data.truncated ?? false);
       if (!manualGenre) {
         const r = analyzeText(data.text);
         setGenre(detectContentGenre(data.text, r.readability));
@@ -354,6 +357,11 @@ export default function ReadabilityTool({
                   .replace("{url}", fetchedInfo.url)}
               </p>
             )}
+            {fetchedTruncated && (
+              <p className="text-xs leading-relaxed text-[#e8c766]">
+                {copy.truncationNote}
+              </p>
+            )}
           </div>
         )}
 
@@ -405,7 +413,7 @@ export default function ReadabilityTool({
             )}
             <button
               onClick={handleShare}
-              className="rounded-full border border-[var(--border-default)] px-4 py-1.5 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+              className="inline-flex items-center rounded-full bg-[var(--accent-primary)] px-5 py-2 text-xs font-semibold text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
             >
               {copied ? ui.copiedLabel : ui.shareButtonLabel}
             </button>

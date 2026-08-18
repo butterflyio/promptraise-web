@@ -117,6 +117,7 @@ export interface FleschCopy {
   invalidContentError: string;
   fetchError: string;
   disclaimerText: string;
+  truncationNote: string;
 
   methodologyTitle: string;
   methodologyBody: string;
@@ -355,6 +356,8 @@ export const DEFAULT_COPY: FleschCopy = {
     "Couldn't fetch that page. It may block automatic requests - try pasting the text directly instead.",
   disclaimerText:
     "Use the Citation Readiness score to spot what to look at - but use your judgment to decide what to change.",
+  truncationNote:
+    "This page is large - analyzing the first 50,000 characters (the main content). Paste the full text for a complete analysis.",
   methodologyTitle: "Methodology & how it works",
   methodologyBody:
     "This calculator runs entirely in your browser - pasted text never leaves your device. The six formulas (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, SMOG, Coleman-Liau and ARI) are computed client-side from their original published equations. The Citation Readiness score and per-engine verdicts are PromptRaise heuristics built from four citation signals: entity clarity, defined terms, groundable statements and sentence structure. Web3 vocabulary (DeFi, TVL, AMM, protocol names) is scored with a Web3-aware dictionary so legitimate industry terms are not falsely penalized as complex.",

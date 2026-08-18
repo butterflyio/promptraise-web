@@ -44,8 +44,9 @@ function isPrivateHost(hostname: string): boolean {
   return false;
 }
 
-/** Roughly extract the main readable text from HTML. */
-function extractText(html: string): string {
+/** Roughly extract the main readable text from HTML. Returns the text and
+ * whether it was truncated to MAX_OUT. */
+function extractText(html: string): { text: string; truncated: boolean } {
   // Pull the part most likely to be the article body.
   const mainMatch =
     html.match(/<main[\s>][\s\S]*?<\/main>/i) ??
@@ -71,7 +72,8 @@ function extractText(html: string): string {
     .replace(/\s+/g, " ")
     .trim();
 
-  return text.slice(0, MAX_OUT);
+  const truncated = text.length > MAX_OUT;
+  return { text: text.slice(0, MAX_OUT), truncated };
 }
 
 export async function GET(request: Request) {
@@ -128,7 +130,7 @@ export async function GET(request: Request) {
       );
     }
     const html = (await res.text()).slice(0, MAX_BODY);
-    const text = extractText(html);
+    const { text, truncated } = extractText(html);
     const words = text.split(/\s+/).filter((w) => w.length > 0).length;
     if (words === 0) {
       return NextResponse.json(
@@ -136,7 +138,13 @@ export async function GET(request: Request) {
         { status: 422 },
       );
     }
-    return NextResponse.json({ ok: true, url: parsed.toString(), words, text });
+    return NextResponse.json({
+      ok: true,
+      url: parsed.toString(),
+      words,
+      text,
+      truncated,
+    });
   } catch (err) {
     const timedOut = err instanceof Error && err.name === "AbortError";
     return NextResponse.json(
