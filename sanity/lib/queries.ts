@@ -626,6 +626,8 @@ const FLESCH_PROJECTION = `{
   contentTypeLabel,
   emptyTextError,
   tooShortError,
+  linkError,
+  invalidContentError,
   faqSectionTitle,
   sampleText,
   introSectionTitle,

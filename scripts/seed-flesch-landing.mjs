@@ -66,6 +66,10 @@ const doc = {
   emptyTextError: "Please paste or type some text to analyze.",
   tooShortError:
     "Not enough text to analyze. Paste at least a couple of full sentences (min 8 words) for a meaningful readability score.",
+  linkError:
+    "It looks like you pasted a link or URL. This tool analyzes text, not links - paste the actual article, post or docs copy instead.",
+  invalidContentError:
+    "That doesn't look like readable text. Paste plain sentences (words and punctuation) to get a readability score.",
   faqSectionTitle: "Flesch & AI citation, explained",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",

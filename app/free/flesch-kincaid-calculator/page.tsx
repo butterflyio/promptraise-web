@@ -55,6 +55,8 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "contentTypeLabel",
     "emptyTextError",
     "tooShortError",
+    "linkError",
+    "invalidContentError",
     "faqSectionTitle",
     "sampleText",
     "introSectionTitle",

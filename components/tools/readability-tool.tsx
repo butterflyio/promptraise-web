@@ -18,6 +18,14 @@ import {
   type SentenceBreakdown,
 } from "@/lib/readability";
 
+/**
+ * URL/link detection for the input validation. Catches explicit http(s)/www
+ * links and bare domains (aave.com, docs.aave.com). Kept at module scope and
+ * without the /g flag so .test() has no lastIndex state between calls.
+ */
+const LINK_RE =
+  /(?:https?:\/\/|www\.)\S+|(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:com|org|net|io|xyz|app|dev|ai|co|eth|me|finance|exchange|link|fi|one|sol)\b/i;
+
 export default function ReadabilityTool({
   copy = DEFAULT_COPY,
 }: {
@@ -37,7 +45,13 @@ export default function ReadabilityTool({
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
   const isEmpty = trimmed.length === 0;
   const isTooShort = !isEmpty && wordCount < MIN_ANALYZE_WORDS;
-  const valid = !isEmpty && !isTooShort;
+  // A link/URL pasted in place of text (explicit http/www or a bare domain
+  // like aave.com). The analyzer would happily score it as garbage words, so
+  // we reject it up front with a clear message.
+  const containsLink = !isEmpty && LINK_RE.test(trimmed);
+  // Content with no letters at all (numbers/symbols/code) is not analyzable.
+  const hasNoLetters = !isEmpty && !/[a-z]/i.test(trimmed);
+  const valid = !isEmpty && !containsLink && !hasNoLetters && !isTooShort;
 
   // Strictly click-gated: analysis only ever runs on the Analyze snapshot.
   const result = useMemo(
@@ -49,9 +63,13 @@ export default function ReadabilityTool({
   const error = tried
     ? isEmpty
       ? copy.emptyTextError
-      : isTooShort
-        ? copy.tooShortError
-        : null
+      : containsLink
+        ? copy.linkError
+        : hasNoLetters
+          ? copy.invalidContentError
+          : isTooShort
+            ? copy.tooShortError
+            : null
     : null;
 
   const activeGenre: FleschGenre = copy.genres.find((g) => g.id === genre) ??

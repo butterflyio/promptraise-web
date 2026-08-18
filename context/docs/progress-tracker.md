@@ -339,3 +339,7 @@ Update this file after every meaningful implementation change.
   - Added "Social media" content type (Flesch 60-75 target) - now 5 genre pills.
   - Strict click gating: results + inline highlighting render ONLY from the Analyze-snapshot text; any edit to the textarea clears results until Analyze is clicked again (was: scores appeared live as you typed).
   - Reseeded CMS doc; typecheck + build pass.
+- **Flesch-Kincaid calculator - link/unacceptable-content validation (latest, 2026-08-18):**
+  - Pasting a URL/link (http/www or bare domain like aave.com, docs.aave.com) now blocks Analyze with a CMS-editable linkError instead of silently scoring the URL as text (a long URL passed the 8-word gate and got nonsense scores).
+  - Content with no letters at all (pure numbers/symbols/code) blocked with CMS-editable invalidContentError.
+  - LINK_RE hoisted module-scope (no /g) in readability-tool.tsx; error priority: empty -> link -> no-letters -> too-short. Regex unit-tested (7 cases pass). Reseeded CMS doc.

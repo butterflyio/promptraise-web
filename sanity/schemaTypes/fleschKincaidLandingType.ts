@@ -76,6 +76,20 @@ export const fleschKincaidLandingType = defineType({
         "Shown when input is below the min words threshold. Include the min word count (8) so users know the bar.",
     }),
     defineField({
+      name: "linkError",
+      title: "Link / URL Error",
+      type: "string",
+      description:
+        "Shown when a URL, link or bare domain (aave.com) is pasted instead of text. Default: It looks like you pasted a link or URL...",
+    }),
+    defineField({
+      name: "invalidContentError",
+      title: "Invalid Content Error",
+      type: "string",
+      description:
+        "Shown when the input has no letters (pure numbers/symbols/code). Default: That doesn't look like readable text...",
+    }),
+    defineField({
       name: "faqSectionTitle",
       title: "FAQ Section Title (H2)",
       type: "string",

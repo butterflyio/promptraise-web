@@ -95,6 +95,8 @@ export interface FleschCopy {
 
   emptyTextError: string;
   tooShortError: string;
+  linkError: string;
+  invalidContentError: string;
 
   faqSectionTitle: string;
 
@@ -304,6 +306,10 @@ export const DEFAULT_COPY: FleschCopy = {
 
   emptyTextError: "Please paste or type some text to analyze.",
   tooShortError: `Not enough text to analyze. Paste at least a couple of full sentences (min ${MIN_ANALYZE_WORDS} words) for a meaningful readability score.`,
+  linkError:
+    "It looks like you pasted a link or URL. This tool analyzes text, not links - paste the actual article, post or docs copy instead.",
+  invalidContentError:
+    "That doesn't look like readable text. Paste plain sentences (words and punctuation) to get a readability score.",
 
   faqSectionTitle: "Flesch & AI citation, explained",
 
