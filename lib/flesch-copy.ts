@@ -5,16 +5,82 @@
 // The values below are the in-code FALLBACK defaults, used whenever the CMS is
 // unreachable or a field is left blank. The server page merges the CMS doc over
 // these defaults, so shipping this module never breaks the page.
+//
+// Every user-facing string on the page should live here so the whole page is
+// editable from Sanity. The only strings that stay code-side are pure data
+// (score thresholds, formula keys, reading-time math) and the analyzer's own
+// output templates in lib/readability.ts.
 // ---------------------------------------------------------------------------
+
+export interface FleschGenre {
+  id: string;
+  label: string;
+  targetMin: number;
+  targetMax: number;
+  note: string;
+}
 
 export interface FleschCopyFormulaDef {
   key: string; // matches ReadabilityResult key
+  label: string; // display name
   description: string;
 }
 
 export interface FleschCopyFaq {
   question: string;
   answer: string;
+}
+
+/** Every remaining UI label/string on the calculator page. */
+export interface FleschUiLabels {
+  // Controls
+  analyzeLabel: string;
+  exampleLabel: string;
+  clearLabel: string;
+  textareaPlaceholder: string;
+  pasteHint: string;
+
+  // Score header
+  citationScoreTitle: string;
+  readingEaseTitle: string;
+  scoreSuffix: string;
+  citationScoreDesc: string;
+  inTargetLabel: string;
+  offTargetLabel: string;
+  forGenreSuffix: string;
+  gradeLevelPrefix: string;
+
+  // Formula grid
+  formulaTargetPrefix: string;
+
+  // Engine verdicts
+  tipPrefix: string;
+  verdictFootnote: string;
+
+  // Metric grid
+  metricWords: string;
+  metricSentences: string;
+  metricSyllables: string;
+  metricCharacters: string;
+  metricComplexWords: string;
+  metricAvgSentence: string;
+  metricAvgSyllables: string;
+  metricReadingTime: string;
+
+  // Breakdown panels
+  complexWordsTitle: string;
+  longestSentencesTitle: string;
+  noComplexWords: string;
+  noSentences: string;
+
+  // Web3 terms panel
+  web3TermsTitlePrefix: string;
+  web3TermsFootnote: string;
+
+  // Inline highlight legend
+  legendComplexWord: string;
+  legendLongSentence: string;
+  legendWeb3Term: string;
 }
 
 export interface FleschCopy {
@@ -29,6 +95,8 @@ export interface FleschCopy {
 
   emptyTextError: string;
   tooShortError: string;
+
+  faqSectionTitle: string;
 
   sampleText: string;
 
@@ -48,44 +116,14 @@ export interface FleschCopy {
 
   faq: FleschCopyFaq[];
 
+  genres: FleschGenre[];
+  ui: FleschUiLabels;
+
   ctaHeading: string;
   ctaBody: string;
   ctaLabel: string;
   ctaHref: string;
 }
-
-export const DEFAULT_FORMULA_DEFINITIONS: FleschCopyFormulaDef[] = [
-  {
-    key: "readingEase",
-    description:
-      "Score 0-100 from sentence length and syllables. Higher = easier. 60-70 is plain English most adults read easily.",
-  },
-  {
-    key: "gradeLevel",
-    description:
-      "U.S. school grade a reader needs. Uses the same inputs as Reading Ease, converted to a grade level.",
-  },
-  {
-    key: "gunningFog",
-    description:
-      "Grade level weighted toward long words (3+ syllables), which tend to slow readers down the most.",
-  },
-  {
-    key: "smog",
-    description:
-      "Grades text by counting polysyllable words near sentence ends. Strictest of the common formulas.",
-  },
-  {
-    key: "colemanLiau",
-    description:
-      "Grade level based on characters per word and sentences - no syllable counting needed.",
-  },
-  {
-    key: "ari",
-    description:
-      "Uses characters per word and words per sentence to estimate a grade level. Good for technical text.",
-  },
-];
 
 /**
  * Minimum text the analyzer will accept for a meaningful readability score.
@@ -93,6 +131,131 @@ export const DEFAULT_FORMULA_DEFINITIONS: FleschCopyFormulaDef[] = [
  * levels etc.), so the tool asks for more input instead of analyzing.
  */
 export const MIN_ANALYZE_WORDS = 8;
+
+export const DEFAULT_GENRES: FleschGenre[] = [
+  {
+    id: "general",
+    label: "General audience",
+    targetMin: 60,
+    targetMax: 70,
+    note: "Flesch 60-70 (plain English).",
+  },
+  {
+    id: "explainer",
+    label: "Web3 explainer",
+    targetMin: 45,
+    targetMax: 60,
+    note: "Flesch 45-60 (a bit denser, still readable).",
+  },
+  {
+    id: "whitepaper",
+    label: "Whitepaper",
+    targetMin: 30,
+    targetMax: 50,
+    note: "Flesch 30-50 (technical is OK).",
+  },
+  {
+    id: "tutorial",
+    label: "Tutorial / docs",
+    targetMin: 55,
+    targetMax: 70,
+    note: "Flesch 55-70 (step-following friendly).",
+  },
+  {
+    id: "social",
+    label: "Social media",
+    targetMin: 60,
+    targetMax: 75,
+    note: "Flesch 60-75 (short, scannable posts).",
+  },
+];
+
+export const DEFAULT_FORMULA_DEFINITIONS: FleschCopyFormulaDef[] = [
+  {
+    key: "readingEase",
+    label: "Flesch Reading Ease",
+    description:
+      "Score 0-100 from sentence length and syllables. Higher = easier. 60-70 is plain English most adults read easily.",
+  },
+  {
+    key: "gradeLevel",
+    label: "Flesch-Kincaid Grade",
+    description:
+      "U.S. school grade a reader needs. Uses the same inputs as Reading Ease, converted to a grade level.",
+  },
+  {
+    key: "gunningFog",
+    label: "Gunning Fog",
+    description:
+      "Grade level weighted toward long words (3+ syllables), which tend to slow readers down the most.",
+  },
+  {
+    key: "smog",
+    label: "SMOG",
+    description:
+      "Grades text by counting polysyllable words near sentence ends. Strictest of the common formulas.",
+  },
+  {
+    key: "colemanLiau",
+    label: "Coleman-Liau",
+    description:
+      "Grade level based on characters per word and sentences - no syllable counting needed.",
+  },
+  {
+    key: "ari",
+    label: "ARI",
+    description:
+      "Uses characters per word and words per sentence to estimate a grade level. Good for technical text.",
+  },
+];
+
+export const DEFAULT_UI: FleschUiLabels = {
+  analyzeLabel: "Analyze text",
+  exampleLabel: "Try Web3 example",
+  clearLabel: "Clear",
+  textareaPlaceholder:
+    "Paste your Web3 copy, whitepaper excerpt, or landing page text here...",
+  pasteHint:
+    "Paste text above and hit Analyze - or use the Web3 example to see how it works.",
+
+  citationScoreTitle: "Citation Readiness",
+  readingEaseTitle: "Flesch Reading Ease",
+  scoreSuffix: "/100",
+  citationScoreDesc:
+    "How likely answer engines are to pull a clean, grounded, citable sentence from your text (PromptRaise proprietary GEO signal).",
+  inTargetLabel: "In target",
+  offTargetLabel: "Off target",
+  forGenreSuffix: " for ",
+  gradeLevelPrefix: "Grade level",
+
+  formulaTargetPrefix: "target",
+
+  tipPrefix: "Tip:",
+  verdictFootnote:
+    "Heuristic estimate from PromptRaise's citation signals - not a live API check.",
+
+  metricWords: "Words",
+  metricSentences: "Sentences",
+  metricSyllables: "Syllables",
+  metricCharacters: "Characters",
+  metricComplexWords: "Complex words",
+  metricAvgSentence: "Avg sentence",
+  metricAvgSyllables: "Avg syllables/word",
+  metricReadingTime: "Reading time",
+
+  complexWordsTitle: "Complex words",
+  longestSentencesTitle: "Longest sentences",
+  noComplexWords: "No complex words. Nice.",
+  noSentences: "No sentences to review.",
+
+  web3TermsTitlePrefix: "Web3 terms detected",
+  web3TermsFootnote:
+    "These are scored with Web3-aware rules, so industry terms are not falsely punished as \u201ccomplex.\u201d",
+
+  legendComplexWord: "complex word",
+  legendLongSentence: "long sentence (20+ words)",
+  legendWeb3Term: "Web3 term",
+};
 
 export const DEFAULT_FAQ: FleschCopyFaq[] = [
   {
@@ -142,6 +305,8 @@ export const DEFAULT_COPY: FleschCopy = {
   emptyTextError: "Please paste or type some text to analyze.",
   tooShortError: `Not enough text to analyze. Paste at least a couple of full sentences (min ${MIN_ANALYZE_WORDS} words) for a meaningful readability score.`,
 
+  faqSectionTitle: "Flesch & AI citation, explained",
+
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",
 
@@ -165,6 +330,9 @@ export const DEFAULT_COPY: FleschCopy = {
     "These are the concrete, ordered actions that will move your Citation Readiness score the most. Do them, re-run, and watch the verdicts climb.",
 
   faq: DEFAULT_FAQ,
+
+  genres: DEFAULT_GENRES,
+  ui: DEFAULT_UI,
 
   ctaHeading: "Want AI to actually cite your protocol?",
   ctaBody:

@@ -66,6 +66,7 @@ const doc = {
   emptyTextError: "Please paste or type some text to analyze.",
   tooShortError:
     "Not enough text to analyze. Paste at least a couple of full sentences (min 8 words) for a meaningful readability score.",
+  faqSectionTitle: "Flesch & AI citation, explained",
   sampleText:
     "Promptraise helps Web3 projects get cited by AI. It is a visibility platform that measures how often ChatGPT, Perplexity and Claude mention your protocol. Protocol teams paste their docs or landing page and get a 0-100 AI Visibility score in seconds, plus a clear list of exactly what to fix. As of this quarter, Promptraise tracks how over 40 leading answer engines refer to projects across DeFi and Web3.",
   introSectionTitle: "Why readability and AI citation matter for Web3",
@@ -80,36 +81,42 @@ const doc = {
     {
       _key: "f-readingEase",
       key: "readingEase",
+      label: "Flesch Reading Ease",
       description:
         "Score 0-100 from sentence length and syllables. Higher = easier. 60-70 is plain English most adults read easily.",
     },
     {
       _key: "f-gradeLevel",
       key: "gradeLevel",
+      label: "Flesch-Kincaid Grade",
       description:
         "U.S. school grade a reader needs. Uses the same inputs as Reading Ease, converted to a grade level.",
     },
     {
       _key: "f-gunningFog",
       key: "gunningFog",
+      label: "Gunning Fog",
       description:
         "Grade level weighted toward long words (3+ syllables), which tend to slow readers down the most.",
     },
     {
       _key: "f-smog",
       key: "smog",
+      label: "SMOG",
       description:
         "Grades text by counting polysyllable words near sentence ends. Strictest of the common formulas.",
     },
     {
       _key: "f-colemanLiau",
       key: "colemanLiau",
+      label: "Coleman-Liau",
       description:
         "Grade level based on characters per word and sentences - no syllable counting needed.",
     },
     {
       _key: "f-ari",
       key: "ari",
+      label: "ARI",
       description:
         "Uses characters per word and words per sentence to estimate a grade level. Good for technical text.",
     },
@@ -158,6 +165,88 @@ const doc = {
         "No. The calculator runs 100% in your browser. Your text is analyzed on your device, never uploaded or stored - it works even offline after the page loads.",
     },
   ],
+  genres: [
+    {
+      _key: "g-general",
+      id: "general",
+      label: "General audience",
+      targetMin: 60,
+      targetMax: 70,
+      note: "Flesch 60-70 (plain English).",
+    },
+    {
+      _key: "g-explainer",
+      id: "explainer",
+      label: "Web3 explainer",
+      targetMin: 45,
+      targetMax: 60,
+      note: "Flesch 45-60 (a bit denser, still readable).",
+    },
+    {
+      _key: "g-whitepaper",
+      id: "whitepaper",
+      label: "Whitepaper",
+      targetMin: 30,
+      targetMax: 50,
+      note: "Flesch 30-50 (technical is OK).",
+    },
+    {
+      _key: "g-tutorial",
+      id: "tutorial",
+      label: "Tutorial / docs",
+      targetMin: 55,
+      targetMax: 70,
+      note: "Flesch 55-70 (step-following friendly).",
+    },
+    {
+      _key: "g-social",
+      id: "social",
+      label: "Social media",
+      targetMin: 60,
+      targetMax: 75,
+      note: "Flesch 60-75 (short, scannable posts).",
+    },
+  ],
+  ui: {
+    analyzeLabel: "Analyze text",
+    exampleLabel: "Try Web3 example",
+    clearLabel: "Clear",
+    textareaPlaceholder:
+      "Paste your Web3 copy, whitepaper excerpt, or landing page text here...",
+    pasteHint:
+      "Paste text above and hit Analyze - or use the Web3 example to see how it works.",
+    citationScoreTitle: "Citation Readiness",
+    readingEaseTitle: "Flesch Reading Ease",
+    scoreSuffix: "/100",
+    citationScoreDesc:
+      "How likely answer engines are to pull a clean, grounded, citable sentence from your text (PromptRaise proprietary GEO signal).",
+    inTargetLabel: "In target",
+    offTargetLabel: "Off target",
+    forGenreSuffix: " for ",
+    gradeLevelPrefix: "Grade level",
+    formulaTargetPrefix: "target",
+    tipPrefix: "Tip:",
+    verdictFootnote:
+      "Heuristic estimate from PromptRaise's citation signals - not a live API check.",
+    metricWords: "Words",
+    metricSentences: "Sentences",
+    metricSyllables: "Syllables",
+    metricCharacters: "Characters",
+    metricComplexWords: "Complex words",
+    metricAvgSentence: "Avg sentence",
+    metricAvgSyllables: "Avg syllables/word",
+    metricReadingTime: "Reading time",
+    complexWordsTitle: "Complex words",
+    longestSentencesTitle: "Longest sentences",
+    noComplexWords: "No complex words. Nice.",
+    noSentences: "No sentences to review.",
+    web3TermsTitlePrefix: "Web3 terms detected",
+    web3TermsFootnote:
+      "These are scored with Web3-aware rules, so industry terms are not falsely punished as \u201ccomplex.\u201d",
+    legendComplexWord: "complex word",
+    legendLongSentence: "long sentence (20+ words)",
+    legendWeb3Term: "Web3 term",
+  },
   ctaHeading: "Want AI to actually cite your protocol?",
   ctaBody:
     "Get a free AI-viability audit and see how ChatGPT, Perplexity and Claude currently talk about your project - and how to become the answer instead of the rumor.",

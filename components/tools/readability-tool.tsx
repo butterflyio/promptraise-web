@@ -7,6 +7,7 @@ import {
   DEFAULT_COPY,
   MIN_ANALYZE_WORDS,
   type FleschCopy,
+  type FleschGenre,
 } from "@/lib/flesch-copy";
 import {
   analyzeText,
@@ -17,81 +18,20 @@ import {
   type SentenceBreakdown,
 } from "@/lib/readability";
 
-const GENRES: {
-  id: string;
-  label: string;
-  target: [number, number];
-  note: string;
-}[] = [
-  {
-    id: "general",
-    label: "General audience",
-    target: [60, 70],
-    note: "Flesch 60-70 (plain English).",
-  },
-  {
-    id: "explainer",
-    label: "Web3 explainer",
-    target: [45, 60],
-    note: "Flesch 45-60 (a bit denser, still readable).",
-  },
-  {
-    id: "whitepaper",
-    label: "Whitepaper",
-    target: [30, 50],
-    note: "Flesch 30-50 (technical is OK).",
-  },
-  {
-    id: "tutorial",
-    label: "Tutorial / docs",
-    target: [55, 70],
-    note: "Flesch 55-70 (step-following friendly).",
-  },
-];
-
-const FORMULAS: { key: keyof ReadabilityResult; label: string }[] = [
-  { key: "readingEase", label: "Flesch Reading Ease" },
-  { key: "gradeLevel", label: "Flesch-Kincaid Grade" },
-  { key: "gunningFog", label: "Gunning Fog" },
-  { key: "smog", label: "SMOG" },
-  { key: "colemanLiau", label: "Coleman-Liau" },
-  { key: "ari", label: "ARI" },
-];
-
-const SAMPLE_PLACEHOLDER = ""; // sample text now comes from CMS copy.sampleText
-
-const EMPTY: ReadabilityResult = {
-  charCount: 0,
-  charCountNoSpaces: 0,
-  wordCount: 0,
-  sentenceCount: 0,
-  syllableCount: 0,
-  complexWordCount: 0,
-  complexWordPct: 0,
-  avgSentenceLength: 0,
-  avgSyllablesPerWord: 0,
-  readingEase: null,
-  gradeLevel: null,
-  gunningFog: null,
-  smog: null,
-  colemanLiau: null,
-  ari: null,
-  readingTimeMinutes: 0,
-  uniqueWeb3Terms: [],
-  wordAnalyses: [],
-  complexWordList: [],
-  longestSentences: [],
-};
-
 export default function ReadabilityTool({
   copy = DEFAULT_COPY,
 }: {
   copy?: FleschCopy;
 }) {
   const [text, setText] = useState("");
-  const [analyzed, setAnalyzed] = useState(false);
+  // Snapshot taken when the user clicks Analyze. Results render only from this
+  // snapshot, and editing the box clears it until they click Analyze again.
+  const [analyzedText, setAnalyzedText] = useState<string | null>(null);
   const [tried, setTried] = useState(false);
-  const [genre, setGenre] = useState<string>(GENRES[1]!.id);
+  const [genre, setGenre] = useState<string>(() => {
+    const defaultGenre = copy.genres.find((g) => g.id === "explainer");
+    return (defaultGenre ?? copy.genres[0])?.id ?? "explainer";
+  });
 
   const trimmed = text.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
@@ -99,15 +39,10 @@ export default function ReadabilityTool({
   const isTooShort = !isEmpty && wordCount < MIN_ANALYZE_WORDS;
   const valid = !isEmpty && !isTooShort;
 
+  // Strictly click-gated: analysis only ever runs on the Analyze snapshot.
   const result = useMemo(
-    () => (analyzed && valid ? analyzeText(text) : null),
-    [analyzed, text, valid],
-  );
-
-  // Always compute highlighting data for whatever is in the box.
-  const highlight = useMemo(
-    () => (valid ? analyzeText(text) : null),
-    [text, valid],
+    () => (analyzedText ? analyzeText(analyzedText) : null),
+    [analyzedText],
   );
 
   // Clear, user-facing validation message shown after they hit Analyze.
@@ -119,12 +54,40 @@ export default function ReadabilityTool({
         : null
     : null;
 
-  const activeGenre = GENRES.find((g) => g.id === genre) ?? GENRES[0]!;
+  const activeGenre: FleschGenre = copy.genres.find((g) => g.id === genre) ??
+    copy.genres[0] ?? {
+      id: "explainer",
+      label: "Web3 explainer",
+      targetMin: 45,
+      targetMax: 60,
+      note: "",
+    };
   const inTarget =
     result != null &&
     result.readability.readingEase != null &&
-    result.readability.readingEase >= activeGenre.target[0] &&
-    result.readability.readingEase <= activeGenre.target[1];
+    result.readability.readingEase >= activeGenre.targetMin &&
+    result.readability.readingEase <= activeGenre.targetMax;
+
+  const { ui } = copy;
+
+  const handleAnalyze = () => {
+    setTried(true);
+    if (valid) {
+      setAnalyzedText(text);
+    }
+  };
+
+  const handleExample = () => {
+    setTried(false);
+    setText(copy.sampleText);
+    setAnalyzedText(copy.sampleText);
+  };
+
+  const handleClear = () => {
+    setText("");
+    setAnalyzedText(null);
+    setTried(false);
+  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -134,7 +97,7 @@ export default function ReadabilityTool({
           <span className="text-sm text-[var(--text-muted)]">
             {copy.contentTypeLabel}
           </span>
-          {GENRES.map((g) => (
+          {copy.genres.map((g) => (
             <button
               key={g.id}
               onClick={() => setGenre(g.id)}
@@ -156,8 +119,10 @@ export default function ReadabilityTool({
           onChange={(e) => {
             setText(e.target.value);
             setTried(false);
+            // Strict gating: any edit invalidates the previous analysis.
+            setAnalyzedText(null);
           }}
-          placeholder="Paste your Web3 copy, whitepaper excerpt, or landing page text here..."
+          placeholder={ui.textareaPlaceholder}
           className="min-h-[200px] w-full resize-y rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5 text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
         />
 
@@ -171,60 +136,51 @@ export default function ReadabilityTool({
           </div>
         )}
 
-        {/* Inline highlighting preview (complex words + hard sentences) */}
-        {highlight && (
-          <HighlightedText text={text} result={highlight.readability} />
-        )}
-
         <div className="flex flex-wrap items-center gap-3">
           <button
-            onClick={() => {
-              setTried(true);
-              if (valid) setAnalyzed(true);
-            }}
+            onClick={handleAnalyze}
             className="rounded-full bg-[var(--accent-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--accent-foreground)] transition-opacity hover:opacity-90"
           >
-            Analyze text
+            {ui.analyzeLabel}
           </button>
           <button
-            onClick={() => {
-              setTried(false);
-              setText(copy.sampleText);
-              setAnalyzed(true);
-            }}
+            onClick={handleExample}
             className="rounded-full border border-[var(--border-default)] px-6 py-2.5 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)]"
           >
-            Try Web3 example
+            {ui.exampleLabel}
           </button>
           {text && (
             <button
-              onClick={() => {
-                setText("");
-                setAnalyzed(false);
-                setTried(false);
-              }}
+              onClick={handleClear}
               className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
-              Clear
+              {ui.clearLabel}
             </button>
           )}
         </div>
       </div>
 
-      {/* ---- Results ---- */}
+      {/* ---- Results (only after using Analyze / Try Web3 example) ---- */}
       {result ? (
         <div className="flex flex-col gap-8">
+          <HighlightedText
+            text={analyzedText ?? ""}
+            result={result.readability}
+            ui={ui}
+          />
+
           <ScoreHeader
             citationScore={result.citation.score}
             readingEase={result.readability.readingEase}
             gradeLevel={result.readability.gradeLevel}
             inTarget={inTarget}
             genreLabel={activeGenre.label}
+            ui={ui}
           />
 
           <FormulaGrid
             readability={result.readability}
-            target={activeGenre.target}
+            target={[activeGenre.targetMin, activeGenre.targetMax]}
             copy={copy}
           />
 
@@ -254,18 +210,19 @@ export default function ReadabilityTool({
             </div>
           )}
 
-          <MetricGrid readability={result.readability} />
+          <MetricGrid readability={result.readability} ui={ui} />
 
           <BreakdownPanels
             complexWords={result.readability.complexWordList}
             longestSentences={result.readability.longestSentences}
+            ui={ui}
           />
 
           {result.readability.uniqueWeb3Terms.length > 0 && (
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
               <h3 className="mb-3 text-lg font-semibold text-[var(--text-primary)]">
-                Web3 terms detected ({result.readability.uniqueWeb3Terms.length}
-                )
+                {ui.web3TermsTitlePrefix} (
+                {result.readability.uniqueWeb3Terms.length})
               </h3>
               <div className="flex flex-wrap gap-2">
                 {result.readability.uniqueWeb3Terms.map((t) => (
@@ -278,8 +235,7 @@ export default function ReadabilityTool({
                 ))}
               </div>
               <p className="mt-3 text-xs text-[var(--text-muted)]">
-                These are scored with Web3-aware rules, so industry terms are
-                not falsely punished as &ldquo;complex.&rdquo;
+                {ui.web3TermsFootnote}
               </p>
             </div>
           )}
@@ -301,11 +257,7 @@ export default function ReadabilityTool({
           </div>
         </div>
       ) : !error ? (
-        <p className="text-sm text-[var(--text-muted)]">
-          Paste text above and hit{" "}
-          <span className="text-[var(--accent-primary)]">Analyze</span> - or use
-          the Web3 example to see how it works.
-        </p>
+        <p className="text-sm text-[var(--text-muted)]">{ui.pasteHint}</p>
       ) : null}
     </div>
   );
@@ -316,9 +268,11 @@ export default function ReadabilityTool({
 function HighlightedText({
   text,
   result,
+  ui,
 }: {
   text: string;
   result: ReadabilityResult;
+  ui: FleschCopy["ui"];
 }) {
   const complexSet = new Set(result.complexWordList);
   const hardSets = result.longestSentences
@@ -350,15 +304,15 @@ function HighlightedText({
       <div className="mb-2 flex items-center gap-4 text-xs text-[var(--text-muted)]">
         <span>
           <span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[#ff7a6e]" />
-          complex word
+          {ui.legendComplexWord}
         </span>
         <span>
           <span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[#e8c766]" />
-          long sentence (20+ words)
+          {ui.legendLongSentence}
         </span>
         <span>
           <span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[#67ff67]/60" />
-          Web3 term
+          {ui.legendWeb3Term}
         </span>
       </div>
       <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
@@ -398,12 +352,14 @@ function ScoreHeader({
   gradeLevel,
   inTarget,
   genreLabel,
+  ui,
 }: {
   citationScore: number;
   readingEase: number | null;
   gradeLevel: number | null;
   inTarget: boolean;
   genreLabel: string;
+  ui: FleschCopy["ui"];
 }) {
   const citeColor =
     citationScore >= 70
@@ -420,7 +376,7 @@ function ScoreHeader({
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
         <div className="flex items-baseline justify-between">
           <h3 className="text-sm font-medium tracking-wide text-[var(--text-muted)] uppercase">
-            Citation Readiness
+            {ui.citationScoreTitle}
           </h3>
           <span className={cn("text-sm font-semibold", citeColor)}>
             {citeLabel}
@@ -430,18 +386,19 @@ function ScoreHeader({
           <span className={cn("text-5xl font-bold", citeColor)}>
             {citationScore}
           </span>
-          <span className="text-sm text-[var(--text-muted)]">/100</span>
+          <span className="text-sm text-[var(--text-muted)]">
+            {ui.scoreSuffix}
+          </span>
         </p>
         <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-          How likely answer engines are to pull a clean, grounded, citable
-          sentence from your text (PromptRaise proprietary GEO signal).
+          {ui.citationScoreDesc}
         </p>
       </div>
 
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
         <div className="flex items-baseline justify-between">
           <h3 className="text-sm font-medium tracking-wide text-[var(--text-muted)] uppercase">
-            Flesch Reading Ease
+            {ui.readingEaseTitle}
           </h3>
           <span
             className={cn(
@@ -449,17 +406,21 @@ function ScoreHeader({
               inTarget ? "text-[#67ff67]" : "text-[#e8c766]",
             )}
           >
-            {inTarget ? "In target" : "Off target"} for {genreLabel}
+            {inTarget ? ui.inTargetLabel : ui.offTargetLabel}
+            {ui.forGenreSuffix}
+            {genreLabel}
           </span>
         </div>
         <p className="mt-2 flex items-baseline gap-2">
           <span className="text-5xl font-bold text-[var(--text-primary)]">
             {readingEase ?? "-"}
           </span>
-          <span className="text-sm text-[var(--text-muted)]">/100</span>
+          <span className="text-sm text-[var(--text-muted)]">
+            {ui.scoreSuffix}
+          </span>
         </p>
         <p className="mt-2 text-sm text-[var(--text-secondary)]">
-          {easeLabel} · Grade level{" "}
+          {easeLabel} · {ui.gradeLevelPrefix}{" "}
           <span className="text-[var(--text-primary)]">
             {gradeLevelLabel(gradeLevel)}
           </span>
@@ -480,9 +441,7 @@ function FormulaGrid({
   target: [number, number];
   copy: FleschCopy;
 }) {
-  const defByKey = new Map(
-    copy.formulaDefinitions.map((d) => [d.key, d.description]),
-  );
+  const defByKey = new Map(copy.formulaDefinitions.map((d) => [d.key, d]));
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
       <div className="mb-4 flex flex-col gap-1">
@@ -496,16 +455,15 @@ function FormulaGrid({
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        {FORMULAS.map((f) => {
+        {copy.formulaDefinitions.map((f) => {
           const main = f.key === "readingEase";
-          const raw = readability[f.key];
+          const raw = readability[f.key as keyof ReadabilityResult];
           const val = typeof raw === "number" ? raw : "-";
           const isTarget =
             main &&
             typeof raw === "number" &&
             raw >= target[0] &&
             raw <= target[1];
-          const desc = defByKey.get(String(f.key));
           return (
             <div
               key={f.key}
@@ -524,12 +482,12 @@ function FormulaGrid({
                     isTarget ? "text-[#67ff67]" : "text-[#e8c766]",
                   )}
                 >
-                  target {target[0]}-{target[1]}
+                  {copy.ui.formulaTargetPrefix} {target[0]}-{target[1]}
                 </p>
               )}
-              {desc && (
+              {f.description && (
                 <p className="mt-2 border-t border-[var(--border-default)] pt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-                  {desc}
+                  {f.description}
                 </p>
               )}
             </div>
@@ -582,7 +540,9 @@ function EngineVerdicts({
                 {v.reasoning}
               </p>
               <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)]">
-                <span className="text-[var(--accent-primary)]">Tip:</span>{" "}
+                <span className="text-[var(--accent-primary)]">
+                  {copy.ui.tipPrefix}
+                </span>{" "}
                 {v.tip}
               </p>
             </div>
@@ -590,8 +550,7 @@ function EngineVerdicts({
         })}
       </div>
       <p className="mt-3 text-xs text-[var(--text-muted)]">
-        Heuristic estimate from PromptRaise&rsquo;s citation signals - not a
-        live API check.
+        {copy.ui.verdictFootnote}
       </p>
     </div>
   );
@@ -599,26 +558,32 @@ function EngineVerdicts({
 
 /* ---- Metric grid ---------------------------------------------------------- */
 
-function MetricGrid({ readability }: { readability: ReadabilityResult }) {
+function MetricGrid({
+  readability,
+  ui,
+}: {
+  readability: ReadabilityResult;
+  ui: FleschCopy["ui"];
+}) {
   const metrics: { label: string; value: string }[] = [
-    { label: "Words", value: String(readability.wordCount) },
-    { label: "Sentences", value: String(readability.sentenceCount) },
-    { label: "Syllables", value: String(readability.syllableCount) },
-    { label: "Characters", value: String(readability.charCount) },
+    { label: ui.metricWords, value: String(readability.wordCount) },
+    { label: ui.metricSentences, value: String(readability.sentenceCount) },
+    { label: ui.metricSyllables, value: String(readability.syllableCount) },
+    { label: ui.metricCharacters, value: String(readability.charCount) },
     {
-      label: "Complex words",
+      label: ui.metricComplexWords,
       value: `${readability.complexWordCount} (${readability.complexWordPct.toFixed(1)}%)`,
     },
     {
-      label: "Avg sentence",
+      label: ui.metricAvgSentence,
       value: `${readability.avgSentenceLength.toFixed(1)} words`,
     },
     {
-      label: "Avg syllables/word",
+      label: ui.metricAvgSyllables,
       value: readability.avgSyllablesPerWord.toFixed(2),
     },
     {
-      label: "Reading time",
+      label: ui.metricReadingTime,
       value: `${formatTime(readability.readingTimeMinutes)}`,
     },
   ];
@@ -645,19 +610,21 @@ function MetricGrid({ readability }: { readability: ReadabilityResult }) {
 function BreakdownPanels({
   complexWords,
   longestSentences,
+  ui,
 }: {
   complexWords: string[];
   longestSentences: SentenceBreakdown[];
+  ui: FleschCopy["ui"];
 }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
         <h3 className="mb-3 text-lg font-semibold text-[var(--text-primary)]">
-          Complex words
+          {ui.complexWordsTitle}
         </h3>
         {complexWords.length === 0 ? (
           <p className="text-sm text-[var(--text-muted)]">
-            No complex words. Nice.
+            {ui.noComplexWords}
           </p>
         ) : (
           <div className="flex flex-wrap gap-2">
@@ -675,12 +642,10 @@ function BreakdownPanels({
 
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
         <h3 className="mb-3 text-lg font-semibold text-[var(--text-primary)]">
-          Longest sentences
+          {ui.longestSentencesTitle}
         </h3>
         {longestSentences.length === 0 ? (
-          <p className="text-sm text-[var(--text-muted)]">
-            No sentences to review.
-          </p>
+          <p className="text-sm text-[var(--text-muted)]">{ui.noSentences}</p>
         ) : (
           <ul className="flex flex-col gap-2">
             {longestSentences.map((s, i) => (

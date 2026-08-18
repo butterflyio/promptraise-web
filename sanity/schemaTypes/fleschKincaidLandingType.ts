@@ -1,5 +1,9 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+/** Compact string-field helper for the UI labels object below. */
+const uiString = (name: string, title: string, description?: string) =>
+  defineField({ name, title, type: "string", description });
+
 /**
  * Flesch-Kincaid calculator page copy - editable marketing content for
  * promptraise.com/free/flesch-kincaid-calculator.
@@ -72,6 +76,58 @@ export const fleschKincaidLandingType = defineType({
         "Shown when input is below the min words threshold. Include the min word count (8) so users know the bar.",
     }),
     defineField({
+      name: "faqSectionTitle",
+      title: "FAQ Section Title (H2)",
+      type: "string",
+      description: "Heading above the FAQ accordion.",
+      initialValue: "Flesch & AI citation, explained",
+    }),
+    defineField({
+      name: "genres",
+      title: "Content Types (genre pills)",
+      type: "array",
+      description:
+        "The selectable content-type pills. id must stay one of general/explainer/whitepaper/tutorial/social; edit label, target range and note freely. Targets are Flesch Reading Ease ranges.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "genre",
+          title: "Content Type",
+          fields: [
+            defineField({
+              name: "id",
+              title: "ID (do not change)",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "label",
+              title: "Label",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "targetMin",
+              title: "Target Flesch Min",
+              type: "number",
+            }),
+            defineField({
+              name: "targetMax",
+              title: "Target Flesch Max",
+              type: "number",
+            }),
+            defineField({
+              name: "note",
+              title: "Note",
+              type: "string",
+              description: "Small line under the pills, e.g. Flesch 60-70.",
+            }),
+          ],
+          preview: { select: { title: "label", subtitle: "note" } },
+        }),
+      ],
+    }),
+    defineField({
       name: "sampleText",
       title: "Try Web3 Example Text",
       type: "text",
@@ -129,8 +185,15 @@ export const fleschKincaidLandingType = defineType({
               title: "Formula Key",
               type: "string",
               description:
-                "readingEase | gradeLevel | gunningFog | smog | colemanLiau | ari",
+                "readingEase | gradeLevel | gunningFog | smog | colemanLiau | ari (do not change)",
               validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "label",
+              title: "Display Name",
+              type: "string",
+              description:
+                "Name shown on the formula card, e.g. Gunning Fog. Leave blank to use the default.",
             }),
             defineField({
               name: "description",
@@ -175,6 +238,92 @@ export const fleschKincaidLandingType = defineType({
       rows: 3,
       description:
         "Short intro above the actionable citation tips - frame them as concrete next actions.",
+    }),
+    defineField({
+      name: "ui",
+      title: "UI Labels & Strings",
+      type: "object",
+      description:
+        "Every remaining button label, heading and hint on the calculator. Leave a field blank to keep the default.",
+      fields: [
+        uiString("analyzeLabel", "Analyze Button", "Default: Analyze text"),
+        uiString("exampleLabel", "Example Button", "Default: Try Web3 example"),
+        uiString("clearLabel", "Clear Button", "Default: Clear"),
+        uiString(
+          "textareaPlaceholder",
+          "Textarea Placeholder",
+          "Default: Paste your Web3 copy, whitepaper excerpt...",
+        ),
+        uiString(
+          "pasteHint",
+          "Empty-State Hint",
+          "Shown before any analysis. Default: Paste text above and hit Analyze...",
+        ),
+        uiString(
+          "citationScoreTitle",
+          "Citation Score Card Title",
+          "Default: Citation Readiness",
+        ),
+        uiString(
+          "readingEaseTitle",
+          "Reading Ease Card Title",
+          "Default: Flesch Reading Ease",
+        ),
+        uiString("scoreSuffix", "Score Suffix", "Default: /100"),
+        uiString(
+          "citationScoreDesc",
+          "Citation Score Description",
+          "Small text under the citation score.",
+        ),
+        uiString("inTargetLabel", "In-Target Label", "Default: In target"),
+        uiString("offTargetLabel", "Off-Target Label", "Default: Off target"),
+        uiString("forGenreSuffix", "Genre Suffix", "Default:  for "),
+        uiString(
+          "gradeLevelPrefix",
+          "Grade-Level Label",
+          "Default: Grade level",
+        ),
+        uiString(
+          "formulaTargetPrefix",
+          "Formula Target Prefix",
+          "Default: target",
+        ),
+        uiString("tipPrefix", "Verdict Tip Prefix", "Default: Tip:"),
+        uiString(
+          "verdictFootnote",
+          "Verdict Footnote",
+          "Small disclaimer under the per-engine verdicts.",
+        ),
+        uiString("metricWords", "Metric: Words"),
+        uiString("metricSentences", "Metric: Sentences"),
+        uiString("metricSyllables", "Metric: Syllables"),
+        uiString("metricCharacters", "Metric: Characters"),
+        uiString("metricComplexWords", "Metric: Complex words"),
+        uiString("metricAvgSentence", "Metric: Avg sentence"),
+        uiString("metricAvgSyllables", "Metric: Avg syllables/word"),
+        uiString("metricReadingTime", "Metric: Reading time"),
+        uiString("complexWordsTitle", "Complex Words Panel Title"),
+        uiString("longestSentencesTitle", "Longest Sentences Panel Title"),
+        uiString(
+          "noComplexWords",
+          "Empty Complex Words Text",
+          "Default: No complex words. Nice.",
+        ),
+        uiString(
+          "noSentences",
+          "Empty Sentences Text",
+          "Default: No sentences to review.",
+        ),
+        uiString(
+          "web3TermsTitlePrefix",
+          "Web3 Terms Title Prefix",
+          "Rendered as: {prefix} (count)",
+        ),
+        uiString("web3TermsFootnote", "Web3 Terms Footnote"),
+        uiString("legendComplexWord", "Highlight Legend: Complex Word"),
+        uiString("legendLongSentence", "Highlight Legend: Long Sentence"),
+        uiString("legendWeb3Term", "Highlight Legend: Web3 Term"),
+      ],
     }),
     defineField({
       name: "faq",

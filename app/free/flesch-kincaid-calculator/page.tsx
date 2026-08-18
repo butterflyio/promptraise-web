@@ -9,6 +9,16 @@ import {
   getFleschKincaidLandingPreview,
 } from "@/sanity/lib/queries";
 
+/** Fallback display names when the CMS leaves a formula label blank. */
+const DEFAULT_FORMULA_LABELS: Record<string, string> = {
+  readingEase: "Flesch Reading Ease",
+  gradeLevel: "Flesch-Kincaid Grade",
+  gunningFog: "Gunning Fog",
+  smog: "SMOG",
+  colemanLiau: "Coleman-Liau",
+  ari: "ARI",
+};
+
 export const revalidate = 30;
 
 const siteUrl =
@@ -45,6 +55,7 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
     "contentTypeLabel",
     "emptyTextError",
     "tooShortError",
+    "faqSectionTitle",
     "sampleText",
     "introSectionTitle",
     "introBody1",
@@ -71,12 +82,109 @@ function mergeCopy(doc: Record<string, unknown> | null): FleschCopy {
   if (Array.isArray(formulas) && formulas.length > 0) {
     const mapped = formulas
       .map((f) => {
-        const entry = f as { key?: string; description?: string };
+        const entry = f as {
+          key?: string;
+          label?: string;
+          description?: string;
+        };
         if (!entry.key || typeof entry.description !== "string") return null;
-        return { key: entry.key, description: entry.description };
+        return {
+          key: entry.key,
+          label:
+            typeof entry.label === "string" && entry.label.trim().length > 0
+              ? entry.label
+              : (DEFAULT_FORMULA_LABELS[entry.key] ?? entry.key),
+          description: entry.description,
+        };
       })
-      .filter((x): x is { key: string; description: string } => x !== null);
+      .filter(
+        (x): x is { key: string; label: string; description: string } =>
+          x !== null,
+      );
     if (mapped.length > 0) copy.formulaDefinitions = mapped;
+  }
+
+  const genres = doc["genres"];
+  if (Array.isArray(genres) && genres.length > 0) {
+    const mapped = genres
+      .map((g) => {
+        const entry = g as {
+          id?: string;
+          label?: string;
+          targetMin?: number;
+          targetMax?: number;
+          note?: string;
+        };
+        if (
+          typeof entry.id !== "string" ||
+          entry.id.trim().length === 0 ||
+          typeof entry.label !== "string" ||
+          entry.label.trim().length === 0 ||
+          typeof entry.targetMin !== "number" ||
+          typeof entry.targetMax !== "number"
+        ) {
+          return null;
+        }
+        return {
+          id: entry.id,
+          label: entry.label,
+          targetMin: entry.targetMin,
+          targetMax: entry.targetMax,
+          note: typeof entry.note === "string" ? entry.note : "",
+        };
+      })
+      .filter(
+        (x): x is NonNullable<typeof x> =>
+          x !== null && x.targetMax >= x.targetMin,
+      );
+    if (mapped.length > 0) copy.genres = mapped;
+  }
+
+  const ui = doc["ui"];
+  if (ui && typeof ui === "object") {
+    const uiSrc = ui as Record<string, unknown>;
+    const merged: Record<string, unknown> = { ...copy.ui };
+    for (const key of [
+      "analyzeLabel",
+      "exampleLabel",
+      "clearLabel",
+      "textareaPlaceholder",
+      "pasteHint",
+      "citationScoreTitle",
+      "readingEaseTitle",
+      "scoreSuffix",
+      "citationScoreDesc",
+      "inTargetLabel",
+      "offTargetLabel",
+      "forGenreSuffix",
+      "gradeLevelPrefix",
+      "formulaTargetPrefix",
+      "tipPrefix",
+      "verdictFootnote",
+      "metricWords",
+      "metricSentences",
+      "metricSyllables",
+      "metricCharacters",
+      "metricComplexWords",
+      "metricAvgSentence",
+      "metricAvgSyllables",
+      "metricReadingTime",
+      "complexWordsTitle",
+      "longestSentencesTitle",
+      "noComplexWords",
+      "noSentences",
+      "web3TermsTitlePrefix",
+      "web3TermsFootnote",
+      "legendComplexWord",
+      "legendLongSentence",
+      "legendWeb3Term",
+    ]) {
+      const val = uiSrc[key];
+      if (typeof val === "string" && val.trim().length > 0) {
+        merged[key] = val;
+      }
+    }
+    copy.ui = merged as unknown as typeof copy.ui;
   }
 
   const faq = doc["faq"];
@@ -213,7 +321,7 @@ export default async function ReadabilityPage() {
         </div>
 
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
-          Flesch &amp; AI citation, explained
+          {copy.faqSectionTitle}
         </h2>
         <div className="mt-6">
           <FaqAccordion
