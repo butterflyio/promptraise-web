@@ -390,3 +390,6 @@ Update this file after every meaningful implementation change.
   - Mounted in `app/layout.tsx` next to Vercel Analytics + Ahrefs script.
   - Project ID `y4ruxt71v1` added to local `.env.local` + documented in `.env.example`.
   - Data Export API key stored securely at /root/.hermes/secure/clarity.env (never in frontend bundle).
+- **Clarity switched to manual head script (2026-08-19, commit 2f079aa):**
+  - Replaced npm package approach (component + @microsoft/clarity dep) with the official manual snippet in `app/layout.tsx` `<head>` (project ID from NEXT_PUBLIC_CLARITY_PROJECT_ID, fallback y4ruxt71v1). Verified locally: script loads https://www.clarity.ms/tag/y4ruxt71v1, window.clarity = function.
+  - Deployed to production (dpl_6n2Re9rBVPsajEEaGLVwgnScz6G4); www.promptraise.com + promptraise.com re-aliased. Export API confirmed live (HTTP 200), sessions pending real traffic.
