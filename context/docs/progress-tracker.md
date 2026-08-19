@@ -384,3 +384,9 @@ Update this file after every meaningful implementation change.
   - Embed section: new CMS hero heading "Embed once, use free forever" + replaced the (empty-looking) iframe preview with an animated GIF of the widget embedded on a docs-style site (generated from real headless-chromium screenshots; public/gifs/fk-embed-demo.gif, 393KB). Kept an "Open the live embed" link.
   - Copy feedback: CopyCommand + share button now ALWAYS show "Copied!" after a click (execCommand fallback + manual prompt only if copy genuinely failed) - fixes the "no Copied message" report.
   - SEO research in docs/flesch-kincaid-seo-research.md: formulas help SEO via UX/AI-citability/quality (not direct rank factors); fits all Web3 content types; recommend Rix/Lix/Dale-Chall/Linsear as glossary + keyword pages (and optional collapsible "advanced" formulas) but NOT headline metrics; consensus grade (PR-24) first.
+- **Microsoft Clarity installed (2026-08-19):**
+  - Installed @microsoft/clarity v1.0.2 (npm package, per Zain).
+  - New component `components/clarity-analytics.tsx`: client-side init of Clarity keyed off `NEXT_PUBLIC_CLARITY_PROJECT_ID` (guarded init; dev warning when var missing). Loaded always (traffic/SEO observation is the goal; consistent with Ahrefs unconditional load).
+  - Mounted in `app/layout.tsx` next to Vercel Analytics + Ahrefs script.
+  - Project ID `y4ruxt71v1` added to local `.env.local` + documented in `.env.example`.
+  - Data Export API key stored securely at /root/.hermes/secure/clarity.env (never in frontend bundle).

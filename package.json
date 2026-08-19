@@ -24,6 +24,7 @@
     "test:e2e:local": "BASE_URL=http://localhost:3101 playwright test"
   },
   "dependencies": {
+    "@microsoft/clarity": "^1.0.2",
     "@radix-ui/react-icons": "^1.3.2",
     "@sanity/client": "^7.22.1",
     "@sanity/code-input": "^7.3.3",

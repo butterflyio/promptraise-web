@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { SiteChrome } from "@/components/site-chrome";
 import { SiteShell } from "@/components/site-shell";
+import ClarityAnalytics from "@/components/clarity-analytics";
 import TermlyCMP from "@/components/termly-cmp";
 import { getSiteSettings } from "@/sanity/lib/queries";
 
@@ -190,6 +191,8 @@ export default async function RootLayout({
           bare={<>{children}</>}
         />
         <Analytics />
+        {/* Microsoft Clarity - traffic + SEO behavior analytics (session recording, heatmaps) */}
+        <ClarityAnalytics />
       </body>
     </html>
   );
