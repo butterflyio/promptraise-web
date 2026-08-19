@@ -4,7 +4,6 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { SiteChrome } from "@/components/site-chrome";
 import { SiteShell } from "@/components/site-shell";
-import ClarityAnalytics from "@/components/clarity-analytics";
 import TermlyCMP from "@/components/termly-cmp";
 import { getSiteSettings } from "@/sanity/lib/queries";
 
@@ -178,6 +177,15 @@ export default async function RootLayout({
           data-key="lV0hEymR0FuxRpoJU0kVKg"
           async
         />
+        {/* Microsoft Clarity - traffic + SEO behavior analytics (session recording, heatmaps) */}
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${
+              process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "y4ruxt71v1"
+            }");`,
+          }}
+        />
       </head>
       <body className="min-h-full">
         <Suspense fallback={null}>
@@ -191,8 +199,6 @@ export default async function RootLayout({
           bare={<>{children}</>}
         />
         <Analytics />
-        {/* Microsoft Clarity - traffic + SEO behavior analytics (session recording, heatmaps) */}
-        <ClarityAnalytics />
       </body>
     </html>
   );
