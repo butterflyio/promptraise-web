@@ -486,7 +486,10 @@ const POST_PROJECTION = `{
   excerpt,
   coverImage{asset->{url}},
   categories,
-  body,
+  body[]{
+    ...,
+    asset->{url}
+  },
   author->{
     _id,
     name,

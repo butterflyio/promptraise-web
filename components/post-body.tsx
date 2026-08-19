@@ -105,14 +105,21 @@ const components: PortableTextComponents = {
     image: ({ value }) => {
       const url = (value as { asset?: { url?: string } })?.asset?.url;
       if (!url) return null;
+      const alt = (value as { alt?: string })?.alt ?? "";
+      const caption = (value as { caption?: string })?.caption;
       return (
         <figure className="my-8">
           <img
             src={url}
-            alt={(value as { alt?: string })?.alt ?? ""}
+            alt={alt}
             className="w-full rounded-2xl border border-[var(--border-soft)]"
             loading="lazy"
           />
+          {caption ? (
+            <figcaption className="mt-3 text-center text-sm text-[var(--text-muted)]">
+              {caption}
+            </figcaption>
+          ) : null}
         </figure>
       );
     },
