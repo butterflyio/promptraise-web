@@ -10,6 +10,7 @@ type Block = {
     _key: string;
     _type: string;
     href?: string;
+    nofollow?: boolean;
   }>;
   asset?: { _ref?: string; url?: string };
   url?: string;
@@ -24,11 +25,20 @@ const components: PortableTextComponents = {
     link: ({ children, value }) => {
       const href = (value as { href?: string })?.href ?? "#";
       const external = /^https?:\/\//.test(href);
+      const nofollow = (value as { nofollow?: boolean })?.nofollow;
+      const rel = external
+        ? nofollow
+          ? "nofollow noopener noreferrer"
+          : "noopener noreferrer"
+        : undefined;
       return (
         <a
           href={href}
           {...(external
-            ? { target: "_blank", rel: "noopener noreferrer" }
+            ? {
+                target: "_blank",
+                rel,
+              }
             : {})}
           className="text-[var(--accent-primary)] underline decoration-[var(--accent-primary)]/40 underline-offset-2 hover:decoration-[var(--accent-primary)]"
         >

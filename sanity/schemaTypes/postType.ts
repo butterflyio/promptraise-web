@@ -69,7 +69,29 @@ export const postType = defineType({
       title: "Body",
       type: "array",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+          marks: {
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "Link",
+                fields: [
+                  { name: "href", type: "url", title: "URL" },
+                  {
+                    name: "nofollow",
+                    type: "boolean",
+                    title: "Nofollow (do not pass link equity)",
+                    description:
+                      "Adds rel=nofollow to this external link. Use for third-party / less-trusted destinations to balance the link profile.",
+                    initialValue: false,
+                  },
+                ],
+              },
+            ],
+          },
+        },
         { type: "image" },
         {
           type: "object",
