@@ -82,11 +82,10 @@ export async function POST(request: Request) {
     if (slug && slug !== "/") {
       revalidatePath(`/${slug.replace(/^\/+|\/+$/g, "")}`);
     }
-    // The legacy /glossary page renders the same Sanity glossary doc - keep
-    // it in lock-step whenever the CMS-glossary changes.
-    if (slug && slug.replace(/^\/+|\/+$/g, "") === "academy/glossary") {
-      revalidatePath("/glossary");
-    }
+    // The legacy /glossary page now 301-redirects to /academy/glossary (PR-39
+    // glossary consolidation), so revalidating the canonical /academy/glossary
+    // path above fully covers glossary changes - no separate /glossary lockstep
+    // is needed anymore.
     // Sitemap + robots/llms.txt are dynamic; revalidate them too so new
     // pages and posts are crawled quickly. Blog routes get revalidated on
     // any publish (cheap, matches revalidate=30 ISR behavior).

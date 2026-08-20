@@ -3,8 +3,9 @@ import type { SiteSettings } from "@/sanity/lib/queries";
 import { SiteBrand } from "./site-brand";
 
 const defaultFooterLinks = [
+  { label: "AI Visibility Blog", href: "/blog" },
   { label: "Academy", href: "/academy/glossary" },
-  { label: "Glossary", href: "/glossary" },
+  { label: "Free Tools", href: "/free/flesch-kincaid-calculator" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
   { label: "Cookie Usage", href: "/cookies" },

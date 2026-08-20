@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
     // Blog post slug 301s (renamed posts) + legacy tool consolidation.
     return [
       ...slugRedirectEntries(),
+      // Glossary consolidation: /glossary is the legacy copy of the same
+      // Sanity doc /academy/glossary renders. Canonical is /academy/glossary
+      // (richer Academy page, DefinedTermSet authority). 301 to it and drop
+      // /glossary from sitemap, llms.txt, llms-full.txt (see PR-39).
+      {
+        source: "/glossary",
+        destination: "/academy/glossary",
+        permanent: true,
+      },
       // Legacy tool URLs -> consolidated free tools
       {
         source: "/tools/flesch-kincaid",
