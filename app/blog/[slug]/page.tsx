@@ -11,7 +11,7 @@ import {
   getRelatedPosts,
   type PostDoc,
 } from "@/sanity/lib/queries";
-import { imageUrl } from "@/lib/sanity-image";
+import { imageUrl, naturalAspectRatio } from "@/lib/sanity-image";
 import {
   postUrl,
   postHref,
@@ -127,10 +127,12 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   const related = await getRelatedPosts(post._id, post.categories ?? [], 3);
-  const cover = post.coverImage?.asset?.url
-    ? imageUrl(post.coverImage.asset.url, {
-        width: 1400,
-        height: 700,
+  const coverAssetUrl = post.coverImage?.asset?.url;
+  const coverRatio = naturalAspectRatio(coverAssetUrl) ?? 2;
+  const cover = coverAssetUrl
+    ? imageUrl(coverAssetUrl, {
+        width: 1600,
+        height: Math.round(1600 / coverRatio),
         fit: "crop",
       })
     : null;
@@ -262,7 +264,8 @@ export default async function PostPage({ params }: PageProps) {
           <img
             src={cover}
             alt={post.title ?? ""}
-            className="aspect-[2/1] w-full object-cover"
+            className="w-full object-cover"
+            style={{ aspectRatio: String(coverRatio) }}
           />
         </div>
       ) : null}

@@ -165,9 +165,6 @@ function PostCard({ post }: { post: Post }) {
                 "linear-gradient(to top, rgba(15,15,15,0.9), transparent)",
             }}
           />
-          <div className="absolute top-4 left-4">
-            <CategoryTag label={post.categories?.[0]} />
-          </div>
         </div>
       ) : null}
       <div className="flex flex-1 flex-col gap-3 p-5">

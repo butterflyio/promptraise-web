@@ -49,3 +49,22 @@ export function imageSrcSet(
     .map((w) => `${imageUrl(assetUrl, { width: w })} ${w}w`)
     .join(", ");
 }
+
+/**
+ * Natural aspect ratio (w/h) of a Sanity asset URL, parsed from the embedded
+ * `-WIDTHxHEIGHT.` segment in the filename (e.g. `-1600x640.png` -> 2.5).
+ * Returns null when the ratio cannot be determined. Use to size media boxes
+ * to their source so fit=crop never cuts content.
+ */
+export function naturalAspectRatio(
+  assetUrl: string | null | undefined,
+): number | null {
+  if (!assetUrl || !assetUrl.includes("cdn.sanity.io")) return null;
+  const m = /-(\d+)x(\d+)\./.exec(assetUrl);
+  if (!m || m.length < 3) return null;
+  const w = Number(m[1]);
+  const h = Number(m[2]);
+  return Number.isFinite(w) && w > 0 && Number.isFinite(h) && h > 0
+    ? w / h
+    : null;
+}
