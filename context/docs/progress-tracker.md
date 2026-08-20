@@ -396,3 +396,16 @@ Update this file after every meaningful implementation change.
 - **Google Analytics 4 tag installed (2026-08-20):**
   - Added the official gtag.js snippet as the FIRST scripts in `app/layout.tsx` `<head>` (immediately after the `<head>` element, per Google install guide): async `https://www.googletagmanager.com/gtag/js?id=G-4BME0R598C` + inline dataLayer/gtag config. Exactly one Google tag per page.
   - Sits alongside Ahrefs + Clarity sitewide tracking; consistent with those unconditional head loads. Tag ID is hardcoded (G-4BME0R598C) per Google's manual-install tag - could be env-gated later if needed.
+- **PR-39 - Homepage internal-link architecture + glossary consolidation (2026-08-20, commit ec5d3f3 -> staging):**
+  - 301 `/glossary` -> `/academy/glossary` (added to `next.config.ts` redirects). Canonical glossary is the richer Academy page (DefinedTermSet authority); `/glossary` was a true duplicate splitting authority.
+  - `app/sitemap.ts`: removed `/glossary` entry (kept `/academy/glossary`); rest of sitemap otherwise as-is.
+  - `app/llms.txt/route.ts`: dropped `/glossary`, marked `/academy/glossary` canonical.
+  - `app/llms-full.txt/route.ts`: glossary term links changed from `/glossary#term-...` to `/academy/glossary#term-...`; Pages section consolidated to single Academy Glossary entry.
+  - `app/api/revalidate/route.ts`: removed the now-obsolete `/glossary` lock-step revalidate (301 target `/academy/glossary` is revalidated by the canonical path).
+  - Footer (`components/site-footer.tsx` + Sanity `siteSettings.footerLegalLinks`): added "AI Visibility Blog" (/blog) and "Free Tools" (/free/flesch-kincaid-calculator) links; only Academy glossary (/academy/glossary) linked (no /glossary); /studio excluded. Both the code fallback (`defaultFooterLinks`) and the live CMS doc updated.
+  - Type-check + build pass. Pushed to staging branch (deploys to https://staging.promptraise.com). Production untouched.
+- **PR-35 - Phase 4 lead mapping (2026-08-20):**
+  - Verified live: Supabase migration already applied to `audit_leads` (lead_tier, llm_audit_status, llm_audit_url, trello_card_id, consent_at, requires_llm + indexes). Captured it in repo as `supabase/migrations/002_lead_mapping.sql` (was only applied live, not version-controlled).
+  - Linear bridge (`leads_to_linear.py`) stays as-is (PM/backup per Zain).
+  - Built `leads_to_trello.py` (inert, key-gated) + registered a `Leads -> Trello bridge` 5-min no-agent cron job (258d6c88de4f). Silent no-op until Zain supplies TRELLO_API_KEY + TRELLO_TOKEN; then creates cards in 'Sales Pipeline' board (Warm/Hot label, stores trello_card_id, updates card on LLM-audit done).
+  - Trello bridge remains blocked pending the key.
