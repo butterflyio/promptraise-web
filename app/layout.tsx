@@ -170,6 +170,19 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <head>
+        {/* Google tag (gtag.js) - GA4 sitewide. Keep exactly one Google tag per page. */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-4BME0R598C"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4BME0R598C');`,
+          }}
+        />
         <StructuredData settings={settings} />
         {/* Ahrefs Analytics - sitewide traffic measurement */}
         <script

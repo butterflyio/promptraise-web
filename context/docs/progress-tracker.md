@@ -393,3 +393,6 @@ Update this file after every meaningful implementation change.
 - **Clarity switched to manual head script (2026-08-19, commit 2f079aa):**
   - Replaced npm package approach (component + @microsoft/clarity dep) with the official manual snippet in `app/layout.tsx` `<head>` (project ID from NEXT_PUBLIC_CLARITY_PROJECT_ID, fallback y4ruxt71v1). Verified locally: script loads https://www.clarity.ms/tag/y4ruxt71v1, window.clarity = function.
   - Deployed to production (dpl_6n2Re9rBVPsajEEaGLVwgnScz6G4); www.promptraise.com + promptraise.com re-aliased. Export API confirmed live (HTTP 200), sessions pending real traffic.
+- **Google Analytics 4 tag installed (2026-08-20):**
+  - Added the official gtag.js snippet as the FIRST scripts in `app/layout.tsx` `<head>` (immediately after the `<head>` element, per Google install guide): async `https://www.googletagmanager.com/gtag/js?id=G-4BME0R598C` + inline dataLayer/gtag config. Exactly one Google tag per page.
+  - Sits alongside Ahrefs + Clarity sitewide tracking; consistent with those unconditional head loads. Tag ID is hardcoded (G-4BME0R598C) per Google's manual-install tag - could be env-gated later if needed.

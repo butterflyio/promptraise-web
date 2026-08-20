@@ -44,7 +44,7 @@ const nextConfig: NextConfig = {
       "img-src 'self' data: https:",
       "font-src 'self' https: data:",
       "style-src 'self' 'unsafe-inline' https:",
-      "script-src 'self' 'unsafe-inline' https://app.termly.io https://*.termly.io https://www.clarity.ms https://*.clarity.ms",
+      "script-src 'self' 'unsafe-inline' https://app.termly.io https://*.termly.io https://www.clarity.ms https://*.clarity.ms https://www.googletagmanager.com https://*.googletagmanager.com",
       "connect-src 'self' https:",
       "frame-src https://app.termly.io https://*.termly.io https://www.youtube.com https://youtube.com https://player.vimeo.com",
       "object-src 'none'",
