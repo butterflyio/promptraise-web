@@ -409,8 +409,9 @@ Update this file after every meaningful implementation change.
   - Linear bridge (`leads_to_linear.py`) stays as-is (PM/backup per Zain).
   - Built `leads_to_trello.py` (inert, key-gated) + registered a `Leads -> Trello bridge` 5-min no-agent cron job (258d6c88de4f). Silent no-op until Zain supplies TRELLO_API_KEY + TRELLO_TOKEN; then creates cards in 'Sales Pipeline' board (Warm/Hot label, stores trello_card_id, updates card on LLM-audit done).
   - Trello bridge remains blocked pending the key.
-  - **PR-41 - Blog cover images no longer double-cropped (2026-08-20, commit cb3c805 -> staging):**
-    - FeaturedCard redesigned -> full-width banner strip: image across the top at native 2.5:1 (`aspect-[5/2]`, CDN request 1200x480), text below. Single deterministic crop, zero browser second-crop. Removed the old side-column `object-cover` (0.86:1) that cut the banner to a center sliver.
-    - PostCard -> uniform 16:9 (`aspect-[16/9]`, CDN request 640x360). One crop, matches box ratio exactly; removed second-crop from `h-[180px]` box.
-    - Deleted `components/blog/browser.tsx` (dead duplicate of live `components/blog-browser.tsx` - two copies of the same bug).
-    - Type-check passes, lint 0 errors. Pushed to staging branch only (https://staging.promptraise.com). Production untouched. Zain to eyeball rendered /blog on staging.
+  - **PR-8 approval closed (2026-08-20):** Zain approved the GA4 + funnel-event work already committed to staging. Verified present on the `staging` branch (HEAD e545661 = origin/staging): GA4 tag G-4BME0R598C in `app/layout.tsx` head + CSP whitelist, and lead_form_submit/lead_form_success/lead_form_error events in `components/sections/plans-section.tsx`. Typecheck clean. Moved PR-8 to In Review with an acknowledgment comment. Remaining: confirm conversion numbers in GA4 (needs real traffic); playbook form events deferred until PR-5 playbook ships. Note: staging URL currently bounces to a Vercel SSO login page when fetched headlessly (302 -> vercel.com/sso-api) - likely deployment protection; needs a Vercel-side check since browser/SSO auth is required.
+- **PR-41 - Blog cover images no longer double-cropped (2026-08-20, commit cb3c805 -> staging):**
+  - FeaturedCard redesigned -> full-width banner strip: image across the top at native 2.5:1 (`aspect-[5/2]`, CDN request 1200x480), text below. Single deterministic crop, zero browser second-crop. Removed the old side-column `object-cover` (0.86:1) that cut the banner to a center sliver.
+  - PostCard -> uniform 16:9 (`aspect-[16/9]`, CDN request 640x360). One crop, matches box ratio exactly; removed second-crop from `h-[180px]` box.
+  - Deleted `components/blog/browser.tsx` (dead duplicate of live `components/blog-browser.tsx` - two copies of the same bug).
+  - Type-check passes, lint 0 errors. Pushed to staging branch only (https://staging.promptraise.com). Production untouched. Zain to eyeball rendered /blog on staging.
