@@ -32,6 +32,19 @@ type FormErrors = Partial<Record<keyof FormValues, string>>;
 
 const WEBSITE_PATTERN = /^https?:\/\/[^\s]+$/i;
 
+/** Fire a GA4 event if gtag is loaded (no-op otherwise, never throws). */
+function trackEvent(name: string, params?: Record<string, unknown>) {
+  try {
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void })
+      .gtag;
+    if (typeof gtag === "function") {
+      gtag("event", name, params);
+    }
+  } catch {
+    /* analytics must never break the form */
+  }
+}
+
 function Field({
   label,
   name,
@@ -115,8 +128,18 @@ export function PlansSection({ content }: { content?: HomePage["plans"] }) {
 
     if (!validate()) {
       setStatus("idle");
+      trackEvent("lead_form_error", { reason: "validation" });
       return;
     }
+    trackEvent("lead_form_submit", {
+      website_domain: (() => {
+        try {
+          return new URL(values.website.trim()).hostname;
+        } catch {
+          return null;
+        }
+      })(),
+    });
 
     setStatus("submitting");
     try {
@@ -135,8 +158,10 @@ export function PlansSection({ content }: { content?: HomePage["plans"] }) {
       setValues(INITIAL_VALUES);
       setErrors({});
       setStatus("success");
+      trackEvent("lead_form_success");
     } catch {
       setStatus("error");
+      trackEvent("lead_form_error", { reason: "network" });
     }
   }
 
