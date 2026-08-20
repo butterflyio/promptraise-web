@@ -35,36 +35,48 @@ function coverUrl(
 }
 
 function FeaturedCard({ post }: { post: Post }) {
-  const img = coverUrl(post.coverImage, 1080, 640);
+  const img = coverUrl(post.coverImage, 1200, 480); // 2.5:1 = native banner ratio
   return (
     <Link
       href={postHref(post)}
       className="group relative block overflow-hidden rounded-[24px] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] backdrop-blur-[12px] transition-colors duration-300 hover:border-[rgba(103,255,103,0.15)]"
     >
-      <div className="relative flex flex-col lg:flex-row">
-        {/* Decorative glow */}
-        <div
-          className="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] rounded-full opacity-15"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(103,255,103,0.4) 0%, transparent 70%)",
-          }}
-        />
-        {/* Content */}
-        <div className="relative z-10 flex shrink-0 flex-col gap-6 p-8 lg:w-[55%] lg:p-12">
-          <div className="flex items-center gap-3">
+      <div className="relative flex flex-col">
+        {/* Image across the top at native 2.5:1 — single deterministic crop, no browser second-crop */}
+        {img ? (
+          <div className="relative aspect-[5/2] w-full overflow-hidden">
+            <img
+              src={img}
+              alt={post.title ?? ""}
+              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-[rgba(15,15,15,0.15)]" />
+          </div>
+        ) : null}
+        {/* Content below the banner */}
+        <div className="relative flex flex-col gap-6 p-8 lg:p-12">
+          {/* Decorative glow */}
+          <div
+            className="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] rounded-full opacity-15"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(103,255,103,0.4) 0%, transparent 70%)",
+            }}
+          />
+          <div className="relative z-10 flex items-center gap-3">
             <CategoryTag label={post.categories?.[0]} />
             <span className="text-[12px] tracking-[-0.24px] text-[rgba(255,255,255,0.35)]">
               Featured
             </span>
           </div>
-          <h2 className="text-[32px] leading-[1.1] tracking-[-0.84px] text-white md:text-[42px]">
+          <h2 className="relative z-10 text-[32px] leading-[1.1] tracking-[-0.84px] text-white md:text-[42px]">
             {post.title}
           </h2>
-          <p className="text-[16px] leading-[1.65] tracking-[-0.32px] text-[rgba(255,255,255,0.5)]">
+          <p className="relative z-10 text-[16px] leading-[1.65] tracking-[-0.32px] text-[rgba(255,255,255,0.5)]">
             {post.excerpt}
           </p>
-          <div className="flex items-center gap-4">
+          <div className="relative z-10 flex items-center gap-4">
             <span className="text-[13px] tracking-[-0.26px] text-[rgba(255,255,255,0.35)]">
               {formatShortDate(post.publishedAt)}
             </span>
@@ -73,7 +85,7 @@ function FeaturedCard({ post }: { post: Post }) {
               {readTime(post.excerpt)}
             </span>
           </div>
-          <span className="relative inline-flex items-center gap-2 self-start rounded-[9999px] bg-white px-6 py-3 text-[16px] leading-[1.5] tracking-[-0.32px] text-[#09090b] transition-colors hover:bg-[#ededee]">
+          <span className="relative z-10 inline-flex items-center gap-2 self-start rounded-[9999px] bg-white px-6 py-3 text-[16px] leading-[1.5] tracking-[-0.32px] text-[#09090b] transition-colors hover:bg-[#ededee]">
             Read Article
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -86,39 +98,20 @@ function FeaturedCard({ post }: { post: Post }) {
             </svg>
           </span>
         </div>
-        {/* Image */}
-        {img ? (
-          <div className="relative min-h-[320px] flex-1 overflow-hidden lg:h-auto">
-            <img
-              src={img}
-              alt={post.title ?? ""}
-              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
-            <div
-              className="absolute inset-y-0 left-0 w-24 lg:w-32"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(15,15,15,0.95), transparent)",
-              }}
-            />
-            <div className="absolute inset-0 bg-[rgba(15,15,15,0.25)]" />
-          </div>
-        ) : null}
       </div>
     </Link>
   );
 }
 
 function PostCard({ post }: { post: Post }) {
-  const img = coverUrl(post.coverImage, 600, 400);
+  const img = coverUrl(post.coverImage, 640, 360); // 16:9, matches the box ratio
   return (
     <Link
       href={postHref(post)}
       className="group flex flex-col overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.07)] bg-[rgba(255,255,255,0.02)] backdrop-blur-[8px] transition-all duration-300 hover:border-[rgba(103,255,103,0.15)] hover:bg-[rgba(255,255,255,0.04)]"
     >
       {img ? (
-        <div className="relative h-[180px] overflow-hidden">
+        <div className="relative aspect-[16/9] w-full overflow-hidden">
           <img
             src={img}
             alt={post.title ?? ""}
