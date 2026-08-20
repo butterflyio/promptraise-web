@@ -34,17 +34,53 @@ function coverUrl(
   }
 }
 
+/**
+ * Natural aspect ratio of a Sanity asset URL, parsed from the embedded
+ * `-WIDTHxHEIGHT.` segment in the filename (e.g. `-1600x640.png`).
+ * Returns a float (w/h) so callers can size their box to match the source
+ * exactly -> zero crop regardless of the image's real ratio.
+ */
+function naturalRatio(url?: string | null): number | null {
+  if (!url || !url.includes("cdn.sanity.io")) return null;
+  const m = /-(\d+)x(\d+)\./.exec(url);
+  if (!m || m.length < 3) return null;
+  const w = Number(m[1]);
+  const h = Number(m[2]);
+  return Number.isFinite(w) && w > 0 && Number.isFinite(h) && h > 0
+    ? w / h
+    : null;
+}
+
+/** Match CDN request to the image's own ratio so fit=crop never crops. */
+function matchedCoverUrl(
+  post: Post,
+  targetW: number,
+  fallbackRatio: number,
+): { src: string | null; ratio: number } {
+  const img = post.coverImage ?? post.openGraphImage;
+  const url = img?.asset?.url;
+  const ratio = naturalRatio(url) ?? fallbackRatio;
+  const h = Math.round(targetW / ratio);
+  return {
+    src: coverUrl(post.coverImage ?? post.openGraphImage, targetW, h),
+    ratio,
+  };
+}
+
 function FeaturedCard({ post }: { post: Post }) {
-  const img = coverUrl(post.coverImage, 1200, 480); // 2.5:1 = native banner ratio
+  const { src: img, ratio } = matchedCoverUrl(post, 1200, 5 / 2);
   return (
     <Link
       href={postHref(post)}
       className="group relative block overflow-hidden rounded-[24px] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] backdrop-blur-[12px] transition-colors duration-300 hover:border-[rgba(103,255,103,0.15)]"
     >
       <div className="relative flex flex-col">
-        {/* Image across the top at native 2.5:1 — single deterministic crop, no browser second-crop */}
+        {/* Image across the top at the image's NATIVE ratio — box matches source, so zero crop */}
         {img ? (
-          <div className="relative aspect-[5/2] w-full overflow-hidden">
+          <div
+            className="relative w-full overflow-hidden"
+            style={{ aspectRatio: ratio }}
+          >
             <img
               src={img}
               alt={post.title ?? ""}
@@ -104,14 +140,17 @@ function FeaturedCard({ post }: { post: Post }) {
 }
 
 function PostCard({ post }: { post: Post }) {
-  const img = coverUrl(post.coverImage, 640, 360); // 16:9, matches the box ratio
+  const { src: img, ratio } = matchedCoverUrl(post, 640, 16 / 9);
   return (
     <Link
       href={postHref(post)}
       className="group flex flex-col overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.07)] bg-[rgba(255,255,255,0.02)] backdrop-blur-[8px] transition-all duration-300 hover:border-[rgba(103,255,103,0.15)] hover:bg-[rgba(255,255,255,0.04)]"
     >
       {img ? (
-        <div className="relative aspect-[16/9] w-full overflow-hidden">
+        <div
+          className="relative w-full overflow-hidden"
+          style={{ aspectRatio: ratio }}
+        >
           <img
             src={img}
             alt={post.title ?? ""}
