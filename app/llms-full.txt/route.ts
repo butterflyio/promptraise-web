@@ -1,8 +1,7 @@
 import { getAllPosts, getGlossary } from "@/sanity/lib/queries";
 import { termAnchor } from "@/lib/glossary-terms";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export const revalidate = 300;
 

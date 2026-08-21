@@ -11,8 +11,7 @@ import type { GlossaryTerm } from "@/lib/glossary-terms";
 
 export const revalidate = 30;
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const dm = await draftMode();
