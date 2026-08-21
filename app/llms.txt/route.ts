@@ -31,7 +31,6 @@ PromptRaise helps Web3 projects rank across AI summaries, LLM responses, and sea
 - ${siteUrl}/free/flesch-kincaid-calculator — Free Flesch-Kincaid readability calculator for Web3: six readability formulas plus a Citation Readiness score. 100% offline in the browser, no signup, no data capture.
 - ${siteUrl}/free/flesch-kincaid-calculator/embed — iframe-embeddable version of the calculator for any site
 - ${siteUrl}/privacy — Privacy notice and data handling practices
-- ${siteUrl}/studio — Sanity CMS studio (admin only)
 
 ## Tools
 
@@ -47,7 +46,7 @@ ${blogLines.length ? blogLines.join("\n") : "- No posts published yet."}
 
 ## Contact
 
-- Telegram: https://t.me/placeholder
+- Telegram: https://t.me/promptraise
 - Free Audit: https://audit.promptraise.com
 
 ## Last Updated

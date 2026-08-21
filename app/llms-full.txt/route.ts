@@ -70,7 +70,7 @@ ${glossaryLines.length ? glossaryLines.join("\n") : "- No glossary terms yet."}
 ## Contact
 
 - Free Audit: https://audit.promptraise.com
-- Telegram: https://t.me/promptraise (placeholder)
+- Telegram: https://t.me/promptraise
 
 ## Last Updated
 
