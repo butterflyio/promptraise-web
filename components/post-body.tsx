@@ -193,7 +193,13 @@ function VideoEmbed({ url }: { url: string }) {
   return <video src={url} controls className="h-full w-full" />;
 }
 
-export default function PostBody({ blocks }: { blocks: Block[] }) {
+export default function PostBody({
+  blocks,
+  headingIds,
+}: {
+  blocks: Block[];
+  headingIds?: Record<string, string>;
+}) {
   if (!blocks || blocks.length === 0) {
     return (
       <p className="text-[var(--text-secondary)]">
@@ -201,9 +207,47 @@ export default function PostBody({ blocks }: { blocks: Block[] }) {
       </p>
     );
   }
+
+  // h2/h3 renderers get auto-generated anchor ids (shared with the TOC) plus
+  // scroll-margin so the sticky header never covers a jump target. IDs come
+  // from lib/blog-headings.ts via the page, keyed by block _key.
+  const blockWithIds = {
+    ...components.block,
+    h2: ({ children, value }: any) => {
+      const id = headingIds?.[(value as { _key?: string })?._key ?? ""];
+      return (
+        <h2
+          id={id}
+          className="mt-10 mb-4 scroll-mt-28 text-2xl font-semibold tracking-tight text-[var(--text-primary)]"
+        >
+          {children}
+        </h2>
+      );
+    },
+    h3: ({ children, value }: any) => {
+      const id = headingIds?.[(value as { _key?: string })?._key ?? ""];
+      return (
+        <h3
+          id={id}
+          className="mt-8 mb-3 scroll-mt-28 text-xl font-semibold tracking-tight text-[var(--text-primary)]"
+        >
+          {children}
+        </h3>
+      );
+    },
+  };
+
   return (
     <div className="flex flex-col gap-6">
-      <PortableText value={blocks as never} components={components} />
+      <PortableText
+        value={blocks as never}
+        components={
+          {
+            ...components,
+            block: blockWithIds as PortableTextComponents["block"],
+          } as PortableTextComponents
+        }
+      />
     </div>
   );
 }

@@ -15,7 +15,9 @@ import { getGlossaryContent } from "@/lib/glossary-content";
 import { autoLinkBlocks } from "@/lib/glossary-links";
 import { imageUrl, naturalAspectRatio } from "@/lib/sanity-image";
 import { BlogAskLlm } from "@/components/blog-ask-llm";
+import { BlogToc } from "@/components/blog-toc";
 import { getSiteSettings } from "@/sanity/lib/queries";
+import { deriveHeadings } from "@/lib/blog-headings";
 import {
   postUrl,
   postHref,
@@ -139,6 +141,14 @@ export default async function PostPage({ params }: PageProps) {
   const glossary = await getGlossaryContent(dm);
   const linked = autoLinkBlocks((post.body ?? []) as never, glossary.terms);
   const bodyBlocks = linked.blocks;
+
+  // TOC + heading anchors, derived from the same block list that renders the
+  // body (see lib/blog-headings.ts). Gate: >= 4 H2s, h2+h3 only, kebab ids.
+  const {
+    headings,
+    headingIds,
+    show: showToc,
+  } = deriveHeadings((post.body ?? []) as never, 4);
 
   // Ask-an-AI-assistant box (GEO nudge). Read siteSettings for the box copy
   // and on/off switch - all CMS-editable, defaults conservative (off).
@@ -286,9 +296,12 @@ export default async function PostPage({ params }: PageProps) {
         </div>
       ) : null}
 
+      {/* Table of contents (auto, >= 4 H2s only) */}
+      {showToc ? <BlogToc headings={headings} /> : null}
+
       {/* Body */}
       <div className="prose-blog mt-10">
-        <PostBody blocks={bodyBlocks as never} />
+        <PostBody blocks={bodyBlocks as never} headingIds={headingIds} />
       </div>
 
       {/* Ask an AI assistant (GEO nudge) - CMS-switched via siteSettings */}
