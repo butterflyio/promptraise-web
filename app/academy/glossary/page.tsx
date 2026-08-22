@@ -10,7 +10,11 @@ import {
 } from "@/lib/glossary-content";
 import type { GlossaryTerm } from "@/lib/glossary-terms";
 import { getAllPostsForGlossaryLinks } from "@/sanity/lib/queries";
-import { relatedPostsForTerm } from "@/lib/glossary-links";
+import {
+  relatedPostsForTerm,
+  GLOSSARY_MAX_OUTBOUND_LINKS,
+  type ParsedPostForLinks,
+} from "@/lib/glossary-links";
 import { postHref } from "@/lib/blog";
 
 export const revalidate = 30;
@@ -50,7 +54,23 @@ export default async function AcademyGlossaryPage(_props: PageProps) {
 
   // Reverse-direction relations: which real posts mention each term
   // (glossary -> blog). Placeholder posts are filtered by min body length.
+  // Outbound budget is SHARED across all terms: the whole glossary hub page
+  // can emit at most GLOSSARY_MAX_OUTBOUND_LINKS links to blog posts, consumed
+  // in term order, so outbound link count never scales with term count.
   const posts = await getAllPostsForGlossaryLinks();
+  const outboundBudget = { remaining: GLOSSARY_MAX_OUTBOUND_LINKS };
+  const outboundByTerm = new Map<string, ParsedPostForLinks[]>();
+  for (const t of terms) {
+    if (outboundBudget.remaining <= 0) break;
+    const rel = relatedPostsForTerm(t.term, posts, 2).slice(
+      0,
+      outboundBudget.remaining,
+    );
+    if (rel.length) {
+      outboundByTerm.set(t.term, rel);
+      outboundBudget.remaining -= rel.length;
+    }
+  }
 
   // DefinedTermSet JSON-LD: the machine-readable facts this page exists to
   // provide (see ai-visibility.md -> DefinedTerm). Server-rendered.
@@ -124,7 +144,7 @@ export default async function AcademyGlossaryPage(_props: PageProps) {
                   key={t.term}
                   term={t}
                   content={content}
-                  posts={posts}
+                  outboundPosts={outboundByTerm.get(t.term) ?? []}
                 />
               ))}
             </dl>
@@ -177,13 +197,13 @@ function buildJsonLd(siteUrl: string, content: GlossaryContent) {
 function TermCard({
   term,
   content,
-  posts,
+  outboundPosts,
 }: {
   term: GlossaryTerm;
   content: GlossaryContent;
-  posts: Awaited<ReturnType<typeof getAllPostsForGlossaryLinks>>;
+  outboundPosts: ParsedPostForLinks[];
 }) {
-  const relatedReads = relatedPostsForTerm(term.term, posts, 3);
+  const relatedReads = outboundPosts;
   return (
     <div
       id={"term-" + slugify(term.term)}

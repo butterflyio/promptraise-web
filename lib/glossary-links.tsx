@@ -62,6 +62,18 @@ export const GLOSSARY_MIN_LINK_GAP_CHARS = Number(
   process.env.GLOSSARY_MIN_LINK_GAP ?? 30,
 );
 
+/**
+ * Global budget for OUTBOUND links from the glossary hub page to blog
+ * posts (the "Related reads" chips). The glossary itself naturally has many
+ * same-page anchor links (See also) - those are in-page navigation and fine.
+ * But outbound links from a hub page scale with term count, so they get
+ * their own hard cap independent of term count. Default 6 keeps the hub
+ * page healthy no matter how many terms it grows to.
+ */
+export const GLOSSARY_MAX_OUTBOUND_LINKS = Number(
+  process.env.GLOSSARY_MAX_OUTBOUND_LINKS ?? 6,
+);
+
 export interface ParsedPostForLinks {
   _id?: string;
   slug?: { current?: string };
