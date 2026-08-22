@@ -44,6 +44,15 @@ export interface SiteSettings {
     label: string;
     href: string;
   }>;
+  blogAskLlm?: {
+    enabled?: boolean;
+    heading?: string;
+    promptTemplate?: string;
+    chatgptLabel?: string;
+    perplexityLabel?: string;
+    grokLabel?: string;
+    googleAiLabel?: string;
+  };
   socialLinks: {
     x?: string;
     telegram?: string;
@@ -65,6 +74,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     footerPoweredByText,
     footerCopyrightText,
     footerLegalLinks,
+    blogAskLlm,
     socialLinks,
     announcement,
     logo{
@@ -313,6 +323,7 @@ export async function getSiteSettingsPreview() {
     footerPoweredByText,
     footerCopyrightText,
     footerLegalLinks,
+    blogAskLlm,
     socialLinks,
     announcement,
     logo{

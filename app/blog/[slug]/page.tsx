@@ -14,6 +14,8 @@ import {
 import { getGlossaryContent } from "@/lib/glossary-content";
 import { autoLinkBlocks } from "@/lib/glossary-links";
 import { imageUrl, naturalAspectRatio } from "@/lib/sanity-image";
+import { BlogAskLlm } from "@/components/blog-ask-llm";
+import { getSiteSettings } from "@/sanity/lib/queries";
 import {
   postUrl,
   postHref,
@@ -137,6 +139,10 @@ export default async function PostPage({ params }: PageProps) {
   const glossary = await getGlossaryContent(dm);
   const linked = autoLinkBlocks((post.body ?? []) as never, glossary.terms);
   const bodyBlocks = linked.blocks;
+
+  // Ask-an-AI-assistant box (GEO nudge). Read siteSettings for the box copy
+  // and on/off switch - all CMS-editable, defaults conservative (off).
+  const settings = await getSiteSettings();
   const coverAssetUrl = post.coverImage?.asset?.url;
   const coverRatio = naturalAspectRatio(coverAssetUrl) ?? 2;
   const cover = coverAssetUrl
@@ -284,6 +290,9 @@ export default async function PostPage({ params }: PageProps) {
       <div className="prose-blog mt-10">
         <PostBody blocks={bodyBlocks as never} />
       </div>
+
+      {/* Ask an AI assistant (GEO nudge) - CMS-switched via siteSettings */}
+      <BlogAskLlm settings={settings} slug={slug} />
 
       {/* About the author box */}
       {post.author?.name ? (
