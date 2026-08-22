@@ -132,14 +132,11 @@ function StructuredData({
     "@type": "WebSite",
     name: siteName,
     url: siteUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteUrl}/?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
+    // NOTE: no SearchAction / potentialAction. Promptraise has no dedicated
+    // search results page - /?q= is the homepage catch-all, not a search
+    // endpoint. Advertising SearchAction here made Google crawl the literal
+    // urlTemplate ?q={search_term_string} (GSC "page with redirect").
+    // Re-add ONLY when a real search results page ships.
   };
 
   return (
