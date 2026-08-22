@@ -24,8 +24,27 @@ import { GLOSSARY_TERMS, termAnchor } from "@/lib/glossary-terms";
  * (filters placeholder/stub posts automatically). */
 export const GLOSSARY_LINK_MIN_BODY_CHARS = 3000;
 
-/** Hard cap on auto links per post. */
-export const GLOSSARY_LINK_MAX_PER_POST = 12;
+/**
+ * Hard cap on auto links per page. Default 6 keeps in-content anchor links
+ * below the keyword-stuffing threshold while still building the topical
+ * graph. Override per call (maxLinks param) or per deployment
+ * (GLOSSARY_MAX_LINKS_PER_POST env var, no code change).
+ */
+export const GLOSSARY_LINK_MAX_PER_POST = Number(
+  process.env.GLOSSARY_MAX_LINKS_PER_POST ?? 6,
+);
+
+/** Resolves the effective cap: explicit param > env > default. */
+export function effectiveMaxLinks(maxLinks?: number): number {
+  if (
+    typeof maxLinks === "number" &&
+    Number.isFinite(maxLinks) &&
+    maxLinks > 0
+  ) {
+    return Math.floor(maxLinks);
+  }
+  return GLOSSARY_LINK_MAX_PER_POST;
+}
 
 export interface ParsedPostForLinks {
   _id?: string;
@@ -164,6 +183,7 @@ export interface AutoLinkResult {
 export function autoLinkBlocks(
   blocks: Block[],
   terms: GlossaryTerm[],
+  maxLinks?: number,
 ): AutoLinkResult {
   if (!blocks || blocks.length === 0) {
     return { blocks: blocks ?? [], matched: [] };
@@ -172,6 +192,7 @@ export function autoLinkBlocks(
   const termByLabel = new Map(terms.map((t) => [t.term, t]));
   const used = new Set<string>();
   const matched: GlossaryTerm[] = [];
+  const cap = effectiveMaxLinks(maxLinks);
   let totalLinks = 0;
 
   const transformed: Block[] = blocks.map((block, bi) => {
@@ -213,7 +234,7 @@ export function autoLinkBlocks(
 
       // Repeatedly locate the best (earliest, longest) term in the remainder.
       for (;;) {
-        if (totalLinks >= GLOSSARY_LINK_MAX_PER_POST) break;
+        if (totalLinks >= cap) break;
         const hits = earliestMatches(remaining, phrases, used);
         if (hits.length === 0) break;
         // Earliest/longest term at this position (safe: hits is non-empty).
@@ -329,17 +350,19 @@ export function relatedPostsForTerm(
 export function linkGlossaryTerms(
   text: string,
   terms: GlossaryTerm[] = GLOSSARY_TERMS,
+  maxLinks?: number,
 ): ReactNode {
   if (!text) return text;
   const phrases = linkablePhrases(terms);
   const used = new Set<string>();
+  const cap = effectiveMaxLinks(maxLinks);
   let remaining = text;
   let totalLinks = 0;
   const parts: ReactNode[] = [];
   let key = 0;
 
   for (;;) {
-    if (totalLinks >= GLOSSARY_LINK_MAX_PER_POST) break;
+    if (totalLinks >= cap) break;
     const hits = earliestMatches(remaining, phrases, used);
     if (hits.length === 0) break;
     const hit = hits[0];
