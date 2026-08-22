@@ -13,7 +13,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const faviconUrl = settings?.favicon?.asset?.url ?? `${siteUrl}/favicon.ico`;
+  const faviconUrl =
+    settings?.favicon?.asset?.url ?? `${siteUrl}/brand/promptraise-mark.svg`;
   const socialImageUrl =
     settings?.openGraphImage?.asset?.url ??
     settings?.logo?.asset?.url ??
