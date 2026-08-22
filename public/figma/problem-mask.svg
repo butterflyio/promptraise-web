@@ -1,11 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1441" height="1075" viewBox="0 0 1441 1075" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect id="Mask Rectangle" width="1441" height="1075" fill="url(#paint0_linear_0_43)"/>
-<defs>
-<linearGradient id="paint0_linear_0_43" x1="720.5" y1="0" x2="720.5" y2="1075" gradientUnits="userSpaceOnUse">
-<stop stop-color="white" stop-opacity="0"/>
-<stop offset="0.101108" stop-color="white"/>
-<stop offset="0.896552" stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="1441" height="1075" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 1441 1075"><rect id="Mask Rectangle" width="1441" height="1075" fill="url(#paint0_linear_0_43)"/><defs><linearGradient id="paint0_linear_0_43" x1="720.5" x2="720.5" y1="0" y2="1075" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".101" stop-color="#fff"/><stop offset=".897" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>

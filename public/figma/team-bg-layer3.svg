@@ -1,17 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1968" height="659" viewBox="0 0 1968 659" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Decorative Vector" filter="url(#filter0_f_0_74)" style="mix-blend-mode:screen">
-<path d="M944.62 336.852C391.168 336.852 183.268 211.284 148.5 148.5V510.5H1819.5V148.5C1758.48 211.284 1498.07 336.852 944.62 336.852Z" fill="url(#paint0_linear_0_74)" fill-opacity="0.35"/>
-</g>
-<defs>
-<filter id="filter0_f_0_74" x="0" y="0" width="1968" height="659" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="74.25" result="effect1_foregroundBlur_0_74"/>
-</filter>
-<linearGradient id="paint0_linear_0_74" x1="148.5" y1="329.5" x2="1819.5" y2="329.5" gradientUnits="userSpaceOnUse">
-<stop stop-color="#7BFF7B"/>
-<stop offset="0.5" stop-color="#7BFF7B" stop-opacity="0"/>
-<stop offset="1" stop-color="#7BFF7B"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="1968" height="659" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 1968 659"><g id="Decorative Vector" filter="url(#filter0_f_0_74)" style="mix-blend-mode:screen"><path fill="url(#paint0_linear_0_74)" fill-opacity=".35" d="M944.62 336.852C391.168 336.852 183.268 211.284 148.5 148.5V510.5H1819.5V148.5C1758.48 211.284 1498.07 336.852 944.62 336.852Z"/></g><defs><filter id="filter0_f_0_74" width="1968" height="659" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_74" stdDeviation="74.25"/></filter><linearGradient id="paint0_linear_0_74" x1="148.5" x2="1819.5" y1="329.5" y2="329.5" gradientUnits="userSpaceOnUse"><stop stop-color="#7BFF7B"/><stop offset=".5" stop-color="#7BFF7B" stop-opacity="0"/><stop offset="1" stop-color="#7BFF7B"/></linearGradient></defs></svg>
