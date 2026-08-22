@@ -105,6 +105,7 @@ function BenefitIcon({ iconKey }: { iconKey: string }) {
           <img
             src={`/figma/ai-icon-${iconKey}.svg`}
             alt=""
+            aria-hidden="true"
             className="block size-full max-w-none"
           />
         </div>
@@ -179,12 +180,14 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             <img
               src="/figma/ai-badge-line.svg"
               alt=""
+              aria-hidden="true"
               className="absolute top-1/2 left-0 h-[6px] w-full max-w-none -translate-y-1/2"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/figma/ai-badge-mark-2.svg"
               alt=""
+              aria-hidden="true"
               className="relative mr-3 h-[25px] w-[39px]"
             />
             <div className="relative flex h-[39px] items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]">
@@ -196,6 +199,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             <img
               src="/figma/ai-badge-mark-1.svg"
               alt=""
+              aria-hidden="true"
               className="relative ml-3 h-[25px] w-[41px]"
             />
           </div>

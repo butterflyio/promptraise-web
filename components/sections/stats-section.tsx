@@ -165,6 +165,7 @@ function StatsMobileLayout({
                             <img
                               src={layer.img}
                               alt=""
+                              aria-hidden="true"
                               className="block size-full max-w-none"
                             />
                           </div>
@@ -175,6 +176,7 @@ function StatsMobileLayout({
                         <img
                           src={layer.img}
                           alt=""
+                          aria-hidden="true"
                           className="block size-full max-w-none"
                         />
                       </div>

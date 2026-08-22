@@ -415,3 +415,12 @@ Update this file after every meaningful implementation change.
   - PostCard -> uniform 16:9 (`aspect-[16/9]`, CDN request 640x360). One crop, matches box ratio exactly; removed second-crop from `h-[180px]` box.
   - Deleted `components/blog/browser.tsx` (dead duplicate of live `components/blog-browser.tsx` - two copies of the same bug).
   - Type-check passes, lint 0 errors. Pushed to staging branch only (https://staging.promptraise.com). Production untouched. Zain to eyeball rendered /blog on staging.
+- **Alt-text cleanup - homepage (2026-08-22):**
+  - Audit finding: "Alt attribute for images is missing" (216 instances). Root cause: homepage renders ~239 images with literal `alt=""`; meaningful ones (team photos, brand mark, comparison check cells) were blank while decorative art was correct-but-unmarked.
+  - Fixes in `components/`:
+    - `team-section.tsx`: member photo now `alt={name}` (CMS member name).
+    - `site-brand.tsx`: `SiteBrand` Image alt="PromptRaise" (was blank + aria-hidden).
+    - `comparison-section.tsx`: CheckCell images now alt="Yes"/"No" (was blank).
+    - All remaining decorative imgs (bg layers, rings, ellipses, noise, connectors, separators, badge marks, icons) got `aria-hidden="true"` alongside `alt=""` - the WCAG-correct decorative pattern, 115 imgs across 7 section components.
+  - Verified: typecheck clean, production build passes, served build renders 252 imgs = 0 no-alt, 0 empty-without-aria-hidden, 42 descriptive, 210 decorative-marked.
+  - Staged to `staging` branch only. Production untouched.

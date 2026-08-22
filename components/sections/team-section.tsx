@@ -140,7 +140,7 @@ function TeamCard({
           {/* Member photo (fills the window; CMS-supplied) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            alt=""
+            alt={name}
             className="absolute inset-0 h-full w-full object-cover"
             src={
               imageUrl(image, { width: 640, height: 520, fit: "crop" }) ?? image
@@ -302,6 +302,7 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     alt=""
+                    aria-hidden="true"
                     src={layer.src}
                     className="block size-full max-w-none"
                   />

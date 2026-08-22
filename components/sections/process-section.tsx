@@ -15,7 +15,12 @@ const STEPS = [
       "We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you now. We fix the baseline - how often you're mentioned in target queries and alongside which competitors.",
     icon: (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src="/figma/process-card-icon-1.svg" alt="" className="size-full" />
+      <img
+        src="/figma/process-card-icon-1.svg"
+        alt=""
+        aria-hidden="true"
+        className="size-full"
+      />
     ),
   },
   {
@@ -318,6 +323,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               <img
                 src="/figma/process-bg-bright-1.svg"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
               />
             </div>
@@ -329,6 +335,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               <img
                 src="/figma/process-bg-bright-2.svg"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
               />
             </div>
@@ -345,6 +352,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   <img
                     src="/figma/process-vector-1.svg"
                     alt=""
+                    aria-hidden="true"
                     className="block size-full max-w-none"
                   />
                 </div>
@@ -363,6 +371,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   <img
                     src="/figma/process-vector-2.svg"
                     alt=""
+                    aria-hidden="true"
                     className="block size-full max-w-none"
                   />
                 </div>
@@ -392,6 +401,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               <img
                 src="/figma/process-bg-bar-glow.svg"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
               />
             </div>
@@ -416,6 +426,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                     <img
                       src="/figma/process-noise.png"
                       alt=""
+                      aria-hidden="true"
                       loading="lazy"
                       decoding="async"
                       className="block size-full max-w-none"
@@ -446,6 +457,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
           <img
             src="/figma/process-pattern.svg"
             alt=""
+            aria-hidden="true"
             className="absolute left-1/2 -translate-x-1/2 mix-blend-overlay"
             style={{ top: "34.35%", width: 1566, maxWidth: "none" }}
           />
@@ -637,6 +649,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             <img
               src="/figma/process-connector.svg"
               alt=""
+              aria-hidden="true"
               className="block h-[68px] w-full max-w-none"
             />
           </motion.div>

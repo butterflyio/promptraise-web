@@ -113,18 +113,12 @@ function CheckCell({
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
           src={company.check}
-          alt=""
-          aria-hidden
+          alt="Yes"
           className="mobile:size-4 relative size-6"
         />
       ) : (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img
-          src={MINUS}
-          alt=""
-          aria-hidden
-          className="mobile:size-4 relative size-6"
-        />
+        <img src={MINUS} alt="No" className="mobile:size-4 relative size-6" />
       )}
     </div>
   );
@@ -373,6 +367,7 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
         <img
           src="/figma/comparison-bg-ellipse.svg"
           alt=""
+          aria-hidden="true"
           className="h-full w-full object-cover"
         />
       </div>
@@ -384,6 +379,7 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
         <img
           src="/figma/comparison-bg-ellipse.svg"
           alt=""
+          aria-hidden="true"
           className="h-full w-full object-cover"
         />
       </div>
