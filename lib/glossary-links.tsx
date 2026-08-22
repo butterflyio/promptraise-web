@@ -11,6 +11,10 @@ import { GLOSSARY_TERMS, termAnchor } from "@/lib/glossary-terms";
  *  - Whole-word, case-insensitive match, longest term wins at a position.
  *  - First occurrence of each term per post only (no term-link spam).
  *  - A hard cap on total links per post avoids over-optimization.
+ *  - A minimum-text gap between links enforces Google's "don't chain up
+ *    links next to each other" rule: a dense list of terms (e.g. six
+ *    readability formulas in one sentence) only gets the first few linked,
+ *    never a back-to-back chain.
  *  - Spans already carrying a `link` mark are never touched.
  *  - List items and headings are linked too; code blocks are not.
  *
@@ -45,6 +49,18 @@ export function effectiveMaxLinks(maxLinks?: number): number {
   }
   return GLOSSARY_LINK_MAX_PER_POST;
 }
+
+/**
+ * Minimum characters of plain text between two auto-link anchors.
+ * Implements Google's "don't chain up links next to each other" rule
+ * directly: a link needs surrounding context or it stops being a useful
+ * link. Without this, a single sentence listing several terms (e.g. the
+ * FK FAQ "Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog...")
+ * would get every term linked back-to-back.
+ */
+export const GLOSSARY_MIN_LINK_GAP_CHARS = Number(
+  process.env.GLOSSARY_MIN_LINK_GAP ?? 30,
+);
 
 export interface ParsedPostForLinks {
   _id?: string;
@@ -130,14 +146,17 @@ type Block = {
 
 /**
  * Returns the first-occurrence match positions for linkable phrases in `text`,
- * skipping terms already in `used` (tracked by canonical name). Longest phrase
- * at the earliest position wins. Result: array of
+ * skipping terms already in `used` (tracked by canonical name) and any match
+ * that starts before `minIndex` (the minimum plain-text distance from the
+ * previous link, preventing chained links). Longest phrase at the earliest
+ * qualifying position wins. Result: array of
  * { canonical, phrase, index, phraseLen }.
  */
 function earliestMatches(
   text: string,
   phrases: LinkPhrase[],
   used: Set<string>,
+  minIndex = 0,
 ): Array<{
   canonical: string;
   phrase: string;
@@ -153,7 +172,7 @@ function earliestMatches(
   for (const { phrase, canonical } of phrases) {
     if (used.has(canonical)) continue;
     const index = findTerm(text, phrase);
-    if (index > -1)
+    if (index > -1 && index >= minIndex)
       found.push({ canonical, phrase, index, phraseLen: phrase.length });
   }
   // Earliest position first; tie-break by longest phrase.
@@ -231,13 +250,18 @@ export function autoLinkBlocks(
       const spanKey = span._key ?? `sp-${bi}-${outChildren.length}`;
       let remaining = span.text;
       const produced: Span[] = [];
+      // Distance (in chars of plain text) from the previous link's end to the
+      // start of the next link. Starts at 0 so the first link in a span is
+      // never blocked; every later one must be at least
+      // GLOSSARY_MIN_LINK_GAP_CHARS of prose away (Google: don't chain links).
+      let minNextIndex = 0;
 
       // Repeatedly locate the best (earliest, longest) term in the remainder.
       for (;;) {
         if (totalLinks >= cap) break;
-        const hits = earliestMatches(remaining, phrases, used);
+        const hits = earliestMatches(remaining, phrases, used, minNextIndex);
         if (hits.length === 0) break;
-        // Earliest/longest term at this position (safe: hits is non-empty).
+        // Earliest/longest qualifying term (safe: hits is non-empty).
         const hit = hits[0];
         if (!hit) break;
         // Respect the whole-word boundary: the regex already guarantees it.
@@ -270,6 +294,8 @@ export function autoLinkBlocks(
         if (term && !matched.includes(term)) matched.push(term);
         totalLinks += 1;
         remaining = afterText;
+        // Next link must be at least GAP chars into the remaining prose.
+        minNextIndex = GLOSSARY_MIN_LINK_GAP_CHARS;
       }
 
       if (remaining) {
@@ -360,10 +386,11 @@ export function linkGlossaryTerms(
   let totalLinks = 0;
   const parts: ReactNode[] = [];
   let key = 0;
+  let minNextIndex = 0;
 
   for (;;) {
     if (totalLinks >= cap) break;
-    const hits = earliestMatches(remaining, phrases, used);
+    const hits = earliestMatches(remaining, phrases, used, minNextIndex);
     if (hits.length === 0) break;
     const hit = hits[0];
     if (!hit) break;
@@ -385,6 +412,7 @@ export function linkGlossaryTerms(
     used.add(hit.canonical);
     totalLinks += 1;
     remaining = remaining.slice(hit.index + hit.phraseLen);
+    minNextIndex = GLOSSARY_MIN_LINK_GAP_CHARS;
   }
 
   if (remaining) {
