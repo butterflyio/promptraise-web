@@ -36,6 +36,14 @@
 - Use shadcn/Radix primitives for interactive behavior (menus, dialogs, disclosure); build bespoke marketing components by hand from Figma.
 - Mobile-first responsive design; use the token breakpoints, no arbitrary pixel media queries.
 - Semantic HTML required: exactly one `<h1>` per page, correct heading order, landmarks (`<nav>`, `<main>`, `<footer>`), and `alt` text on meaningful images.
+
+## Images & alt text (moving-forward rule)
+
+- Every image the team adds must satisfy `npm run check:alt` (run in CI). Two allowed states:
+  1. Meaningful image -> descriptive `alt` (literal string or JSX expression), e.g. `alt="Team member photo of Zain Khan"`. Never `alt=""` on an image that conveys content.
+  2. Decorative image -> `alt=""` **and** `aria-hidden` (or `aria-hidden="true"`) together. Decorative = background art, rings, ellipses, glows, noise, separator/connector lines, badge marks, icons that sit next to already-present text.
+- Do NOT put fake keyword alt on decorative images - that is an accessibility defect and a weak SEO signal.
+- New CMS images (Sanity): the blog body image block (`contentImage`) has a required `alt` field + optional `caption`. Fill alt on every image added in Studio; the field warns if you publish without it. Cover images, team portraits and author avatars inherit alt from their known subject (post title / member name / author name) in code - do not add a conflicting schema alt.
 - Follow the border-radius, spacing, and type scales defined in `ui-context.md`.
 
 ## API Routes

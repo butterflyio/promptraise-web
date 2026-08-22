@@ -92,7 +92,33 @@ export const postType = defineType({
             ],
           },
         },
-        { type: "image" },
+        {
+          type: "image",
+          name: "contentImage",
+          title: "Image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alt text",
+              type: "string",
+              description:
+                "Required. Describe what the image shows for screen readers, search engines and AI crawlers, e.g. 'Chart of Web3 audit pass rates by protocol size'.",
+              validation: (rule) =>
+                rule
+                  .required()
+                  .warning(
+                    "Add descriptive alt text - images without it fail accessibility audits",
+                  ),
+            }),
+            defineField({
+              name: "caption",
+              title: "Caption",
+              type: "string",
+              description: "Optional visible caption below the image.",
+            }),
+          ],
+        },
         {
           type: "object",
           name: "video",

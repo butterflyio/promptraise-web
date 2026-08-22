@@ -30,6 +30,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Alt-text check
+        run: npm run check:alt
+
       - name: Format check
         run: npm run format:check
 
