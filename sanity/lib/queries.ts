@@ -615,6 +615,32 @@ export async function getRelatedPosts(
   }
 }
 
+/**
+ * Lightweight projection of published posts (title + slug + plain body text)
+ * used to compute glossary <-> blog relations WITHOUT pulling full bodies.
+ * `pt::text(body)` keeps the matching pure server-side text.
+ */
+export interface PostForGlossaryLinks {
+  _id: string;
+  title?: string;
+  slug?: { current?: string };
+  publishedAt?: string;
+  bodyText?: string;
+}
+
+export async function getAllPostsForGlossaryLinks(): Promise<
+  PostForGlossaryLinks[]
+> {
+  const query = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now())]{
+    _id,
+    title,
+    slug,
+    publishedAt,
+    "bodyText": pt::text(body)
+  } | order(publishedAt desc)`;
+  return sanityClient.fetch(query) as Promise<PostForGlossaryLinks[]>;
+}
+
 // ── Flesch-Kincaid calculator page copy ────────────────────────────────────
 // Editable singleton "fleschKincaidLanding". The Next page renders with the
 // in-code defaults (lib/flesch-copy.ts) when this doc is missing; every field

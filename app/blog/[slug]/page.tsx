@@ -11,6 +11,9 @@ import {
   getRelatedPosts,
   type PostDoc,
 } from "@/sanity/lib/queries";
+import { getGlossaryContent } from "@/lib/glossary-content";
+import { autoLinkBlocks, type AutoLinkResult } from "@/lib/glossary-links";
+import { termAnchor } from "@/lib/glossary-terms";
 import { imageUrl, naturalAspectRatio } from "@/lib/sanity-image";
 import {
   postUrl,
@@ -126,6 +129,16 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   const related = await getRelatedPosts(post._id, post.categories ?? [], 3);
+
+  // Auto link glossary terms in the body + collect the terms actually linked
+  // for the "Key terms" chips (blog -> glossary direction).
+  const glossary = await getGlossaryContent(dm);
+  const linked: AutoLinkResult = autoLinkBlocks(
+    (post.body ?? []) as never,
+    glossary.terms,
+  );
+  const bodyBlocks = linked.blocks;
+  const keyTerms = linked.matched;
   const coverAssetUrl = post.coverImage?.asset?.url;
   const coverRatio = naturalAspectRatio(coverAssetUrl) ?? 2;
   const cover = coverAssetUrl
@@ -271,8 +284,26 @@ export default async function PostPage({ params }: PageProps) {
 
       {/* Body */}
       <div className="prose-blog mt-10">
-        <PostBody blocks={(post.body ?? []) as never} />
+        <PostBody blocks={bodyBlocks as never} />
       </div>
+
+      {/* Key terms: auto-linked glossary terms (blog -> glossary) */}
+      {keyTerms.length > 0 ? (
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          <span className="text-xs tracking-[0.12em] text-[var(--text-muted)] uppercase">
+            Key terms
+          </span>
+          {keyTerms.map((t) => (
+            <a
+              key={t.term}
+              href={`/academy/glossary#${termAnchor(t.term)}`}
+              className="inline-flex items-center rounded-full border border-[var(--border-soft)] px-3 py-1 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+            >
+              {t.term}
+            </a>
+          ))}
+        </div>
+      ) : null}
 
       {/* About the author box */}
       {post.author?.name ? (

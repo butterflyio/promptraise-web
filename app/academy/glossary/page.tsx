@@ -9,6 +9,9 @@ import {
   type GlossaryContent,
 } from "@/lib/glossary-content";
 import type { GlossaryTerm } from "@/lib/glossary-terms";
+import { getAllPostsForGlossaryLinks } from "@/sanity/lib/queries";
+import { relatedPostsForTerm } from "@/lib/glossary-links";
+import { postHref } from "@/lib/blog";
 
 export const revalidate = 30;
 
@@ -44,6 +47,10 @@ export default async function AcademyGlossaryPage(_props: PageProps) {
   const { categories, terms, intro } = content;
 
   const termsByCategory = buildTermsByCategory(categories, terms);
+
+  // Reverse-direction relations: which real posts mention each term
+  // (glossary -> blog). Placeholder posts are filtered by min body length.
+  const posts = await getAllPostsForGlossaryLinks();
 
   // DefinedTermSet JSON-LD: the machine-readable facts this page exists to
   // provide (see ai-visibility.md -> DefinedTerm). Server-rendered.
@@ -113,7 +120,12 @@ export default async function AcademyGlossaryPage(_props: PageProps) {
 
             <dl className="mt-6 flex flex-col gap-3">
               {group.map((t) => (
-                <TermCard key={t.term} term={t} content={content} />
+                <TermCard
+                  key={t.term}
+                  term={t}
+                  content={content}
+                  posts={posts}
+                />
               ))}
             </dl>
           </section>
@@ -165,10 +177,13 @@ function buildJsonLd(siteUrl: string, content: GlossaryContent) {
 function TermCard({
   term,
   content,
+  posts,
 }: {
   term: GlossaryTerm;
   content: GlossaryContent;
+  posts: Awaited<ReturnType<typeof getAllPostsForGlossaryLinks>>;
 }) {
+  const relatedReads = relatedPostsForTerm(term.term, posts, 3);
   return (
     <div
       id={"term-" + slugify(term.term)}
@@ -208,6 +223,24 @@ function TermCard({
                 {r}
               </a>
             ))}
+          </span>
+        ) : null}
+        {relatedReads.length ? (
+          <span className="mt-3 block border-t border-[var(--border-soft)] pt-3">
+            <span className="text-xs tracking-[0.1em] text-[var(--text-muted)] uppercase">
+              Related reads
+            </span>
+            <span className="mt-2 flex flex-wrap gap-2">
+              {relatedReads.map((p) => (
+                <a
+                  key={p._id}
+                  href={postHref(p)}
+                  className="inline-flex items-center rounded-full border border-[var(--border-soft)] px-3 py-1 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                >
+                  {p.title ?? "Read post"}
+                </a>
+              ))}
+            </span>
           </span>
         ) : null}
       </dd>
