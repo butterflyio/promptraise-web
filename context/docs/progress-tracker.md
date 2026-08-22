@@ -424,3 +424,10 @@ Update this file after every meaningful implementation change.
     - All remaining decorative imgs (bg layers, rings, ellipses, noise, connectors, separators, badge marks, icons) got `aria-hidden="true"` alongside `alt=""` - the WCAG-correct decorative pattern, 115 imgs across 7 section components.
   - Verified: typecheck clean, production build passes, served build renders 252 imgs = 0 no-alt, 0 empty-without-aria-hidden, 42 descriptive, 210 decorative-marked.
   - Staged to `staging` branch only. Production untouched.
+- **PR - Blog TOC + Ask-an-AI box (2026-08-22, commits fe7bc43 -> b76a473 -> 6168f44, deployed to PRODUCTION at 6168f44):**
+  - Auto-generated **Table of Contents** on blog posts, derived from the same Sanity PortableText blocks that render the body (see `lib/blog-headings.ts`). This makes it **automatic for every future blog** - any post with >= 4 H2s gets a TOC; short posts stay clean. Zero author/CMS setup.
+  - Elegibility: >= 4 H2s, depth H2+H3 only, kebab-case ids (`#core-problem-the-citation-gap`), deduped with -1/-2 on repeats; h2/h3 carry `scroll-mt-28` so the sticky header never covers jumps.
+  - Design: numbered entries (01..09), accent hover, responsive - single column mobile (15px, py-2.5 touch targets), two-column grid on md+ (16px). Verified at 390px + 1280px + on production.
+  - NO TableOfContents JSON-LD (Google retired that rich result - dead bytes).
+  - **Ask-an-AI-assistant box** (`components/blog-ask-llm.tsx`): deep-link buttons to ChatGPT/Perplexity/Grok/Google AI with prefilled authority prompt `{url}` placeholder + UTM params. All copy CMS-editable via `siteSettings.blogAskLlm` (seeded enabled in production dataset - verified live on both blog posts).
+  - Prod verification: both live blogs render TOC (9 + 7 entries, all anchors resolve), Ask box + ChatGPT button present, 6 in-body glossary links intact.
