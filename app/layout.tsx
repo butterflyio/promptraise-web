@@ -109,6 +109,26 @@ function StructuredData({
     socialLinks.youtube,
   ].filter(Boolean) as string[];
 
+  const orgAddress = settings?.address;
+  const address = orgAddress
+    ? {
+        "@type": "PostalAddress",
+        ...(orgAddress.streetAddress
+          ? { streetAddress: orgAddress.streetAddress }
+          : {}),
+        ...(orgAddress.addressLocality
+          ? { addressLocality: orgAddress.addressLocality }
+          : {}),
+        ...(orgAddress.addressRegion
+          ? { addressRegion: orgAddress.addressRegion }
+          : {}),
+        ...(orgAddress.postalCode ? { postalCode: orgAddress.postalCode } : {}),
+        ...(orgAddress.addressCountry
+          ? { addressCountry: orgAddress.addressCountry }
+          : {}),
+      }
+    : undefined;
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -119,6 +139,10 @@ function StructuredData({
     description:
       "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
     ...(sameAs.length > 0 ? { sameAs } : {}),
+    ...(address ? { address } : {}),
+    ...(settings?.telephone ? { telephone: settings.telephone } : {}),
+    ...(settings?.contactEmail ? { email: settings.contactEmail } : {}),
+    ...(settings?.areaServed ? { areaServed: settings.areaServed } : {}),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",

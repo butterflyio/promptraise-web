@@ -298,6 +298,7 @@ Update this file after every meaningful implementation change.
 - Wired user-provided hero video asset (`/Users/zkhan/Downloads/BG Video PromptRaise.mp4`) into app as `public/videos/bg-video-promptraise.mp4`.
 - Removed hero poster usage and hero-only image/texture overlays to keep background driven by video media only.
 - Current command snapshot after hero video replacement: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npm run design:verify` passes.
+- Added NAP + Telegram contact chrome (modeled on 009.agency): new `siteSettings` fields `contactEmail`, `telegramHandleDisplay`, `telephone`, `address` (object), `areaServed`; footer renders a contact line (email mailto, telegram handle linking to socialLinks.telegram or primaryTelegramCtaUrl, optional tel, address line); Organization JSON-LD now emits `address`, `telephone`, `email`, `areaServed` when set. All values CMS-editable. `tsc --noEmit` clean. Committed to `staging`; prod publish remains gated.
 
 ## Housekeeping
 

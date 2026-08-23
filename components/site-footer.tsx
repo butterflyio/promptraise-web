@@ -11,6 +11,27 @@ const defaultFooterLinks = [
   { label: "Cookie Usage", href: "/cookies" },
 ];
 
+const COUNTRY_DISPLAY: Record<string, string> = {
+  AE: "UAE",
+  US: "USA",
+  GB: "UK",
+};
+
+function formatAddress(address: SiteSettings["address"]): string | null {
+  if (!address) return null;
+  const parts = [
+    address.streetAddress,
+    address.addressLocality,
+    address.addressRegion && address.addressRegion !== address.addressLocality
+      ? address.addressRegion
+      : null,
+    address.addressCountry
+      ? (COUNTRY_DISPLAY[address.addressCountry] ?? address.addressCountry)
+      : null,
+  ].filter((part): part is string => Boolean(part));
+  return parts.length > 0 ? parts.join(", ") : null;
+}
+
 export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
   const siteName = settings?.siteName ?? "PromptRaise";
   const logoUrl = settings?.logo?.asset?.url;
@@ -21,6 +42,39 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
     settings?.footerLegalLinks && settings.footerLegalLinks.length > 0
       ? settings.footerLegalLinks
       : defaultFooterLinks;
+
+  const contactEmail = settings?.contactEmail;
+  const telegramHandle = settings?.telegramHandleDisplay;
+  const telegramUrl =
+    settings?.socialLinks?.telegram ?? settings?.primaryTelegramCtaUrl;
+  const telephone = settings?.telephone;
+  const addressLine = formatAddress(settings?.address);
+
+  const contactItems: Array<{ key: string; href?: string; label: string }> = [];
+  if (contactEmail) {
+    contactItems.push({
+      key: "email",
+      href: `mailto:${contactEmail}`,
+      label: contactEmail,
+    });
+  }
+  if (telegramHandle && telegramUrl) {
+    contactItems.push({
+      key: "telegram",
+      href: telegramUrl,
+      label: telegramHandle,
+    });
+  }
+  if (telephone) {
+    contactItems.push({
+      key: "telephone",
+      href: `tel:${telephone.replace(/[^+0-9]/g, "")}`,
+      label: telephone,
+    });
+  }
+  if (addressLine) {
+    contactItems.push({ key: "address", label: addressLine });
+  }
 
   return (
     <footer className="border-t border-[rgba(255,255,255,0.06)] bg-[var(--bg-contrast)]">
@@ -39,6 +93,36 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
         </div>
 
         <div className="tablet:items-end flex flex-col items-center gap-1">
+          {contactItems.length > 0 && (
+            <div className="tablet:flex-row tablet:gap-3 flex flex-col items-center gap-1">
+              {contactItems.map((item) => (
+                <span
+                  key={item.key}
+                  className="text-[10px] leading-4 tracking-[0] text-[#686B6E]"
+                >
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="transition-colors hover:text-[var(--accent-primary)]"
+                      target={
+                        item.href.startsWith("http") ? "_blank" : undefined
+                      }
+                      rel={
+                        item.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    item.label
+                  )}
+                </span>
+              ))}
+            </div>
+          )}
+
           <p className="tablet:order-1 order-2 text-[10px] leading-4 tracking-[0] text-[#686B6E]">
             {copyrightText}
           </p>

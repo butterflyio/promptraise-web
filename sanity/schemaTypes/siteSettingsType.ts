@@ -20,6 +20,76 @@ export const siteSettingsType = defineType({
       initialValue: "PromptRaise",
     }),
     defineField({
+      name: "contactEmail",
+      title: "Contact Email (NAP)",
+      type: "string",
+      description:
+        "Displayed in the footer contact line and used in Organization structured data (email). Shows as a mailto: link.",
+      validation: (rule) => rule.email(),
+      initialValue: "readability@promptraise.com",
+    }),
+    defineField({
+      name: "telegramHandleDisplay",
+      title: "Telegram Handle (NAP)",
+      type: "string",
+      description:
+        "Footer contact-line text, e.g. @promptraise. Links to the Telegram URL from Social Links (or Primary Telegram CTA URL as fallback).",
+      initialValue: "@promptraise",
+    }),
+    defineField({
+      name: "telephone",
+      title: "Telephone (NAP)",
+      type: "string",
+      description:
+        "Optional. Used in Organization structured data (contact telephone) and rendered as a tel: link when present.",
+    }),
+    defineField({
+      name: "address",
+      title: "Physical Address (NAP)",
+      type: "object",
+      description:
+        "Used in Organization structured data. Leave street address blank if you work remote-only.",
+      fields: [
+        defineField({
+          name: "streetAddress",
+          title: "Street Address",
+          type: "string",
+        }),
+        defineField({
+          name: "addressLocality",
+          title: "City",
+          type: "string",
+          initialValue: "Dubai",
+        }),
+        defineField({
+          name: "addressRegion",
+          title: "Region / Emirate",
+          type: "string",
+          initialValue: "Dubai",
+        }),
+        defineField({
+          name: "postalCode",
+          title: "Postal Code",
+          type: "string",
+        }),
+        defineField({
+          name: "addressCountry",
+          title: "Country Code",
+          type: "string",
+          description: "ISO 3166-1 alpha-2, e.g. AE",
+          initialValue: "AE",
+        }),
+      ],
+    }),
+    defineField({
+      name: "areaServed",
+      title: "Area Served",
+      type: "string",
+      description:
+        "Used in Organization structured data. e.g. Worldwide, UAE + EU.",
+      initialValue: "Worldwide",
+    }),
+    defineField({
       name: "logo",
       title: "Organization Logo",
       type: "image",

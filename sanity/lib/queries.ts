@@ -3,6 +3,17 @@ import { sanityClient, getPreviewClient } from "./client";
 export interface SiteSettings {
   siteName: string;
   organizationLegalName: string;
+  contactEmail?: string;
+  telegramHandleDisplay?: string;
+  telephone?: string;
+  address?: {
+    streetAddress?: string;
+    addressLocality?: string;
+    addressRegion?: string;
+    postalCode?: string;
+    addressCountry?: string;
+  };
+  areaServed?: string;
   primaryTelegramCtaUrl: string;
   freeAuditCtaUrl: string;
   headerCtaLabel?: string;
@@ -66,6 +77,11 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
     siteName,
     organizationLegalName,
+    contactEmail,
+    telegramHandleDisplay,
+    telephone,
+    address,
+    areaServed,
     primaryTelegramCtaUrl,
     freeAuditCtaUrl,
     headerCtaLabel,
@@ -315,6 +331,11 @@ export async function getSiteSettingsPreview() {
   const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
     siteName,
     organizationLegalName,
+    contactEmail,
+    telegramHandleDisplay,
+    telephone,
+    address,
+    areaServed,
     primaryTelegramCtaUrl,
     freeAuditCtaUrl,
     headerCtaLabel,
