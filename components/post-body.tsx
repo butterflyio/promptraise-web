@@ -107,14 +107,28 @@ const components: PortableTextComponents = {
       if (!url) return null;
       const alt = (value as { alt?: string })?.alt ?? "";
       const caption = (value as { caption?: string })?.caption;
+      // Reserve the intrinsic box (parsed from the Sanity URL e.g.
+      // ...-1600x1000.jpg) so the layout never jumps when the image loads
+      // (CLS). Fall back to a media ratio when the dims are unknown.
+      const dimMatch = url.match(/-(\d+)x(\d+)\.(?:jpe?g|png|webp|gif)/);
+      const ratio =
+        dimMatch && Number(dimMatch[1]) > 0 && Number(dimMatch[2]) > 0
+          ? Number(dimMatch[1]) / Number(dimMatch[2])
+          : 16 / 9;
       return (
         <figure className="my-8">
-          <img
-            src={url}
-            alt={alt}
-            className="w-full rounded-2xl border border-[var(--border-soft)]"
-            loading="lazy"
-          />
+          <div
+            className="w-full overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)]"
+            style={{ aspectRatio: String(ratio) }}
+          >
+            <img
+              src={url}
+              alt={alt}
+              className="h-full w-full object-cover object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           {caption ? (
             <figcaption className="mt-3 text-center text-sm text-[var(--text-muted)]">
               {caption}

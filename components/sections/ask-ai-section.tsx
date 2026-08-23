@@ -78,6 +78,8 @@ function AskButton({
         <span className="relative block h-6 w-6 overflow-clip">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             src={icon}
             alt={iconAlt}
             aria-hidden="true"
