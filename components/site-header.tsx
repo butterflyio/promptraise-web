@@ -33,8 +33,19 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
       ? settings.headerNavItems
       : defaultNavItems;
 
+  // When the announcement bar is active it is a fixed 40px strip at the very
+  // top (z-60). The header is absolutely positioned, so it must offset below
+  // it - otherwise the bar covers the logo and CTA buttons.
+  const announcementActive = Boolean(
+    settings?.announcement?.enabled && settings?.announcement?.text,
+  );
+
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header
+      className={`absolute inset-x-0 z-50 ${
+        announcementActive ? "top-10" : "top-0"
+      }`}
+    >
       <div className="tablet:px-9 desktop:px-24 mx-auto flex w-full flex-col items-start px-4 py-6">
         <div className="flex w-full items-center justify-between rounded-[9999px] backdrop-blur-[14.012px]">
           <div className="flex items-center gap-6">
