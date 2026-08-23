@@ -4,12 +4,16 @@ import { SiteBrand } from "./site-brand";
 
 const defaultFooterGroups: NonNullable<SiteSettings["footerNavGroups"]> = [
   {
-    heading: "Product",
+    heading: "Resources",
     links: [
       { label: "AI Visibility Blog", href: "/blog" },
-      { label: "Academy", href: "/academy/glossary" },
+      { label: "Glossary", href: "/glossary" },
       { label: "Free Tools", href: "/free/flesch-kincaid-calculator" },
     ],
+  },
+  {
+    heading: "Services",
+    links: [{ label: "Free AI Audit", href: "https://audit.promptraise.com" }],
   },
   {
     heading: "Company",
