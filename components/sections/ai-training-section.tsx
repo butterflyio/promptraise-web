@@ -103,6 +103,8 @@ function BenefitIcon({ iconKey }: { iconKey: string }) {
         <div className="absolute" style={{ inset: inset.inner }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             src={`/figma/ai-icon-${iconKey}.svg`}
             alt=""
             aria-hidden="true"
@@ -178,6 +180,8 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
           <div className="desktop:justify-end relative flex h-full w-full items-center justify-start">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/ai-badge-line.svg"
               alt=""
               aria-hidden="true"
@@ -185,6 +189,8 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/ai-badge-mark-2.svg"
               alt=""
               aria-hidden="true"
@@ -197,6 +203,8 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/ai-badge-mark-1.svg"
               alt=""
               aria-hidden="true"

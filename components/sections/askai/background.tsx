@@ -147,6 +147,8 @@ export function TerminalPanel({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
             aria-hidden
             src={A.containerWithStars}
@@ -178,6 +180,8 @@ export function TerminalPanel({
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.vectorP}
@@ -213,6 +217,8 @@ export function TerminalPanel({
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.claude1}
@@ -248,6 +254,8 @@ export function TerminalPanel({
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.chatgpt1}
@@ -339,6 +347,8 @@ export function TerminalPanel({
         {/* union (2046:8952) - green vertical bar */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.union}
@@ -364,6 +374,8 @@ export function TerminalPanel({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.ellipse336}
@@ -411,6 +423,8 @@ export function AskAiBackground({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
             aria-hidden
             src={A.bg05Bright}
@@ -442,6 +456,8 @@ export function AskAiBackground({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
             aria-hidden
             src={A.bg05Dim}

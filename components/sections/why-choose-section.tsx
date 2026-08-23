@@ -48,7 +48,15 @@ function CardHeader({
     <div className="px-8 pt-8 pb-6">
       <div className="mb-3 flex items-center gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={icon} alt="" aria-hidden width={24} height={24} />
+        <img
+          loading="lazy"
+          decoding="async"
+          src={icon}
+          alt=""
+          aria-hidden
+          width={24}
+          height={24}
+        />
         <h3 className="text-[15px] leading-snug font-bold text-white">
           {title}
         </h3>
@@ -102,6 +110,8 @@ function FullCycleCard({
         {/* Separator */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/separator-line.svg"
           alt=""
           aria-hidden
@@ -120,6 +130,8 @@ function FullCycleCard({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/lucide-chart-line.svg"
                 alt=""
                 aria-hidden
@@ -151,6 +163,8 @@ function FullCycleCard({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/lucide-square-chart-gantt.svg"
                 alt=""
                 aria-hidden
@@ -226,6 +240,8 @@ function RealCreatorsCard({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/logo-shape.svg"
               alt="PromptRaise"
               width={52}
@@ -284,6 +300,8 @@ function TransparencyCard({
           Braxton King
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             src="/figma/arrow.svg"
             alt=""
             aria-hidden
@@ -304,6 +322,8 @@ function TransparencyCard({
           Jamison Clark
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             src="/figma/arrow.svg"
             alt=""
             aria-hidden
@@ -324,6 +344,8 @@ function TransparencyCard({
           Zackary Green
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             src="/figma/arrow.svg"
             alt=""
             aria-hidden
@@ -395,6 +417,8 @@ function NumbersCard({
             <span className="text-[10px] text-white/50">This Week</span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/chevron-down-1.svg"
               alt=""
               aria-hidden
@@ -406,6 +430,8 @@ function NumbersCard({
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/separator-line-2.svg"
           alt=""
           aria-hidden
@@ -424,6 +450,8 @@ function NumbersCard({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/decorative-shape.svg"
               alt=""
               aria-hidden
@@ -567,6 +595,8 @@ function NarrativeCard({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/logo-shape.svg"
               alt="PromptRaise"
               width={16}
@@ -638,6 +668,8 @@ export function WhyChooseSection({
           <div className="tablet:flex mt-2 hidden shrink-0 items-center gap-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/inner-frame.svg"
               alt=""
               aria-hidden
@@ -647,6 +679,8 @@ export function WhyChooseSection({
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/decorative-vector-9.svg"
               alt=""
               aria-hidden
@@ -660,6 +694,8 @@ export function WhyChooseSection({
             </DsBadge>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/decorative-vector-9.svg"
               alt=""
               aria-hidden
@@ -669,6 +705,8 @@ export function WhyChooseSection({
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/inner-frame-1.svg"
               alt=""
               aria-hidden

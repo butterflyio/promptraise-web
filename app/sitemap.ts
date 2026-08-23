@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
     {
-      url: `${siteUrl}/academy/glossary`,
+      url: `${siteUrl}/glossary`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.7,
@@ -100,12 +100,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
-    },
-    {
-      url: `${siteUrl}/studio`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
     },
   ];
 }

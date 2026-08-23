@@ -48,6 +48,8 @@ const COMPANIES: CompanyMeta[] = [
       <span className="flex items-center justify-center gap-[8.878px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/comparison-logo-shape.svg"
           alt=""
           aria-hidden
@@ -66,6 +68,8 @@ const COMPANIES: CompanyMeta[] = [
     logo: (
       /* eslint-disable-next-line @next/next/no-img-element */
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-profound.png"
         alt="Profound"
         className="h-[24px] w-[85px] object-cover"
@@ -79,6 +83,8 @@ const COMPANIES: CompanyMeta[] = [
     logo: (
       /* eslint-disable-next-line @next/next/no-img-element */
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-athenahq.svg"
         alt="AthenaHQ"
         className="h-[17.871px] w-[89.123px]"
@@ -92,6 +98,8 @@ const COMPANIES: CompanyMeta[] = [
     logo: (
       /* eslint-disable-next-line @next/next/no-img-element */
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-coinbound.svg"
         alt="coinbound"
         className="h-[14.438px] w-[86px]"
@@ -112,13 +120,21 @@ function CheckCell({
       {active ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
+          loading="lazy"
+          decoding="async"
           src={company.check}
           alt="Yes"
           className="mobile:size-4 relative size-6"
         />
       ) : (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={MINUS} alt="No" className="mobile:size-4 relative size-6" />
+        <img
+          loading="lazy"
+          decoding="async"
+          src={MINUS}
+          alt="No"
+          className="mobile:size-4 relative size-6"
+        />
       )}
     </div>
   );
@@ -211,6 +227,8 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
     <div className="inline-flex items-center gap-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-decor-mark-flip.svg"
         alt=""
         aria-hidden
@@ -220,6 +238,8 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-decor-line.svg"
         alt=""
         aria-hidden
@@ -239,6 +259,8 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-decor-line.svg"
         alt=""
         aria-hidden
@@ -248,6 +270,8 @@ function ComparisonBadgeRow({ badge }: { badge?: string }) {
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/comparison-decor-mark.svg"
         alt=""
         aria-hidden
@@ -332,6 +356,8 @@ function resolveComparison(content?: HomePage["comparison"]) {
       logo: cms.logo ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
+          loading="lazy"
+          decoding="async"
           src={cms.logo}
           alt={cms.name ?? cms.logo}
           className="h-[24px] max-w-[120px] object-contain"
@@ -365,6 +391,8 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/comparison-bg-ellipse.svg"
           alt=""
           aria-hidden="true"
@@ -377,6 +405,8 @@ export function ComparisonSection({ content }: ComparisonSectionProps) {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/comparison-bg-ellipse.svg"
           alt=""
           aria-hidden="true"

@@ -165,6 +165,8 @@ export function HeroSection({
                 >
                   {company.logo ? (
                     <img
+                      loading="lazy"
+                      decoding="async"
                       src={company.logo}
                       alt=""
                       aria-hidden="true"

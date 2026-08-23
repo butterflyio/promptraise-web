@@ -50,7 +50,7 @@ export default async function SitemapPage() {
       entries: [
         { url: "/", label: "Home" },
         { url: "/blog", label: "AI Visibility Blog" },
-        { url: "/academy/glossary", label: "Glossary" },
+        { url: "/glossary", label: "Glossary" },
         { url: "/free/flesch-kincaid-calculator", label: "Free Tools" },
         { url: "/privacy", label: "Privacy Policy" },
         { url: "/terms", label: "Terms of Service" },
@@ -64,13 +64,14 @@ export default async function SitemapPage() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-16">
-      <h1 className="text-3xl font-bold tracking-tight text-white">
-        Sitemap
-      </h1>
+      <h1 className="text-3xl font-bold tracking-tight text-white">Sitemap</h1>
       <p className="mt-2 text-[15px] text-[var(--text-muted)]">
         A human-readable index of every page on PromptRaise. Crawlers use the
         machine-readable{" "}
-        <a href="/sitemap.xml" className="underline hover:text-[var(--accent-primary)]">
+        <a
+          href="/sitemap.xml"
+          className="underline hover:text-[var(--accent-primary)]"
+        >
           sitemap.xml
         </a>
         .

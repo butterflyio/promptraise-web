@@ -23,7 +23,7 @@ export async function GET() {
     .map((t) => {
       const term = t.term?.trim();
       if (!term) return null;
-      return `- [${term}](${siteUrl}/academy/glossary#${termAnchor(term)}) — Glossary term${t.definition ? `: ${t.definition}` : ""}`;
+      return `- [${term}](${siteUrl}/glossary#${termAnchor(term)}) — Glossary term${t.definition ? `: ${t.definition}` : ""}`;
     })
     .filter((l): l is string => l !== null);
 
@@ -45,7 +45,7 @@ read it, then generates concrete fixes (llms.txt, robots.txt, JSON-LD, meta).
 
 - [Home]( ${siteUrl}/) — Landing: services, pricing, case studies, team
 - [Blog index]( ${siteUrl}/blog) — Research, case studies, Web3 AI visibility strategy
-- [Academy Glossary]( ${siteUrl}/academy/glossary) — Web3 AI visibility glossary (canonical; legacy /glossary 301s here)
+- [Glossary]( ${siteUrl}/glossary) — Web3 AI visibility glossary (canonical; legacy /academy/glossary 301s here)
 - [Free AI Visibility Audit]( https://audit.promptraise.com) — Scan any Web3 site
 - [AI Visibility Checker for Web3]( ${siteUrl}/ai-seo-for-web3) — Free playbook
 - [Privacy]( ${siteUrl}/privacy) — Privacy notice and data handling

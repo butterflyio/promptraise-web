@@ -16,6 +16,8 @@ export function AskAiBadgeRow({ label }: { label: string }) {
       <div className="absolute top-[21px] left-[-146px] h-0 w-[384px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.decorativeVector}
@@ -26,6 +28,8 @@ export function AskAiBadgeRow({ label }: { label: string }) {
       <div className="absolute top-[8px] left-[88.5px] h-[25px] w-[40px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.innerFrame}
@@ -36,6 +40,8 @@ export function AskAiBadgeRow({ label }: { label: string }) {
       <div className="absolute top-[8px] left-[-36.5px] h-[25px] w-[40px] -scale-y-100 rotate-180">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={A.innerFrame1}

@@ -20,7 +20,7 @@ import { GLOSSARY_TERMS, termAnchor } from "@/lib/glossary-terms";
  *
  * Callers:
  *  - app/blog/[slug]/page.tsx: autoLinkBlocks(post.body, glossary.terms)
- *  - app/academy/glossary/page.tsx: relatedPostsForTerm(...) for the
+ *  - app/glossary/page.tsx: relatedPostsForTerm(...) for the
  *    reverse direction (glossary -> blog).
  */
 
@@ -299,7 +299,7 @@ export function autoLinkBlocks(
         markDefs.push({
           _key: newMarkKey,
           _type: "link",
-          href: `/academy/glossary#${termAnchor(hit.canonical)}`,
+          href: `/glossary#${termAnchor(hit.canonical)}`,
         });
         used.add(hit.canonical);
         const term = termByLabel.get(hit.canonical);
@@ -414,7 +414,7 @@ export function linkGlossaryTerms(
         "a",
         {
           key: `gl-${key++}`,
-          href: `/academy/glossary#${termAnchor(hit.canonical)}`,
+          href: `/glossary#${termAnchor(hit.canonical)}`,
           className:
             "text-[var(--accent-primary)] underline decoration-[var(--accent-primary)]/40 underline-offset-2 hover:decoration-[var(--accent-primary)]",
         },

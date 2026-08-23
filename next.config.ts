@@ -9,13 +9,13 @@ const nextConfig: NextConfig = {
     // Blog post slug 301s (renamed posts) + legacy tool consolidation.
     return [
       ...slugRedirectEntries(),
-      // Glossary consolidation: /glossary is the legacy copy of the same
-      // Sanity doc /academy/glossary renders. Canonical is /academy/glossary
-      // (richer Academy page, DefinedTermSet authority). 301 to it and drop
-      // /glossary from sitemap, llms.txt, llms-full.txt (see PR-39).
+      // Glossary consolidation: /glossary is the single canonical glossary
+      // page (DefinedTermSet authority). The old /academy/glossary path is
+      // retired (no Academy section exists), so it 301s here - preserving
+      // inbound links and anchors while consolidating authority on /glossary.
       {
-        source: "/glossary",
-        destination: "/academy/glossary",
+        source: "/academy/glossary",
+        destination: "/glossary",
         permanent: true,
       },
       // Legacy tool URLs -> consolidated free tools

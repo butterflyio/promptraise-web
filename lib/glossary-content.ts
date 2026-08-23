@@ -13,8 +13,8 @@ import {
 } from "@/sanity/lib/queries";
 
 /**
- * Normalized glossary content used by BOTH glossary pages
- * (/academy/glossary and /glossary) so they never drift.
+ * Normalized glossary content used by the canonical /glossary page
+ * (legacy /academy/glossary 301s to it) so they never drift.
  *
  * Data resolution order:
  *   1. Sanity CMS `glossary` document (when configured + present) - the
