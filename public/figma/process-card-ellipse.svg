@@ -1,12 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="696.8" height="710.8" viewBox="0 0 696.8 710.8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Decorative Ellipse" filter="url(#filter0_f_0_586)">
-<ellipse cx="348.4" cy="355.4" rx="163.5" ry="170.5" fill="#131315"/>
-</g>
-<defs>
-<filter id="filter0_f_0_586" x="0" y="0" width="696.8" height="710.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="92.45" result="effect1_foregroundBlur_0_586"/>
-</filter>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="696.8" height="710.8" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 696.8 710.8"><g id="Decorative Ellipse" filter="url(#filter0_f_0_586)"><ellipse cx="348.4" cy="355.4" fill="#131315" rx="163.5" ry="170.5"/></g><defs><filter id="filter0_f_0_586" width="696.8" height="710.8" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_586" stdDeviation="92.45"/></filter></defs></svg>

@@ -1,12 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="765.2" height="579.2" viewBox="0 0 765.2 579.2" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Decorative Vector" filter="url(#filter0_f_0_127)" style="mix-blend-mode:color-dodge">
-<path d="M374.373 421.746C265.709 473.883 176.763 420.618 145.873 387.468C143.052 367.578 137.072 319.251 135.718 285.057C134.025 242.315 150.528 216.078 186.919 172.49C223.31 128.901 269.856 153.446 315.556 143.713C361.256 133.98 523.745 131.864 550.826 143.713C577.908 155.562 626.146 188.994 629.532 227.504C632.917 266.014 510.204 356.575 374.373 421.746Z" fill="#267926"/>
-</g>
-<defs>
-<filter id="filter0_f_0_127" x="-3.36968e-10" y="3.13908e-07" width="765.2" height="579.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="67.8" result="effect1_foregroundBlur_0_127"/>
-</filter>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="765.2" height="579.2" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 765.2 579.2"><g id="Decorative Vector" filter="url(#filter0_f_0_127)" style="mix-blend-mode:color-dodge"><path fill="#267926" d="M374.373 421.746C265.709 473.883 176.763 420.618 145.873 387.468C143.052 367.578 137.072 319.251 135.718 285.057C134.025 242.315 150.528 216.078 186.919 172.49C223.31 128.901 269.856 153.446 315.556 143.713C361.256 133.98 523.745 131.864 550.826 143.713C577.908 155.562 626.146 188.994 629.532 227.504C632.917 266.014 510.204 356.575 374.373 421.746Z"/></g><defs><filter id="filter0_f_0_127" width="765.2" height="579.2" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_127" stdDeviation="67.8"/></filter></defs></svg>

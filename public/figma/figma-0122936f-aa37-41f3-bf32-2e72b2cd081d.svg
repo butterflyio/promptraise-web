@@ -1,13 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="885.329" height="1782.05" viewBox="0 0 885.329 1782.05" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Inner Frame" filter="url(#filter0_f_0_624)">
-<path id="Decorative Vector" d="M428.071 1399.67C478.361 1314.5 551.338 1087.24 440.927 859.542C330.516 631.849 413.829 447.422 469.286 383.67" stroke="#163F16" stroke-width="17.3864"/>
-<path id="Decorative Vector_2" d="M457.257 1399.67C406.968 1314.5 333.99 1087.24 444.401 859.542C554.812 631.849 471.5 447.422 416.042 383.67" stroke="#163F16" stroke-width="17.3864"/>
-</g>
-<defs>
-<filter id="filter0_f_0_624" x="1.43051e-05" y="3.33786e-06" width="885.329" height="1782.05" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="188.982" result="effect1_foregroundBlur_0_624"/>
-</filter>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="885.329" height="1782.05" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 885.329 1782.05"><g id="Inner Frame" filter="url(#filter0_f_0_624)"><path id="Decorative Vector" stroke="#163F16" stroke-width="17.386" d="M428.071 1399.67C478.361 1314.5 551.338 1087.24 440.927 859.542C330.516 631.849 413.829 447.422 469.286 383.67"/><path id="Decorative Vector_2" stroke="#163F16" stroke-width="17.386" d="M457.257 1399.67C406.968 1314.5 333.99 1087.24 444.401 859.542C554.812 631.849 471.5 447.422 416.042 383.67"/></g><defs><filter id="filter0_f_0_624" width="885.329" height="1782.05" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_624" stdDeviation="188.982"/></filter></defs></svg>

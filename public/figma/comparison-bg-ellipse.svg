@@ -1,9 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1150" height="393" viewBox="0 0 1150 393" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Mask Group">
-<mask id="mask0_0_166" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1150" height="393">
-<ellipse id="Decorative Ellipse" cx="575" cy="196.5" rx="575" ry="196.5" fill="#D9D9D9"/>
-</mask>
-<g mask="url(#mask0_0_166)">
-</g>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="1150" height="393" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 1150 393"><g id="Mask Group"><mask id="mask0_0_166" width="1150" height="393" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><ellipse id="Decorative Ellipse" cx="575" cy="196.5" fill="#D9D9D9" rx="575" ry="196.5"/></mask></g></svg>

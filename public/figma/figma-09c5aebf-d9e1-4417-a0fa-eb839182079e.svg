@@ -1,9 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1604" height="1604" viewBox="0 0 1604 1604" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle id="Decorative Ellipse" cx="802" cy="802" r="802" fill="url(#paint0_radial_0_72)"/>
-<defs>
-<radialGradient id="paint0_radial_0_72" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(802 646.5) rotate(90) scale(957.5)">
-<stop stop-color="#D9D9D9"/>
-<stop offset="1" stop-color="#D9D9D9" stop-opacity="0"/>
-</radialGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="1604" height="1604" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 1604 1604"><circle id="Decorative Ellipse" cx="802" cy="802" r="802" fill="url(#paint0_radial_0_72)"/><defs><radialGradient id="paint0_radial_0_72" cx="0" cy="0" r="1" gradientTransform="translate(802 646.5) rotate(90) scale(957.5)" gradientUnits="userSpaceOnUse"><stop stop-color="#D9D9D9"/><stop offset="1" stop-color="#D9D9D9" stop-opacity="0"/></radialGradient></defs></svg>

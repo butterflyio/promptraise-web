@@ -1,12 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="515.4" height="264.4" viewBox="0 0 515.4 264.4" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Decorative Vector" filter="url(#filter0_f_0_597)">
-<path d="M248.438 135.084C118.273 135.084 69.3771 85.828 61.2 61.2V203.2H454.2V61.2C439.848 85.828 378.604 135.084 248.438 135.084Z" fill="#7BFF7B" fill-opacity="0.35"/>
-</g>
-<defs>
-<filter id="filter0_f_0_597" x="0" y="0" width="515.4" height="264.4" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="30.6" result="effect1_foregroundBlur_0_597"/>
-</filter>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="515.4" height="264.4" fill="none" overflow="visible" preserveAspectRatio="none" viewBox="0 0 515.4 264.4"><g id="Decorative Vector" filter="url(#filter0_f_0_597)"><path fill="#7BFF7B" fill-opacity=".35" d="M248.438 135.084C118.273 135.084 69.3771 85.828 61.2 61.2V203.2H454.2V61.2C439.848 85.828 378.604 135.084 248.438 135.084Z"/></g><defs><filter id="filter0_f_0_597" width="515.4" height="264.4" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_0_597" stdDeviation="30.6"/></filter></defs></svg>
