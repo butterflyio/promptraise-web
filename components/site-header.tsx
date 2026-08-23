@@ -5,10 +5,11 @@ import { SiteBrand } from "./site-brand";
 import { MobileMenu } from "./mobile-menu";
 
 const defaultNavItems = [
-  { href: "/blog", label: "Solutions" },
-  { href: "#plans", label: "Pricing" },
   { href: "#company", label: "Team" },
-  { href: "/glossary", label: "Resources", hot: true },
+  { href: "/glossary", label: "Glossary", hot: true },
+  { href: "/blog", label: "Blog" },
+  { href: "#plans", label: "Pricing" },
+  { href: "/free/flesch-kincaid-calculator", label: "Free Tools" },
 ];
 
 /**
