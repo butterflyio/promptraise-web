@@ -4,20 +4,41 @@ import { SiteBrand } from "./site-brand";
 import { MobileMenu } from "./mobile-menu";
 
 const defaultNavItems = [
-  { href: "#solutions", label: "Solutions" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "#how-it-works", label: "Solutions" },
+  { href: "#plans", label: "Pricing" },
   { href: "#company", label: "Company" },
-  { href: "#resources", label: "Resources" },
+  { href: "/glossary", label: "Resources", hot: true },
 ];
 
 /**
  * Normalize nav hrefs so anchors work from ANY page, not just the homepage.
- * "#pricing" -> "/#pricing" (jumps to the homepage section from anywhere).
- * Absolute URLs and real paths pass through unchanged.
+ * "#how-it-works" -> "/#how-it-works" (jumps to the homepage section from
+ * anywhere). Absolute URLs and real paths pass through unchanged.
  */
 function normalizeHref(href: string): string {
   if (href.startsWith("#")) return `/${href}`;
   return href;
+}
+
+/** Small inline "hot" flame marker shown next to a highlighted nav link. */
+function HotBadge() {
+  return (
+    <span
+      aria-label="Hot"
+      title="Hot"
+      className="ml-0.5 inline-flex items-center text-[12px] leading-none"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="h-3.5 w-3.5"
+      >
+        <path d="M12 4C8 3 7 2.5 8 1.5 12 0 0 0 8 4.5 12" fill="currentColor" />
+        <path d="M12 9.5c1.2-6 4-9.5h2.5l1.5 4-3 7.5z" fill="currentColor" />
+      </svg>
+    </span>
+  );
 }
 
 export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
