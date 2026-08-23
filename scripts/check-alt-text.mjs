@@ -70,10 +70,13 @@ for (const dirName of SCAN_DIRS) {
 
 console.log(`Alt-text check: ${imgCount} <img>/<Image> tags scanned.`);
 if (failures.length === 0) {
-  console.log("PASS - every image has alt (or is marked decorative with aria-hidden).");
+  console.log(
+    "PASS - every image has alt (or is marked decorative with aria-hidden).",
+  );
   process.exit(0);
 }
 console.error(`FAIL - ${failures.length} image(s) need attention:`);
 for (const f of failures.slice(0, 40)) console.error("  " + f);
-if (failures.length > 40) console.error(`  ... and ${failures.length - 40} more`);
+if (failures.length > 40)
+  console.error(`  ... and ${failures.length - 40} more`);
 process.exit(1);

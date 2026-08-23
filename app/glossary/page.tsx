@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { draftMode } from "next/headers";
 
 import GlossaryScroller from "@/components/glossary-scroller";
@@ -97,13 +98,13 @@ export default async function GlossaryPage(_props: PageProps) {
       </p>
 
       {/* Internal link partner: the free readability tool */}
-      <a
+      <Link
         href="/free/flesch-kincaid-calculator"
         className="mt-4 inline-block text-sm font-medium text-[var(--accent-primary)] transition-opacity hover:opacity-80"
       >
         Free tool - measure the readability of any Web3 copy with our
         Flesch-Kincaid calculator
-      </a>
+      </Link>
 
       {/* Category pill nav - static anchor links */}
       <nav

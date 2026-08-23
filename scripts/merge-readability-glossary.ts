@@ -7,6 +7,7 @@
 //         SANITY_DATASET / NEXT_PUBLIC_SANITY_DATASET,
 //         SANITY_API_WRITE_TOKEN  (loaded from .env.local, no dotenv dep)
 //   run:  node --experimental-strip-types scripts/merge-readability-glossary.ts
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck -- tooling-only script; run via node --experimental-strip-types
 // (the explicit .ts import extension is required by node ESM but rejected by tsc)
 import { readFileSync } from "node:fs";

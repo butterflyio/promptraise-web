@@ -1,4 +1,5 @@
 import { draftMode } from "next/headers";
+import Link from "next/link";
 
 import ReadabilityTool from "@/components/tools/readability-tool";
 import { mergeCopy } from "@/lib/flesch-merge";
@@ -26,12 +27,12 @@ export default async function EmbedPage() {
       <ReadabilityTool copy={copy} />
       <p className="mt-6 text-center text-xs text-[var(--text-muted)]">
         Powered by{" "}
-        <a
+        <Link
           href="/free/flesch-kincaid-calculator"
           className="text-[var(--accent-primary)] hover:underline"
         >
           PromptRaise Flesch-Kincaid Calculator
-        </a>{" "}
+        </Link>{" "}
         - free, no signup, 100% offline
       </p>
     </main>
