@@ -5,16 +5,16 @@ import { SiteBrand } from "./site-brand";
 import { MobileMenu } from "./mobile-menu";
 
 const defaultNavItems = [
-  { href: "#how-it-works", label: "Solutions" },
+  { href: "/blog", label: "Solutions" },
   { href: "#plans", label: "Pricing" },
-  { href: "#company", label: "Company" },
+  { href: "#company", label: "Team" },
   { href: "/glossary", label: "Resources", hot: true },
 ];
 
 /**
  * Normalize nav hrefs so anchors work from ANY page, not just the homepage.
- * "#how-it-works" -> "/#how-it-works" (jumps to the homepage section from
- * anywhere). Absolute URLs and real paths pass through unchanged.
+ * "#plans" -> "/#plans" (jumps to the homepage section from anywhere).
+ * Absolute URLs and real paths pass through unchanged.
  */
 function normalizeHref(href: string): string {
   if (href.startsWith("#")) return `/${href}`;
@@ -27,9 +27,9 @@ function HotBadge() {
     <span
       aria-label="Hot"
       title="Hot"
-      className="ml-1 inline-flex items-center text-[var(--accent-primary)]"
+      className="ml-1 inline-flex items-center text-[#ff6b1a]"
     >
-      <Flame aria-label="Hot" className="h-3.5 w-3.5" />
+      <Flame aria-label="Hot" className="h-3.5 w-3.5 text-[#ff6b1a]" />
     </span>
   );
 }

@@ -130,7 +130,7 @@ export function MobileMenu({
                 {item.hot ? (
                   <Flame
                     aria-label="Hot"
-                    className="ml-1.5 inline h-4 w-4 text-[var(--accent-primary)]"
+                    className="ml-1.5 inline h-4 w-4 text-[#ff6b1a]"
                   />
                 ) : null}
               </a>
