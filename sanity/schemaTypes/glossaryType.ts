@@ -2,7 +2,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 
 /**
  * `glossary` document - single source of truth for the Web3 AI Visibility
- * glossary page (promptraise.com/academy/glossary and /glossary).
+ * glossary page (promptraise.com/glossary).
  *
  * A single document (id "glossary") holds every category and term so the
  * existing one-doc flows work unchanged: Draft Mode preview renders the whole

@@ -82,10 +82,10 @@ export async function POST(request: Request) {
     if (slug && slug !== "/") {
       revalidatePath(`/${slug.replace(/^\/+|\/+$/g, "")}`);
     }
-    // The legacy /glossary page now 301-redirects to /academy/glossary (PR-39
-    // glossary consolidation), so revalidating the canonical /academy/glossary
-    // path above fully covers glossary changes - no separate /glossary lockstep
-    // is needed anymore.
+    // The retired /academy/glossary path now 301-redirects to the canonical
+    // /glossary (glossary consolidation), so revalidating the canonical
+    // /glossary path above fully covers glossary changes - no separate
+    // /academy/glossary lockstep is needed anymore.
     // Sitemap + robots/llms.txt are dynamic; revalidate them too so new
     // pages and posts are crawled quickly. Blog routes get revalidated on
     // any publish (cheap, matches revalidate=30 ISR behavior).

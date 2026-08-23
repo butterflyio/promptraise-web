@@ -22,7 +22,7 @@ const PREVIEWABLE_TYPES = [
  * path prefix for document types that live under a namespace (posts -> /blog). */
 const FIXED_PREVIEW_SLUGS: Record<string, string> = {
   siteSettings: "/",
-  glossary: "/academy/glossary",
+  glossary: "/glossary",
   fleschKincaidLanding: "/free/flesch-kincaid-calculator",
 };
 
