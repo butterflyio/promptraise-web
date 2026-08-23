@@ -57,7 +57,11 @@ export function AnnouncementBar({
   // Restore a prior dismissal from localStorage (client-only).
   useEffect(() => {
     try {
-      if (localStorage.getItem(DISMISS_KEY) === "1") setDismissed(true);
+      if (localStorage.getItem(DISMISS_KEY) === "1") {
+        // Defer out of the effect's synchronous scope (React 19 hook rule).
+        const t = setTimeout(() => setDismissed(true), 0);
+        return () => clearTimeout(t);
+      }
     } catch {
       /* storage unavailable - just show the bar */
     }

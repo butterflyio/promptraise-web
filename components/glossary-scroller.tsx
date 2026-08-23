@@ -57,17 +57,23 @@ export default function GlossaryScroller({
   }
 
   return (
-    <div className="mt-8 no-print">
+    <div className="no-print mt-8">
       {/* Search */}
       <div className="relative mb-4 max-w-md">
         <svg
-          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]"
+          className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-muted)]"
           width="16"
           height="16"
           viewBox="0 0 16 16"
           fill="none"
         >
-          <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.4" />
+          <circle
+            cx="7"
+            cy="7"
+            r="4.5"
+            stroke="currentColor"
+            strokeWidth="1.4"
+          />
           <path
             d="M10.5 10.5L13.5 13.5"
             stroke="currentColor"
@@ -80,17 +86,17 @@ export default function GlossaryScroller({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search terms, aliases, definitions..."
-          className="w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg-surface)] py-2.5 pl-9 pr-16 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
+          className="w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg-surface)] py-2.5 pr-16 pl-9 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-[var(--accent-primary)]"
         />
         {query ? (
           <button
             onClick={() => setQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded px-1.5 py-0.5 text-xs text-[var(--text-secondary)] bg-[var(--bg-surface-hover)]"
+            className="absolute top-1/2 right-3 -translate-y-1/2 rounded bg-[var(--bg-surface-hover)] px-1.5 py-0.5 text-xs text-[var(--text-secondary)]"
           >
             Clear
           </button>
         ) : (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 rounded border border-[var(--border-soft)] px-1.5 py-0.5 text-xs text-[var(--text-muted)]">
+          <span className="absolute top-1/2 right-3 -translate-y-1/2 rounded border border-[var(--border-soft)] px-1.5 py-0.5 text-xs text-[var(--text-muted)]">
             ⌘K
           </span>
         )}

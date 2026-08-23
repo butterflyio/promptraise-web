@@ -227,8 +227,14 @@ export default function PostBody({
   // from lib/blog-headings.ts via the page, keyed by block _key.
   const blockWithIds = {
     ...components.block,
-    h2: ({ children, value }: any) => {
-      const id = headingIds?.[(value as { _key?: string })?._key ?? ""];
+    h2: ({
+      children,
+      value,
+    }: {
+      children: React.ReactNode;
+      value: { _key?: string };
+    }) => {
+      const id = headingIds?.[value?._key ?? ""];
       return (
         <h2
           id={id}
@@ -238,8 +244,14 @@ export default function PostBody({
         </h2>
       );
     },
-    h3: ({ children, value }: any) => {
-      const id = headingIds?.[(value as { _key?: string })?._key ?? ""];
+    h3: ({
+      children,
+      value,
+    }: {
+      children: React.ReactNode;
+      value: { _key?: string };
+    }) => {
+      const id = headingIds?.[value?._key ?? ""];
       return (
         <h3
           id={id}

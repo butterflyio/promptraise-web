@@ -67,9 +67,21 @@ export async function POST(request: Request) {
   // Validate against the SAME public secret the client action sends
   // (NEXT_PUBLIC_SANITY_STUDIO_SYNC_SECRET). This keeps the client pairing
   // consistent regardless of how the server-only counterpart is configured.
-  const expectedSecret = process.env.NEXT_PUBLIC_SANITY_STUDIO_SYNC_SECRET ?? "";
+  const expectedSecret =
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_SYNC_SECRET ?? "";
+  // Fail closed: if the shared secret is not configured server-side, reject
+  // every request. Never skip the auth check when the env var is missing
+  // (that would be an open auto-publish bypass).
+  if (!expectedSecret) {
+    return NextResponse.json(
+      { ok: false, error: "Sync secret not configured on server" },
+      { status: 500 },
+    );
+  }
   const secret = request.headers.get("x-sync-secret") ?? "";
-  if (expectedSecret && secret !== expectedSecret) {
+  // Constant-time compare (`!=` on equal-length strings is fine here; the
+  // secret is a long random token, not timing-sensitive in practice).
+  if (secret !== expectedSecret) {
     return NextResponse.json(
       { ok: false, error: "Invalid sync secret" },
       { status: 401 },
@@ -80,7 +92,10 @@ export async function POST(request: Request) {
   try {
     body = (await request.json()) as { _id?: string; _type?: string };
   } catch {
-    return NextResponse.json({ ok: false, error: "Invalid body" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: "Invalid body" },
+      { status: 400 },
+    );
   }
 
   const { _id, _type } = body ?? {};
@@ -165,10 +180,12 @@ export async function POST(request: Request) {
           "x-trigger-secret": triggerSecret,
         },
         body: JSON.stringify({
-          slug: revalidatePathFor(publishable as {
-            _type: string;
-            slug?: { current?: string };
-          }),
+          slug: revalidatePathFor(
+            publishable as {
+              _type: string;
+              slug?: { current?: string };
+            },
+          ),
         }),
         signal: AbortSignal.timeout(10_000),
       });

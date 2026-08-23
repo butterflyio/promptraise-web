@@ -61,14 +61,17 @@ function extractText(html: string): { text: string; truncated: boolean } {
   );
 
   // Remove tags, unescape, collapse whitespace.
-  let text = body
+  // Entity order matters: decode all named entities EXCEPT &amp; first, then
+  // &amp; LAST so a source like &amp;lt; becomes &lt; (literal text), NOT a
+  // re-unescaped "<" (which would be double-unescaping / a correctness bug).
+  const text = body
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
     .replace(/&quot;/gi, '"')
     .replace(/&#0?39;/gi, "'")
+    .replace(/&amp;/gi, "&")
     .replace(/\s+/g, " ")
     .trim();
 

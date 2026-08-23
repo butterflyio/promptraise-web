@@ -3,3 +3,13 @@ node_modules
 out
 package-lock.json
 scripts/*.sh
+# Tooling-only scripts (not formatted code): TS-typed .mjs/.ts CLI helpers
+# that prettier can't parse as plain JS, and Termly-generated legal HTML
+# (machine output prettier strict-parse fails on).
+scripts/diag-sanity.mjs
+app/cookies/cookies-content.html
+app/privacy/privacy-content.html
+# Non-code artifacts prettier shouldn't gate on: design sketches + docs.
+docs/
+sketches/
+.hermes/

@@ -5,7 +5,8 @@
 // Rebuilds the portable-text body programmatically from the fxtwitter article
 // Draft.js JSON (/tmp/promptraise_article.json), preserving blockquotes,
 // h2 headings, bold segments, bullet/numbered lists, and inline images with
-// captions. Status = "review" (NOT published) so Zain reviews in Studio first.
+// Status = "review" (NOT published) so Zain reviews in Studio first.
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from "@sanity/client";
 import * as fs from "fs";
 import * as path from "path";
@@ -75,7 +76,7 @@ const styleToSanity: Record<string, string> = {
 function toSanityBlock(draftBlock: any, keyIdx: number): any {
   const text = draftBlock.text ?? "";
   const type = draftBlock.type;
-  let ents = draftBlock.entityRanges ?? [];
+  const ents = draftBlock.entityRanges ?? [];
 
   if (type === "atomic") {
     // Media (drop-column image). The entity maps to a MEDIA entity.

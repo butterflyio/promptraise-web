@@ -47,7 +47,7 @@ function formatAddress(address: SiteSettings["address"]): string | null {
       ? address.addressRegion
       : null,
     address.addressCountry
-      ? COUNTRY_DISPLAY[address.addressCountry] ?? address.addressCountry
+      ? (COUNTRY_DISPLAY[address.addressCountry] ?? address.addressCountry)
       : null,
   ].filter((part): part is string => Boolean(part));
   return parts.length > 0 ? parts.join(", ") : null;
@@ -103,7 +103,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
     <footer className="border-t border-[rgba(255,255,255,0.06)] bg-[var(--bg-contrast)]">
       <div className="tablet:px-[52px] mx-auto flex w-full flex-col gap-8 px-4 pt-[29px] pb-7">
         {/* Brand + tagline */}
-        <div className="flex flex-col items-center gap-2 text-center tablet:flex-row tablet:items-center tablet:gap-3 tablet:text-left">
+        <div className="tablet:flex-row tablet:items-center tablet:gap-3 tablet:text-left flex flex-col items-center gap-2 text-center">
           <SiteBrand
             siteName={siteName}
             logoUrl={logoUrl}
@@ -112,7 +112,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
             wordmarkClassName="ml-2 text-[13px] leading-[20.8px] tracking-[0] font-bold text-white"
           />
           {tagline && (
-            <span className="max-w-[280px] text-[12px] leading-[18px] tracking-[0] text-[var(--text-muted)] tablet:border-l tablet:border-[rgba(255,255,255,0.1)] tablet:pl-3">
+            <span className="tablet:border-l tablet:border-[rgba(255,255,255,0.1)] tablet:pl-3 max-w-[280px] text-[12px] leading-[18px] tracking-[0] text-[var(--text-muted)]">
               {tagline}
             </span>
           )}
@@ -121,7 +121,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
         {/* Nav columns */}
         <nav
           aria-label="Footer navigation"
-          className="grid grid-cols-2 gap-x-6 gap-y-8 tablet:grid-cols-3 lg:grid-cols-4"
+          className="tablet:grid-cols-3 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4"
         >
           {groups.map((group) => (
             <div key={group.heading} className="flex flex-col gap-3">
@@ -146,7 +146,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
 
         {/* Contact row - separated */}
         {contactItems.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center tablet:justify-start">
+          <div className="tablet:justify-start flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
             {contactItems.map((item, i) => (
               <span
                 key={item.key}
@@ -180,7 +180,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
         )}
 
         {/* Bottom bar: legal link fallback + consent + copyright */}
-        <div className="flex flex-col items-center gap-3 border-t border-[rgba(255,255,255,0.06)] pt-6 tablet:flex-row tablet:justify-between">
+        <div className="tablet:flex-row tablet:justify-between flex flex-col items-center gap-3 border-t border-[rgba(255,255,255,0.06)] pt-6">
           <p className="text-[10px] leading-4 tracking-[0] text-[#686B6E]">
             {copyrightText}
           </p>

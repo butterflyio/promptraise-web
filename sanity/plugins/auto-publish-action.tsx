@@ -1,5 +1,9 @@
 "use client";
 
+// This is a Sanity DocumentActionComponent (lowercase name by Design System
+// convention), but Sanity calls it as a React component during Studio
+// rendering - the hooks are legitimate. The rule can't know, so disable it.
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useRef } from "react";
 import type { DocumentActionComponent } from "sanity";
 

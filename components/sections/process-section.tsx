@@ -246,10 +246,16 @@ export function ProcessSection({ content }: ProcessSectionProps) {
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
+    const sync = () => setIsMobile(mq.matches);
+    // Defer the initial sync out of the effect's synchronous scope (React 19
+    // hook rule: no setState directly in the effect body).
+    const t = setTimeout(sync, 0);
     const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    return () => {
+      clearTimeout(t);
+      mq.removeEventListener("change", onChange);
+    };
   }, []);
 
   // Mobile-safe card positions: keep the card entirely inside the viewport.

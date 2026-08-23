@@ -116,13 +116,18 @@ export default function ReadabilityTool({
       decoded = null;
     }
     if (!decoded || decoded.trim().length === 0) return;
-    setText(decoded);
-    setMode("paste");
-    setSharedFrom(true);
-    const res = analyzeText(decoded);
-    setGenre(detectContentGenre(decoded, res.readability));
-    setAutoDetected(true);
-    setAnalyzedText(decoded);
+    // Defer the setState batch out of the effect's synchronous scope
+    // (React 19 hook rule: no setState directly in the effect body).
+    const t = setTimeout(() => {
+      setText(decoded);
+      setMode("paste");
+      setSharedFrom(true);
+      const res = analyzeText(decoded);
+      setGenre(detectContentGenre(decoded, res.readability));
+      setAutoDetected(true);
+      setAnalyzedText(decoded);
+    }, 0);
+    return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
