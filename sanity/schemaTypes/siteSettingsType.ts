@@ -235,11 +235,12 @@ export const siteSettingsType = defineType({
       ],
     }),
     defineField({
-      name: "footerPoweredByText",
-      title: "Footer Powered By Text",
+      name: "footerTagline",
+      title: "Footer Tagline",
       type: "string",
-      description: "Appears after the dot in “PromptRaise · ...”.",
-      initialValue: "powered by Cicada",
+      description:
+        "Shown next to the brand in the footer. Replaces the old “powered by” line.",
+      initialValue: "Be the answer, not the search result",
     }),
     defineField({
       name: "footerCopyrightText",

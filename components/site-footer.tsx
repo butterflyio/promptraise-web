@@ -5,6 +5,7 @@ import { SiteBrand } from "./site-brand";
 const defaultFooterLinks = [
   { label: "AI Visibility Blog", href: "/blog" },
   { label: "Academy", href: "/academy/glossary" },
+  { label: "Trust Center", href: "https://trust.promptraise.com" },
   { label: "Free Tools", href: "/free/flesch-kincaid-calculator" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
@@ -26,7 +27,7 @@ function formatAddress(address: SiteSettings["address"]): string | null {
       ? address.addressRegion
       : null,
     address.addressCountry
-      ? (COUNTRY_DISPLAY[address.addressCountry] ?? address.addressCountry)
+      ? COUNTRY_DISPLAY[address.addressCountry] ?? address.addressCountry
       : null,
   ].filter((part): part is string => Boolean(part));
   return parts.length > 0 ? parts.join(", ") : null;
@@ -35,7 +36,8 @@ function formatAddress(address: SiteSettings["address"]): string | null {
 export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
   const siteName = settings?.siteName ?? "PromptRaise";
   const logoUrl = settings?.logo?.asset?.url;
-  const poweredByText = settings?.footerPoweredByText ?? "powered by Cicada";
+  const tagline =
+    settings?.footerTagline ?? "Be the answer, not the search result";
   const copyrightText =
     settings?.footerCopyrightText ?? "© 2026 · cicada-mm.com · Dubai, UAE";
   const footerLinks =
@@ -48,7 +50,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
   const telegramUrl =
     settings?.socialLinks?.telegram ?? settings?.primaryTelegramCtaUrl;
   const telephone = settings?.telephone;
-  const addressLine = formatAddress(settings?.address);
+  const addressText = formatAddress(settings?.address);
 
   const contactItems: Array<{ key: string; href?: string; label: string }> = [];
   if (contactEmail) {
@@ -72,14 +74,15 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
       label: telephone,
     });
   }
-  if (addressLine) {
-    contactItems.push({ key: "address", label: addressLine });
+  if (addressText) {
+    contactItems.push({ key: "address", label: addressText });
   }
 
   return (
     <footer className="border-t border-[rgba(255,255,255,0.06)] bg-[var(--bg-contrast)]">
-      <div className="tablet:flex-row tablet:justify-between tablet:gap-0 tablet:px-[52px] mx-auto flex w-full flex-col items-center justify-center gap-3 px-4 pt-[29px] pb-7">
-        <div className="tablet:justify-start flex items-center justify-center">
+      <div className="tablet:justify-between tablet:px-[52px] mx-auto flex w-full flex-col items-center gap-4 px-4 pt-[29px] pb-7">
+        {/* Row 1: brand + tagline */}
+        <div className="flex flex-col items-center gap-1 text-center tablet:flex-row tablet:items-center tablet:gap-3 tablet:text-left">
           <SiteBrand
             siteName={siteName}
             logoUrl={logoUrl}
@@ -87,67 +90,68 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
             markClassName="h-[13px] w-auto shrink-0"
             wordmarkClassName="ml-2 text-[13px] leading-[20.8px] tracking-[0] font-bold text-white"
           />
-          <span className="ml-1 text-[13px] leading-[20.8px] tracking-[0] text-[#686B6E]">
-            · {poweredByText}
-          </span>
-        </div>
-
-        <div className="tablet:items-end flex flex-col items-center gap-1">
-          {contactItems.length > 0 && (
-            <div className="tablet:flex-row tablet:gap-3 flex flex-col items-center gap-1">
-              {contactItems.map((item) => (
-                <span
-                  key={item.key}
-                  className="text-[10px] leading-4 tracking-[0] text-[#686B6E]"
-                >
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="transition-colors hover:text-[var(--accent-primary)]"
-                      target={
-                        item.href.startsWith("http") ? "_blank" : undefined
-                      }
-                      rel={
-                        item.href.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    item.label
-                  )}
-                </span>
-              ))}
-            </div>
+          {tagline && (
+            <span className="max-w-[280px] text-[12px] leading-[18px] tracking-[0] text-[#8A8D91] tablet:border-l tablet:border-[rgba(255,255,255,0.1)] tablet:pl-3">
+              {tagline}
+            </span>
           )}
-
-          <p className="tablet:order-1 order-2 text-[10px] leading-4 tracking-[0] text-[#686B6E]">
-            {copyrightText}
-          </p>
-
-          <nav
-            aria-label="Footer links"
-            className="tablet:order-2 tablet:gap-3 order-1 flex items-center gap-1"
-          >
-            {footerLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="px-1 py-1 text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href="#"
-              className="termly-display-preferences px-1 py-1 text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
-            >
-              Consent Preferences
-            </a>
-          </nav>
         </div>
+
+        {/* Row 2: contact line */}
+        {contactItems.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-center tablet:justify-start">
+            {contactItems.map((item) => (
+              <span
+                key={item.key}
+                className="text-[11px] leading-4 tracking-[0] text-[#8A8D91]"
+              >
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="transition-colors hover:text-[var(--accent-primary)]"
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      item.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  item.label
+                )}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Row 3: nav links + consent */}
+        <nav
+          aria-label="Footer links"
+          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 tablet:justify-start"
+        >
+          {footerLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#"
+            className="termly-display-preferences text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
+          >
+            Consent Preferences
+          </a>
+        </nav>
+
+        {/* Row 4: copyright */}
+        <p className="text-[10px] leading-4 tracking-[0] text-[#686B6E]">
+          {copyrightText}
+        </p>
       </div>
     </footer>
   );

@@ -49,7 +49,7 @@ export interface SiteSettings {
     label: string;
     href: string;
   }>;
-  footerPoweredByText?: string;
+  footerTagline?: string;
   footerCopyrightText?: string;
   footerLegalLinks?: Array<{
     label: string;
@@ -87,7 +87,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     headerCtaLabel,
     headerCtaUrl,
     headerNavItems,
-    footerPoweredByText,
+    footerTagline,
     footerCopyrightText,
     footerLegalLinks,
     blogAskLlm,
@@ -341,7 +341,7 @@ export async function getSiteSettingsPreview() {
     headerCtaLabel,
     headerCtaUrl,
     headerNavItems,
-    footerPoweredByText,
+    footerTagline,
     footerCopyrightText,
     footerLegalLinks,
     blogAskLlm,
