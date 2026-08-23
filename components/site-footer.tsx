@@ -39,7 +39,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
   const tagline =
     settings?.footerTagline ?? "Be the answer, not the search result";
   const copyrightText =
-    settings?.footerCopyrightText ?? "© 2026 · cicada-mm.com · Dubai, UAE";
+    settings?.footerCopyrightText ?? "© 2026 PromptRaise · All Rights Reserved";
   const footerLinks =
     settings?.footerLegalLinks && settings.footerLegalLinks.length > 0
       ? settings.footerLegalLinks

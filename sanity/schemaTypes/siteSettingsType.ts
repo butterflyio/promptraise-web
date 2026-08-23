@@ -246,7 +246,7 @@ export const siteSettingsType = defineType({
       name: "footerCopyrightText",
       title: "Footer Copyright Text",
       type: "string",
-      initialValue: "© 2026 · cicada-mm.com · Dubai, UAE",
+      initialValue: "© 2026 PromptRaise · All Rights Reserved",
     }),
     defineField({
       name: "footerLegalLinks",
