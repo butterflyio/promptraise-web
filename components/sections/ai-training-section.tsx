@@ -154,7 +154,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
   }
 
   return (
-    <DsSection className="ds-section-alt">
+    <DsSection id="solutions" className="ds-section-alt">
       <SectionLabel name="AiTrainingSection" />
 
       {/* Decorative background capsules (Figma BG 411:5377, desktop only) */}

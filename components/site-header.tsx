@@ -1,23 +1,38 @@
 import type { SiteSettings } from "@/sanity/lib/queries";
+import { Flame } from "lucide-react";
 import { DsButton } from "@/components/design-system";
 import { SiteBrand } from "./site-brand";
 import { MobileMenu } from "./mobile-menu";
 
 const defaultNavItems = [
-  { href: "#solutions", label: "Solutions" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#company", label: "Company" },
-  { href: "#resources", label: "Resources" },
+  { href: "#company", label: "Team" },
+  { href: "/glossary", label: "Glossary", hot: true },
+  { href: "/blog", label: "Blog" },
+  { href: "#plans", label: "Pricing" },
+  { href: "/free/flesch-kincaid-calculator", label: "Free Tools" },
 ];
 
 /**
  * Normalize nav hrefs so anchors work from ANY page, not just the homepage.
- * "#pricing" -> "/#pricing" (jumps to the homepage section from anywhere).
+ * "#plans" -> "/#plans" (jumps to the homepage section from anywhere).
  * Absolute URLs and real paths pass through unchanged.
  */
 function normalizeHref(href: string): string {
   if (href.startsWith("#")) return `/${href}`;
   return href;
+}
+
+/** Small inline "hot" flame marker shown next to a highlighted nav link. */
+function HotBadge() {
+  return (
+    <span
+      aria-label="Hot"
+      title="Hot"
+      className="ml-1 inline-flex items-center text-[#ff6b1a]"
+    >
+      <Flame aria-label="Hot" className="h-3.5 w-3.5 text-[#ff6b1a]" />
+    </span>
+  );
 }
 
 export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
@@ -57,6 +72,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
                 ...navItems.map((item) => ({
                   href: normalizeHref(item.href),
                   label: item.label,
+                  hot: Boolean((item as { hot?: boolean }).hot),
                 })),
                 { href: auditUrl, label: headerCtaLabel },
               ]}
@@ -75,27 +91,28 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
 
           <nav
             aria-label="Primary"
-            className="tablet:flex hidden items-center gap-1.5"
+            className="hidden items-center gap-7 lg:flex"
           >
             {navItems.map((item) => (
               <a
-                key={item.href}
+                key={item.href + item.label}
                 href={normalizeHref(item.href)}
                 className="rounded-full px-3 py-2 text-[16px] leading-[1.5] tracking-[-0.32px] text-white transition-colors hover:text-white/85"
               >
                 {item.label}
+                {Boolean((item as { hot?: boolean }).hot) ? <HotBadge /> : null}
               </a>
             ))}
-          </nav>
 
-          <DsButton
-            href={auditUrl}
-            variant="light"
-            size="md"
-            className="h-auto px-6 py-3 text-[16px] leading-[1.5] tracking-[-0.32px]"
-          >
-            {headerCtaLabel}
-          </DsButton>
+            <DsButton
+              href={auditUrl}
+              variant="primary"
+              size="md"
+              className="rounded-full"
+            >
+              {headerCtaLabel}
+            </DsButton>
+          </nav>
         </div>
       </div>
     </header>
