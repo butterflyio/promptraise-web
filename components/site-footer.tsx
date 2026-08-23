@@ -19,7 +19,7 @@ const defaultFooterGroups: NonNullable<SiteSettings["footerNavGroups"]> = [
     heading: "Company",
     links: [
       { label: "Trust Center", href: "https://trust.promptraise.com" },
-      { label: "Sitemap", href: "/sitemap.xml" },
+      { label: "Sitemap", href: "/sitemap" },
     ],
   },
   {
