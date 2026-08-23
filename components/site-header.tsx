@@ -91,11 +91,11 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
 
           <nav
             aria-label="Primary"
-            className="tablet:flex hidden items-center gap-1.5"
+            className="hidden items-center gap-7 lg:flex"
           >
             {navItems.map((item) => (
               <a
-                key={item.href}
+                key={item.href + item.label}
                 href={normalizeHref(item.href)}
                 className="rounded-full px-3 py-2 text-[16px] leading-[1.5] tracking-[-0.32px] text-white transition-colors hover:text-white/85"
               >
@@ -103,16 +103,16 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
                 {Boolean((item as { hot?: boolean }).hot) ? <HotBadge /> : null}
               </a>
             ))}
-          </nav>
 
-          <DsButton
-            href={auditUrl}
-            variant="light"
-            size="md"
-            className="h-auto px-6 py-3 text-[16px] leading-[1.5] tracking-[-0.32px]"
-          >
-            {headerCtaLabel}
-          </DsButton>
+            <DsButton
+              href={auditUrl}
+              variant="primary"
+              size="md"
+              className="rounded-full"
+            >
+              {headerCtaLabel}
+            </DsButton>
+          </nav>
         </div>
       </div>
     </header>
