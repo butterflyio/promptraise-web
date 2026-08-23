@@ -302,6 +302,7 @@ Update this file after every meaningful implementation change.
 - NAP final values set in live CMS (production dataset, verified read-back) and as schema defaults: support@promptraise.com, @promptraise -> https://t.me/promptraise, +971-506739713, Cluster Y, JLT / Dubai / Dubai / AE, areaServed Worldwide. Commits `41ed8fa` + `880461a` on staging.
 - Footer redesign (`7546014`): replaced "powered by Cicada" with tagline "Be the answer, not the search result" (new `footerTagline` field, old `footerPoweredByText` removed); added Trust Center link (https://trust.promptraise.com) to CMS footer links + code defaults; restructured footer into 4 clean rows (brand+tagline / contact / nav / copyright) with flex-wrap so it no longer clusters on mobile. Schema field rename `footerPoweredByText` -> `footerTagline`; CMS patched + verified. `tsc` + `next build` clean.
 - Copyright line updated (`ceaba78`): footer last line is now "© 2026 PromptRaise · All Rights Reserved" (was "© 2026 · cicada-mm.com · Dubai, UAE"). Updated in live CMS doc + schema initialValue + code fallback; verified read-back.
+- Footer v3 redesign (`0dc7a73`): grouped nav columns with headings (Product / Company / Legal), elegant separated contact row (middot dots between email / @promptraise / phone / address), Sitemap link added to Company, uses `--text-muted` token. New CMS field `footerNavGroups` (array of {heading, links[]}); populated live in CMS (3 groups) + code defaults; `footerLegalLinks` kept as fallback. `tsc` + `next build` clean.
 
 ## Housekeeping
 
