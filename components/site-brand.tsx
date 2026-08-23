@@ -32,8 +32,7 @@ export function SiteBrand({
     >
       <Image
         src={markSrc}
-        alt=""
-        aria-hidden
+        alt="PromptRaise"
         width={16}
         height={16}
         unoptimized

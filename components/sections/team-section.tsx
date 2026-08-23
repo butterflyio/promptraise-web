@@ -85,6 +85,8 @@ function SocialIcon({
     <span className="inline-flex size-[40px] items-center justify-center rounded-[38px] border border-black bg-[rgba(0,0,0,0.35)] p-4 backdrop-blur-[6px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        loading="lazy"
+        decoding="async"
         alt=""
         aria-hidden
         src={src}
@@ -128,6 +130,8 @@ function TeamCard({
       <div className="absolute top-[calc(50%+0.5px)] left-1/2 h-[444.929px] w-[961.673px] -translate-x-1/2 -translate-y-1/2 mix-blend-overlay">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={figmaAssets.overlayVector}
@@ -140,7 +144,7 @@ function TeamCard({
           {/* Member photo (fills the window; CMS-supplied) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            alt=""
+            alt={name}
             className="absolute inset-0 h-full w-full object-cover"
             src={
               imageUrl(image, { width: 640, height: 520, fit: "crop" }) ?? image
@@ -153,6 +157,8 @@ function TeamCard({
           <div className="absolute top-[10.22px] left-[-17.24px] h-[208.805px] w-[366.032px] mix-blend-lighten">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
               aria-hidden
               src={overlay[1]}
@@ -163,6 +169,8 @@ function TeamCard({
           <div className="absolute top-[10.22px] left-[-17.24px] h-[208.805px] w-[366.032px] mix-blend-plus-lighter">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
               aria-hidden
               src={overlay[1]}
@@ -174,6 +182,8 @@ function TeamCard({
             <div className="absolute top-[10.65px] left-[-21.53px] size-[120px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 alt=""
                 aria-hidden
                 src={figmaAssets.ellipse}
@@ -235,6 +245,8 @@ function BackedByChip({
       <span className="flex w-full items-center justify-center rounded-[38px] border border-black bg-[rgba(0,0,0,0.35)] px-[24px] py-[16px] backdrop-blur-[6px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden
           src={src}
@@ -301,7 +313,10 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
+                    loading="lazy"
+                    decoding="async"
                     alt=""
+                    aria-hidden="true"
                     src={layer.src}
                     className="block size-full max-w-none"
                   />
@@ -321,6 +336,8 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
               {/* Decorative line (147:492, rotate-180) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src={figmaAssets.badgeLine}
                 alt=""
                 aria-hidden
@@ -329,6 +346,8 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
               {/* Mark left (147:496, flipped) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src={figmaAssets.badgeMark2}
                 alt=""
                 aria-hidden
@@ -337,6 +356,8 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
               {/* Mark right (147:493) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src={figmaAssets.badgeMark1}
                 alt=""
                 aria-hidden

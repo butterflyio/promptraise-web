@@ -1,8 +1,7 @@
 import { getAllPosts, getGlossary } from "@/sanity/lib/queries";
 import { termAnchor } from "@/lib/glossary-terms";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export const revalidate = 300;
 
@@ -46,8 +45,7 @@ read it, then generates concrete fixes (llms.txt, robots.txt, JSON-LD, meta).
 
 - [Home]( ${siteUrl}/) — Landing: services, pricing, case studies, team
 - [Blog index]( ${siteUrl}/blog) — Research, case studies, Web3 AI visibility strategy
-- [Glossary]( ${siteUrl}/glossary) — Web3 AI visibility glossary (terms answer engines use)
-- [Academy Glossary]( ${siteUrl}/academy/glossary) — Glossary (Academy)
+- [Glossary]( ${siteUrl}/glossary) — Web3 AI visibility glossary (canonical; legacy /academy/glossary 301s here)
 - [Free AI Visibility Audit]( https://audit.promptraise.com) — Scan any Web3 site
 - [AI Visibility Checker for Web3]( ${siteUrl}/ai-seo-for-web3) — Free playbook
 - [Privacy]( ${siteUrl}/privacy) — Privacy notice and data handling
@@ -72,7 +70,7 @@ ${glossaryLines.length ? glossaryLines.join("\n") : "- No glossary terms yet."}
 ## Contact
 
 - Free Audit: https://audit.promptraise.com
-- Telegram: https://t.me/promptraise (placeholder)
+- Telegram: https://t.me/promptraise
 
 ## Last Updated
 

@@ -107,14 +107,28 @@ const components: PortableTextComponents = {
       if (!url) return null;
       const alt = (value as { alt?: string })?.alt ?? "";
       const caption = (value as { caption?: string })?.caption;
+      // Reserve the intrinsic box (parsed from the Sanity URL e.g.
+      // ...-1600x1000.jpg) so the layout never jumps when the image loads
+      // (CLS). Fall back to a media ratio when the dims are unknown.
+      const dimMatch = url.match(/-(\d+)x(\d+)\.(?:jpe?g|png|webp|gif)/);
+      const ratio =
+        dimMatch && Number(dimMatch[1]) > 0 && Number(dimMatch[2]) > 0
+          ? Number(dimMatch[1]) / Number(dimMatch[2])
+          : 16 / 9;
       return (
         <figure className="my-8">
-          <img
-            src={url}
-            alt={alt}
-            className="w-full rounded-2xl border border-[var(--border-soft)]"
-            loading="lazy"
-          />
+          <div
+            className="w-full overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)]"
+            style={{ aspectRatio: String(ratio) }}
+          >
+            <img
+              src={url}
+              alt={alt}
+              className="h-full w-full object-cover object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           {caption ? (
             <figcaption className="mt-3 text-center text-sm text-[var(--text-muted)]">
               {caption}
@@ -193,7 +207,13 @@ function VideoEmbed({ url }: { url: string }) {
   return <video src={url} controls className="h-full w-full" />;
 }
 
-export default function PostBody({ blocks }: { blocks: Block[] }) {
+export default function PostBody({
+  blocks,
+  headingIds,
+}: {
+  blocks: Block[];
+  headingIds?: Record<string, string>;
+}) {
   if (!blocks || blocks.length === 0) {
     return (
       <p className="text-[var(--text-secondary)]">
@@ -201,9 +221,47 @@ export default function PostBody({ blocks }: { blocks: Block[] }) {
       </p>
     );
   }
+
+  // h2/h3 renderers get auto-generated anchor ids (shared with the TOC) plus
+  // scroll-margin so the sticky header never covers a jump target. IDs come
+  // from lib/blog-headings.ts via the page, keyed by block _key.
+  const blockWithIds = {
+    ...components.block,
+    h2: ({ children, value }: any) => {
+      const id = headingIds?.[(value as { _key?: string })?._key ?? ""];
+      return (
+        <h2
+          id={id}
+          className="mt-10 mb-4 scroll-mt-28 text-2xl font-semibold tracking-tight text-[var(--text-primary)]"
+        >
+          {children}
+        </h2>
+      );
+    },
+    h3: ({ children, value }: any) => {
+      const id = headingIds?.[(value as { _key?: string })?._key ?? ""];
+      return (
+        <h3
+          id={id}
+          className="mt-8 mb-3 scroll-mt-28 text-xl font-semibold tracking-tight text-[var(--text-primary)]"
+        >
+          {children}
+        </h3>
+      );
+    },
+  };
+
   return (
     <div className="flex flex-col gap-6">
-      <PortableText value={blocks as never} components={components} />
+      <PortableText
+        value={blocks as never}
+        components={
+          {
+            ...components,
+            block: blockWithIds as PortableTextComponents["block"],
+          } as PortableTextComponents
+        }
+      />
     </div>
   );
 }

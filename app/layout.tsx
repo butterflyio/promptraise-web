@@ -9,12 +9,12 @@ import { getSiteSettings } from "@/sanity/lib/queries";
 
 import "./globals.css";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const faviconUrl = settings?.favicon?.asset?.url ?? `${siteUrl}/favicon.ico`;
+  const faviconUrl =
+    settings?.favicon?.asset?.url ?? `${siteUrl}/brand/promptraise-mark.svg`;
   const socialImageUrl =
     settings?.openGraphImage?.asset?.url ??
     settings?.logo?.asset?.url ??
@@ -109,6 +109,26 @@ function StructuredData({
     socialLinks.youtube,
   ].filter(Boolean) as string[];
 
+  const orgAddress = settings?.address;
+  const address = orgAddress
+    ? {
+        "@type": "PostalAddress",
+        ...(orgAddress.streetAddress
+          ? { streetAddress: orgAddress.streetAddress }
+          : {}),
+        ...(orgAddress.addressLocality
+          ? { addressLocality: orgAddress.addressLocality }
+          : {}),
+        ...(orgAddress.addressRegion
+          ? { addressRegion: orgAddress.addressRegion }
+          : {}),
+        ...(orgAddress.postalCode ? { postalCode: orgAddress.postalCode } : {}),
+        ...(orgAddress.addressCountry
+          ? { addressCountry: orgAddress.addressCountry }
+          : {}),
+      }
+    : undefined;
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -119,6 +139,10 @@ function StructuredData({
     description:
       "AI visibility for Web3 teams. Rank across LLM summaries, AI search, and conversational discovery.",
     ...(sameAs.length > 0 ? { sameAs } : {}),
+    ...(address ? { address } : {}),
+    ...(settings?.telephone ? { telephone: settings.telephone } : {}),
+    ...(settings?.contactEmail ? { email: settings.contactEmail } : {}),
+    ...(settings?.areaServed ? { areaServed: settings.areaServed } : {}),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
@@ -133,14 +157,11 @@ function StructuredData({
     "@type": "WebSite",
     name: siteName,
     url: siteUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteUrl}/?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
+    // NOTE: no SearchAction / potentialAction. Promptraise has no dedicated
+    // search results page - /?q= is the homepage catch-all, not a search
+    // endpoint. Advertising SearchAction here made Google crawl the literal
+    // urlTemplate ?q={search_term_string} (GSC "page with redirect").
+    // Re-add ONLY when a real search results page ships.
   };
 
   return (

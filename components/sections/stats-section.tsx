@@ -163,8 +163,11 @@ function StatsMobileLayout({
                         <div className="relative size-[357px]">
                           <div className={`absolute ${layer.inset}`}>
                             <img
+                              loading="lazy"
+                              decoding="async"
                               src={layer.img}
                               alt=""
+                              aria-hidden="true"
                               className="block size-full max-w-none"
                             />
                           </div>
@@ -173,8 +176,11 @@ function StatsMobileLayout({
                     ) : (
                       <div className={`absolute ${layer.inset}`}>
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={layer.img}
                           alt=""
+                          aria-hidden="true"
                           className="block size-full max-w-none"
                         />
                       </div>
@@ -187,6 +193,8 @@ function StatsMobileLayout({
 
           {/* Center mark (415:9269 Background Container 92x92 at ring center) */}
           <img
+            loading="lazy"
+            decoding="async"
             src="/images/logo-stats-section.png"
             alt="PromptRaise mark"
             className="absolute top-1/2 left-1/2 z-10 size-[92px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
@@ -334,6 +342,8 @@ export function StatsSection({ content }: StatsSectionProps) {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/stats-ellipse-1.svg"
                 alt=""
                 className="block h-full w-full"
@@ -354,6 +364,8 @@ export function StatsSection({ content }: StatsSectionProps) {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/stats-ellipse-2.svg"
                 alt=""
                 className="block h-full w-full"
@@ -374,6 +386,8 @@ export function StatsSection({ content }: StatsSectionProps) {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/stats-ellipse-3.svg"
                 alt=""
                 className="block h-full w-full"
@@ -394,6 +408,8 @@ export function StatsSection({ content }: StatsSectionProps) {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/stats-ellipse-4.svg"
                 alt=""
                 className="block h-full w-full"
@@ -414,6 +430,8 @@ export function StatsSection({ content }: StatsSectionProps) {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/stats-ellipse-5.svg"
                 alt=""
                 className="block h-full w-full"
@@ -445,6 +463,8 @@ export function StatsSection({ content }: StatsSectionProps) {
             </video>
             <div className="prompt-stats-core-overlay" aria-hidden="true" />
             <motion.img
+              loading="lazy"
+              decoding="async"
               src="/images/logo-stats-section.png"
               alt="PromptRaise mark"
               width={154}

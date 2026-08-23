@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "check:alt": "node scripts/check-alt-text.mjs",
     "design:verify": "node scripts/verify-design-contract.mjs",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",

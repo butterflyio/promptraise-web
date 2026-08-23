@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 
+import GlossaryScroller from "@/components/glossary-scroller";
 import {
   getGlossaryContent,
   relatedFor,
@@ -8,23 +9,34 @@ import {
   type GlossaryContent,
 } from "@/lib/glossary-content";
 import type { GlossaryTerm } from "@/lib/glossary-terms";
+import { getAllPostsForGlossaryLinks } from "@/sanity/lib/queries";
+import {
+  relatedPostsForTerm,
+  GLOSSARY_MAX_OUTBOUND_LINKS,
+  type ParsedPostForLinks,
+} from "@/lib/glossary-links";
+import { postHref } from "@/lib/blog";
 
 export const revalidate = 30;
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
+
+interface PageProps {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
 
 export async function generateMetadata(): Promise<Metadata> {
-  const dm = await draftMode();
-  const content = await getGlossaryContent(dm);
+  const { draftMode: dm } = await import("next/headers");
+  const isDraft = await dm();
+  const content = await getGlossaryContent(isDraft);
   return {
-    title: content.metaTitle || "Web3 AI Visibility Glossary",
+    title: content.metaTitle || "Web3 AI Visibility Glossary | PromptRaise",
     description:
       content.metaDescription ||
-      `The language of AI visibility for Web3: ${content.terms.length} terms answer engines use to discover, read and cite your protocol - from GEO and grounding to DefinedTerm and citation-per-query.`,
+      `The PromptRaise glossary: ${content.terms.length} Web3 + AI-visibility terms answer engines use to discover, read and cite your protocol - from GEO and grounding to DefinedTerm and citation-per-query.`,
     alternates: { canonical: `${siteUrl}/glossary` },
     openGraph: {
-      title: "Web3 AI Visibility Glossary",
+      title: "Web3 AI Visibility Glossary | PromptRaise",
       description:
         "The language of AI visibility for Web3: how ChatGPT, Perplexity, Claude and Gemini discover, read and cite your protocol.",
       url: `${siteUrl}/glossary`,
@@ -32,44 +44,36 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Keep this as a server-rendered page for indexability (matches ai-visibility.md).
-export default async function GlossaryPage() {
-  const dm = await draftMode();
-  const content = await getGlossaryContent(dm);
+export default async function GlossaryPage(_props: PageProps) {
+  const isDraft = await draftMode();
+  const content = await getGlossaryContent(isDraft);
   const { categories, terms, intro } = content;
 
-  const termsByCategory = categories
-    .map((category) => ({
-      category,
-      terms: terms.filter((t) => t.category === category),
-    }))
-    .filter((group) => group.terms.length > 0);
+  const termsByCategory = buildTermsByCategory(categories, terms);
 
-  // ItemList + DefinedTerm JSON-LD: the machine-readable facts this page is
-  // built to provide (see ai-visibility.md -> DefinedTerm, V2).
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "DefinedTermSet",
-    name: "Web3 AI Visibility Glossary",
-    description:
-      "Terms answer engines use to discover, read and cite Web3 protocols.",
-    hasDefinedTerm: terms.map((t) => ({
-      "@type": "DefinedTerm",
-      name: t.term,
-      description: t.definition,
-      ...(t.aliases && t.aliases.length
-        ? { alternateName: t.aliases.slice(0, 3) }
-        : {}),
-      ...(relatedFor(content.related, t.term).length
-        ? {
-            mentions: relatedFor(content.related, t.term).map(
-              (r) => `${siteUrl}/glossary#${termAnchor(r)}`,
-            ),
-          }
-        : {}),
-      inDefinedTermSet: `${siteUrl}/glossary`,
-    })),
-  };
+  // Reverse-direction relations: which real posts mention each term
+  // (glossary -> blog). Placeholder posts are filtered by min body length.
+  // Outbound budget is SHARED across all terms: the whole glossary hub page
+  // can emit at most GLOSSARY_MAX_OUTBOUND_LINKS links to blog posts, consumed
+  // in term order, so outbound link count never scales with term count.
+  const posts = await getAllPostsForGlossaryLinks();
+  const outboundBudget = { remaining: GLOSSARY_MAX_OUTBOUND_LINKS };
+  const outboundByTerm = new Map<string, ParsedPostForLinks[]>();
+  for (const t of terms) {
+    if (outboundBudget.remaining <= 0) break;
+    const rel = relatedPostsForTerm(t.term, posts, 2).slice(
+      0,
+      outboundBudget.remaining,
+    );
+    if (rel.length) {
+      outboundByTerm.set(t.term, rel);
+      outboundBudget.remaining -= rel.length;
+    }
+  }
+
+  // DefinedTermSet JSON-LD: the machine-readable facts this page exists to
+  // provide (see ai-visibility.md -> DefinedTerm). Server-rendered.
+  const jsonLd = buildJsonLd(siteUrl, content);
 
   return (
     <main className="mobile:px-6 tablet:py-20 mx-auto w-full max-w-4xl px-4 py-16">
@@ -78,7 +82,7 @@ export default async function GlossaryPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <p className="text-sm tracking-[0.12em] text-[var(--text-muted)] uppercase">
+      <p className="text-sm tracking-[0.12em] text-[var(--accent-primary)] uppercase">
         Reference
       </p>
       <h1 className="tablet:text-4xl mt-3 text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
@@ -88,8 +92,8 @@ export default async function GlossaryPage() {
         {intro ??
           `The language answer engines use to discover, read and cite your
         protocol. If you are wondering why ChatGPT and Perplexity do not mention
-        you, these ${terms.length} terms explain the machinery - and how to
-        become a source instead of a rumor.`}
+        you, these ${terms.length} terms explain the machinery - and how
+        to become a source instead of a rumor.`}
       </p>
 
       {/* Internal link partner: the free readability tool */}
@@ -101,27 +105,29 @@ export default async function GlossaryPage() {
         Flesch-Kincaid calculator
       </a>
 
+      {/* Category pill nav - static anchor links */}
       <nav
         aria-label="Glossary categories"
         className="mt-8 flex flex-wrap gap-2"
       >
-        {categories
-          .filter((c) => terms.some((t) => t.category === c))
-          .map((category) => (
-            <a
-              key={category}
-              href={`#${slugify(category)}`}
-              className="rounded-full border border-[var(--border-soft)] px-4 py-1.5 text-sm text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
-            >
-              {category}
-              <span className="ml-1.5 text-[var(--text-muted)]">
-                {terms.filter((t) => t.category === category).length}
-              </span>
-            </a>
-          ))}
+        {termsByCategory.map(({ category, terms: group }) => (
+          <a
+            key={category}
+            href={`#${slugify(category)}`}
+            className="rounded-full border border-[var(--border-soft)] px-4 py-1.5 text-sm text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+          >
+            {category}
+            <span className="ml-1.5 text-[var(--text-muted)]">
+              {group.length}
+            </span>
+          </a>
+        ))}
       </nav>
 
-      <div className="mt-12 flex flex-col gap-12">
+      {/* Client enhancement: search + A-Z jump (terms stay SSR'd below) */}
+      <GlossaryScroller terms={terms} categories={[...categories]} />
+
+      <div className="mt-6 flex flex-col gap-12">
         {termsByCategory.map(({ category, terms: group }) => (
           <section key={category} id={slugify(category)}>
             <h2 className="flex items-baseline gap-3 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
@@ -133,7 +139,12 @@ export default async function GlossaryPage() {
 
             <dl className="mt-6 flex flex-col gap-3">
               {group.map((t) => (
-                <TermCard key={t.term} term={t} content={content} />
+                <TermCard
+                  key={t.term}
+                  term={t}
+                  content={content}
+                  outboundPosts={outboundByTerm.get(t.term) ?? []}
+                />
               ))}
             </dl>
           </section>
@@ -143,17 +154,59 @@ export default async function GlossaryPage() {
   );
 }
 
+function buildTermsByCategory(
+  categories: string[],
+  terms: GlossaryTerm[],
+): Array<{ category: string; terms: GlossaryTerm[] }> {
+  return categories
+    .map((category) => ({
+      category,
+      terms: terms.filter((t) => t.category === category),
+    }))
+    .filter((group) => group.terms.length > 0);
+}
+
+function buildJsonLd(siteUrl: string, content: GlossaryContent) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: "Web3 AI Visibility Glossary",
+    description:
+      "Terms answer engines use to discover, read and cite Web3 protocols. Published by PromptRaise.",
+    url: `${siteUrl}/glossary`,
+    hasDefinedTerm: content.terms.map((t) => ({
+      "@type": "DefinedTerm",
+      name: t.term,
+      description: t.definition,
+      ...(t.aliases && t.aliases.length
+        ? { alternateName: t.aliases.slice(0, 4) }
+        : {}),
+      ...(relatedFor(content.related, t.term).length
+        ? {
+            mentions: relatedFor(content.related, t.term).map(
+              (r) => `${siteUrl}/glossary#${termAnchor(r)}`,
+            ),
+          }
+        : {}),
+      inDefinedTermSet: `${siteUrl}/glossary`,
+    })),
+  };
+}
+
 function TermCard({
   term,
   content,
+  outboundPosts,
 }: {
   term: GlossaryTerm;
   content: GlossaryContent;
+  outboundPosts: ParsedPostForLinks[];
 }) {
+  const relatedReads = outboundPosts;
   return (
     <div
       id={"term-" + slugify(term.term)}
-      className="rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface-panel)] p-5"
+      className="scroll-mt-28 rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface-panel)] p-5"
     >
       <dt className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="text-lg font-semibold text-[var(--text-primary)]">
@@ -161,7 +214,7 @@ function TermCard({
         </span>
         {term.aliases && term.aliases.length ? (
           <span className="text-sm text-[var(--text-muted)]">
-            {term.aliases.slice(0, 3).join(", ")}
+            {term.aliases.slice(0, 4).join(", ")}
           </span>
         ) : null}
       </dt>
@@ -189,6 +242,24 @@ function TermCard({
                 {r}
               </a>
             ))}
+          </span>
+        ) : null}
+        {relatedReads.length ? (
+          <span className="mt-3 block border-t border-[var(--border-soft)] pt-3">
+            <span className="text-xs tracking-[0.1em] text-[var(--text-muted)] uppercase">
+              Related reads
+            </span>
+            <span className="mt-2 flex flex-wrap gap-2">
+              {relatedReads.map((p) => (
+                <a
+                  key={p._id}
+                  href={postHref(p)}
+                  className="inline-flex items-center rounded-full border border-[var(--border-soft)] px-3 py-1 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                >
+                  {p.title ?? "Read post"}
+                </a>
+              ))}
+            </span>
           </span>
         ) : null}
       </dd>

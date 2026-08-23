@@ -103,8 +103,11 @@ function BenefitIcon({ iconKey }: { iconKey: string }) {
         <div className="absolute" style={{ inset: inset.inner }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             src={`/figma/ai-icon-${iconKey}.svg`}
             alt=""
+            aria-hidden="true"
             className="block size-full max-w-none"
           />
         </div>
@@ -151,7 +154,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
   }
 
   return (
-    <DsSection className="ds-section-alt">
+    <DsSection id="solutions" className="ds-section-alt">
       <SectionLabel name="AiTrainingSection" />
 
       {/* Decorative background capsules (Figma BG 411:5377, desktop only) */}
@@ -177,14 +180,20 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
           <div className="desktop:justify-end relative flex h-full w-full items-center justify-start">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/ai-badge-line.svg"
               alt=""
+              aria-hidden="true"
               className="absolute top-1/2 left-0 h-[6px] w-full max-w-none -translate-y-1/2"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/ai-badge-mark-2.svg"
               alt=""
+              aria-hidden="true"
               className="relative mr-3 h-[25px] w-[39px]"
             />
             <div className="relative flex h-[39px] items-center justify-center rounded-[100px] border border-[#3c3e3f] bg-[rgba(20,20,20,0.8)] px-6 py-2 backdrop-blur-[12px]">
@@ -194,8 +203,11 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/ai-badge-mark-1.svg"
               alt=""
+              aria-hidden="true"
               className="relative ml-3 h-[25px] w-[41px]"
             />
           </div>

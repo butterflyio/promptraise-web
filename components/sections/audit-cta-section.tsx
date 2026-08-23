@@ -60,7 +60,10 @@ function ButtonIcon({
           >
             <div className="absolute inset-[-7.5%]">
               <img
+                loading="lazy"
+                decoding="async"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
                 src="/figma/figma-fd7006a2-b532-4e39-98bd-826f6ffda47e.svg"
               />
@@ -96,7 +99,10 @@ function WindowMockup({ className }: { className?: string }) {
         >
           <div className="absolute inset-[0_-1.56%_0_0]">
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
+              aria-hidden="true"
               className="block size-full max-w-none"
               src="/figma/cta-window-dots.svg"
             />
@@ -121,7 +127,10 @@ function WindowMockup({ className }: { className?: string }) {
             data-name="Inner Frame"
           >
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
+              aria-hidden="true"
               className="absolute inset-0 block size-full max-w-none"
               src="/figma/cta-bubble.svg"
             />
@@ -132,7 +141,10 @@ function WindowMockup({ className }: { className?: string }) {
             data-name="Tail"
           >
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
+              aria-hidden="true"
               className="absolute inset-0 block size-full max-w-none"
               src="/figma/cta-bubble-tail.svg"
             />
@@ -151,7 +163,10 @@ function WindowMockup({ className }: { className?: string }) {
             data-node-id="411:6841"
           >
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
+              aria-hidden="true"
               className="absolute inset-0 block size-full max-w-none"
               src="/figma/cta-avatar.svg"
             />
@@ -166,7 +181,10 @@ function WindowMockup({ className }: { className?: string }) {
         data-name="Window Controls"
       >
         <img
+          loading="lazy"
+          decoding="async"
           alt=""
+          aria-hidden="true"
           className="absolute inset-0 block size-full max-w-none"
           src="/figma/cta-window-controls.svg"
         />
@@ -199,7 +217,10 @@ function IdentityPanel({
       >
         <div className="absolute inset-[-14.47%_-1.98%_-27.34%_-38.22%]">
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
+            aria-hidden="true"
             className="block size-full max-w-none"
             src="/figma/cta-logo-shape.svg"
           />
@@ -218,7 +239,10 @@ function IdentityPanel({
         >
           <div className="absolute inset-[-14.47%_0_-27.34%_-38.22%]">
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
+              aria-hidden="true"
               className="block size-full max-w-none"
               src="/figma/cta-mask-group.svg"
             />
@@ -258,7 +282,10 @@ function IdentityPanel({
               >
                 <div className="relative size-[22px] shrink-0">
                   <img
+                    loading="lazy"
+                    decoding="async"
                     alt=""
+                    aria-hidden="true"
                     className="absolute inset-0 block size-full max-w-none"
                     src={
                       idx === 0
@@ -291,7 +318,14 @@ function Sep({ className, src }: { className?: string; src: string }) {
       <div className="flex-none rotate-90">
         <div className="relative h-0 w-[82px]" data-name="Separator Line">
           <div className="absolute inset-[-1px_0_0_0]">
-            <img alt="" className="block size-full max-w-none" src={src} />
+            <img
+              loading="lazy"
+              decoding="async"
+              alt=""
+              aria-hidden="true"
+              className="block size-full max-w-none"
+              src={src}
+            />
           </div>
         </div>
       </div>
@@ -307,7 +341,14 @@ function SepH({ className, src }: { className?: string; src: string }) {
       data-name="Separator Line"
     >
       <div className="absolute inset-[-1px_0_0_0]">
-        <img alt="" className="block size-full max-w-none" src={src} />
+        <img
+          loading="lazy"
+          decoding="async"
+          alt=""
+          aria-hidden="true"
+          className="block size-full max-w-none"
+          src={src}
+        />
       </div>
     </div>
   );
@@ -334,7 +375,10 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
       >
         <div className="absolute inset-[-7.17%_-1.57%_-0.48%_0]">
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
+            aria-hidden="true"
             className="block size-full max-w-none"
             src="/figma/cta-light.svg"
           />
@@ -378,7 +422,10 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
               data-name="Inner Frame"
             >
               <img
+                loading="lazy"
+                decoding="async"
                 alt=""
+                aria-hidden="true"
                 className="absolute inset-0 block size-full max-w-none"
                 src="/figma/cta-pattern-base.svg"
               />
@@ -394,7 +441,10 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
                 >
                   <div className="absolute inset-[0_-60%_0_0]">
                     <img
+                      loading="lazy"
+                      decoding="async"
                       alt=""
+                      aria-hidden="true"
                       className="block size-full max-w-none"
                       src="/figma/cta-pattern-rotated.svg"
                     />
@@ -441,7 +491,10 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
       >
         <div className="absolute inset-[-19.92%_-16.85%_-19.92%_-16.65%]">
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
+            aria-hidden="true"
             className="block size-full max-w-none"
             src="/figma/cta-glow.svg"
           />
@@ -456,7 +509,10 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
       >
         <div className="absolute inset-[-22.18%_-17.88%_-22.18%_-17.77%]">
           <img
+            loading="lazy"
+            decoding="async"
             alt=""
+            aria-hidden="true"
             className="block size-full max-w-none"
             src="/figma/cta-sparkle.svg"
           />
@@ -475,7 +531,10 @@ function BgLayers({ patternsLeft }: { patternsLeft: string }) {
           >
             <div className="absolute inset-[-25.63%_-172.31%]">
               <img
+                loading="lazy"
+                decoding="async"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
                 src="/figma/cta-ellipse.svg"
               />
@@ -623,7 +682,10 @@ export function AuditCtaSection({
                 >
                   <div className="absolute inset-[-166.67%]">
                     <img
+                      loading="lazy"
+                      decoding="async"
                       alt=""
+                      aria-hidden="true"
                       className="block size-full max-w-none"
                       src="/figma/cta-ellipse-2.svg"
                     />
@@ -676,7 +738,10 @@ export function AuditCtaSection({
                 >
                   <div className="absolute inset-[-166.67%]">
                     <img
+                      loading="lazy"
+                      decoding="async"
                       alt=""
+                      aria-hidden="true"
                       className="block size-full max-w-none"
                       src="/figma/cta-ellipse-2.svg"
                     />

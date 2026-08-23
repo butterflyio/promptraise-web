@@ -19,8 +19,7 @@ import {
 
 export const revalidate = 30;
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 interface PageProps {
   params: Promise<{ slug?: string[] }>;

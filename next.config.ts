@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
     // Blog post slug 301s (renamed posts) + legacy tool consolidation.
     return [
       ...slugRedirectEntries(),
+      // Glossary consolidation: /glossary is the single canonical glossary
+      // page (DefinedTermSet authority). The old /academy/glossary path is
+      // retired (no Academy section exists), so it 301s here - preserving
+      // inbound links and anchors while consolidating authority on /glossary.
+      {
+        source: "/academy/glossary",
+        destination: "/glossary",
+        permanent: true,
+      },
       // Legacy tool URLs -> consolidated free tools
       {
         source: "/tools/flesch-kincaid",

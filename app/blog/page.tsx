@@ -5,8 +5,7 @@ import { BlogBrowser } from "@/components/blog-browser";
 
 export const revalidate = 30;
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export const metadata: Metadata = {
   title: "Blog | PromptRaise — Web3 AI Visibility Research",

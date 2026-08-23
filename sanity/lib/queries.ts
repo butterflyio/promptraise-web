@@ -3,6 +3,17 @@ import { sanityClient, getPreviewClient } from "./client";
 export interface SiteSettings {
   siteName: string;
   organizationLegalName: string;
+  contactEmail?: string;
+  telegramHandleDisplay?: string;
+  telephone?: string;
+  address?: {
+    streetAddress?: string;
+    addressLocality?: string;
+    addressRegion?: string;
+    postalCode?: string;
+    addressCountry?: string;
+  };
+  areaServed?: string;
   primaryTelegramCtaUrl: string;
   freeAuditCtaUrl: string;
   headerCtaLabel?: string;
@@ -38,12 +49,28 @@ export interface SiteSettings {
     label: string;
     href: string;
   }>;
-  footerPoweredByText?: string;
+  footerTagline?: string;
   footerCopyrightText?: string;
   footerLegalLinks?: Array<{
     label: string;
     href: string;
   }>;
+  footerNavGroups?: Array<{
+    heading: string;
+    links: Array<{
+      label: string;
+      href: string;
+    }>;
+  }>;
+  blogAskLlm?: {
+    enabled?: boolean;
+    heading?: string;
+    promptTemplate?: string;
+    chatgptLabel?: string;
+    perplexityLabel?: string;
+    grokLabel?: string;
+    googleAiLabel?: string;
+  };
   socialLinks: {
     x?: string;
     telegram?: string;
@@ -57,14 +84,21 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
     siteName,
     organizationLegalName,
+    contactEmail,
+    telegramHandleDisplay,
+    telephone,
+    address,
+    areaServed,
     primaryTelegramCtaUrl,
     freeAuditCtaUrl,
     headerCtaLabel,
     headerCtaUrl,
     headerNavItems,
-    footerPoweredByText,
+    footerTagline,
     footerCopyrightText,
     footerLegalLinks,
+    footerNavGroups,
+    blogAskLlm,
     socialLinks,
     announcement,
     logo{
@@ -305,14 +339,21 @@ export async function getSiteSettingsPreview() {
   const query = `*[_type == "siteSettings" && _id == "site-settings"][0]{
     siteName,
     organizationLegalName,
+    contactEmail,
+    telegramHandleDisplay,
+    telephone,
+    address,
+    areaServed,
     primaryTelegramCtaUrl,
     freeAuditCtaUrl,
     headerCtaLabel,
     headerCtaUrl,
     headerNavItems,
-    footerPoweredByText,
+    footerTagline,
     footerCopyrightText,
     footerLegalLinks,
+    footerNavGroups,
+    blogAskLlm,
     socialLinks,
     announcement,
     logo{
@@ -613,6 +654,32 @@ export async function getRelatedPosts(
   } catch {
     return [];
   }
+}
+
+/**
+ * Lightweight projection of published posts (title + slug + plain body text)
+ * used to compute glossary <-> blog relations WITHOUT pulling full bodies.
+ * `pt::text(body)` keeps the matching pure server-side text.
+ */
+export interface PostForGlossaryLinks {
+  _id: string;
+  title?: string;
+  slug?: { current?: string };
+  publishedAt?: string;
+  bodyText?: string;
+}
+
+export async function getAllPostsForGlossaryLinks(): Promise<
+  PostForGlossaryLinks[]
+> {
+  const query = `*[_type == "post" && status == "published" && (!defined(publishedAt) || publishedAt <= now())]{
+    _id,
+    title,
+    slug,
+    publishedAt,
+    "bodyText": pt::text(body)
+  } | order(publishedAt desc)`;
+  return sanityClient.fetch(query) as Promise<PostForGlossaryLinks[]>;
 }
 
 // ── Flesch-Kincaid calculator page copy ────────────────────────────────────

@@ -1,6 +1,16 @@
 import type { MetadataRoute } from "next";
+import { getSiteSettings } from "@/sanity/lib/queries";
 
-export default function manifest(): MetadataRoute.Manifest {
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
+
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const settings = await getSiteSettings();
+  // CMS favicon is the single source of truth (same source as layout.tsx).
+  // Fallback is the on-repo brand mark, NOT /favicon.ico - that file was
+  // intentionally removed (d4d5be7) and 404s.
+  const faviconUrl =
+    settings?.favicon?.asset?.url ?? `${siteUrl}/brand/promptraise-mark.svg`;
+
   return {
     name: "PromptRaise",
     short_name: "PromptRaise",
@@ -12,9 +22,16 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#67FF67",
     icons: [
       {
-        src: "/favicon.ico",
-        sizes: "48x48",
-        type: "image/x-icon",
+        src: faviconUrl,
+        sizes: "128x128",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: `${siteUrl}/brand/promptraise-mark.svg`,
+        sizes: "any",
+        type: "image/svg+xml",
+        purpose: "any",
       },
     ],
   };

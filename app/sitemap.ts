@@ -7,8 +7,7 @@ import {
 } from "@/sanity/lib/queries";
 import { postUrl, authorUrl } from "@/lib/blog";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = await getAllPages();
@@ -61,16 +60,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
     {
-      url: `${siteUrl}/academy/glossary`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-    {
       url: `${siteUrl}/glossary`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.6,
+      priority: 0.7,
     },
     {
       url: `${siteUrl}/free/flesch-kincaid-calculator`,
@@ -79,10 +72,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
-      url: `${siteUrl}/studio`,
+      url: `${siteUrl}/terms`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.3,
+      priority: 0.4,
+    },
+    {
+      url: `${siteUrl}/cookies`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${siteUrl}/llms.txt`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/llms-full.txt`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/sitemap`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.4,
     },
   ];
 }

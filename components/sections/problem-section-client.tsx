@@ -65,14 +65,20 @@ export function ProblemSectionClient({
           className="pointer-events-none absolute inset-0 z-0 overflow-clip opacity-60"
         >
           <img
+            loading="lazy"
+            decoding="async"
             src="/figma/problem-decorative-ellipse.svg"
             alt=""
+            aria-hidden="true"
             className="absolute top-[46%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
             style={{ width: "min(1300px, 130%)" }}
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="/figma/problem-decorative-vector.svg"
             alt=""
+            aria-hidden="true"
             className="absolute top-[50%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
             style={{ width: "min(1340px, 134%)" }}
           />
@@ -82,8 +88,11 @@ export function ProblemSectionClient({
             <div className="prompt-problem-window-bar relative mb-6 flex items-center pb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/problem-window-dots.svg"
                 alt=""
+                aria-hidden="true"
                 className="absolute top-[1px] left-[2px] h-[17px] w-[65px]"
               />
               <h2 className="prompt-problem-window-title absolute inset-x-0 text-center">
@@ -95,8 +104,11 @@ export function ProblemSectionClient({
                 <div key={problem.id} className="prompt-problem-card">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
+                    loading="lazy"
+                    decoding="async"
                     src="/figma/problem-card-icon.svg"
                     alt=""
+                    aria-hidden="true"
                     className="prompt-problem-card-icon"
                   />
                   <h3 className="prompt-problem-card-title">{problem.title}</h3>
@@ -168,79 +180,124 @@ function ProblemSectionAnimated({
         }}
       >
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-bg-layer.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[-1476px] left-[-259px] block h-[2222px] w-[1959px] max-w-none"
         />
         {/* Scattered decorative marks */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-2.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[123px] left-[191px] h-[24px] w-[25px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-3.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-0 left-[51px] h-[24px] w-[25px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-4.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[106px] left-0 h-[24px] w-[25px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-5.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[246px] left-[134px] size-[24px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-6.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[214px] left-[345px] size-[23px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-7.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[348px] left-[281px] h-[23px] w-[24px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-8.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[276px] left-[513px] h-[24px] w-[26px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-9.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[423px] left-[443px] h-[24px] w-[28px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-10.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[307px] left-[694px] h-[24px] w-[27px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-11.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[466px] left-[618px] h-[25px] w-[27px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-12.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[298px] left-[895px] h-[24px] w-[28px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-13.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[473px] left-[812px] h-[25px] w-[29px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-14.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[233px] left-[1124px] h-[31px] w-[27px]"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-mark-15.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[436px] left-[1028px] h-[26px] w-[28px]"
         />
       </div>
@@ -251,14 +308,20 @@ function ProblemSectionAnimated({
         className="pointer-events-none absolute inset-0 z-0 overflow-clip"
       >
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-decorative-ellipse.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[46%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
           style={{ width: "min(1300px, 130%)", opacity: 0.9 }}
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/problem-decorative-vector.svg"
           alt=""
+          aria-hidden="true"
           className="absolute top-[50%] left-1/2 -translate-x-1/2 mix-blend-plus-lighter"
           style={{ width: "min(1340px, 134%)", opacity: 0.9 }}
         />
@@ -275,8 +338,11 @@ function ProblemSectionAnimated({
             <div className="prompt-problem-window-bar relative mb-6 flex items-center pb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/problem-window-dots.svg"
                 alt=""
+                aria-hidden="true"
                 className="absolute top-[1px] left-0 h-[17px] w-[65px]"
               />
               <h2 className="prompt-problem-window-title absolute inset-x-0 text-center">
@@ -347,8 +413,11 @@ function FloatingProblemCard({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        loading="lazy"
+        decoding="async"
         src="/figma/problem-card-icon.svg"
         alt=""
+        aria-hidden="true"
         className="prompt-problem-card-icon"
       />
       <h4 className="prompt-problem-card-title">{problem.title}</h4>

@@ -298,6 +298,14 @@ Update this file after every meaningful implementation change.
 - Wired user-provided hero video asset (`/Users/zkhan/Downloads/BG Video PromptRaise.mp4`) into app as `public/videos/bg-video-promptraise.mp4`.
 - Removed hero poster usage and hero-only image/texture overlays to keep background driven by video media only.
 - Current command snapshot after hero video replacement: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npm run design:verify` passes.
+- Added NAP + Telegram contact chrome (modeled on 009.agency): new `siteSettings` fields `contactEmail`, `telegramHandleDisplay`, `telephone`, `address` (object), `areaServed`; footer renders a contact line (email mailto, telegram handle linking to socialLinks.telegram or primaryTelegramCtaUrl, optional tel, address line); Organization JSON-LD now emits `address`, `telephone`, `email`, `areaServed` when set. All values CMS-editable. `tsc --noEmit` clean. Committed to `staging`; prod publish remains gated.
+- NAP final values set in live CMS (production dataset, verified read-back) and as schema defaults: support@promptraise.com, @promptraise -> https://t.me/promptraise, +971-506739713, Cluster Y, JLT / Dubai / Dubai / AE, areaServed Worldwide. Commits `41ed8fa` + `880461a` on staging.
+- Footer redesign (`7546014`): replaced "powered by Cicada" with tagline "Be the answer, not the search result" (new `footerTagline` field, old `footerPoweredByText` removed); added Trust Center link (https://trust.promptraise.com) to CMS footer links + code defaults; restructured footer into 4 clean rows (brand+tagline / contact / nav / copyright) with flex-wrap so it no longer clusters on mobile. Schema field rename `footerPoweredByText` -> `footerTagline`; CMS patched + verified. `tsc` + `next build` clean.
+- Copyright line updated (`ceaba78`): footer last line is now "© 2026 PromptRaise · All Rights Reserved" (was "© 2026 · cicada-mm.com · Dubai, UAE"). Updated in live CMS doc + schema initialValue + code fallback; verified read-back.
+- Footer v3 redesign (`0dc7a73`): grouped nav columns with headings (Product / Company / Legal), elegant separated contact row (middot dots between email / @promptraise / phone / address), Sitemap link added to Company, uses `--text-muted` token. New CMS field `footerNavGroups` (array of {heading, links[]}); populated live in CMS (3 groups) + code defaults; `footerLegalLinks` kept as fallback. `tsc` + `next build` clean.
+- Footer v4 (`fe51960`): Resources heading (was Product), new Services column with Free AI Audit -> audit.promptraise.com, Academy -> Glossary link to /glossary (legacy 301 to /academy/glossary preserved). Sitemap now includes /terms, /cookies, /llms.txt, /llms-full.txt.
+- DEPLOYED TO PRODUCTION (8c70396 + 9d2ba54): added human-readable /sitemap page (app/sitemap/page.tsx, noindex) with all pages/post/authors; footer Sitemap now links to /sitemap (was /sitemap.xml); /sitemap.xml stays for crawlers + added /sitemap to XML. New prod deploy promptraise-q92ouywbt-...vercel.app (dpl_C5ADohuk...) serves promptraise.com/www/dev (aliases re-verified pointing to new deploy). Verified live: /sitemap -> 200 HTML Sitemap page, footer href=/sitemap, /sitemap.xml -> 200 application/xml.
+- Trust center (`/srv/trust-center` + Caddy vhost trust.promptraise.com -> static file_server) staged on VPS. DNS write blocked: cloudflare.token is read-only (Zone.DNS Read), and www.trust currently CNAMEs to a dead CloudFront origin (403). Telegram.promptraise.com also has missing A record (NXDOMAIN in Caddy logs). Needs: trust.promptraise.com A 84.247.186.104 (+ telegram.promptraise.com A 84.247.186.104) added in Cloudflare dashboard or via a write-scoped token.
 
 ## Housekeeping
 
@@ -396,3 +404,38 @@ Update this file after every meaningful implementation change.
 - **Google Analytics 4 tag installed (2026-08-20):**
   - Added the official gtag.js snippet as the FIRST scripts in `app/layout.tsx` `<head>` (immediately after the `<head>` element, per Google install guide): async `https://www.googletagmanager.com/gtag/js?id=G-4BME0R598C` + inline dataLayer/gtag config. Exactly one Google tag per page.
   - Sits alongside Ahrefs + Clarity sitewide tracking; consistent with those unconditional head loads. Tag ID is hardcoded (G-4BME0R598C) per Google's manual-install tag - could be env-gated later if needed.
+- **PR-39 - Homepage internal-link architecture + glossary consolidation (2026-08-20, commit ec5d3f3 -> staging):**
+  - 301 `/glossary` -> `/academy/glossary` (added to `next.config.ts` redirects). Canonical glossary is the richer Academy page (DefinedTermSet authority); `/glossary` was a true duplicate splitting authority.
+  - `app/sitemap.ts`: removed `/glossary` entry (kept `/academy/glossary`); rest of sitemap otherwise as-is.
+  - `app/llms.txt/route.ts`: dropped `/glossary`, marked `/academy/glossary` canonical.
+  - `app/llms-full.txt/route.ts`: glossary term links changed from `/glossary#term-...` to `/academy/glossary#term-...`; Pages section consolidated to single Academy Glossary entry.
+  - `app/api/revalidate/route.ts`: removed the now-obsolete `/glossary` lock-step revalidate (301 target `/academy/glossary` is revalidated by the canonical path).
+  - Footer (`components/site-footer.tsx` + Sanity `siteSettings.footerLegalLinks`): added "AI Visibility Blog" (/blog) and "Free Tools" (/free/flesch-kincaid-calculator) links; only Academy glossary (/academy/glossary) linked (no /glossary); /studio excluded. Both the code fallback (`defaultFooterLinks`) and the live CMS doc updated.
+  - Type-check + build pass. Pushed to staging branch (deploys to https://staging.promptraise.com). Production untouched.
+- **PR-35 - Phase 4 lead mapping (2026-08-20):**
+  - Verified live: Supabase migration already applied to `audit_leads` (lead_tier, llm_audit_status, llm_audit_url, trello_card_id, consent_at, requires_llm + indexes). Captured it in repo as `supabase/migrations/002_lead_mapping.sql` (was only applied live, not version-controlled).
+  - Linear bridge (`leads_to_linear.py`) stays as-is (PM/backup per Zain).
+  - Built `leads_to_trello.py` (inert, key-gated) + registered a `Leads -> Trello bridge` 5-min no-agent cron job (258d6c88de4f). Silent no-op until Zain supplies TRELLO_API_KEY + TRELLO_TOKEN; then creates cards in 'Sales Pipeline' board (Warm/Hot label, stores trello_card_id, updates card on LLM-audit done).
+  - Trello bridge remains blocked pending the key.
+  - **PR-8 approval closed (2026-08-20):** Zain approved the GA4 + funnel-event work already committed to staging. Verified present on the `staging` branch (HEAD e545661 = origin/staging): GA4 tag G-4BME0R598C in `app/layout.tsx` head + CSP whitelist, and lead_form_submit/lead_form_success/lead_form_error events in `components/sections/plans-section.tsx`. Typecheck clean. Moved PR-8 to In Review with an acknowledgment comment. Remaining: confirm conversion numbers in GA4 (needs real traffic); playbook form events deferred until PR-5 playbook ships. Note: staging URL currently bounces to a Vercel SSO login page when fetched headlessly (302 -> vercel.com/sso-api) - likely deployment protection; needs a Vercel-side check since browser/SSO auth is required.
+- **PR-41 - Blog cover images no longer double-cropped (2026-08-20, commit cb3c805 -> staging):**
+  - FeaturedCard redesigned -> full-width banner strip: image across the top at native 2.5:1 (`aspect-[5/2]`, CDN request 1200x480), text below. Single deterministic crop, zero browser second-crop. Removed the old side-column `object-cover` (0.86:1) that cut the banner to a center sliver.
+  - PostCard -> uniform 16:9 (`aspect-[16/9]`, CDN request 640x360). One crop, matches box ratio exactly; removed second-crop from `h-[180px]` box.
+  - Deleted `components/blog/browser.tsx` (dead duplicate of live `components/blog-browser.tsx` - two copies of the same bug).
+  - Type-check passes, lint 0 errors. Pushed to staging branch only (https://staging.promptraise.com). Production untouched. Zain to eyeball rendered /blog on staging.
+- **Alt-text cleanup - homepage (2026-08-22):**
+  - Audit finding: "Alt attribute for images is missing" (216 instances). Root cause: homepage renders ~239 images with literal `alt=""`; meaningful ones (team photos, brand mark, comparison check cells) were blank while decorative art was correct-but-unmarked.
+  - Fixes in `components/`:
+    - `team-section.tsx`: member photo now `alt={name}` (CMS member name).
+    - `site-brand.tsx`: `SiteBrand` Image alt="PromptRaise" (was blank + aria-hidden).
+    - `comparison-section.tsx`: CheckCell images now alt="Yes"/"No" (was blank).
+    - All remaining decorative imgs (bg layers, rings, ellipses, noise, connectors, separators, badge marks, icons) got `aria-hidden="true"` alongside `alt=""` - the WCAG-correct decorative pattern, 115 imgs across 7 section components.
+  - Verified: typecheck clean, production build passes, served build renders 252 imgs = 0 no-alt, 0 empty-without-aria-hidden, 42 descriptive, 210 decorative-marked.
+  - Staged to `staging` branch only. Production untouched.
+- **PR - Blog TOC + Ask-an-AI box (2026-08-22, commits fe7bc43 -> b76a473 -> 6168f44, deployed to PRODUCTION at 6168f44):**
+  - Auto-generated **Table of Contents** on blog posts, derived from the same Sanity PortableText blocks that render the body (see `lib/blog-headings.ts`). This makes it **automatic for every future blog** - any post with >= 4 H2s gets a TOC; short posts stay clean. Zero author/CMS setup.
+  - Elegibility: >= 4 H2s, depth H2+H3 only, kebab-case ids (`#core-problem-the-citation-gap`), deduped with -1/-2 on repeats; h2/h3 carry `scroll-mt-28` so the sticky header never covers jumps.
+  - Design: numbered entries (01..09), accent hover, responsive - single column mobile (15px, py-2.5 touch targets), two-column grid on md+ (16px). Verified at 390px + 1280px + on production.
+  - NO TableOfContents JSON-LD (Google retired that rich result - dead bytes).
+  - **Ask-an-AI-assistant box** (`components/blog-ask-llm.tsx`): deep-link buttons to ChatGPT/Perplexity/Grok/Google AI with prefilled authority prompt `{url}` placeholder + UTM params. All copy CMS-editable via `siteSettings.blogAskLlm` (seeded enabled in production dataset - verified live on both blog posts).
+  - Prod verification: both live blogs render TOC (9 + 7 entries, all anchors resolve), Ask box + ChatGPT button present, 6 in-body glossary links intact.

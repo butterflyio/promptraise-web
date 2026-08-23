@@ -15,7 +15,14 @@ const STEPS = [
       "We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you now. We fix the baseline - how often you're mentioned in target queries and alongside which competitors.",
     icon: (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src="/figma/process-card-icon-1.svg" alt="" className="size-full" />
+      <img
+        loading="lazy"
+        decoding="async"
+        src="/figma/process-card-icon-1.svg"
+        alt=""
+        aria-hidden="true"
+        className="size-full"
+      />
     ),
   },
   {
@@ -316,8 +323,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               style={{ left: 0, top: 885, width: 1891, height: 217 }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/process-bg-bright-1.svg"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
               />
             </div>
@@ -327,8 +337,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               style={{ left: 316, top: 789, width: 1224, height: 710 }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/process-bg-bright-2.svg"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
               />
             </div>
@@ -343,8 +356,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   style={{ width: 950, height: 1339 }}
                 >
                   <img
+                    loading="lazy"
+                    decoding="async"
                     src="/figma/process-vector-1.svg"
                     alt=""
+                    aria-hidden="true"
                     className="block size-full max-w-none"
                   />
                 </div>
@@ -361,8 +377,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   style={{ width: 428, height: 1339 }}
                 >
                   <img
+                    loading="lazy"
+                    decoding="async"
                     src="/figma/process-vector-2.svg"
                     alt=""
+                    aria-hidden="true"
                     className="block size-full max-w-none"
                   />
                 </div>
@@ -390,8 +409,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               style={{ left: 878, top: 370, width: 112, height: 1016 }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src="/figma/process-bg-bar-glow.svg"
                 alt=""
+                aria-hidden="true"
                 className="block size-full max-w-none"
               />
             </div>
@@ -416,6 +438,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                     <img
                       src="/figma/process-noise.png"
                       alt=""
+                      aria-hidden="true"
                       loading="lazy"
                       decoding="async"
                       className="block size-full max-w-none"
@@ -444,8 +467,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
 
           {/* Pattern (106:1295, mix-blend-overlay, centered at top 34.35%) */}
           <img
+            loading="lazy"
+            decoding="async"
             src="/figma/process-pattern.svg"
             alt=""
+            aria-hidden="true"
             className="absolute left-1/2 -translate-x-1/2 mix-blend-overlay"
             style={{ top: "34.35%", width: 1566, maxWidth: "none" }}
           />
@@ -454,6 +480,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
         {/* ── Decorative vector on top (119:2733, color-dodge) ─ */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/process-vector-top.svg"
           alt=""
           aria-hidden
@@ -466,6 +494,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
           <div className="relative mx-auto mb-5 inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/process-badge-line.svg"
               alt=""
               aria-hidden
@@ -474,6 +504,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             {/* Mark 1 (Figma 123:40522, at x=105.5, flipped) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/process-badge-mark-1.svg"
               alt=""
               aria-hidden
@@ -487,6 +519,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             {/* Mark 2 (Figma 123:40521, at x=238.5) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/process-badge-mark-2.svg"
               alt=""
               aria-hidden
@@ -531,6 +565,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 {/* Glow panels */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/figma/process-card-glow-1.svg"
                   alt=""
                   aria-hidden
@@ -538,6 +574,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/figma/process-card-glow-2.svg"
                   alt=""
                   aria-hidden
@@ -546,6 +584,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 {/* Arcs */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/figma/process-card-arc-1.svg"
                   alt=""
                   aria-hidden
@@ -553,6 +593,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/figma/process-card-arc-2.svg"
                   alt=""
                   aria-hidden
@@ -560,6 +602,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/figma/process-card-arc-3.svg"
                   alt=""
                   aria-hidden
@@ -568,6 +612,8 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                 {/* Decorative ellipse (338:714) */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/figma/process-card-ellipse.svg"
                   alt=""
                   aria-hidden
@@ -635,8 +681,11 @@ export function ProcessSection({ content }: ProcessSectionProps) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/figma/process-connector.svg"
               alt=""
+              aria-hidden="true"
               className="block h-[68px] w-full max-w-none"
             />
           </motion.div>

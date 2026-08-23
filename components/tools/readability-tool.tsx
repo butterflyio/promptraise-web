@@ -34,7 +34,7 @@ const LINK_RE =
 /**
  * Maps each readability formula key to its glossary term name, so the formula
  * card label becomes an internal link to that term's anchor on
- * /academy/glossary (and /glossary). Anchors use #term-<slug>.
+ * /glossary. Anchors use #term-<slug>.
  */
 const FORMULA_GLOSSARY: Record<string, string> = {
   readingEase: "Flesch Reading Ease",
@@ -53,7 +53,7 @@ function glossarySlug(s: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-const GLOSSARY_URL = "/academy/glossary";
+const GLOSSARY_URL = "/glossary";
 
 /** Encode report text into a compact URL segment (lz-string URI-safe). */
 function encodeShare(text: string): string {

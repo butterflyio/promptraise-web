@@ -11,7 +11,13 @@ import {
   getRelatedPosts,
   type PostDoc,
 } from "@/sanity/lib/queries";
-import { imageUrl } from "@/lib/sanity-image";
+import { getGlossaryContent } from "@/lib/glossary-content";
+import { autoLinkBlocks } from "@/lib/glossary-links";
+import { imageUrl, naturalAspectRatio } from "@/lib/sanity-image";
+import { BlogAskLlm } from "@/components/blog-ask-llm";
+import { BlogToc } from "@/components/blog-toc";
+import { getSiteSettings } from "@/sanity/lib/queries";
+import { deriveHeadings } from "@/lib/blog-headings";
 import {
   postUrl,
   postHref,
@@ -24,8 +30,7 @@ import {
 
 export const revalidate = 30;
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.promptraise.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -127,10 +132,33 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   const related = await getRelatedPosts(post._id, post.categories ?? [], 3);
-  const cover = post.coverImage?.asset?.url
-    ? imageUrl(post.coverImage.asset.url, {
-        width: 1400,
-        height: 700,
+
+  // Auto link glossary terms in the body (blog -> glossary direction).
+  // Deliberately NOT rendered as a keyword chip row: a list of exact-term
+  // links violates Google's link guidance ("don't chain up links next to
+  // each other") and its keyword-stuffing definition ("keywords appear in a
+  // list or group"). In-body first-occurrence links are the safe pattern.
+  const glossary = await getGlossaryContent(dm);
+  const linked = autoLinkBlocks((post.body ?? []) as never, glossary.terms);
+  const bodyBlocks = linked.blocks;
+
+  // TOC + heading anchors, derived from the same block list that renders the
+  // body (see lib/blog-headings.ts). Gate: >= 4 H2s, h2+h3 only, kebab ids.
+  const {
+    headings,
+    headingIds,
+    show: showToc,
+  } = deriveHeadings((post.body ?? []) as never, 4);
+
+  // Ask-an-AI-assistant box (GEO nudge). Read siteSettings for the box copy
+  // and on/off switch - all CMS-editable, defaults conservative (off).
+  const settings = await getSiteSettings();
+  const coverAssetUrl = post.coverImage?.asset?.url;
+  const coverRatio = naturalAspectRatio(coverAssetUrl) ?? 2;
+  const cover = coverAssetUrl
+    ? imageUrl(coverAssetUrl, {
+        width: 1600,
+        height: Math.round(1600 / coverRatio),
         fit: "crop",
       })
     : null;
@@ -262,15 +290,22 @@ export default async function PostPage({ params }: PageProps) {
           <img
             src={cover}
             alt={post.title ?? ""}
-            className="aspect-[2/1] w-full object-cover"
+            className="w-full object-cover"
+            style={{ aspectRatio: String(coverRatio) }}
           />
         </div>
       ) : null}
 
+      {/* Table of contents (auto, >= 4 H2s only) */}
+      {showToc ? <BlogToc headings={headings} /> : null}
+
       {/* Body */}
       <div className="prose-blog mt-10">
-        <PostBody blocks={(post.body ?? []) as never} />
+        <PostBody blocks={bodyBlocks as never} headingIds={headingIds} />
       </div>
+
+      {/* Ask an AI assistant (GEO nudge) - CMS-switched via siteSettings */}
+      <BlogAskLlm settings={settings} slug={slug} />
 
       {/* About the author box */}
       {post.author?.name ? (
