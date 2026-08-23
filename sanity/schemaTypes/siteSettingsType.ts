@@ -26,7 +26,7 @@ export const siteSettingsType = defineType({
       description:
         "Displayed in the footer contact line and used in Organization structured data (email). Shows as a mailto: link.",
       validation: (rule) => rule.email(),
-      initialValue: "readability@promptraise.com",
+      initialValue: "support@promptraise.com",
     }),
     defineField({
       name: "telegramHandleDisplay",
@@ -42,6 +42,7 @@ export const siteSettingsType = defineType({
       type: "string",
       description:
         "Optional. Used in Organization structured data (contact telephone) and rendered as a tel: link when present.",
+      initialValue: "+971-506739713",
     }),
     defineField({
       name: "address",
@@ -54,6 +55,7 @@ export const siteSettingsType = defineType({
           name: "streetAddress",
           title: "Street Address",
           type: "string",
+          initialValue: "Cluster Y, JLT",
         }),
         defineField({
           name: "addressLocality",
