@@ -299,6 +299,7 @@ Update this file after every meaningful implementation change.
 - Removed hero poster usage and hero-only image/texture overlays to keep background driven by video media only.
 - Current command snapshot after hero video replacement: `npm run lint` passes with warnings only (0 errors), `npm run build` passes, `npm run design:verify` passes.
 - Added NAP + Telegram contact chrome (modeled on 009.agency): new `siteSettings` fields `contactEmail`, `telegramHandleDisplay`, `telephone`, `address` (object), `areaServed`; footer renders a contact line (email mailto, telegram handle linking to socialLinks.telegram or primaryTelegramCtaUrl, optional tel, address line); Organization JSON-LD now emits `address`, `telephone`, `email`, `areaServed` when set. All values CMS-editable. `tsc --noEmit` clean. Committed to `staging`; prod publish remains gated.
+- NAP final values set in live CMS (production dataset, verified read-back) and as schema defaults: support@promptraise.com, @promptraise -> https://t.me/promptraise, +971-506739713, Cluster Y, JLT / Dubai / Dubai / AE, areaServed Worldwide. Commits `41ed8fa` + `880461a` on staging.
 
 ## Housekeeping
 
