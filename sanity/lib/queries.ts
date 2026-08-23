@@ -55,6 +55,13 @@ export interface SiteSettings {
     label: string;
     href: string;
   }>;
+  footerNavGroups?: Array<{
+    heading: string;
+    links: Array<{
+      label: string;
+      href: string;
+    }>;
+  }>;
   blogAskLlm?: {
     enabled?: boolean;
     heading?: string;
@@ -90,6 +97,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     footerTagline,
     footerCopyrightText,
     footerLegalLinks,
+    footerNavGroups,
     blogAskLlm,
     socialLinks,
     announcement,
@@ -344,6 +352,7 @@ export async function getSiteSettingsPreview() {
     footerTagline,
     footerCopyrightText,
     footerLegalLinks,
+    footerNavGroups,
     blogAskLlm,
     socialLinks,
     announcement,

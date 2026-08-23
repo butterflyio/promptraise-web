@@ -2,14 +2,30 @@ import type { SiteSettings } from "@/sanity/lib/queries";
 
 import { SiteBrand } from "./site-brand";
 
-const defaultFooterLinks = [
-  { label: "AI Visibility Blog", href: "/blog" },
-  { label: "Academy", href: "/academy/glossary" },
-  { label: "Trust Center", href: "https://trust.promptraise.com" },
-  { label: "Free Tools", href: "/free/flesch-kincaid-calculator" },
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
-  { label: "Cookie Usage", href: "/cookies" },
+const defaultFooterGroups: NonNullable<SiteSettings["footerNavGroups"]> = [
+  {
+    heading: "Product",
+    links: [
+      { label: "AI Visibility Blog", href: "/blog" },
+      { label: "Academy", href: "/academy/glossary" },
+      { label: "Free Tools", href: "/free/flesch-kincaid-calculator" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "Trust Center", href: "https://trust.promptraise.com" },
+      { label: "Sitemap", href: "/sitemap.xml" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
+      { label: "Cookie Usage", href: "/cookies" },
+    ],
+  },
 ];
 
 const COUNTRY_DISPLAY: Record<string, string> = {
@@ -40,10 +56,11 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
     settings?.footerTagline ?? "Be the answer, not the search result";
   const copyrightText =
     settings?.footerCopyrightText ?? "© 2026 PromptRaise · All Rights Reserved";
-  const footerLinks =
-    settings?.footerLegalLinks && settings.footerLegalLinks.length > 0
-      ? settings.footerLegalLinks
-      : defaultFooterLinks;
+
+  const groups =
+    settings?.footerNavGroups && settings.footerNavGroups.length > 0
+      ? settings.footerNavGroups
+      : defaultFooterGroups;
 
   const contactEmail = settings?.contactEmail;
   const telegramHandle = settings?.telegramHandleDisplay;
@@ -80,9 +97,9 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
 
   return (
     <footer className="border-t border-[rgba(255,255,255,0.06)] bg-[var(--bg-contrast)]">
-      <div className="tablet:justify-between tablet:px-[52px] mx-auto flex w-full flex-col items-center gap-4 px-4 pt-[29px] pb-7">
-        {/* Row 1: brand + tagline */}
-        <div className="flex flex-col items-center gap-1 text-center tablet:flex-row tablet:items-center tablet:gap-3 tablet:text-left">
+      <div className="tablet:px-[52px] mx-auto flex w-full flex-col gap-8 px-4 pt-[29px] pb-7">
+        {/* Brand + tagline */}
+        <div className="flex flex-col items-center gap-2 text-center tablet:flex-row tablet:items-center tablet:gap-3 tablet:text-left">
           <SiteBrand
             siteName={siteName}
             logoUrl={logoUrl}
@@ -91,20 +108,52 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
             wordmarkClassName="ml-2 text-[13px] leading-[20.8px] tracking-[0] font-bold text-white"
           />
           {tagline && (
-            <span className="max-w-[280px] text-[12px] leading-[18px] tracking-[0] text-[#8A8D91] tablet:border-l tablet:border-[rgba(255,255,255,0.1)] tablet:pl-3">
+            <span className="max-w-[280px] text-[12px] leading-[18px] tracking-[0] text-[var(--text-muted)] tablet:border-l tablet:border-[rgba(255,255,255,0.1)] tablet:pl-3">
               {tagline}
             </span>
           )}
         </div>
 
-        {/* Row 2: contact line */}
+        {/* Nav columns */}
+        <nav
+          aria-label="Footer navigation"
+          className="grid grid-cols-2 gap-x-6 gap-y-8 tablet:grid-cols-3 lg:grid-cols-4"
+        >
+          {groups.map((group) => (
+            <div key={group.heading} className="flex flex-col gap-3">
+              <h3 className="text-[11px] font-semibold tracking-[0.12em] text-[var(--text-muted)] uppercase">
+                {group.heading}
+              </h3>
+              <ul className="flex flex-col gap-2.5">
+                {group.links.map((link) => (
+                  <li key={link.href + link.label}>
+                    <a
+                      href={link.href}
+                      className="text-[13px] leading-[1.4] tracking-[0] text-[#cfd3d8] transition-colors hover:text-[var(--accent-primary)]"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+
+        {/* Contact row - separated */}
         {contactItems.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-center tablet:justify-start">
-            {contactItems.map((item) => (
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center tablet:justify-start">
+            {contactItems.map((item, i) => (
               <span
                 key={item.key}
-                className="text-[11px] leading-4 tracking-[0] text-[#8A8D91]"
+                className="flex items-center gap-3 text-[12px] leading-4 tracking-[0] text-[var(--text-muted)]"
               >
+                {i > 0 && (
+                  <span
+                    aria-hidden
+                    className="h-1 w-1 shrink-0 rounded-full bg-[#3a3f45]"
+                  />
+                )}
                 {item.href ? (
                   <a
                     href={item.href}
@@ -126,32 +175,18 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
           </div>
         )}
 
-        {/* Row 3: nav links + consent */}
-        <nav
-          aria-label="Footer links"
-          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 tablet:justify-start"
-        >
-          {footerLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
-            >
-              {link.label}
-            </a>
-          ))}
+        {/* Bottom bar: legal link fallback + consent + copyright */}
+        <div className="flex flex-col items-center gap-3 border-t border-[rgba(255,255,255,0.06)] pt-6 tablet:flex-row tablet:justify-between">
+          <p className="text-[10px] leading-4 tracking-[0] text-[#686B6E]">
+            {copyrightText}
+          </p>
           <a
             href="#"
-            className="termly-display-preferences text-[12px] leading-[1.4] tracking-[0] text-white transition-colors hover:text-[var(--accent-primary)]"
+            className="termly-display-preferences text-[10px] leading-4 tracking-[0] text-[#686B6E] transition-colors hover:text-[var(--accent-primary)]"
           >
             Consent Preferences
           </a>
-        </nav>
-
-        {/* Row 4: copyright */}
-        <p className="text-[10px] leading-4 tracking-[0] text-[#686B6E]">
-          {copyrightText}
-        </p>
+        </div>
       </div>
     </footer>
   );

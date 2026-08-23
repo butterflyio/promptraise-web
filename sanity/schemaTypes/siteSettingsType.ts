@@ -286,6 +286,67 @@ export const siteSettingsType = defineType({
       ],
     }),
     defineField({
+      name: "footerNavGroups",
+      title: "Footer Navigation Groups",
+      type: "array",
+      description:
+        "Organize footer links into columns with headings. When set, replaces the flat link row.",
+      of: [
+        {
+          type: "object",
+          name: "footerNavGroup",
+          title: "Footer Column",
+          fields: [
+            defineField({
+              name: "heading",
+              title: "Heading",
+              type: "string",
+              description: "Column title, e.g. Product, Company, Legal",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "links",
+              title: "Links",
+              type: "array",
+              of: [
+                {
+                  type: "object",
+                  name: "footerNavLink",
+                  title: "Link",
+                  fields: [
+                    defineField({
+                      name: "label",
+                      title: "Label",
+                      type: "string",
+                      validation: (rule) => rule.required(),
+                    }),
+                    defineField({
+                      name: "href",
+                      title: "URL or Path",
+                      type: "string",
+                      validation: (rule) => rule.required(),
+                    }),
+                  ],
+                  preview: {
+                    select: {
+                      title: "label",
+                      subtitle: "href",
+                    },
+                  },
+                },
+              ],
+            }),
+          ],
+          preview: {
+            select: {
+              title: "heading",
+              subtitle: "links",
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "blogAskLlm",
       title: "Blog: Ask an AI Assistant",
       type: "object",
