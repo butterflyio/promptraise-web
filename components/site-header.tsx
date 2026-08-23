@@ -1,4 +1,5 @@
 import type { SiteSettings } from "@/sanity/lib/queries";
+import { Flame } from "lucide-react";
 import { DsButton } from "@/components/design-system";
 import { SiteBrand } from "./site-brand";
 import { MobileMenu } from "./mobile-menu";
@@ -26,17 +27,9 @@ function HotBadge() {
     <span
       aria-label="Hot"
       title="Hot"
-      className="ml-0.5 inline-flex items-center text-[12px] leading-none"
+      className="ml-1 inline-flex items-center text-[var(--accent-primary)]"
     >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-        className="h-3.5 w-3.5"
-      >
-        <path d="M12 4C8 3 7 2.5 8 1.5 12 0 0 0 8 4.5 12" fill="currentColor" />
-        <path d="M12 9.5c1.2-6 4-9.5h2.5l1.5 4-3 7.5z" fill="currentColor" />
-      </svg>
+      <Flame aria-label="Hot" className="h-3.5 w-3.5" />
     </span>
   );
 }
@@ -75,6 +68,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
                 ...navItems.map((item) => ({
                   href: normalizeHref(item.href),
                   label: item.label,
+                  hot: Boolean((item as { hot?: boolean }).hot),
                 })),
                 { href: auditUrl, label: headerCtaLabel },
               ]}
@@ -102,6 +96,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
                 className="rounded-full px-3 py-2 text-[16px] leading-[1.5] tracking-[-0.32px] text-white transition-colors hover:text-white/85"
               >
                 {item.label}
+                {Boolean((item as { hot?: boolean }).hot) ? <HotBadge /> : null}
               </a>
             ))}
           </nav>

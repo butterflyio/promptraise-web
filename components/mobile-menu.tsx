@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 
 import { DsButton } from "@/components/design-system";
 import { MenuIcon } from "@/components/design-system";
+import { Flame } from "lucide-react";
 
 export type MobileNavItem = {
   href: string;
   label: string;
+  hot?: boolean;
 };
 
 interface MobileMenuProps {
@@ -125,6 +127,12 @@ export function MobileMenu({
                 className="rounded-full px-4 py-3 text-[24px] leading-[1.4] tracking-[-0.48px] text-white transition-colors hover:bg-white/5 hover:text-[var(--accent-primary)]"
               >
                 {item.label}
+                {item.hot ? (
+                  <Flame
+                    aria-label="Hot"
+                    className="ml-1.5 inline h-4 w-4 text-[var(--accent-primary)]"
+                  />
+                ) : null}
               </a>
             ))}
           </nav>
