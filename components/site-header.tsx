@@ -33,19 +33,22 @@ export function SiteHeader({ settings }: { settings: SiteSettings | null }) {
       ? settings.headerNavItems
       : defaultNavItems;
 
-  // When the announcement bar is active it is a fixed 40px strip at the very
-  // top (z-60). The header is absolutely positioned, so it must offset below
-  // it - otherwise the bar covers the logo and CTA buttons.
-  const announcementActive = Boolean(
+  // The announcement bar is a fixed strip that publishes its measured height
+  // to the CSS variable --announce-offset (set client-side, so it can also
+  // collapse to 0 when dismissed). The header is absolutely positioned, so it
+  // offsets from that variable to sit below the bar - and back to the top when
+  // the bar is gone. The fallback matches the bar's height on first paint so
+  // there is no overlap flash before the client measures it.
+  const announcementEnabled = Boolean(
     settings?.announcement?.enabled && settings?.announcement?.text,
   );
+  const fallbackOffset = announcementEnabled
+    ? "calc(2.5rem + env(safe-area-inset-top))"
+    : "0px";
+  const announceOffset = `var(--announce-offset, ${fallbackOffset})`;
 
   return (
-    <header
-      className={`absolute inset-x-0 z-50 ${
-        announcementActive ? "top-10" : "top-0"
-      }`}
-    >
+    <header className="absolute inset-x-0 z-50" style={{ top: announceOffset }}>
       <div className="tablet:px-9 desktop:px-24 mx-auto flex w-full flex-col items-start px-4 py-6">
         <div className="flex w-full items-center justify-between rounded-[9999px] backdrop-blur-[14.012px]">
           <div className="flex items-center gap-6">
