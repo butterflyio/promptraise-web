@@ -116,7 +116,7 @@ function CheckCell({
   active: boolean;
 }) {
   return (
-    <div className="mobile:px-2 relative flex w-full items-center justify-center rounded-[12px] px-6 py-2">
+    <div className="relative flex w-full items-center justify-center rounded-[12px] px-6 py-2">
       {active ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
@@ -124,7 +124,7 @@ function CheckCell({
           decoding="async"
           src={company.check}
           alt="Yes"
-          className="mobile:size-4 relative size-6"
+          className="relative size-6"
         />
       ) : (
         /* eslint-disable-next-line @next/next/no-img-element */
@@ -133,7 +133,7 @@ function CheckCell({
           decoding="async"
           src={MINUS}
           alt="No"
-          className="mobile:size-4 relative size-6"
+          className="relative size-6"
         />
       )}
     </div>
@@ -208,7 +208,7 @@ function LabelColumn({
           <span
             className={
               mobile
-                ? "text-center text-[11px] leading-[1.35] text-[var(--fg-secondary,#d4d4d8)]"
+                ? "text-center text-[16px] leading-[1.5] tracking-[-0.32px] whitespace-nowrap text-[var(--fg-secondary,#d4d4d8)]"
                 : "text-center text-[16px] leading-[1.5] tracking-[-0.32px] whitespace-nowrap text-[var(--fg-secondary,#d4d4d8)]"
             }
           >
@@ -326,7 +326,7 @@ function MobileComparison({
         }
       >
         <LabelColumn
-          className="mobile:w-[118px] mobile:px-3 w-[256px]"
+          className="mobile:w-[256px] mobile:px-3 w-[208px]"
           labels={labels}
           mobile
         />
@@ -334,7 +334,7 @@ function MobileComparison({
           company={company}
           columns={ROW_MATRIX}
           columnIndex={active}
-          className="mobile:flex-[1_1_0%] mobile:p-4 min-w-px flex-[1_0_0]"
+          className="min-w-px flex-[1_0_0] flex-[1_1_0%]"
         />
       </div>
     </div>
