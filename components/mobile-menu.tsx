@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 
 import { DsButton } from "@/components/design-system";
 import { MenuIcon } from "@/components/design-system";
@@ -32,6 +33,16 @@ export function MobileMenu({
   auditLabel,
 }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
+  // "Is hydrated" flag via useSyncExternalStore: false during SSR and the
+  // first client render (matches server HTML), flips to true right after
+  // hydration so the drawer can be portaled to document.body without a
+  // hydration mismatch. This is the setState-free equivalent of a mounted
+  // check (the direct setState-in-effect pattern trips the lint gate).
+  const isClient = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   // Lock body scroll while the menu is open.
   useEffect(() => {
@@ -80,76 +91,86 @@ export function MobileMenu({
         )}
       </button>
 
-      {/* Overlay drawer */}
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        className="tablet:hidden fixed inset-x-0 top-0 bottom-0 z-[80]"
-        style={{
-          background: "rgba(10,10,12,1)",
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
-        }}
-      >
-        <div className="flex h-full flex-col px-5 pt-6 pb-10">
-          <div className="mb-8 flex h-9 items-center justify-between">
-            <span className="text-[18px] leading-[1.5] font-normal tracking-[-0.396px] text-white">
-              Menu
-            </span>
-            <button
-              type="button"
-              aria-label="Close navigation"
-              onClick={() => setOpen(false)}
-              className="inline-flex h-6 w-6 items-center justify-center text-white"
+      {/* Overlay drawer.
+       *
+       * IMPORTANT: rendered via a portal to document.body. The header bar it
+       * would otherwise live inside has `backdrop-filter` (blur), which makes
+       * that bar the CSS containing block for `position: fixed` descendants.
+       * A non-portaled `fixed inset-0` drawer therefore only covered the tiny
+       * header pill (the bug that made the menu look transparent while open).
+       * Portaling out restores viewport coverage so the opaque background
+       * actually hides the page behind it.
+       */}
+      {isClient
+        ? createPortal(
+            <div
+              id="mobile-menu"
+              hidden={!open}
+              className="tablet:hidden fixed inset-x-0 top-0 bottom-0 z-[80]"
+              style={{ background: "rgba(10,10,12,1)" }}
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-                className="h-6 w-6"
-              >
-                <path
-                  d="M6 6l12 12M18 6L6 18"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-          </div>
+              <div className="flex h-full flex-col px-5 pt-6 pb-10">
+                <div className="mb-8 flex h-9 items-center justify-between">
+                  <span className="text-[18px] leading-[1.5] font-normal tracking-[-0.396px] text-white">
+                    Menu
+                  </span>
+                  <button
+                    type="button"
+                    aria-label="Close navigation"
+                    onClick={() => setOpen(false)}
+                    className="inline-flex h-6 w-6 items-center justify-center text-white"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                      className="h-6 w-6"
+                    >
+                      <path
+                        d="M6 6l12 12M18 6L6 18"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
 
-          <nav aria-label="Mobile" className="flex flex-col gap-2">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="rounded-full px-4 py-3 text-[24px] leading-[1.4] tracking-[-0.48px] text-white transition-colors hover:bg-white/5 hover:text-[var(--accent-primary)]"
-              >
-                {item.label}
-                {item.hot ? (
-                  <Flame
-                    aria-label="Hot"
-                    className="ml-1.5 inline h-4 w-4 text-[#ff6b1a]"
-                  />
-                ) : null}
-              </a>
-            ))}
-          </nav>
+                <nav aria-label="Mobile" className="flex flex-col gap-2">
+                  {navItems.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="rounded-full px-4 py-3 text-[24px] leading-[1.4] tracking-[-0.48px] text-white transition-colors hover:bg-white/5 hover:text-[var(--accent-primary)]"
+                    >
+                      {item.label}
+                      {item.hot ? (
+                        <Flame
+                          aria-label="Hot"
+                          className="ml-1.5 inline h-4 w-4 text-[#ff6b1a]"
+                        />
+                      ) : null}
+                    </a>
+                  ))}
+                </nav>
 
-          <div className="mt-auto">
-            <DsButton
-              href={auditUrl}
-              variant="light"
-              size="md"
-              className="w-full justify-center"
-              onClick={() => setOpen(false)}
-            >
-              {auditLabel}
-            </DsButton>
-          </div>
-        </div>
-      </div>
+                <div className="mt-auto">
+                  <DsButton
+                    href={auditUrl}
+                    variant="light"
+                    size="md"
+                    className="w-full justify-center"
+                    onClick={() => setOpen(false)}
+                  >
+                    {auditLabel}
+                  </DsButton>
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
