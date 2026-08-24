@@ -86,7 +86,7 @@ export function MobileMenu({
         hidden={!open}
         className="tablet:hidden fixed inset-x-0 top-0 bottom-0 z-[80]"
         style={{
-          background: "rgba(10,10,12,0.88)",
+          background: "rgba(10,10,12,1)",
           backdropFilter: "blur(28px)",
           WebkitBackdropFilter: "blur(28px)",
         }}
