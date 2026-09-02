@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
 import { useRef, useSyncExternalStore } from "react";
@@ -86,7 +87,6 @@ export function ProblemSectionClient({
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="prompt-problem-window p-6 md:p-8">
             <div className="prompt-problem-window-bar relative mb-6 flex items-center pb-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 loading="lazy"
                 decoding="async"
@@ -102,7 +102,6 @@ export function ProblemSectionClient({
             <div className="space-y-4">
               {problems.map((problem) => (
                 <div key={problem.id} className="prompt-problem-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     loading="lazy"
                     decoding="async"
@@ -336,7 +335,6 @@ function ProblemSectionAnimated({
           {/* Central window */}
           <div className="prompt-problem-window absolute inset-x-0 top-1/2 mx-auto w-full max-w-2xl -translate-y-1/2 p-8">
             <div className="prompt-problem-window-bar relative mb-6 flex items-center pb-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 loading="lazy"
                 decoding="async"
@@ -411,7 +409,6 @@ function FloatingProblemCard({
         scale,
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         loading="lazy"
         decoding="async"

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -99,9 +100,12 @@ export default async function AuthorPage({ params }: PageProps) {
       {/* Profile header */}
       <section className="mobile:flex-row mobile:items-start mobile:text-left flex flex-col items-center gap-6 text-center">
         {avatar ? (
-          <img
+          <Image
             src={avatar}
             alt={author.name ?? "author"}
+            width={112}
+            height={112}
+            unoptimized
             className="h-28 w-28 flex-shrink-0 rounded-full border border-[var(--border-soft)] object-cover"
           />
         ) : (

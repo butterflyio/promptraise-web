@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { DsSection, DsSectionContainer } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
 import { cn } from "@/lib/cn";

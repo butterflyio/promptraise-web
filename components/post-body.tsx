@@ -121,12 +121,13 @@ const components: PortableTextComponents = {
             className="w-full overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)]"
             style={{ aspectRatio: String(ratio) }}
           >
-            <img
+            <Image
               src={url}
               alt={alt}
+              fill
+              unoptimized
+              sizes="(max-width: 768px) 100vw, 768px"
               className="h-full w-full object-cover object-center"
-              loading="lazy"
-              decoding="async"
             />
           </div>
           {caption ? (

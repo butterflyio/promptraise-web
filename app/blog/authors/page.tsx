@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import { getAllPublicAuthors } from "@/sanity/lib/queries";
 import { imageUrl } from "@/lib/sanity-image";
-import { authorHref, authorUrl } from "@/lib/blog";
+import { authorHref } from "@/lib/blog";
 
 export const revalidate = 30;
 
@@ -50,9 +51,12 @@ export default async function AuthorsIndexPage() {
               className="group rounded-2xl border border-[var(--border-soft)] bg-[rgba(255,255,255,0.02)] p-6 text-center transition-colors hover:border-[rgba(103,255,103,0.25)]"
             >
               {avatar ? (
-                <img
+                <Image
                   src={avatar}
                   alt={a.name ?? "author"}
+                  width={80}
+                  height={80}
+                  unoptimized
                   className="mx-auto h-20 w-20 rounded-full border border-[var(--border-soft)] object-cover"
                 />
               ) : (

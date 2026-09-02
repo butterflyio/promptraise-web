@@ -1,4 +1,4 @@
-import { test, expect, request as pwRequest } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { execSync } from "child_process";
 import { readFileSync } from "fs";
 

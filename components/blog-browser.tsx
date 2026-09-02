@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
-import type { PostDoc } from "@/sanity/lib/queries";
 import { imageUrl } from "@/lib/sanity-image";
 import { postHref, formatShortDate, readTime } from "@/lib/blog";
 
@@ -81,11 +81,13 @@ function FeaturedCard({ post }: { post: Post }) {
             className="relative w-full overflow-hidden"
             style={{ aspectRatio: ratio }}
           >
-            <img
+            <Image
               src={img}
               alt={post.title ?? ""}
+              fill
+              unoptimized
+              sizes="(max-width: 1024px) 100vw, 1200px"
               className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
             />
             <div className="absolute inset-0 bg-[rgba(15,15,15,0.15)]" />
           </div>
@@ -151,11 +153,13 @@ function PostCard({ post }: { post: Post }) {
           className="relative w-full overflow-hidden"
           style={{ aspectRatio: ratio }}
         >
-          <img
+          <Image
             src={img}
             alt={post.title ?? ""}
+            fill
+            unoptimized
+            sizes="(max-width: 768px) 100vw, 640px"
             className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
           />
           <div className="absolute inset-0 bg-[rgba(15,15,15,0.35)]" />
           <div

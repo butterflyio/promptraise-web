@@ -1,5 +1,3 @@
-import type { PostDoc } from "@/sanity/lib/queries";
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
 /**

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { draftMode } from "next/headers";
 
 import CopyCommand from "@/components/tools/copy-command";
@@ -219,7 +220,7 @@ export default async function ReadabilityPage() {
 
         {/* Animated demo - the widget embedded on a docs-style site */}
         <div className="mt-6 overflow-hidden rounded-2xl border border-[var(--border-default)]">
-          <img
+          <Image
             src="/gifs/fk-embed-demo.gif"
             alt="Animated demo of the Flesch-Kincaid calculator embedded on a website"
             width={720}

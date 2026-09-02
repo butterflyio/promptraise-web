@@ -443,3 +443,10 @@ Update this file after every meaningful implementation change.
   - The earlier `rgba(10,10,12,1)` opacity change was correct but ineffective. Root cause found by live CDP audit: the drawer sat inside the header bar, which has `backdrop-filter: blur(14px)`. Per CSS, a backdrop-filter ancestor becomes the containing block for `position:fixed` descendants, so the `fixed inset-0` drawer only covered the small header pill (~358x32px at y=64) - never the viewport. Menu text overflowed onto hero text, reading as "transparent menu" + text collision.
   - Fix: render the drawer via `createPortal` to `document.body` (components/mobile-menu.tsx), gated by a useSyncExternalStore isClient flag (setState-in-effect pattern trips the new lint gate).
   - Verified in mobile viewport (390x844): drawer is now a direct child of body, rect x:0 y:0 390x844, opaque rgb(10,10,12), z-80, no hydration errors, no next-error. Deployed to staging, then PRODUCTION on Zain approval (prod deploy 2026-08-24, dpl_9tzGs6KkmuUaxXQQoFRPrLPcLDP7m, live verified on promptraise.com).
+- **Security + quality remediation pass (2026-09-02):**
+  - Cleared all local ESLint warnings (81 -> 0), including unused symbols/directives and `no-img-element` findings.
+  - Replaced content/media `<img>` tags with `next/image` in blog/article/author/tool surfaces where semantic images are rendered.
+  - Kept Figma-heavy decorative composition layers in section components with explicit file-level `@next/next/no-img-element` overrides to preserve exact absolute-positioned SVG stack behavior.
+  - Migrated GA/Ahrefs/Clarity script loading from raw `<script>` tags to `next/script` in `app/layout.tsx` to satisfy Next quality rules.
+  - Remediated dependency vulnerabilities by upgrading Next packages to patched versions (`next` + `eslint-config-next` -> `16.3.4`) and refreshing lockfile; `npm audit` now reports 0 vulnerabilities.
+  - Validation snapshot: `npm run lint` pass, `npm run typecheck` pass, `npm run design:verify` pass, `npm audit` pass; `npm run build` blocked in this sandbox by external Sanity DNS resolution (`ENOTFOUND ...apicdn.sanity.io`).
