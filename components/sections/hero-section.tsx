@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import { DsBadge, DsButton } from "@/components/design-system";
 import { SectionLabel } from "@/components/section-label";
@@ -170,12 +171,12 @@ export function HeroSection({
                   }`}
                 >
                   {company.logo ? (
-                    <img
-                      loading="lazy"
-                      decoding="async"
+                    <Image
                       src={company.logo}
                       alt=""
                       aria-hidden="true"
+                      width={18}
+                      height={18}
                       className="h-[18px] w-[18px]"
                     />
                   ) : (

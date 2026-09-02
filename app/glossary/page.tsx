@@ -22,10 +22,6 @@ export const revalidate = 30;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
 
-interface PageProps {
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
-}
-
 export async function generateMetadata(): Promise<Metadata> {
   const { draftMode: dm } = await import("next/headers");
   const isDraft = await dm();
@@ -45,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function GlossaryPage(_props: PageProps) {
+export default async function GlossaryPage() {
   const isDraft = await draftMode();
   const content = await getGlossaryContent(isDraft);
   const { categories, terms, intro } = content;
@@ -126,7 +122,7 @@ export default async function GlossaryPage(_props: PageProps) {
       </nav>
 
       {/* Client enhancement: search + A-Z jump (terms stay SSR'd below) */}
-      <GlossaryScroller terms={terms} categories={[...categories]} />
+      <GlossaryScroller terms={terms} />
 
       <div className="mt-6 flex flex-col gap-12">
         {termsByCategory.map(({ category, terms: group }) => (

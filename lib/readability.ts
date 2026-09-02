@@ -393,7 +393,6 @@ export function analyzeReadability(text: string): ReadabilityResult {
   const charCount = raw.length;
   const charCountNoSpaces = raw.replace(/\s/g, "").length;
   const wordCount = words.length;
-  const sentenceCount = Math.max(1, sentences.length);
   const terminatorCount = (raw.match(TERMINATORS) ?? []).length;
 
   // Actually count sentence terminators so sentenceCount isn't overflowed.

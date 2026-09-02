@@ -128,7 +128,6 @@ export default function ReadabilityTool({
       setAnalyzedText(decoded);
     }, 0);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const trimmed = text.trim();
@@ -749,7 +748,6 @@ function FormulaGrid({
   target: [number, number];
   copy: FleschCopy;
 }) {
-  const defByKey = new Map(copy.formulaDefinitions.map((d) => [d.key, d]));
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
       <div className="mb-4 flex flex-col gap-1">

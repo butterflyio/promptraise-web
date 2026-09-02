@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,7 +15,6 @@ const STEPS = [
     description:
       "We check how ChatGPT, Gemini, Perplexity, Claude, DeepSeek see you now. We fix the baseline - how often you're mentioned in target queries and alongside which competitors.",
     icon: (
-      // eslint-disable-next-line @next/next/no-img-element
       <img
         loading="lazy"
         decoding="async"
@@ -265,8 +265,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
   const cardOffsets = isMobile
     ? ["50%", "50%", "50%", "50%", "50%"]
     : CARD_OFFSETS;
-  const cardTranslateX = isMobile ? "translateX(-50%)" : "none";
-
   // Override step copy/label/number from CMS while keeping the 5-step structure
   const steps = STEPS.map((step, i) => {
     const cms = content?.steps?.[i];
@@ -484,7 +482,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
         </div>
 
         {/* ── Decorative vector on top (119:2733, color-dodge) ─ */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           loading="lazy"
           decoding="async"
@@ -498,7 +495,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
         <div className="relative z-10 px-6 pt-16 pb-6 text-center">
           {/* "Process" badge: line + marks + pill + capsules */}
           <div className="relative mx-auto mb-5 inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               loading="lazy"
               decoding="async"
@@ -508,7 +504,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               className="absolute top-1/2 left-1/2 h-[6px] w-[384px] max-w-none -translate-x-1/2 -translate-y-1/2"
             />
             {/* Mark 1 (Figma 123:40522, at x=105.5, flipped) */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               loading="lazy"
               decoding="async"
@@ -523,7 +518,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               </span>
             </div>
             {/* Mark 2 (Figma 123:40521, at x=238.5) */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               loading="lazy"
               decoding="async"
@@ -569,7 +563,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
               {/* Icon art area (338:709, h 216) */}
               <div className="relative h-[216px] w-full">
                 {/* Glow panels */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   loading="lazy"
                   decoding="async"
@@ -578,7 +571,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   aria-hidden
                   className="absolute top-0 left-0 h-[256px] w-[400px] max-w-none"
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   loading="lazy"
                   decoding="async"
@@ -588,7 +580,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   className="absolute top-0 right-0 h-[256px] w-[400px] max-w-none"
                 />
                 {/* Arcs */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   loading="lazy"
                   decoding="async"
@@ -597,7 +588,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   aria-hidden
                   className="absolute bottom-0 left-1/2 h-[207px] w-[392px] max-w-none -translate-x-1/2"
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   loading="lazy"
                   decoding="async"
@@ -606,7 +596,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   aria-hidden
                   className="absolute bottom-[74px] left-1/2 h-[142px] w-[393px] max-w-none -translate-x-1/2"
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   loading="lazy"
                   decoding="async"
@@ -616,7 +605,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
                   className="absolute bottom-[131px] left-1/2 h-[85px] w-[393px] max-w-none -translate-x-1/2"
                 />
                 {/* Decorative ellipse (338:714) */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   loading="lazy"
                   decoding="async"
@@ -685,7 +673,6 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
             style={{ top: 388, width: 1, transform: "translateX(-50%)" }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               loading="lazy"
               decoding="async"

@@ -18,13 +18,7 @@ type Term = {
  * component adds search filtering, an A-Z quick-nav, and copy-permalink for a
  * given term without removing content that crawlers/AI engines need.
  */
-export default function GlossaryScroller({
-  terms,
-  categories,
-}: {
-  terms: Term[];
-  categories: string[];
-}) {
+export default function GlossaryScroller({ terms }: { terms: Term[] }) {
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {

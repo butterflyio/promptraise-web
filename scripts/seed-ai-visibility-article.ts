@@ -13,7 +13,6 @@ import * as path from "path";
 
 const projectId = "4pws3pyj";
 const dataset = "production"; // single live dataset (per infra memory)
-const token = ""; // set via SANITY_API_WRITE_TOKEN below
 
 // Read tokens from .env.local
 const envRaw = fs.readFileSync(path.join(process.cwd(), ".env.local"), "utf8");

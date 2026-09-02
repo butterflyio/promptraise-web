@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -191,37 +192,29 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <head>
-        {/* Google tag (gtag.js) - GA4 sitewide. Keep exactly one Google tag per page. */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-4BME0R598C"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4BME0R598C');`,
-          }}
-        />
         <StructuredData settings={settings} />
-        {/* Ahrefs Analytics - sitewide traffic measurement */}
-        <script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key="lV0hEymR0FuxRpoJU0kVKg"
-          async
-        />
-        {/* Microsoft Clarity - traffic + SEO behavior analytics (session recording, heatmaps) */}
-        <script
-          type="text/javascript"
-          dangerouslySetInnerHTML={{
-            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${
-              process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "y4ruxt71v1"
-            }");`,
-          }}
-        />
       </head>
       <body className="min-h-full">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4BME0R598C"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4BME0R598C');`}
+        </Script>
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="lV0hEymR0FuxRpoJU0kVKg"
+          strategy="afterInteractive"
+        />
+        <Script id="ms-clarity-init" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${
+            process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "y4ruxt71v1"
+          }");`}
+        </Script>
         <Suspense fallback={null}>
           <TermlyCMP
             websiteUUID="7e325b94-5a2f-4d14-9502-ccf9e7e8e5e7"

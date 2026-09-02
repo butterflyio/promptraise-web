@@ -8,8 +8,6 @@ import {
 } from "@/sanity/lib/queries";
 import { postUrl, authorUrl } from "@/lib/blog";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://promptraise.com";
-
 export const metadata: Metadata = {
   title: "Sitemap",
   description:

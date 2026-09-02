@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
@@ -238,9 +239,12 @@ export default async function PostPage({ params }: PageProps) {
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(103,255,103,0.15)] text-sm font-semibold text-[var(--accent-primary)]">
           {authorAvatar ? (
-            <img
+            <Image
               src={authorAvatar}
               alt={post.author?.name ?? "author"}
+              width={40}
+              height={40}
+              unoptimized
               className="h-full w-full rounded-full object-cover"
             />
           ) : (
@@ -287,11 +291,13 @@ export default async function PostPage({ params }: PageProps) {
       {/* Cover */}
       {cover ? (
         <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--border-soft)]">
-          <img
+          <Image
             src={cover}
             alt={post.title ?? ""}
-            className="w-full object-cover"
-            style={{ aspectRatio: String(coverRatio) }}
+            width={1600}
+            height={Math.round(1600 / coverRatio)}
+            unoptimized
+            className="h-auto w-full object-cover"
           />
         </div>
       ) : null}
@@ -312,9 +318,12 @@ export default async function PostPage({ params }: PageProps) {
         <section className="mt-10 rounded-2xl border border-[var(--border-soft)] bg-[rgba(255,255,255,0.02)] p-6">
           <div className="mobile:flex-row mobile:items-start flex flex-col gap-4">
             {authorAvatar ? (
-              <img
+              <Image
                 src={authorAvatar}
                 alt={post.author.name}
+                width={56}
+                height={56}
+                unoptimized
                 className="h-14 w-14 flex-shrink-0 rounded-full border border-[var(--border-soft)] object-cover"
               />
             ) : (

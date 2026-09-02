@@ -32,18 +32,6 @@ const HOME_SECTIONS: Array<{ label: string; id: string }> = [
   { label: "TeamSection", id: "#company" },
 ];
 
-async function scrollToAndAssert(
-  page: import("@playwright/test").Page,
-  selector: string,
-  label: string,
-) {
-  // Sections are above the fold or use scroll-triggered animations; scroll
-  // the element into view so visibility checks reflect real render state.
-  const locator = page.locator(selector);
-  await locator.scrollIntoViewIfNeeded({ timeout: 10_000 });
-  await expect(locator).toBeVisible({ timeout: 10_000 });
-}
-
 test("homepage loads with correct title", async ({ page }) => {
   const response = await page.goto("/");
   expect(response?.status()).toBe(200);

@@ -45,14 +45,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    ...buildBlogEntries(posts, siteUrl),
+    ...buildBlogEntries(posts),
     {
       url: `${siteUrl}/blog/authors`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     },
-    ...buildAuthorEntries(authors, siteUrl),
+    ...buildAuthorEntries(authors),
     {
       url: `${siteUrl}/privacy`,
       lastModified: new Date(),
@@ -106,7 +106,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 function buildBlogEntries(
   posts: Awaited<ReturnType<typeof getAllPosts>>,
-  siteUrl: string,
 ): MetadataRoute.Sitemap {
   return posts
     .filter((p) => !p.noindex)
@@ -125,7 +124,6 @@ function buildBlogEntries(
 
 function buildAuthorEntries(
   authors: Awaited<ReturnType<typeof getAllPublicAuthors>>,
-  siteUrl: string,
 ): MetadataRoute.Sitemap {
   return authors
     .filter((a) => !a.noindex)
