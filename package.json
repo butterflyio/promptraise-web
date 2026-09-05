@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "bash scripts/indexnow-submit.sh || true",
     "start": "next start",
     "lint": "eslint .",
     "check:alt": "node scripts/check-alt-text.mjs",
