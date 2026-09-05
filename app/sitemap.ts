@@ -47,6 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...buildBlogEntries(posts),
     {
+      url: `${siteUrl}/blog/feed.xml`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.3,
+    },
+    {
       url: `${siteUrl}/blog/authors`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
