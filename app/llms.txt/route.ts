@@ -20,7 +20,6 @@ export async function GET() {
 # https://llmstxt.org/
 
 Entity
-Wikidata: https://www.wikidata.org/wiki/Q141306929
 Website: ${siteUrl}
 
 Overview
