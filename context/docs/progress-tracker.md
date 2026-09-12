@@ -12,6 +12,7 @@ Update this file after every meaningful implementation change.
 
 ## Completed
 
+- **Ask AI → Make Me Preferred on Google (2026-09-12):** removed the `askAi` section (schema block, `AskAiSection` component + `askai/` assets, registry entry, `HomePage` query type) and added `preferredSources` ("Make Me Preferred on Google") in its place — new `preferred-sources-section.tsx` using standard section atoms, schema block with CMS-editable badge/heading/subtext/ctaLabel/ctaHref/guideLabel/guideHref, wired through `sectionBlockTypes` → Studio and `registry.tsx`. Defaults: primary CTA = Google source-preferences deeplink (`?q=https://promptraise.com`), secondary = Google's preferred-sources doc. Verified: lint, typecheck, prod build all pass; IndexNow re-pinged 24 URLs. Data step pending: in Studio, replace the `askAi` block in the `page-home` sections array with the new `preferredSources` block (renaming the registry already drops `askAi` from the rendered page); update smoke.spec assertion once deployed.
 - Planning and architecture decisions finalized.
 - Build order validated against dependency/security/JIT rules.
 - Unit specs drafted for Unit 1, Unit 2, and Unit 3.

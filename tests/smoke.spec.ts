@@ -18,7 +18,7 @@ const SECTION_LABELS = [
   "WhyChooseSection",
   "PlansSection",
   "AuditCtaSection",
-  "AskAiSection",
+  "PreferredSourcesSection",
 ];
 
 // TeamSection does not render a SectionLabel - it anchors at #company.

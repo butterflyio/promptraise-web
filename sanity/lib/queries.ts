@@ -232,12 +232,14 @@ export interface HomePage {
     }>;
     backedBy?: Array<{ label?: string; href?: string; logo?: string }>;
   };
-  askAi?: {
+  preferredSources?: {
     badge?: string;
     heading?: string;
     subtext?: string;
-    prompt?: string;
-    assistants?: Array<{ name?: string; baseHref?: string }>;
+    ctaLabel?: string;
+    ctaHref?: string;
+    guideLabel?: string;
+    guideHref?: string;
   };
 }
 

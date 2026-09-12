@@ -716,67 +716,59 @@ export const teamBlock = defineType({
   ],
 });
 
-export const askAiBlock = defineType({
-  name: "askAi",
-  title: "Ask AI",
+export const preferredSourcesBlock = defineType({
+  name: "preferredSources",
+  title: "Make Me Preferred on Google",
   type: "object",
-  description: "Editable copy for the Ask AI deep-link section.",
+  description:
+    "Editable copy for the Google Preferred Sources section. Ref: https://developers.google.com/search/docs/appearance/preferred-sources",
   fields: [
     defineField({
       name: "badge",
       title: "Badge",
       type: "string",
-      initialValue: "Ask AI",
+      initialValue: "Make Me Preferred on Google",
     }),
     defineField({
       name: "heading",
       title: "Heading",
       type: "string",
-      initialValue: "Still deciding? Let the AI decide for you.",
+      initialValue: "Add us as a preferred source in Google",
     }),
     defineField({
       name: "subtext",
       title: "Subtext",
-      type: "string",
-      initialValue:
-        "Ask a model directly about PromptRaise and how it can help.",
-    }),
-    defineField({
-      name: "prompt",
-      title: "AI Prompt",
       type: "text",
-      description:
-        "Sent to ChatGPT, Claude and Perplexity when someone clicks the deep links.",
+      initialValue:
+        "When you add a site as a preferred source, Google marks it with a \u201cpreferred\u201d badge and boosts it in AI Mode, AI Overviews and Top Stories. One click pins PromptRaise to the top of the AI answers you see.",
     }),
     defineField({
-      name: "assistants",
-      title: "AI Assistant Buttons",
+      name: "ctaLabel",
+      title: "Primary CTA label",
+      type: "string",
+      initialValue: "Add as Preferred Source",
+    }),
+    defineField({
+      name: "ctaHref",
+      title: "Primary CTA URL",
+      type: "url",
       description:
-        "The three deep-link buttons. Leave name empty to keep the design defaults (ChatGPT / Claude / Perplexity).",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "object",
-          name: "askAiAssistant",
-          title: "Assistant Button",
-          fields: [
-            defineField({
-              name: "name",
-              title: "Button Label",
-              type: "string",
-            }),
-            defineField({
-              name: "baseHref",
-              title: "Base URL",
-              type: "url",
-              description: "e.g. https://chatgpt.com/?q=",
-            }),
-          ],
-          preview: {
-            select: { title: "name", subtitle: "baseHref" },
-          },
-        }),
-      ],
+        "Deep link into Google's source-preferences tool. The ?q= domain is the site being added (edit for clients).",
+      initialValue:
+        "https://www.google.com/preferences/source?q=https://promptraise.com",
+    }),
+    defineField({
+      name: "guideLabel",
+      title: "Guide link label",
+      type: "string",
+      initialValue: "Read Google's guide",
+    }),
+    defineField({
+      name: "guideHref",
+      title: "Guide link URL",
+      type: "url",
+      initialValue:
+        "https://developers.google.com/search/docs/appearance/preferred-sources",
     }),
   ],
 });
@@ -793,7 +785,7 @@ export const sectionBlockTypes = [
   plansBlock,
   auditCtaBlock,
   teamBlock,
-  askAiBlock,
+  preferredSourcesBlock,
 ];
 
 /** Block type names, in canonical order. Used to seed a page's sections array. */
