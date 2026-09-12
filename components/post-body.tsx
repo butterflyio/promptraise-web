@@ -118,7 +118,7 @@ const components: PortableTextComponents = {
       return (
         <figure className="my-8">
           <div
-            className="w-full overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)]"
+            className="relative w-full overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)]"
             style={{ aspectRatio: String(ratio) }}
           >
             <Image
