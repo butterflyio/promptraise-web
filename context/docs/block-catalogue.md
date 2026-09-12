@@ -24,7 +24,7 @@ Component column points at the source that implements the visuals.
 | `plans`      | `plans-section.tsx`       | Plans That Scale With You        | badge, heading, subtext, CTA label                                                                               | form styling (fields are code-fixed)  |
 | `auditCta`   | `audit-cta-section.tsx`   | Final CTA                        | heading, subtext, CTA label, checklist heading, checklist[]                                                      | banner art stack, glass panels        |
 | `team`       | `team-section.tsx`        | Team + Backed by                 | badge, heading, subtext, members[] (name, role, bio)                                                             | portraits, social icons, logos        |
-| `askAi`      | `ask-ai-section.tsx`      | Ask AI                           | badge, heading, subtext, prompt                                                                                  | button art, background visual         |
+| `preferredSources` | `preferred-sources-section.tsx` | Make Me Preferred on Google | badge, heading, subtext, ctaLabel, ctaHref, guideLabel, guideHref                                                | standard section atoms (no Figma node yet) |
 
 ## Settings-dependent props
 

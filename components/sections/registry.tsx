@@ -1,11 +1,11 @@
 import type { ComponentType } from "react";
 
 import { AiTrainingSection } from "@/components/sections/ai-training-section";
-import { AskAiSection } from "@/components/sections/ask-ai-section";
 import { AuditCtaSection } from "@/components/sections/audit-cta-section";
 import { ComparisonSection } from "@/components/sections/comparison-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { PlansSection } from "@/components/sections/plans-section";
+import { PreferredSourcesSection } from "@/components/sections/preferred-sources-section";
 import { ProblemSection } from "@/components/sections/problem-section";
 import { ProcessSection } from "@/components/sections/process-section";
 import { StatsSection } from "@/components/sections/stats-section";
@@ -34,7 +34,7 @@ export type SectionBlockType =
   | "plans"
   | "auditCta"
   | "team"
-  | "askAi";
+  | "preferredSources";
 
 export interface SectionBlock {
   _type: SectionBlockType;
@@ -56,7 +56,7 @@ const registry: Record<SectionBlockType, ComponentType<any>> = {
   plans: PlansSection,
   auditCta: AuditCtaSection,
   team: TeamSection,
-  askAi: AskAiSection,
+  preferredSources: PreferredSourcesSection,
 };
 
 export function isSectionBlockType(value: unknown): value is SectionBlockType {
