@@ -103,12 +103,14 @@ export function HeroSection({
 
       <div className="mobile:px-6 tablet:pt-[220px] desktop:min-h-[960px] desktop:pt-[255px] relative z-10 mx-auto flex min-h-[780px] max-w-[1248px] flex-col items-center px-5 pt-[170px] text-center">
         <div className="flex max-w-[761px] flex-col items-center">
-          <div className="mb-3 inline-flex h-9 items-center gap-2 rounded-full bg-white/10 px-4 backdrop-blur-md">
-            <span className="h-1 w-1 rounded-full bg-white/70" />
-            <span className="prompt-hero-eyebrow text-white/70">
-              {content?.eyebrow ?? defaultHeroContent.eyebrow}
-            </span>
-          </div>
+          {content?.showEyebrow !== false && (
+            <div className="prompt-eyebrow mb-3 inline-flex h-9 items-center gap-2 rounded-full bg-white/10 px-4 backdrop-blur-md">
+              <span className="h-1 w-1 rounded-full bg-white/70" />
+              <span className="prompt-hero-eyebrow text-white/70">
+                {content?.eyebrow ?? defaultHeroContent.eyebrow}
+              </span>
+            </div>
+          )}
 
           <h1 className="prompt-hero-title mb-6 text-white">
             {content?.headlinePrefix ?? defaultHeroContent.headlinePrefix}{" "}

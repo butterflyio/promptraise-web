@@ -46,7 +46,12 @@ export function PreferredSourcesSection({
     <DsSection id="preferred-sources" className="ds-section-alt">
       <SectionLabel name="PreferredSourcesSection" />
       <DsSectionContainer className="relative z-10 flex flex-col items-center gap-7 text-center">
-        <DsBadge variant="section">{badge}</DsBadge>
+        <DsBadge
+          variant="section"
+          className="prompt-eyebrow shrink-0 whitespace-nowrap"
+        >
+          {badge}
+        </DsBadge>
         <h2 className="tablet:text-[40px] max-w-[760px] text-[28px] leading-[1.25] font-bold tracking-[-0.03em] text-white">
           {heading}
         </h2>

@@ -147,6 +147,14 @@ export const siteSettingsType = defineType({
       ],
     }),
     defineField({
+      name: "showEyebrows",
+      title: "Show Eyebrows",
+      type: "boolean",
+      description:
+        "Global master switch for section eyebrows/badges (hero pill, Process / Team / Comparison / Why Choose us / Make Me Preferred on Google badges). Off hides them everywhere on the site.",
+      initialValue: true,
+    }),
+    defineField({
       name: "primaryTelegramCtaUrl",
       title: "Primary Telegram CTA URL",
       type: "url",

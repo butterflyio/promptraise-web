@@ -78,6 +78,7 @@ export interface SiteSettings {
     reddit?: string;
     youtube?: string;
   };
+  showEyebrows?: boolean;
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
@@ -101,6 +102,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     blogAskLlm,
     socialLinks,
     announcement,
+    showEyebrows,
     logo{
       asset->{url, metadata{dimensions}}
     },
@@ -134,6 +136,7 @@ export interface HomePageHeroTrustLogo {
 
 export interface HomePageHero {
   eyebrow?: string;
+  showEyebrow?: boolean;
   headlinePrefix?: string;
   headlineHighlight?: string;
   headlineSuffix?: string;
@@ -358,6 +361,7 @@ export async function getSiteSettingsPreview() {
     blogAskLlm,
     socialLinks,
     announcement,
+    showEyebrows,
     logo{
       asset->{url, metadata{dimensions}}
     },

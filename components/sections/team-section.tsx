@@ -332,7 +332,7 @@ export function TeamSection({ content }: { content?: HomePage["team"] }) {
           {/* ── Heading (147:477) ─────────────────────────────── */}
           <div className="flex flex-col items-center gap-[20px]">
             {/* Badge row (147:491 Team Container) */}
-            <div className="relative inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
+            <div className="prompt-eyebrow relative inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
               {/* Decorative line (147:492, rotate-180) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

@@ -494,7 +494,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
         {/* ── Section header (Figma 133:41030, 649px) ───────── */}
         <div className="relative z-10 px-6 pt-16 pb-6 text-center">
           {/* "Process" badge: line + marks + pill + capsules */}
-          <div className="relative mx-auto mb-5 inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
+          <div className="prompt-eyebrow relative mx-auto mb-5 inline-flex h-[48px] w-[384px] max-w-full items-center justify-center">
             <img
               loading="lazy"
               decoding="async"

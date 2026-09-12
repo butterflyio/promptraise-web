@@ -176,7 +176,7 @@ export function AiTrainingSection({ content }: AiTrainingSectionProps) {
             Tablet: label left, rule extends right. Desktop: label right,
             long rule from the left edge. Hidden on mobile (Figma mobile
             badge is positioned off-canvas). */}
-        <div className="tablet:flex mb-10 hidden h-[39px] w-full items-center">
+        <div className="prompt-eyebrow tablet:flex mb-10 hidden h-[39px] w-full items-center">
           <div className="desktop:justify-end relative flex h-full w-full items-center justify-start">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

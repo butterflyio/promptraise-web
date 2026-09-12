@@ -120,7 +120,7 @@ export default async function Page({ params }: PageProps) {
   const faqItems = (faq ?? []).filter((item) => item.question && item.answer);
 
   return (
-    <main>
+    <main data-eyebrows={settings?.showEyebrows === false ? "off" : "on"}>
       {faqItems.length > 0 ? (
         <script
           type="application/ld+json"

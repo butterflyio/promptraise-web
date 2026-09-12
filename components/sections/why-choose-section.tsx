@@ -665,7 +665,7 @@ export function WhyChooseSection({
           </div>
 
           {/* "Why Choose us" badge with connector lines — same Figma SVG assets as Process badge */}
-          <div className="tablet:flex mt-2 hidden shrink-0 items-center gap-0">
+          <div className="prompt-eyebrow tablet:flex mt-2 hidden shrink-0 items-center gap-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               loading="lazy"

@@ -224,7 +224,7 @@ function LabelColumn({
  * (matches Figma 139:124 / 422:5999 and the Process section badge pattern). */
 function ComparisonBadgeRow({ badge }: { badge?: string }) {
   return (
-    <div className="inline-flex items-center gap-0">
+    <div className="prompt-eyebrow inline-flex items-center gap-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         loading="lazy"

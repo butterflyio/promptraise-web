@@ -111,6 +111,13 @@ body {
   }
 }
 
+/* Global eyebrow kill-switch: set data-eyebrows="off" on the page root
+   (driven by the Sanity "Show Eyebrows" site-setting) to hide every
+   section eyebrow/badge. Elements opt in with the .prompt-eyebrow class. */
+[data-eyebrows="off"] .prompt-eyebrow {
+  display: none;
+}
+
 .prompt-hero-title {
   font-size: 30px;
   line-height: 1;

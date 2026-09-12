@@ -39,6 +39,14 @@ export const heroBlock = defineType({
       initialValue: "GEO · LLM Visibility · Web3",
     }),
     defineField({
+      name: "showEyebrow",
+      title: "Show Eyebrow",
+      type: "boolean",
+      description:
+        "Toggle the eyebrow badge above the headline on/off. Off hides it on the page.",
+      initialValue: true,
+    }),
+    defineField({
       name: "headlinePrefix",
       title: "Headline Prefix",
       type: "string",
